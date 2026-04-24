@@ -49,21 +49,22 @@
 
 ## 4. Design System
 
-**Primary direction: Light-mode, modern colorful with gradient accents**
-- Rationale: Colorful, light-mode portfolios stand out strongly among senior technical candidates in 2026; warm gradients and bold section accents communicate energy, creativity, and confidence — traits that differentiate a PM from a purely technical IC.
+**Primary direction: Light-mode, modern colorful with blue-teal-amber gradient**
+- Rationale: A blue → cyan → amber palette is vibrant and energetic without veering into purple, pink, or red territory; it reads as technical, optimistic, and modern — well-suited for a data/AI-focused PM.
 - **Palette:**
-  - Background `#FFFFFF`, surface `#F5F7FF`, section alt `#EEF2FF`
+  - Background `#FFFFFF`, surface `#F0F9FF`, section alt `#ECFDF5`
   - Text `#111827`, muted `#6B7280`
-  - **Primary accent:** `#6366F1` (indigo-violet)
-  - **Secondary accent:** `#F59E0B` (amber — for highlights, tags, badges)
-  - **Gradient hero:** `linear-gradient(135deg, #6366F1 0%, #EC4899 50%, #F59E0B 100%)`
-  - Section dividers and card borders use `#E0E7FF`
+  - **Primary accent:** `#2563EB` (royal blue)
+  - **Secondary accent:** `#F59E0B` (amber — highlights, tags, badges)
+  - **Tertiary accent:** `#10B981` (emerald green — success states, domain tags)
+  - **Gradient hero:** `linear-gradient(135deg, #2563EB 0%, #06B6D4 50%, #F59E0B 100%)`
+  - Section dividers and card borders use `#BFDBFE`
 - **Typography:** `Plus Jakarta Sans` (headings — expressive, modern) + `Inter` (body, UI) — both free on Google Fonts
 - **Spacing scale:** 4px base, scale ×1.5 (4, 6, 8, 12, 16, 24, 36, 48, 72px)
-- **Visual tone:** Bright and premium; bold gradient on hero text/background, white card surfaces with soft indigo shadows, colorful skill/domain tags, no dark backgrounds anywhere.
+- **Visual tone:** Bright and premium; bold blue-to-cyan-to-amber gradient on hero, white card surfaces with soft blue shadows, colorful skill/domain tags in blue, green, and amber — no purple, pink, or dark red anywhere.
 
-**Alternative direction: Light-mode with a single vivid teal accent (less colorful, more refined)**
-- Palette: `#F8FAFC` background, `#0F172A` text, `#0EA5E9` (sky-blue) accent — more restrained if the full gradient palette feels too bold.
+**Alternative direction: Light-mode, cyan-and-orange (warmer, more energetic)**
+- Palette: `#F0FDFA` background, `#134E4A` text, `#0D9488` (teal) primary + `#F97316` (orange) accent — warmer feel, still avoids purple/pink/red.
 
 ---
 
@@ -143,7 +144,7 @@ All content — case studies, skills, experience, diagrams — is static and cha
 
 ## 10. Open Decisions for Rohit
 
-1. **Palette intensity:** Full multi-color gradient (indigo → pink → amber) vs. restrained single-accent teal — which feels more "you"?
+1. **Palette direction:** Blue-cyan-amber gradient (primary) vs. teal-orange (alternative) — which color energy feels more "you"?
 2. **Photo on Hero:** Include a professional headshot on the hero section (yes/no)?
 3. **Blog / Writing in v1:** Include the Writing/Insights section at launch, or defer to v2?
 4. **Custom domain:** Purchase a domain (e.g., `rohitkumarsingh.com`) before launch, or launch on `*.vercel.app` first?
