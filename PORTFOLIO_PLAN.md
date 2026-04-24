@@ -49,15 +49,21 @@
 
 ## 4. Design System
 
-**Primary direction: Dark-mode-first, data-terminal aesthetic**
-- Rationale: Dominant premium aesthetic for senior technical portfolios in 2026; signals comfort with engineering tooling; sets Rohit apart from generic PM portfolios.
-- **Palette:** Background `#0D0F14`, surface `#161A23`, border `#252A36`, text `#E8EAF0`, muted `#7A8099`, **accent `#3B82F6`** (electric blue), accent-hover `#60A5FA`
-- **Typography:** `Inter` (body, UI) + `Cal Sans` or `DM Sans` (headings) — both free on Google Fonts
+**Primary direction: Light-mode, modern colorful with gradient accents**
+- Rationale: Colorful, light-mode portfolios stand out strongly among senior technical candidates in 2026; warm gradients and bold section accents communicate energy, creativity, and confidence — traits that differentiate a PM from a purely technical IC.
+- **Palette:**
+  - Background `#FFFFFF`, surface `#F5F7FF`, section alt `#EEF2FF`
+  - Text `#111827`, muted `#6B7280`
+  - **Primary accent:** `#6366F1` (indigo-violet)
+  - **Secondary accent:** `#F59E0B` (amber — for highlights, tags, badges)
+  - **Gradient hero:** `linear-gradient(135deg, #6366F1 0%, #EC4899 50%, #F59E0B 100%)`
+  - Section dividers and card borders use `#E0E7FF`
+- **Typography:** `Plus Jakarta Sans` (headings — expressive, modern) + `Inter` (body, UI) — both free on Google Fonts
 - **Spacing scale:** 4px base, scale ×1.5 (4, 6, 8, 12, 16, 24, 36, 48, 72px)
-- **Visual tone:** Precise and confident; data-grid-inspired subtle textures, no gradients except on accent CTAs.
+- **Visual tone:** Bright and premium; bold gradient on hero text/background, white card surfaces with soft indigo shadows, colorful skill/domain tags, no dark backgrounds anywhere.
 
-**Alternative direction: Light-mode, editorial minimal**
-- Palette: `#F8F9FA` background, `#111827` text, `#2563EB` accent — cleaner for print/PDF resumes but less distinctive.
+**Alternative direction: Light-mode with a single vivid teal accent (less colorful, more refined)**
+- Palette: `#F8FAFC` background, `#0F172A` text, `#0EA5E9` (sky-blue) accent — more restrained if the full gradient palette feels too bold.
 
 ---
 
@@ -65,7 +71,7 @@
 
 | Section | Animation | Trigger |
 |---------|-----------|---------|
-| Hero | Headline word-by-word fade-up, tagline slide-in delay | Page load |
+| Hero | Headline word-by-word fade-up with gradient text reveal, animated gradient background shimmer | Page load |
 | About | Paragraph reveal on scroll | Intersection Observer |
 | Skills | Bar/dot fill animation for each skill category | Scroll into view |
 | Projects | Card lift + border-glow on hover; diagram zoom on click | Hover / click |
@@ -137,7 +143,7 @@ All content — case studies, skills, experience, diagrams — is static and cha
 
 ## 10. Open Decisions for Rohit
 
-1. **Theme direction:** Dark-mode-first (primary recommendation) vs. light editorial — or both with a toggle?
+1. **Palette intensity:** Full multi-color gradient (indigo → pink → amber) vs. restrained single-accent teal — which feels more "you"?
 2. **Photo on Hero:** Include a professional headshot on the hero section (yes/no)?
 3. **Blog / Writing in v1:** Include the Writing/Insights section at launch, or defer to v2?
 4. **Custom domain:** Purchase a domain (e.g., `rohitkumarsingh.com`) before launch, or launch on `*.vercel.app` first?
