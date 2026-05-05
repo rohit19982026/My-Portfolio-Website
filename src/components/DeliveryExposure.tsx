@@ -6,22 +6,22 @@ import { useRef } from "react";
 const stacks = [
   {
     label: "// DATA PLATFORMS DELIVERED ON",
-    color: "#2563eb",
+    color: "#A78BFA",
     items: ["Snowflake", "Databricks", "Amazon Redshift", "SQL Server", "Hadoop / HDFS", "SigmaBI"],
   },
   {
     label: "// ENGINEERING TOOLING IN-PROGRAM",
-    color: "#06b6d4",
+    color: "#6EE7B7",
     items: ["dbt", "Airflow / MWAA", "ETL / ELT Pipelines", "Qlik Replicate", "Spark SQL", "LandingAI / Computer Vision", "AWS", "Azure"],
   },
   {
     label: "// PMO & DELIVERY STACK I OPERATE DAILY",
-    color: "#10b981",
+    color: "#F0ABFC",
     items: ["Jira", "Confluence", "Kantata (PSA)", "MS Project", "Azure DevOps", "Asana", "Salesforce", "Slack / Teams"],
   },
   {
     label: "// AI & AUTOMATION LAYER I'VE BUILT",
-    color: "#f59e0b",
+    color: "#A78BFA",
     items: ["Glean Agent Builder", "Claude (Anthropic)", "n8n (workflow automation)", "Google Apps Script", "Salesforce MCP", "Slack MCP", "Google Drive MCP"],
   },
 ];
@@ -41,37 +41,45 @@ export default function DeliveryExposure() {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <div className="flex items-center gap-4 mb-6">
-            <span className="font-heading text-5xl font-bold text-[#e5e7eb]">04</span>
-            <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#2563eb]">/ DELIVERY EXPOSURE</span>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+              04 / DELIVERY EXPOSURE
+            </span>
           </div>
-          <h2 className="font-heading text-4xl font-bold text-[#111827] mb-4">
-            Programs I&apos;ve delivered{" "}
-            <span className="gradient-text">across these stacks.</span>
+          <h2
+            className="font-display font-bold tracking-tight leading-[0.97] mb-5"
+            style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
+          >
+            Programs I&apos;ve delivered<br />
+            across <span className="gradient-text italic font-normal">these stacks</span>.
           </h2>
-          <p className="text-[#374151] max-w-2xl leading-relaxed mb-4">
+          <p className="text-[15px] text-[#A8A4C7] max-w-2xl leading-relaxed mb-4">
             I&apos;m a Technical Program Manager, not a hands-on engineer. What follows is the
             technology surface area I&apos;ve owned delivery across — enough fluency to scope,
             sequence, govern risk, and make defensible trade-offs in architecture conversations.
           </p>
-          <p className="text-sm text-[#6b7280] font-semibold border-l-4 border-[#2563eb] pl-4 py-1 italic">
+          <p
+            className="text-[14px] text-[#A8A4C7] font-semibold italic px-4 py-2.5 rounded-lg w-fit"
+            style={{ borderLeft: "3px solid #A78BFA", background: "rgba(167,139,250,0.06)" }}
+          >
             The engineering belongs to the team. The plan, the controls, and the outcome belong to me.
           </p>
         </motion.div>
 
-        {/* Stack groups */}
-        <div className="grid sm:grid-cols-2 gap-6 mb-10">
+        {/* Stack cards */}
+        <div className="grid sm:grid-cols-2 gap-5 mb-10">
           {stacks.map((stack, si) => (
             <motion.div
               key={stack.label}
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + si * 0.1 }}
-              className="bg-white rounded-2xl border border-[#e5e7eb] p-6"
+              transition={{ duration: 0.5, delay: 0.08 + si * 0.1 }}
+              className="p-6 rounded-2xl"
+              style={{ background: "#1B1B2A", border: "1px solid rgba(255,255,255,0.06)" }}
             >
               <p
-                className="text-[10px] font-bold uppercase tracking-[0.15em] mb-4"
-                style={{ color: stack.color }}
+                className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4 pb-3"
+                style={{ color: stack.color, borderBottom: `1px solid rgba(255,255,255,0.06)` }}
               >
                 {stack.label}
               </p>
@@ -79,8 +87,13 @@ export default function DeliveryExposure() {
                 {stack.items.map((item) => (
                   <span
                     key={item}
-                    className="text-sm font-semibold px-3 py-1.5 rounded-lg border text-[#374151]"
-                    style={{ borderColor: `${stack.color}40`, backgroundColor: `${stack.color}08` }}
+                    className="font-mono text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                    style={{
+                      borderColor: `${stack.color}30`,
+                      backgroundColor: `${stack.color}0D`,
+                      border: `1px solid ${stack.color}30`,
+                      color: "#A8A4C7",
+                    }}
                   >
                     {item}
                   </span>
@@ -95,9 +108,10 @@ export default function DeliveryExposure() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.5 }}
-          className="text-xs font-mono text-[#9ca3af] border border-dashed border-[#e5e7eb] rounded-xl p-4 max-w-3xl"
+          className="font-mono text-[11px] text-[#6B6B8A] rounded-xl p-4 max-w-3xl"
+          style={{ border: "1px dashed rgba(167,139,250,0.2)" }}
         >
-          <span className="text-[#2563eb]">// </span>
+          <span className="text-[#A78BFA]">// </span>
           Read this as delivery surface area, not a technical skills inventory. My value is in
           program design, financial governance, and risk anticipation across these technologies
           — not in writing the code that runs on them.

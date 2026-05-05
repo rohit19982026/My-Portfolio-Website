@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 
-const inter = Inter({
-  variable: "--font-inter",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "swap",
 });
@@ -54,10 +62,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakarta.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-white text-[#111827] antialiased">
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${manrope.variable} ${jetbrains.variable} h-full`}
+    >
+      <body className="min-h-full flex flex-col bg-[#0A0A12] text-[#EDE9FE] antialiased">
+        <ScrollProgress />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 relative z-[2]">{children}</main>
         <ScrollToTop />
       </body>
     </html>

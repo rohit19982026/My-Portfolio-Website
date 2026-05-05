@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 
 const links = [
   { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com" },
-  { label: "LINKEDIN", value: "linkedin.com/in/rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
+  { label: "LINKEDIN", value: "linkedin.com/in/rohit-kumar-singh", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
   { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119" },
 ];
 
@@ -28,9 +28,38 @@ export default function Contact() {
     setSubmitted(true);
   }
 
+  const inputClass =
+    "w-full px-4 py-3 rounded-xl text-[14px] font-heading text-[#EDE9FE] placeholder-[#6B6B8A] outline-none transition-all";
+  const inputStyle = {
+    background: "#1B1B2A",
+    border: "1px solid rgba(167,139,250,0.18)",
+  };
+
   return (
-    <section id="contact" className="py-24 section-alt">
-      <div className="max-w-6xl mx-auto px-6">
+    <section
+      id="contact"
+      className="py-24 relative overflow-hidden"
+      style={{
+        background: "radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.18), transparent 65%), #0A0A12",
+        borderTop: "1px solid rgba(167,139,250,0.14)",
+      }}
+    >
+      {/* Glow orb */}
+      <div
+        className="absolute pointer-events-none rounded-full"
+        style={{
+          width: 500,
+          height: 500,
+          background: "#8B5CF6",
+          opacity: 0.08,
+          filter: "blur(80px)",
+          top: -100,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div
           ref={ref}
@@ -39,22 +68,26 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <div className="flex items-center gap-4 mb-6">
-            <span className="font-heading text-5xl font-bold text-[#e5e7eb]">06</span>
-            <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#2563eb]">/ LET&apos;S BUILD SOMETHING</span>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+              06 / LET&apos;S BUILD SOMETHING
+            </span>
           </div>
-          <h2 className="font-heading text-4xl font-bold text-[#111827] mb-4">
-            Got a complex{" "}
-            <span className="gradient-text">data & AI program?</span>
+          <h2
+            className="font-display font-bold tracking-tight leading-[0.97] mb-5"
+            style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
+          >
+            Got a <span className="gradient-text italic font-normal">complex</span>
+            <br />data &amp; AI program?
           </h2>
-          <p className="text-[#6b7280] max-w-xl leading-relaxed">
+          <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
             Let&apos;s talk. Whether it&apos;s a platform migration, a program rescue, or a
             managed delivery engagement — I&apos;d rather understand the problem first.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-14">
-          {/* Contact links */}
+          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -63,12 +96,12 @@ export default function Contact() {
             <div className="space-y-5 mb-10">
               {links.map((link) => (
                 <div key={link.label} className="flex items-center gap-4 group">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#6b7280] w-20 shrink-0">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A] w-20 shrink-0">
                     {link.label}
                   </span>
                   <a
                     href={link.href}
-                    className="text-sm font-semibold text-[#111827] group-hover:text-[#2563eb] transition-colors"
+                    className="text-[14px] font-semibold text-[#A8A4C7] group-hover:text-[#A78BFA] transition-colors"
                   >
                     {link.value}
                   </a>
@@ -77,11 +110,21 @@ export default function Contact() {
             </div>
 
             {/* Availability badge */}
-            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl border border-[#10b981]/40 bg-[#ecfdf5]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
+            <div
+              className="inline-flex items-center gap-3 px-5 py-3.5 rounded-xl"
+              style={{ border: "1px solid rgba(110,231,183,0.25)", background: "rgba(110,231,183,0.06)" }}
+            >
+              <span
+                className="w-2.5 h-2.5 rounded-full bg-[#6EE7B7] shrink-0"
+                style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
+              />
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-[#10b981]">● OPEN FOR PROGRAMS</p>
-                <p className="text-xs text-[#6b7280] mt-0.5">Bengaluru, India · IST · Available globally</p>
+                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">
+                  ● OPEN FOR PROGRAMS
+                </p>
+                <p className="font-mono text-[10px] text-[#6B6B8A] mt-0.5">
+                  Bengaluru, India · IST · Available globally
+                </p>
               </div>
             </div>
           </motion.div>
@@ -93,44 +136,62 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {submitted ? (
-              <div className="flex flex-col items-center justify-center text-center p-10 rounded-2xl bg-[#ecfdf5] border border-[#10b981]/40 h-full">
+              <div
+                className="flex flex-col items-center justify-center text-center p-10 rounded-2xl h-full"
+                style={{ border: "1px solid rgba(110,231,183,0.25)", background: "rgba(110,231,183,0.05)" }}
+              >
                 <span className="text-4xl mb-4">✅</span>
-                <h3 className="font-heading font-bold text-[#111827] text-xl mb-2">Message received.</h3>
-                <p className="text-sm text-[#6b7280]">I&apos;ll respond within 24 hours.</p>
+                <h3 className="font-display font-bold text-[#EDE9FE] text-[22px] mb-2 tracking-tight">
+                  Message received.
+                </h3>
+                <p className="text-[14px] text-[#A8A4C7]">I&apos;ll respond within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#6b7280] mb-1.5">Name</label>
+                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Name</label>
                     <input name="name" required type="text" placeholder="Your name"
-                      className="w-full px-4 py-3 rounded-xl border border-[#e5e7eb] bg-white text-[#111827] placeholder-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] text-sm transition" />
+                      className={inputClass} style={inputStyle}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }} />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#6b7280] mb-1.5">Email</label>
+                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Email</label>
                     <input name="email" required type="email" placeholder="your@email.com"
-                      className="w-full px-4 py-3 rounded-xl border border-[#e5e7eb] bg-white text-[#111827] placeholder-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] text-sm transition" />
+                      className={inputClass} style={inputStyle}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }} />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#6b7280] mb-1.5">Engagement type</label>
+                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Engagement type</label>
                   <select name="type"
-                    className="w-full px-4 py-3 rounded-xl border border-[#e5e7eb] bg-white text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#2563eb] text-sm transition">
+                    className={inputClass} style={{ ...inputStyle, cursor: "pointer" }}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }}>
                     <option value="">Select commercial model</option>
                     <option>Fixed-Price Program</option>
-                    <option>Time & Materials</option>
+                    <option>Time &amp; Materials</option>
                     <option>Managed Services / Pod</option>
                     <option>Advisory / Consulting</option>
                     <option>Other</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#6b7280] mb-1.5">Tell me about the program</label>
-                  <textarea name="message" required rows={5} placeholder="Stack, scale, timeline, what's broken or what needs building..."
-                    className="w-full px-4 py-3 rounded-xl border border-[#e5e7eb] bg-white text-[#111827] placeholder-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] text-sm transition resize-none" />
+                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Tell me about the program</label>
+                  <textarea name="message" required rows={5}
+                    placeholder="Stack, scale, timeline, what's broken or what needs building..."
+                    className={`${inputClass} resize-none`} style={inputStyle}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }} />
                 </div>
-                <button type="submit" disabled={loading}
-                  className="w-full py-3.5 rounded-full font-bold text-sm uppercase tracking-wider text-white gradient-bg hover:opacity-90 transition-opacity disabled:opacity-60">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 disabled:opacity-60 hover:brightness-110"
+                  style={{ background: "#A78BFA", boxShadow: "0 0 24px rgba(167,139,250,0.3)" }}
+                >
                   {loading ? "Sending..." : "Let's Talk →"}
                 </button>
               </form>
