@@ -13,7 +13,10 @@ const fadeUp: Variants = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 hero-grid">
+      {/* Fade grid at edges */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/60 via-transparent to-white/80 pointer-events-none" />
+
       {/* Animated gradient background blobs */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#2563eb]/10 rounded-full blur-3xl animate-pulse" />
