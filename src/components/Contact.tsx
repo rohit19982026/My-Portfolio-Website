@@ -5,8 +5,7 @@ import { useRef, useState } from "react";
 
 const links = [
   { label: "EMAIL", value: "rsingh@phdata.io", href: "mailto:rsingh@phdata.io" },
-  { label: "LINKEDIN", value: "linkedin.com/in/rohitkumarsingh", href: "#" },
-  { label: "GITHUB", value: "github.com/rohit19982026", href: "#" },
+  { label: "LINKEDIN", value: "linkedin.com/in/rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
   { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119" },
 ];
 

@@ -23,8 +23,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 ["Email", "mailto:rsingh@phdata.io"],
-                ["LinkedIn", "#"],
-                ["GitHub", "#"],
+                ["LinkedIn", "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/"],
                 ["Call", "tel:+918967725119"],
               ].map(([label, href]) => (
                 <li key={label}><a href={href} className="text-[#6b7280] hover:text-[#2563eb] transition-colors">→ {label}</a></li>
