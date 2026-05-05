@@ -4,6 +4,8 @@ import Expertise from "@/components/Expertise";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
+import Diagrams from "@/components/Diagrams";
+import AIPMOSkills from "@/components/AIPMOSkills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getAllProjects } from "@/lib/projects";
@@ -19,6 +21,8 @@ export default function Home() {
       <Skills />
       <Experience />
       <Projects projects={projects} />
+      <Diagrams />
+      <AIPMOSkills />
       <Contact />
       <Footer />
     </>
