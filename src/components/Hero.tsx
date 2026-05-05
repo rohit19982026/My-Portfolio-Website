@@ -1,128 +1,158 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
-  }),
-};
+const industries = [
+  "EdTech", "Enterprise SaaS", "Investment Mgmt", "MarTech / AdTech",
+  "Software Intelligence", "Industrial Mfg", "Healthcare", "Filtration",
+];
+
+const stats = [
+  { value: "$3.5M+", label: "PORTFOLIO MANAGED · MULTI-COMMERCIAL" },
+  { value: "10+", label: "ENTERPRISE PROGRAMS LED · END-TO-END" },
+  { value: "8+", label: "REGULATED INDUSTRIES SERVED" },
+  { value: "3×", label: "CONTINENTS · FOLLOW-THE-SUN GOVERNANCE" },
+];
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 hero-grid">
-      {/* Fade grid at edges */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/60 via-transparent to-white/80 pointer-events-none" />
+    <section className="min-h-screen flex flex-col pt-16 bg-white hero-grid">
+      <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20">
 
-      {/* Animated gradient background blobs */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#2563eb]/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-[#06b6d4]/10 rounded-full blur-3xl animate-pulse [animation-delay:1s]" />
-        <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-[#f59e0b]/10 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        {/* Badge */}
+        {/* Top label */}
         <motion.div
-          custom={0}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#bfdbfe] bg-[#f0f9ff] text-sm font-medium text-[#2563eb] mb-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3 mb-12"
         >
-          <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
-          Open to new opportunities
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h1
-          custom={1}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="font-heading text-5xl md:text-7xl font-bold leading-tight mb-6"
-        >
-          Technical Project Manager{" "}
-          <span className="gradient-text block mt-1">
-            for Data at Scale
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#6b7280]">
+            PORTFOLIO · MMXXVI
           </span>
-        </motion.h1>
-
-        {/* Sub-headline */}
-        <motion.p
-          custom={2}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="text-lg md:text-xl text-[#6b7280] max-w-2xl mx-auto mb-10 leading-relaxed"
-        >
-          I ship cloud data platform migrations, ELT pipelines, and AI-powered
-          PMO tools — leading cross-functional teams from discovery to production.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          custom={3}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a
-            href="#projects"
-            className="px-8 py-3.5 rounded-full text-white font-semibold gradient-bg hover:opacity-90 transition-opacity shadow-lg shadow-blue-200"
-          >
-            View My Work
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3.5 rounded-full font-semibold border-2 border-[#2563eb] text-[#2563eb] hover:bg-[#f0f9ff] transition-colors"
-          >
-            Get in Touch
-          </a>
+          <span className="flex-1 h-px bg-[#e5e7eb]" />
+          <span className="flex items-center gap-1.5 text-xs font-semibold text-[#10b981]">
+            <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+            AVAILABLE FOR PROGRAMS
+          </span>
         </motion.div>
 
-        {/* Stats row */}
-        <motion.div
-          custom={4}
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
-        >
-          {[
-            { value: "2,300+", label: "Tables Migrated" },
-            { value: "3+", label: "Cloud Platforms" },
-            { value: "5+", label: "Years Experience" },
-            { value: "10+", label: "Projects Delivered" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-heading text-3xl font-bold gradient-text">
-                {stat.value}
-              </div>
-              <div className="text-sm text-[#6b7280] mt-1">{stat.label}</div>
+        {/* Main grid */}
+        <div className="grid md:grid-cols-5 gap-12 items-start">
+
+          {/* Left — identity */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="md:col-span-2 flex flex-col gap-6"
+          >
+            {/* Avatar */}
+            <div className="w-24 h-24 rounded-2xl gradient-bg flex items-center justify-center text-white text-3xl font-bold font-heading shadow-lg">
+              RKS
             </div>
-          ))}
-        </motion.div>
+
+            <div>
+              <h1 className="font-heading text-3xl font-bold text-[#111827] leading-tight mb-1">
+                Rohit Kumar Singh
+              </h1>
+              <p className="text-sm text-[#6b7280] font-medium tracking-wide">BENGALURU, IN</p>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#2563eb]">
+                PROJECT MANAGER
+              </p>
+              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#111827]">
+                DATA & AI DELIVERY
+              </p>
+            </div>
+
+            {/* Commercial models */}
+            <div className="flex flex-wrap gap-2">
+              {["FIXED-PRICE", "T&M", "MANAGED"].map((model) => (
+                <span
+                  key={model}
+                  className="text-xs font-bold px-3 py-1 rounded-full border border-[#bfdbfe] text-[#2563eb] bg-[#f0f9ff]"
+                >
+                  {model}
+                </span>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col gap-3 pt-2">
+              <a
+                href="#work"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-bold gradient-bg hover:opacity-90 transition-opacity w-fit"
+              >
+                SEE THE WORK
+                <span className="text-base">→</span>
+              </a>
+              <a
+                href="mailto:rsingh@phdata.io"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold border-2 border-[#2563eb] text-[#2563eb] hover:bg-[#f0f9ff] transition-colors w-fit"
+              >
+                EMAIL ME ✉
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Right — bio */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="md:col-span-3"
+          >
+            <p className="text-xl md:text-2xl text-[#111827] leading-relaxed font-light mb-8">
+              Senior Technical Program Manager for data & AI delivery. I own the full
+              program lifecycle —{" "}
+              <span className="font-semibold text-[#111827]">
+                discovery, scope baseline, WBS, RAID logs, governance cadences, EVM & burn
+                tracking, change control, and executive reporting
+              </span>{" "}
+              — across multi-stream, multi-region engagements.
+            </p>
+            <p className="text-lg text-[#374151] leading-relaxed mb-8 border-l-4 border-[#2563eb] pl-5">
+              The engineering belongs to the team; the plan, the controls, the commercials,
+              and the outcome belong to me. I architect delivery from scratch, run program
+              finance with rigor, and build AI tooling that compounds my own throughput.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 + i * 0.08 }}
+                  className="p-4 rounded-xl border border-[#bfdbfe] bg-[#f0f9ff]"
+                >
+                  <div className="font-heading text-3xl font-bold gradient-text mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#6b7280] leading-tight">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[#6b7280]"
-      >
-        <span className="text-xs">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.4 }}
-          className="w-0.5 h-6 bg-[#bfdbfe] rounded-full"
-        />
-      </motion.div>
+      {/* Industries marquee */}
+      <div className="border-t border-[#e5e7eb] py-4 overflow-hidden bg-white">
+        <div className="flex gap-0 animate-marquee whitespace-nowrap">
+          {[...industries, ...industries, ...industries].map((ind, i) => (
+            <span key={i} className="inline-flex items-center gap-3 px-4">
+              <span className="text-sm font-semibold text-[#374151]">{ind}</span>
+              <span className="text-[#2563eb] text-lg">·</span>
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,28 +1,21 @@
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Expertise from "@/components/Expertise";
-import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Diagrams from "@/components/Diagrams";
-import AIPMOSkills from "@/components/AIPMOSkills";
+import Work from "@/components/Work";
+import Approach from "@/components/Approach";
+import ToolsBuilt from "@/components/ToolsBuilt";
+import DeliveryExposure from "@/components/DeliveryExposure";
+import Trajectory from "@/components/Trajectory";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { getAllProjects } from "@/lib/projects";
 
 export default function Home() {
-  const projects = getAllProjects();
-
   return (
     <>
       <Hero />
-      <About />
-      <Expertise />
-      <Skills />
-      <Experience />
-      <Projects projects={projects} />
-      <Diagrams />
-      <AIPMOSkills />
+      <Work />
+      <Approach />
+      <ToolsBuilt />
+      <DeliveryExposure />
+      <Trajectory />
       <Contact />
       <Footer />
     </>
