@@ -104,19 +104,24 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="md:col-span-3"
           >
-            <p className="text-xl md:text-2xl text-[#111827] leading-relaxed font-light mb-8">
-              Senior Technical Program Manager for data & AI delivery. I own the full
-              program lifecycle —{" "}
+            <p className="text-xl md:text-2xl text-[#111827] leading-relaxed font-light mb-6">
+              I operate at the intersection of{" "}
               <span className="font-semibold text-[#111827]">
-                discovery, scope baseline, WBS, RAID logs, governance cadences, EVM & burn
-                tracking, change control, and executive reporting
+                technology, execution, and organizational alignment
               </span>{" "}
-              — across multi-stream, multi-region engagements.
+              — leading complex programs across data platforms, cloud ecosystems, and AI-driven products.
             </p>
-            <p className="text-lg text-[#374151] leading-relaxed mb-8 border-l-4 border-[#2563eb] pl-5">
-              The engineering belongs to the team; the plan, the controls, the commercials,
-              and the outcome belong to me. I architect delivery from scratch, run program
-              finance with rigor, and build AI tooling that compounds my own throughput.
+            <p className="text-base text-[#374151] leading-relaxed mb-6">
+              My focus is not just on delivery — but on{" "}
+              <span className="font-semibold text-[#111827]">bringing structure to ambiguity</span>,
+              aligning fragmented teams, and{" "}
+              <span className="font-semibold text-[#111827]">accelerating execution in high-dependency environments</span>.
+              I translate business strategy into engineering-ready roadmaps, own the critical path,
+              and run program finance with the rigor of a P&L owner.
+            </p>
+            <p className="text-base text-[#374151] leading-relaxed mb-8 border-l-4 border-[#2563eb] pl-5 italic">
+              The engineering belongs to the team. The plan, the controls, the cross-functional
+              alignment, and the outcome belong to me.
             </p>
 
             {/* Stats */}

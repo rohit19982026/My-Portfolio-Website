@@ -8,16 +8,16 @@ const roles = [
     period: "2023 — PRESENT",
     title: "Technical Project Manager — PMO",
     org: "DATA & AI SERVICES · BENGALURU",
-    body: "Lead enterprise data & AI engagements for Fortune 500 clients across EdTech, MarTech, Investment Management, Industrial Manufacturing, and Software Intelligence. Own delivery model design, financial governance, multi-region team coordination, and executive reporting. Build AI agents and skills that automate the operational parts of the role.",
-    tags: ["$3.5M+ Portfolio", "Fortune 500", "Multi-region", "Fixed-price · T&M · Managed"],
+    body: "Own the full program lifecycle for enterprise data & AI engagements — from pre-sales scoping and SOW structuring through mobilization, sprint execution, financial governance, and executive close-out. Manage $3.5M+ in active portfolio across fixed-price, T&M, and managed-services commercials. Run dependency mapping, RAID log governance, critical path management, and steerco communication for multi-stream, multi-region programs. Build AI agents and skills on Glean that automate status reporting, executive briefing, and billing controls — reducing manual PM overhead and increasing time available for decision-making.",
+    tags: ["$3.5M+ Portfolio", "Fortune 500 Clients", "Multi-region Delivery", "Fixed-price · T&M · Managed", "AI Agent Builder"],
     current: true,
   },
   {
     period: "EARLIER",
     title: "Delivery & Program Roles",
     org: "DATA & ANALYTICS PROGRAMS · MULTIPLE",
-    body: "Background spanning program management, delivery operations, and process design across data and analytics engagements. Enough exposure to engineering teams to translate architecture trade-offs into schedule, cost, and rollback terms — and to make sure technical decisions and commercial reality stay aligned in the steerco.",
-    tags: ["Program Management", "Delivery Operations", "Stakeholder Alignment"],
+    body: "Built the foundation across program management, delivery operations, and cross-functional coordination on data and analytics engagements. Developed the fluency to translate engineering architecture trade-offs into schedule, cost, and rollback consequences — and to keep technical decisions aligned with commercial reality in every leadership forum.",
+    tags: ["Program Delivery", "Stakeholder Communication", "Cross-functional Alignment"],
     current: false,
   },
 ];
@@ -46,9 +46,10 @@ export default function Trajectory() {
             <span className="gradient-text">I sit in.</span>
           </h2>
           <p className="text-[#6b7280] max-w-xl leading-relaxed">
-            Senior Technical Program Manager in a Data & AI services firm — owning enterprise
-            programs end-to-end across the full PMI lifecycle: pre-sales scoping, SOW & commercial
-            structuring, mobilization, governance, EVM, change control, and executive close-out.
+            Senior Technical Program Manager in a Data & AI services firm. I own programs —
+            not just tasks. That means the delivery model, the financial governance, the
+            cross-functional alignment, the risk framework, and the executive communication.
+            End to end, from kickoff to close-out.
           </p>
         </motion.div>
 
