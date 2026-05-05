@@ -67,7 +67,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="pb-8 pl-14">
+            <div className="pb-8 pl-4 sm:pl-14">
               {/* Context */}
               <p className="text-[#374151] leading-relaxed mb-6 max-w-3xl">{study.context}</p>
 

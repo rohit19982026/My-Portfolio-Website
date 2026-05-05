@@ -16,7 +16,7 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col pt-16 bg-white hero-grid">
+    <section className="min-h-screen flex flex-col pt-16 bg-white hero-grid relative">
       <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20">
 
         {/* Top label */}
@@ -90,7 +90,7 @@ export default function Hero() {
                 <span className="text-base">→</span>
               </a>
               <a
-                href="mailto:rsingh@phdata.io"
+                href="mailto:singhrohit.25119@gmail.com"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold border-2 border-[#2563eb] text-[#2563eb] hover:bg-[#f0f9ff] transition-colors w-fit"
               >
                 EMAIL ME ✉
@@ -126,7 +126,7 @@ export default function Hero() {
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
               {stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -148,8 +148,11 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Bottom gradient fade over dot grid */}
+      <div className="absolute bottom-[72px] left-0 right-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+
       {/* Industries marquee */}
-      <div className="border-t border-[#e5e7eb] py-4 overflow-hidden bg-white">
+      <div className="relative border-t border-[#e5e7eb] py-4 overflow-hidden bg-white">
         <div className="flex gap-0 animate-marquee whitespace-nowrap">
           {[...industries, ...industries, ...industries].map((ind, i) => (
             <span key={i} className="inline-flex items-center gap-3 px-4">

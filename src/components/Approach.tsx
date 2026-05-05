@@ -174,7 +174,7 @@ export default function Approach() {
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6b7280] mb-6">
             // EXECUTION PHILOSOPHY
           </p>
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0">
             {[
               { label: "Visibility", sub: "drives alignment" },
               { label: "Alignment", sub: "drives speed" },
@@ -186,7 +186,7 @@ export default function Approach() {
                   <p className="text-xs text-[#6b7280] font-medium">{item.sub}</p>
                 </div>
                 {i < 2 && (
-                  <span className="text-2xl text-[#bfdbfe] font-light hidden md:block mx-4">→</span>
+                  <span className="text-2xl text-[#bfdbfe] font-light md:mx-4">→</span>
                 )}
               </div>
             ))}

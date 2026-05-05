@@ -19,12 +19,32 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Rohit Kumar Singh — Technical Project Manager",
   description:
-    "Technical Project Manager specializing in data engineering, cloud migrations, ELT pipelines, and AI enablement.",
+    "Technical Project Manager with 5+ years leading enterprise data & AI programs at phData. PSM1 · ITIL certified. $3.5M+ portfolio managed across cloud migrations, platform delivery, and AI automation.",
+  keywords: [
+    "Technical Project Manager",
+    "Program Manager",
+    "Data Platform",
+    "Snowflake",
+    "Databricks",
+    "AI Automation",
+    "phData",
+    "PSM1",
+    "ITIL",
+    "Bengaluru",
+  ],
+  authors: [{ name: "Rohit Kumar Singh" }],
   openGraph: {
     title: "Rohit Kumar Singh — Technical Project Manager",
     description:
-      "Data platform migrations, ELT pipelines, and AI enablement at scale.",
+      "5+ years owning enterprise data & AI programs end-to-end. $3.5M+ portfolio · 10+ programs delivered · PSM1 · ITIL · phData Innovation Award.",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Rohit Kumar Singh — Technical Project Manager",
+    description:
+      "5+ years owning enterprise data & AI programs end-to-end. $3.5M+ portfolio · 10+ programs delivered · phData Innovation Award.",
   },
 };
 
