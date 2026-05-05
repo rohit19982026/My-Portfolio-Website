@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 const links = [
-  { label: "EMAIL", value: "rsingh@phdata.io", href: "mailto:rsingh@phdata.io" },
+  { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com" },
   { label: "LINKEDIN", value: "linkedin.com/in/rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
   { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119" },
 ];

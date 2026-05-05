@@ -45,7 +45,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="mailto:rsingh@phdata.io"
+            href="mailto:singhrohit.25119@gmail.com"
             className="ml-4 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white rounded-full gradient-bg hover:opacity-90 transition-opacity"
           >
             Email Me
@@ -80,7 +80,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="mailto:rsingh@phdata.io"
+            href="mailto:singhrohit.25119@gmail.com"
             onClick={() => setMenuOpen(false)}
             className="mt-4 inline-block px-5 py-2 text-xs font-bold uppercase tracking-wider text-white rounded-full gradient-bg"
           >

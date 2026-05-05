@@ -7,22 +7,22 @@ const stacks = [
   {
     label: "// DATA PLATFORMS DELIVERED ON",
     color: "#2563eb",
-    items: ["Snowflake", "Databricks", "Redshift", "SQL Server", "Hadoop / HDFS"],
+    items: ["Snowflake", "Databricks", "Amazon Redshift", "SQL Server", "Hadoop / HDFS", "SigmaBI"],
   },
   {
     label: "// ENGINEERING TOOLING IN-PROGRAM",
     color: "#06b6d4",
-    items: ["Airflow / MWAA", "dbt", "Unity Catalog", "Qlik Replicate", "Spark SQL"],
+    items: ["dbt", "Airflow / MWAA", "ETL / ELT Pipelines", "Qlik Replicate", "Spark SQL", "LandingAI / Computer Vision", "AWS", "Azure"],
   },
   {
-    label: "// DELIVERY & PMO STACK I OPERATE",
+    label: "// PMO & DELIVERY STACK I OPERATE DAILY",
     color: "#10b981",
-    items: ["Jira", "Salesforce / Certinia PSA", "ServiceNow", "Slack / Teams", "Confluence / Notion"],
+    items: ["Jira", "Confluence", "Kantata (PSA)", "MS Project", "Azure DevOps", "Asana", "Salesforce", "Slack / Teams"],
   },
   {
-    label: "// AI LAYER I'VE BUILT",
+    label: "// AI & AUTOMATION LAYER I'VE BUILT",
     color: "#f59e0b",
-    items: ["Glean Agent Builder", "Custom Skills (15+)", "Claude / GPT", "Prompt Engineering", "AI-Assisted Delivery"],
+    items: ["Glean Agent Builder", "Claude (Anthropic)", "n8n (workflow automation)", "Google Apps Script", "Salesforce MCP", "Slack MCP", "Google Drive MCP"],
   },
 ];
 

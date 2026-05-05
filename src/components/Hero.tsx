@@ -60,11 +60,12 @@ export default function Hero() {
 
             <div className="space-y-1">
               <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#2563eb]">
-                PROJECT MANAGER
+                TECHNICAL PROJECT MANAGER
               </p>
               <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#111827]">
-                DATA & AI DELIVERY
+                AI & DATA ENGINEERING DELIVERY
               </p>
+              <p className="text-xs text-[#6b7280] font-medium pt-0.5">PSM1 · ITIL · phData Innovation Award</p>
             </div>
 
             {/* Commercial models */}

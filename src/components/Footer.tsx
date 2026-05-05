@@ -6,8 +6,9 @@ export default function Footer() {
           <div>
             <p className="font-bold uppercase tracking-widest text-[#111827] mb-3">Rohit.</p>
             <p className="text-[#6b7280] leading-relaxed">
-              Technical Project Manager. Data & AI delivery. Builder of agents and skills
-              that compound throughput. Based in Bengaluru, working globally.
+              Technical Project Manager · 5+ years · phData (Snowflake Elite Partner).
+              PSM1 · ITIL certified. phData Innovation Award for AI automation.
+              Bengaluru, India · working globally.
             </p>
           </div>
           <div>
@@ -22,7 +23,7 @@ export default function Footer() {
             <p className="font-bold uppercase tracking-widest text-[#6b7280] mb-3">// CONNECT</p>
             <ul className="space-y-2">
               {[
-                ["Email", "mailto:rsingh@phdata.io"],
+                ["Email", "mailto:singhrohit.25119@gmail.com"],
                 ["LinkedIn", "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/"],
                 ["Call", "tel:+918967725119"],
               ].map(([label, href]) => (
