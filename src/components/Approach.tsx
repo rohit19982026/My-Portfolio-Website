@@ -7,32 +7,42 @@ const featured = [
   {
     num: "01 / ARCHITECTURE",
     title: <>I <em className="text-[#2563EB] not-italic">architect</em> delivery, not manage it.</>,
-    body: "Most PMs execute the plan they're handed. I design it from scratch — WBS decomposition, parallel epic tracks, weighted % complete, critical-path mapping, float allocation. Anyone can track a Gantt. Few can build one that holds under load.",
-    highlights: ["WBS decomposition", "Parallel epic tracks", "Critical-path mapping"],
+    body: "On a 19-week regulated migration with a 3-week compliance blackout in the middle, a flat delivery plan would have serialised work that could run in parallel. I decomposed the WBS into 6 parallel epic tracks with explicit float at every handoff. Float held for 14 of 19 weeks. The contractual date was met on the day it was signed for. That's what delivery architecture looks like under a fixed constraint.",
+    highlights: ["WBS decomposition", "Parallel epic tracks", "Float allocation"],
   },
   {
     num: "02 / FINANCE",
     title: <>Margin is a <em className="text-[#2563EB] not-italic">feature</em>.</>,
-    body: "99.98% budget execution isn't luck — it's discipline. I instrument burn rate, EAC, ETC, CPI/SPI, rate cards and PO coverage the way an engineer instruments a system. P&L is part of the deliverable, not a finance afterthought.",
-    highlights: ["EAC / ETC / CPI / SPI", "Rate-card governance", "PO coverage"],
+    body: "On a $1.37M T&M program, my EAC model flagged a 74%-budget / 51%-scope gap six weeks before SOW expiry — caused by 23% scope growth with no change orders. I built the commercial case, presented to the client CFO and VP Engineering, and closed an $831K change order in 10 business days. Budget execution finished at 99.98% of SOW target. P&L is part of the deliverable.",
+    highlights: ["EAC / ETC / CPI / SPI", "Change-order business cases", "Rate-card governance"],
   },
   {
     num: "03 / RISK",
     title: <><em className="text-[#2563EB] not-italic">Anticipation</em> beats escalation.</>,
-    body: "Risk is cheapest the day it appears. I run a live RAID register, dependency map, and weighted-progress model backed by leading indicators — UAT aging, approval latency, blocker age, velocity drift — so trouble surfaces in steerco weeks before a vanilla burndown.",
-    highlights: ["Live RAID register", "Dependency mapping", "Leading indicators"],
+    body: "On a fixed-price M&A cutover, a factory-model burndown flagged a pacing risk in week 5 with 11 weeks of runway remaining — before any engineer felt it. On a managed retainer, publishing UAT aging metrics to client leadership cut sign-off time from 11 days to 4. Both times: the data surfaced the problem. The intervention happened while there was still time to act.",
+    highlights: ["Leading indicators", "UAT aging metrics", "Live RAID register"],
   },
 ];
 
-const whatIDo = [
-  { icon: "🗺️", title: "Translate strategy into executable roadmaps", color: "#2563EB", desc: "Break down ambiguous business goals into epics, milestones, WBS structures, and engineering-ready deliverables — so teams know exactly what they're building and why." },
-  { icon: "🔗", title: "Drive cross-functional execution at scale", color: "#10B981", desc: "Align engineering, data, product, and business teams across competing priorities, time zones, and timelines. Facilitate the decisions that fragmented teams avoid." },
-  { icon: "🔍", title: "Own dependency mapping and critical path", color: "#2563EB", desc: "Identify upstream/downstream blockers before they land. Map cross-team dependencies, surface them in governance forums, and actively unblock engineering to maintain velocity." },
-  { icon: "⚠️", title: "Build and operationalize risk frameworks", color: "#06B6D4", desc: "Proactively track risks, quantify impact in schedule and cost terms, and drive mitigation through structured RAID logs, escalation channels, and formal change control." },
-  { icon: "📢", title: "Run high-signal leadership communication", color: "#10B981", desc: "Lead executive reviews, steerco sessions, and cross-org stakeholder syncs with clear visibility on progress, risks, and trade-offs — calibrated to the decision-maker's context." },
-  { icon: "⚡", title: "Optimize Agile execution beyond ceremonies", color: "#2563EB", desc: "Ensure sprints drive outcomes, not just activity. Set measurable sprint goals, track velocity with intent, run retrospectives that actually change behavior." },
-  { icon: "💰", title: "Establish financial governance and control", color: "#10B981", desc: "Track budget vs. burn rate, model EAC/ETC/CPI, manage rate cards and PO coverage, and build change-order business cases before teams see a funding cliff." },
-  { icon: "🛠️", title: "Actively remove engineering friction", color: "#06B6D4", desc: "Work hands-on with teams to resolve blockers, clarify requirements, untangle cross-team ambiguity, and streamline workflows — so engineering velocity is protected." },
+const failurePatterns = [
+  {
+    pattern: "Programs that fail on blockers",
+    signal: "Nobody owns them. They age silently.",
+    fix: "A live dependency register with named owners and aging counters, made the first agenda item in every steerco. 17 blockers cleared in 8 weeks — the final three through VP-level escalation triggered with data, not complaints.",
+    color: "#2563EB",
+  },
+  {
+    pattern: "Programs that fail on scope",
+    signal: "Growth arrives undocumented and unpriced.",
+    fix: "Change control framework requiring every addition to carry a cost estimate, timeline impact, and risk assessment before sponsor sign-off. 14 additions processed through it. Margin protected to 99.98% of SOW target.",
+    color: "#10B981",
+  },
+  {
+    pattern: "Programs that fail on stakeholders",
+    signal: "Three people, three priority lists, zero shared language.",
+    fix: "A weighted intake framework — RICE-style scoring with transparent trade-off matrices visible to all stakeholders. Intake decisions went from 2 weeks to 48 hours. The PM stopped being the bottleneck.",
+    color: "#06B6D4",
+  },
 ];
 
 const philosophy = [
@@ -120,36 +130,34 @@ export default function Approach() {
           ))}
         </div>
 
-        {/* What I actually do — 8 items */}
+        {/* Three failure patterns I solve */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
           className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#2563EB] mb-5"
         >
-          // WHAT I ACTUALLY DO
+          // THREE PATTERNS THAT KILL PROGRAMS — AND WHAT I DO ABOUT EACH
         </motion.p>
 
-        <div className="grid sm:grid-cols-2 gap-3 mb-14">
-          {whatIDo.map((item, i) => (
+        <div className="grid sm:grid-cols-3 gap-4 mb-14">
+          {failurePatterns.map((item, i) => (
             <motion.div
-              key={item.title}
+              key={item.pattern}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.1 + i * 0.05 }}
-              className="flex gap-4 p-5 rounded-xl transition-all duration-250"
-              style={{ background: "#ffffff", border: "1px solid #E2E8F0" }}
+              transition={{ duration: 0.45, delay: 0.1 + i * 0.08 }}
+              className="p-5 rounded-xl"
+              style={{ background: "#ffffff", border: "1px solid #E2E8F0", borderTop: `3px solid ${item.color}` }}
             >
-              <span className="text-2xl shrink-0 mt-0.5">{item.icon}</span>
-              <div>
-                <h3
-                  className="font-heading font-bold text-[13px] text-[#0F172A] mb-1.5"
-                  style={{ borderLeft: `2px solid ${item.color}`, paddingLeft: "8px" }}
-                >
-                  {item.title}
-                </h3>
-                <p className="text-[12.5px] text-[#64748B] leading-relaxed">{item.desc}</p>
-              </div>
+              <p className="font-heading font-bold text-[13px] text-[#0F172A] mb-2">{item.pattern}</p>
+              <p
+                className="font-mono text-[10px] font-semibold mb-3 px-2 py-1 rounded w-fit"
+                style={{ color: item.color, background: `${item.color}10` }}
+              >
+                {item.signal}
+              </p>
+              <p className="text-[12.5px] text-[#64748B] leading-relaxed">{item.fix}</p>
             </motion.div>
           ))}
         </div>
