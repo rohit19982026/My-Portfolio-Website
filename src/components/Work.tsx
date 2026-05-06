@@ -10,18 +10,15 @@ const ACCENT: Record<string, string> = {
   "MANAGED":     "#67E8F9",
 };
 
-const SPRING: [string, number, number] = ["spring", 90, 20];
-const [springType, springStiffness, springDamping] = SPRING;
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const cardVariants = {
   hidden: { opacity: 0, y: 36, scale: 0.97, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 90, damping: 20, delay: i * 0.07 },
+    transition: { type: "spring" as const, stiffness: 90, damping: 20, delay: i * 0.07 },
   }),
 };
-
-const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 function CaseStudyCard({
   study,
@@ -45,7 +42,7 @@ function CaseStudyCard({
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       whileHover={!open ? { y: -5 } : {}}
-      transition={{ type: springType, stiffness: springStiffness, damping: springDamping }}
+      transition={{ type: "spring", stiffness: 90, damping: 20 }}
     >
       <div
         className="rounded-2xl p-px transition-all duration-500"
@@ -213,7 +210,7 @@ function CaseStudyCard({
 
                   <div>
                     <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-4" style={{ color: accent }}>
-                      ◆  THE MOVE THAT MATTERED
+                      ◆  THE MOVE THAT MATTERED
                     </p>
                     <ul className="space-y-4 max-w-3xl">
                       {study.moves.map((move, i) => (
@@ -323,7 +320,7 @@ export default function Work() {
             <div className="rounded-[15px] px-8 py-12 md:px-14 md:py-14 text-center relative overflow-hidden" style={{ background: "linear-gradient(145deg, #0E0E1C 0%, #0A0A14 100%)" }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 55% at 50% 115%, rgba(124,58,237,0.14) 0%, transparent 65%)" }} />
               <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(110,231,183,0.08) 0%, transparent 70%)", filter: "blur(20px)" }} />
-              <div className="font-heading font-black leading-none select-none mb-4 relative" style={{ fontSize: "clamp(80px, 10vw, 110px)", background: "linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", opacity: 0.18, lineHeight: 0.7 }}>“</div>
+              <div className="font-heading font-black leading-none select-none mb-4 relative" style={{ fontSize: "clamp(80px, 10vw, 110px)", background: "linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", opacity: 0.18, lineHeight: 0.7 }}>"</div>
               <p className="font-heading font-light leading-[1.3] tracking-tight text-[#EDE9FE] max-w-3xl mx-auto relative" style={{ fontSize: "clamp(19px, 2.5vw, 30px)" }}>
                 Most PMs <em className="not-italic font-normal" style={{ color: "#A78BFA" }}>coordinate</em>.{" "}
                 <strong className="font-bold text-white">I architect delivery</strong>, protect margin like a P&amp;L owner, and build AI tooling that{" "}
