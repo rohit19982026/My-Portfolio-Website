@@ -1,148 +1,300 @@
-const eomSkill = {
-  title: "EOM Billing Assistant",
-  desc: "End-to-end AI skill that ingests raw time-entry data from the PSA tool, runs it through a 6-prompt chain (discrepancy detection → narrative generation → exception explanation), and produces a finance-ready billing summary. Built, tested, and deployed to 100% of the phData PMO team within 1 month.",
-  stats: [
-    { value: "60%", label: "Time Saved" },
-    { value: "6", label: "Chained Prompts" },
-    { value: ">95%", label: "Accuracy" },
-    { value: "1 mo", label: "Full Adoption" },
-  ],
-};
+import { motion } from "framer-motion";
 
-const tools = [
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const agents = [
   {
-    category: "DELIVERY ASSURANCE",
-    title: "Project Health Intelligence Agent",
-    body: "End-of-month financial controls across the active portfolio in one pass — EAC vs. SOW, burn rate, rate-card compliance, PO coverage, billing event readiness, timecard hygiene. Flags exactly what needs PM attention; ignores what doesn't.",
-    proof: "Runs across 4+ active programs. Replaces a 2-hour manual EOM checklist.",
-    color: "#2563EB",
+    category: "Health Check",
+    title: "Project Health Agent",
+    what: "Scans every active program at month-end — budget vs. plan, burn rate, billing readiness. Flags what needs attention. Ignores what doesn't.",
+    proof: "Replaces a 2-hour manual checklist across 4+ programs",
+    accent: "#A78BFA",
   },
   {
-    category: "ENGINEERING SIGNAL",
+    category: "Daily Standups",
     title: "Delivery Pulse Agent",
-    body: "Triangulates Jira velocity, Slack signal, and meeting outcomes into standup-ready summaries — per-engineer progress, sprint burndown delta, blocker age, and yesterday's decisions.",
-    proof: "Deployed on 3 active programs. Standup prep: 15 min → under 2 min.",
-    color: "#10B981",
+    what: "Reads Jira, Slack, and meeting notes. Writes the standup summary — blockers, progress, decisions — before the meeting starts.",
+    proof: "Standup prep: 15 min → under 2 min",
+    accent: "#6EE7B7",
   },
   {
-    category: "EXECUTIVE BRIEFING",
-    title: "Cross-Channel Brief Generator",
-    body: "Synthesizes 72 hours of email, Slack DMs, channel activity, and meeting transcripts into a prioritized action list per project — flagged by urgency, stakeholder, and decision dependency.",
-    proof: "Used weekly across active portfolio. Monday brief ready before 8am.",
-    color: "#06B6D4",
+    category: "Weekly Brief",
+    title: "Cross-Channel Brief",
+    what: "Pulls 72 hours of emails, Slack, and calls into one prioritized action list. Sorted by urgency. Ready before Monday morning.",
+    proof: "Used weekly across active portfolio",
+    accent: "#67E8F9",
   },
   {
-    category: "STAKEHOLDER COMMS",
-    title: "Communication Engine",
-    body: "Context-aware talking points, escalation drafts, and follow-ups for every stakeholder touchpoint — kickoff, steerco, escalation, renewal. Calibrated to audience seniority and political reality.",
-    proof: "Active on every client engagement. Steerco decks drafted in under 20 min.",
-    color: "#2563EB",
+    category: "Client Comms",
+    title: "Stakeholder Comms Engine",
+    what: "Drafts steerco updates, escalation emails, and renewal talking points. Knows the audience — writes differently for a CFO vs. a VP Engineering.",
+    proof: "Steerco deck drafted in under 20 min",
+    accent: "#A78BFA",
   },
   {
-    category: "DISCOVERY",
+    category: "Program Kickoff",
     title: "Discovery Co-Pilot",
-    body: "Plans discovery goals, stakeholder maps, RACI drafts, and interview methodology for new engagements — tailored to engagement type, scope, and constraints.",
-    proof: "Used on 3 program kickoffs. Full RACI + WBS skeleton produced in 1 session.",
-    color: "#10B981",
-  },
-  {
-    category: "META-CAPABILITY",
-    title: "Agentic Workflow Designer",
-    body: "The skill I use to build new skills — encodes patterns for step design, model selection, memory strategy, and validation gates. Every new agent ships production-ready.",
-    proof: "Underlies all 5 agents above. New agent design-to-deploy: under 4 hours.",
-    color: "#06B6D4",
+    what: "Builds the RACI, stakeholder map, and interview plan for a new engagement. One session to go from blank page to structured kickoff.",
+    proof: "Used on 3 program kickoffs",
+    accent: "#6EE7B7",
   },
 ];
 
 export default function ToolsBuilt() {
   return (
-    <section id="tools" className="py-24" style={{ background: "#F9F8F6" }}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="tools" className="py-24 bg-[#0A0A12] relative overflow-hidden">
+      {/* Ambient orb */}
+      <div
+        className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(110,231,183,0.05) 0%, transparent 65%)",
+          filter: "blur(1px)",
+        }}
+      />
+
+      <div className="max-w-5xl mx-auto px-6 relative">
+
         {/* Header */}
-        <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
-          <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#10B981" }}>
-              03 / TOOLS I&apos;VE BUILT
-            </span>
-          </div>
-          <h2
-            className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
-          >
-            <span className="gradient-text italic font-normal">I don&apos;t just use AI</span>.
-            <br />I build it.
-          </h2>
-          <p className="text-[16px] text-[#64748B] max-w-2xl leading-relaxed">
-            A growing toolbox of{" "}
-            <strong className="font-semibold text-[#0F172A]">Glean agents and skills</strong> that
-            automate the parts of program management that should never have been manual — EOM
-            controls, standup synthesis, executive briefs, stakeholder comms, discovery, and agent
-            design itself.
-          </p>
-        </div>
-
-        {/* EOM Billing Skill — featured */}
-        <div
-          className="reveal rounded-2xl p-8 mb-8"
-          style={{ border: "2px solid #10B981", background: "#ffffff", animationDelay: "0.1s", boxShadow: "0 4px 24px rgba(16,185,129,0.1)" }}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mb-12"
         >
-          <div className="grid md:grid-cols-3 gap-8 items-center">
-            <div className="md:col-span-2">
-              <span className="inline-block font-mono text-[10px] font-bold px-3 py-1 rounded-full bg-[#10B981] text-white mb-4 uppercase tracking-wider">
-                Featured Build · phData Innovation Award
-              </span>
-              <h3 className="font-heading text-[22px] font-bold text-[#0F172A] mb-3 tracking-tight">
-                {eomSkill.title}
-              </h3>
-              <p className="text-[13.5px] text-[#64748B] leading-relaxed">{eomSkill.desc}</p>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {eomSkill.stats.map((s) => (
-                <div
-                  key={s.label}
-                  className="text-center p-4 rounded-xl"
-                  style={{ background: "rgba(16,185,129,0.07)", border: "1px solid rgba(16,185,129,0.2)" }}
-                >
-                  <div className="font-heading text-[22px] font-bold text-[#10B981] leading-none">{s.value}</div>
-                  <div className="font-mono text-[9px] text-[#64748B] mt-1 uppercase tracking-wider">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Tools grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {tools.map((tool, i) => (
-            <div
-              key={tool.title}
-              className="reveal p-7 rounded-2xl card-hover flex flex-col"
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#6EE7B7] mb-5">
+            03 / TOOLS I&apos;VE BUILT
+          </p>
+          <h2
+            className="font-heading font-bold tracking-tight leading-[0.97] mb-5 text-[#EDE9FE]"
+            style={{ fontSize: "clamp(36px, 5vw, 60px)" }}
+          >
+            I don&apos;t just use AI.{" "}
+            <span
+              className="italic font-normal"
               style={{
-                background: "#ffffff",
-                border: "1px solid #E2E8F0",
-                borderTop: `3px solid ${tool.color}`,
-                animationDelay: `${0.15 + i * 0.07}s`,
+                background: "linear-gradient(130deg, #6EE7B7 0%, #34D399 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
               }}
             >
-              <div className="flex items-center gap-2 mb-6">
-                <span className="w-2 h-2 rounded-full shrink-0" style={{ background: tool.color }} />
-                <p className="font-mono text-[9.5px] font-bold uppercase tracking-[0.18em]" style={{ color: tool.color }}>
-                  {tool.category}
-                </p>
+              I build it.
+            </span>
+          </h2>
+          <p className="text-[15px] text-[#55557A] max-w-xl leading-relaxed mb-6">
+            AI agents that automate the manual, repetitive parts of running programs —
+            so I spend time on decisions, not formatting.
+          </p>
+
+          {/* Tech badges */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#6B6B8A]">
+              Built with
+            </span>
+            <span
+              className="font-mono text-[10px] font-bold px-3 py-1.5 rounded-full"
+              style={{
+                color: "#C4B5FD",
+                background: "rgba(167,139,250,0.1)",
+                border: "1px solid rgba(167,139,250,0.25)",
+              }}
+            >
+              Claude · Anthropic
+            </span>
+            <span className="text-[#35355A] font-mono text-[10px]">&amp;</span>
+            <span
+              className="font-mono text-[10px] font-bold px-3 py-1.5 rounded-full"
+              style={{
+                color: "#6EE7B7",
+                background: "rgba(110,231,183,0.1)",
+                border: "1px solid rgba(110,231,183,0.25)",
+              }}
+            >
+              Glean
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Featured: EOM Billing Assistant */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
+          className="mb-5"
+        >
+          <div
+            className="rounded-2xl p-px"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(110,231,183,0.4) 0%, rgba(110,231,183,0.1) 40%, transparent 70%)",
+            }}
+          >
+            <div
+              className="rounded-[15px] p-7 md:p-8"
+              style={{
+                background: "linear-gradient(145deg, #0E0E1C 0%, #0A0A14 100%)",
+              }}
+            >
+              {/* Award badge */}
+              <div className="flex items-center gap-3 mb-5">
+                <span
+                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
+                  style={{
+                    color: "#6EE7B7",
+                    background: "rgba(110,231,183,0.12)",
+                    border: "1px solid rgba(110,231,183,0.3)",
+                  }}
+                >
+                  Featured Build
+                </span>
+                <span
+                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
+                  style={{
+                    color: "#FCD34D",
+                    background: "rgba(252,211,77,0.1)",
+                    border: "1px solid rgba(252,211,77,0.25)",
+                  }}
+                >
+                  🏆 phData Innovation Award
+                </span>
               </div>
-              <h3 className="font-heading text-[21px] font-bold leading-tight tracking-tight text-[#0F172A] mb-3">
-                {tool.title}
-              </h3>
-              <p className="text-[13px] leading-relaxed text-[#64748B] flex-1">{tool.body}</p>
-              <p
-                className="mt-4 font-mono text-[10px] font-semibold px-2.5 py-1.5 rounded-lg w-fit"
-                style={{ color: tool.color, background: `${tool.color}10`, border: `1px solid ${tool.color}25` }}
-              >
-                → {tool.proof}
-              </p>
+
+              <div className="grid md:grid-cols-5 gap-6 items-start">
+                <div className="md:col-span-3">
+                  <h3
+                    className="font-heading font-bold leading-tight mb-3"
+                    style={{ fontSize: "clamp(18px, 2.2vw, 24px)", color: "#EDE9FE" }}
+                  >
+                    EOM Billing Assistant
+                  </h3>
+                  <p className="text-[14px] text-[#6A6A9A] leading-[1.75] mb-3">
+                    At the end of every month, PMs manually cross-check time entries, hunt for discrepancies,
+                    and write billing summaries for finance. It takes hours and it&apos;s the same process every time.
+                  </p>
+                  <p className="text-[14px] text-[#6A6A9A] leading-[1.75]">
+                    This agent reads the raw time data, finds the issues, explains them, and writes the
+                    finance-ready summary — automatically. Deployed to the full phData PMO team in one month.
+                  </p>
+                </div>
+
+                {/* Stats */}
+                <div className="md:col-span-2 grid grid-cols-2 gap-3">
+                  {[
+                    { value: "60%", label: "Time saved" },
+                    { value: ">95%", label: "Accuracy" },
+                    { value: "1 mo", label: "Full team adoption" },
+                    { value: "100%", label: "PMO coverage" },
+                  ].map((s) => (
+                    <div
+                      key={s.label}
+                      className="text-center px-3 py-4 rounded-xl"
+                      style={{
+                        background: "rgba(110,231,183,0.07)",
+                        border: "1px solid rgba(110,231,183,0.18)",
+                      }}
+                    >
+                      <div
+                        className="font-mono font-black text-[20px] tabular-nums leading-none"
+                        style={{ color: "#6EE7B7" }}
+                      >
+                        {s.value}
+                      </div>
+                      <div className="font-mono text-[8px] uppercase tracking-wider text-[#35355A] mt-2">
+                        {s.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Agent grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {agents.map((agent, i) => (
+            <motion.div
+              key={agent.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.5, delay: i * 0.07, ease: EASE }}
+              className="group rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
+              style={{
+                background: "rgba(13,13,26,0.8)",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              {/* Category */}
+              <span
+                className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest inline-block mb-4"
+                style={{
+                  color: agent.accent,
+                  background: `${agent.accent}12`,
+                  border: `1px solid ${agent.accent}25`,
+                }}
+              >
+                {agent.category}
+              </span>
+
+              {/* Title */}
+              <h3
+                className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE] group-hover:text-white transition-colors"
+              >
+                {agent.title}
+              </h3>
+
+              {/* What it does */}
+              <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">
+                {agent.what}
+              </p>
+
+              {/* Proof */}
+              <p
+                className="font-mono text-[10px] font-semibold"
+                style={{ color: agent.accent }}
+              >
+                → {agent.proof}
+              </p>
+            </motion.div>
           ))}
+
+          {/* Meta card: Agentic Workflow Designer */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-30px" }}
+            transition={{ duration: 0.5, delay: agents.length * 0.07, ease: EASE }}
+            className="rounded-2xl p-6"
+            style={{
+              background: "linear-gradient(145deg, rgba(167,139,250,0.08), rgba(10,10,18,0.9))",
+              border: "1px solid rgba(167,139,250,0.15)",
+            }}
+          >
+            <span
+              className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest inline-block mb-4"
+              style={{
+                color: "#A78BFA",
+                background: "rgba(167,139,250,0.12)",
+                border: "1px solid rgba(167,139,250,0.25)",
+              }}
+            >
+              How I build these
+            </span>
+            <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE]">
+              Agentic Workflow Designer
+            </h3>
+            <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">
+              A meta-skill that encodes how to design, build, and ship a new agent — prompt structure,
+              model choice, validation. New agent design to deployed: under 4 hours.
+            </p>
+            <p className="font-mono text-[10px] font-semibold" style={{ color: "#A78BFA" }}>
+              → Underlies all 5 agents above
+            </p>
+          </motion.div>
         </div>
+
       </div>
     </section>
   );
