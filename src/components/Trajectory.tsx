@@ -1,8 +1,3 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-
 const roles = [
   {
     period: "DEC 2022 — PRESENT",
@@ -57,20 +52,11 @@ const award = {
 };
 
 export default function Trajectory() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section id="trajectory" className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-14"
-        >
+        <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
               04 / TRAJECTORY
@@ -87,7 +73,7 @@ export default function Trajectory() {
             5+ years owning programs — not participating in them. Full lifecycle from
             presales scoping through delivery close, with financial governance at every stage.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Work history */}
@@ -96,18 +82,15 @@ export default function Trajectory() {
               <div className="absolute left-0 top-2 bottom-2 w-px bg-[#BFDBFE]" />
               <div className="space-y-12">
                 {roles.map((role, i) => (
-                  <motion.div
+                  <div
                     key={role.title}
-                    initial={{ opacity: 0, x: -24 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.1 + i * 0.2 }}
-                    className="pl-8 relative"
+                    className="reveal pl-8 relative"
+                    style={{ animationDelay: `${0.1 + i * 0.15}s` }}
                   >
                     <div
                       className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-white -translate-x-1/2"
                       style={{ backgroundColor: role.color }}
                     />
-
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
                       <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8]">
                         {role.period}
@@ -118,12 +101,10 @@ export default function Trajectory() {
                         </span>
                       )}
                     </div>
-
                     <h3 className="font-heading text-xl font-bold text-[#0F172A] mb-0.5">{role.title}</h3>
                     <p className="font-mono text-[11px] font-bold uppercase tracking-wider mb-4" style={{ color: role.color }}>
                       {role.org}
                     </p>
-
                     <ul className="space-y-2.5 mb-5">
                       {role.bullets.map((b, bi) => (
                         <li key={bi} className="flex gap-2.5 text-sm text-[#64748B] leading-relaxed">
@@ -132,7 +113,6 @@ export default function Trajectory() {
                         </li>
                       ))}
                     </ul>
-
                     <div className="flex flex-wrap gap-2">
                       {role.tags.map((tag) => (
                         <span
@@ -144,21 +124,16 @@ export default function Trajectory() {
                         </span>
                       ))}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
 
           {/* Right panel */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-5"
-          >
+          <div className="space-y-5">
             {/* Education */}
-            <div className="p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]">
+            <div className="reveal p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]" style={{ animationDelay: "0.2s" }}>
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#2563EB] mb-3">// EDUCATION</p>
               <p className="font-heading font-bold text-[#0F172A] text-sm leading-snug mb-1">{education.degree}</p>
               <p className="text-xs text-[#334155] font-medium">{education.institution}</p>
@@ -166,7 +141,7 @@ export default function Trajectory() {
             </div>
 
             {/* Certifications */}
-            <div className="p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]">
+            <div className="reveal p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]" style={{ animationDelay: "0.25s" }}>
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#2563EB] mb-3">// CERTIFICATIONS & COURSES</p>
               <ul className="space-y-2.5">
                 {certifications.map((c) => (
@@ -186,14 +161,14 @@ export default function Trajectory() {
             </div>
 
             {/* Award */}
-            <div className="p-5 rounded-2xl border-2 border-[#F59E0B]/40 bg-[#FFFBEB]">
+            <div className="reveal p-5 rounded-2xl border-2 border-[#F59E0B]/40 bg-[#FFFBEB]" style={{ animationDelay: "0.3s" }}>
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#F59E0B] mb-2">// AWARD</p>
               <p className="font-heading font-bold text-[#0F172A] text-sm mb-2 flex items-center gap-2">
                 🏆 {award.title}
               </p>
               <p className="text-xs text-[#64748B] leading-relaxed">{award.desc}</p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

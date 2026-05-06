@@ -1,24 +1,22 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-
 const featured = [
   {
     num: "01 / ARCHITECTURE",
-    title: <>I <em className="text-[#2563EB] not-italic">architect</em> delivery, not manage it.</>,
+    title: "I architect delivery, not manage it.",
+    titleEmphasis: "architect",
     body: "On a 19-week regulated migration with a 3-week compliance blackout in the middle, a flat delivery plan would have serialised work that could run in parallel. I decomposed the WBS into 6 parallel epic tracks with explicit float at every handoff. Float held for 14 of 19 weeks. The contractual date was met on the day it was signed for. That's what delivery architecture looks like under a fixed constraint.",
     highlights: ["WBS decomposition", "Parallel epic tracks", "Float allocation"],
   },
   {
     num: "02 / FINANCE",
-    title: <>Margin is a <em className="text-[#2563EB] not-italic">feature</em>.</>,
+    title: "Margin is a feature.",
+    titleEmphasis: "feature",
     body: "On a $1.37M T&M program, my EAC model flagged a 74%-budget / 51%-scope gap six weeks before SOW expiry — caused by 23% scope growth with no change orders. I built the commercial case, presented to the client CFO and VP Engineering, and closed an $831K change order in 10 business days. Budget execution finished at 99.98% of SOW target. P&L is part of the deliverable.",
     highlights: ["EAC / ETC / CPI / SPI", "Change-order business cases", "Rate-card governance"],
   },
   {
     num: "03 / RISK",
-    title: <><em className="text-[#2563EB] not-italic">Anticipation</em> beats escalation.</>,
+    title: "Anticipation beats escalation.",
+    titleEmphasis: "Anticipation",
     body: "On a fixed-price M&A cutover, a factory-model burndown flagged a pacing risk in week 5 with 11 weeks of runway remaining — before any engineer felt it. On a managed retainer, publishing UAT aging metrics to client leadership cut sign-off time from 11 days to 4. Both times: the data surfaced the problem. The intervention happened while there was still time to act.",
     highlights: ["Leading indicators", "UAT aging metrics", "Live RAID register"],
   },
@@ -52,26 +50,11 @@ const philosophy = [
 ];
 
 export default function Approach() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-  };
-
   return (
     <section id="approach" className="py-24 section-alt">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-14"
-        >
+        <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
               02 / APPROACH
@@ -91,19 +74,19 @@ export default function Approach() {
             </strong>{" "}
             commercials, regardless of stack or industry.
           </p>
-        </motion.div>
+        </div>
 
         {/* 3 featured approach cards */}
         <div className="grid md:grid-cols-3 gap-5 mb-16">
           {featured.map((card, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-              className="approach-card p-7 rounded-2xl transition-all duration-400 card-hover"
-              style={{ background: "#ffffff", border: "1px solid #E2E8F0" }}
-              onMouseMove={handleSpotlight}
+              className="reveal p-7 rounded-2xl card-hover"
+              style={{
+                background: "#ffffff",
+                border: "1px solid #E2E8F0",
+                animationDelay: `${0.1 + i * 0.1}s`,
+              }}
             >
               <span
                 className="inline-block font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded mb-7"
@@ -112,7 +95,14 @@ export default function Approach() {
                 {card.num}
               </span>
               <h3 className="font-heading text-[26px] font-bold leading-tight tracking-tight mb-4 text-[#0F172A]">
-                {card.title}
+                {card.title.split(card.titleEmphasis).map((part, j, arr) =>
+                  j < arr.length - 1 ? (
+                    <span key={j}>
+                      {part}
+                      <em className="text-[#2563EB] not-italic">{card.titleEmphasis}</em>
+                    </span>
+                  ) : part
+                )}
               </h3>
               <p className="text-[13.5px] leading-relaxed text-[#64748B] mb-5">{card.body}</p>
               <div className="flex flex-wrap gap-1.5">
@@ -126,29 +116,27 @@ export default function Approach() {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Three failure patterns I solve */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.3 }}
-          className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#2563EB] mb-5"
-        >
+        {/* Three failure patterns */}
+        <p className="reveal-in font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#2563EB] mb-5"
+          style={{ animationDelay: "0.3s" }}>
           // THREE PATTERNS THAT KILL PROGRAMS — AND WHAT I DO ABOUT EACH
-        </motion.p>
+        </p>
 
         <div className="grid sm:grid-cols-3 gap-4 mb-14">
           {failurePatterns.map((item, i) => (
-            <motion.div
+            <div
               key={item.pattern}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.1 + i * 0.08 }}
-              className="p-5 rounded-xl"
-              style={{ background: "#ffffff", border: "1px solid #E2E8F0", borderTop: `3px solid ${item.color}` }}
+              className="reveal p-5 rounded-xl"
+              style={{
+                background: "#ffffff",
+                border: "1px solid #E2E8F0",
+                borderTop: `3px solid ${item.color}`,
+                animationDelay: `${0.35 + i * 0.08}s`,
+              }}
             >
               <p className="font-heading font-bold text-[13px] text-[#0F172A] mb-2">{item.pattern}</p>
               <p
@@ -158,17 +146,18 @@ export default function Approach() {
                 {item.signal}
               </p>
               <p className="text-[12.5px] text-[#64748B] leading-relaxed">{item.fix}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Execution philosophy */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="rounded-2xl p-8 md:p-10"
-          style={{ border: "1px solid #BFDBFE", background: "rgba(37,99,235,0.04)" }}
+        <div
+          className="reveal rounded-2xl p-8 md:p-10"
+          style={{
+            border: "1px solid #BFDBFE",
+            background: "rgba(37,99,235,0.04)",
+            animationDelay: "0.5s",
+          }}
         >
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-7">
             // EXECUTION PHILOSOPHY
@@ -188,7 +177,7 @@ export default function Approach() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

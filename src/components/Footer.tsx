@@ -19,7 +19,7 @@ export default function Footer() {
           <div>
             <p className="font-mono font-bold uppercase tracking-widest text-[#94A3B8] mb-3 text-[10px]">// EXPLORE</p>
             <ul className="space-y-2">
-              {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Exposure", "#exposure"]].map(([label, href]) => (
+              {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
                 <li key={label}>
                   <a
                     href={href}
