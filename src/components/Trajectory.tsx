@@ -73,7 +73,7 @@ export default function Trajectory() {
         >
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
-              05 / TRAJECTORY
+              04 / TRAJECTORY
             </span>
           </div>
           <h2

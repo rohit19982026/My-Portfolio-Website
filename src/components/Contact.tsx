@@ -67,7 +67,7 @@ export default function Contact() {
         >
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
-              06 / LET&apos;S BUILD SOMETHING
+              05 / LET&apos;S BUILD SOMETHING
             </span>
           </div>
           <h2
