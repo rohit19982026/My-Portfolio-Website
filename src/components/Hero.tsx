@@ -41,31 +41,54 @@ const socials = [
   },
 ];
 
-const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const SPRING = { type: "spring" as const, stiffness: 80, damping: 18 };
+const SPRING_FAST = { type: "spring" as const, stiffness: 120, damping: 20 };
 
-function fade(delay = 0) {
-  return {
-    initial: { opacity: 0, y: 18 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.65, delay, ease: EASE },
-  };
-}
+const socialVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.55 } },
+};
+const socialItem = {
+  hidden: { opacity: 0, y: 16, scale: 0.8 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: SPRING_FAST },
+};
+
+const statVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.7 } },
+};
+const statItem = {
+  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { ...SPRING_FAST, duration: 0.5 } },
+};
 
 export default function Hero() {
   return (
-    <section
-      className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden bg-[#0A0A12]"
-    >
+    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden bg-[#0A0A12]">
       <div
         className="absolute pointer-events-none"
         style={{
-          width: 600,
-          height: 600,
+          width: 700,
+          height: 700,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)",
           top: "50%",
-          right: "-100px",
+          right: "-160px",
           transform: "translateY(-50%)",
+        }}
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 1.4 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.8, ease: "easeOut" }}
+        className="absolute pointer-events-none"
+        style={{
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(110,231,183,0.04) 0%, transparent 70%)",
+          top: "20%",
+          left: "-80px",
         }}
       />
 
@@ -75,42 +98,58 @@ export default function Hero() {
 
             {/* LEFT */}
             <div>
+              {/* Hi I am */}
               <motion.p
-                {...fade(0.05)}
+                initial={{ opacity: 0, x: -20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                transition={{ ...SPRING, delay: 0.05 }}
                 className="text-[15px] mb-1"
                 style={{ color: "#9090A8" }}
               >
                 Hi, I am
               </motion.p>
 
-              <motion.h2
-                {...fade(0.12)}
-                className="text-[22px] font-semibold mb-4"
-                style={{ color: "#EDE9FE" }}
-              >
-                Rohit Kumar Singh
-              </motion.h2>
+              {/* Name — clip reveal */}
+              <div style={{ overflow: "hidden", marginBottom: "16px" }}>
+                <motion.h2
+                  initial={{ y: "110%" }}
+                  animate={{ y: "0%" }}
+                  transition={{ ...SPRING, delay: 0.12 }}
+                  className="text-[22px] font-semibold"
+                  style={{ color: "#EDE9FE" }}
+                >
+                  Rohit Kumar Singh
+                </motion.h2>
+              </div>
 
-              <motion.h1
-                {...fade(0.2)}
-                className="font-display font-bold leading-[1.0] tracking-[-0.02em] mb-5"
-                style={{
-                  fontSize: "clamp(38px, 5.5vw, 68px)",
-                  background: "linear-gradient(135deg, #A78BFA 0%, #7C3AED 60%, #A78BFA 100%)",
-                  backgroundSize: "200% auto",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  animation: "gradient-shift 6s linear infinite",
-                }}
-              >
-                Technical Project
-                <br />
-                Manager
-              </motion.h1>
+              {/* Title — clip reveal */}
+              <div style={{ overflow: "hidden", marginBottom: "20px" }}>
+                <motion.h1
+                  initial={{ y: "105%", rotate: 2 }}
+                  animate={{ y: "0%", rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 65, damping: 16, delay: 0.2 }}
+                  className="font-display font-bold leading-[1.0] tracking-[-0.02em]"
+                  style={{
+                    fontSize: "clamp(38px, 5.5vw, 68px)",
+                    background: "linear-gradient(135deg, #A78BFA 0%, #7C3AED 60%, #A78BFA 100%)",
+                    backgroundSize: "200% auto",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    animation: "gradient-shift 6s linear infinite",
+                  }}
+                >
+                  Technical Project
+                  <br />
+                  Manager
+                </motion.h1>
+              </div>
 
+              {/* Description — blur fade */}
               <motion.p
-                {...fade(0.28)}
+                initial={{ opacity: 0, filter: "blur(12px)", y: 8 }}
+                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
                 style={{ color: "#6B6B8A" }}
               >
@@ -120,34 +159,50 @@ export default function Hero() {
                 and I automate the reporting before anyone has to ask.
               </motion.p>
 
-              <motion.div {...fade(0.34)} className="flex gap-3 mb-8">
+              {/* Social icons — stagger spring */}
+              <motion.div
+                variants={socialVariants}
+                initial="hidden"
+                animate="visible"
+                className="flex gap-3 mb-8"
+              >
                 {socials.map((s) => (
-                  <a
+                  <motion.a
                     key={s.label}
+                    variants={socialItem}
                     href={s.href}
                     aria-label={s.label}
-                    className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105"
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    whileTap={{ scale: 0.92 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
                     style={{
                       background: "rgba(124,58,237,0.12)",
                       border: "1px solid rgba(124,58,237,0.25)",
                       color: "#A78BFA",
                     }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.25)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.12)";
-                    }}
                   >
                     {s.icon}
-                  </a>
+                  </motion.a>
                 ))}
               </motion.div>
 
-              <motion.div {...fade(0.4)} className="flex flex-wrap gap-3">
-                <a
+              {/* Buttons — stagger spring */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.65 } } }}
+                className="flex flex-wrap gap-3"
+              >
+                <motion.a
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.85, y: 10 },
+                    visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
+                  }}
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
                   href="#work"
-                  className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+                  className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
                   style={{
                     background: "linear-gradient(135deg, #7C3AED, #6D28D9)",
                     color: "#FFFFFF",
@@ -155,38 +210,40 @@ export default function Hero() {
                   }}
                 >
                   See My Work
-                </a>
-                <a
+                </motion.a>
+                <motion.a
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.85, y: 10 },
+                    visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
+                  }}
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide transition-all duration-200"
+                  className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
                   style={{
                     background: "transparent",
                     border: "1px solid rgba(124,58,237,0.4)",
                     color: "#A78BFA",
                   }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.1)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "transparent";
-                  }}
                 >
                   Download CV
-                </a>
+                </motion.a>
               </motion.div>
             </div>
 
-            {/* RIGHT — Photo frame */}
+            {/* RIGHT — Photo frame — spring tilt */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
+              initial={{ opacity: 0, scale: 0.78, rotate: -6, filter: "blur(12px)" }}
+              animate={{ opacity: 1, scale: 1, rotate: 0, filter: "blur(0px)" }}
+              transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.15 }}
               className="flex justify-center md:justify-end"
             >
               <div className="relative" style={{ width: 380, height: 420 }}>
-                <div
+                <motion.div
+                  animate={{ rotate: [0, 1, -1, 0] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute inset-0 rounded-full"
                   style={{ border: "1px solid rgba(124,58,237,0.15)" }}
                 />
@@ -203,11 +260,6 @@ export default function Hero() {
                     boxShadow: "0 0 60px rgba(124,58,237,0.12) inset",
                   }}
                 >
-                  {/*
-                    Replace with your photo:
-                    <img src="/photo.jpg" alt="Rohit Kumar Singh"
-                         className="w-full h-full object-cover object-top" />
-                  */}
                   <div className="w-full h-full flex flex-col items-center justify-center gap-2">
                     <span
                       className="font-display font-bold"
@@ -223,9 +275,24 @@ export default function Hero() {
                     </span>
                   </div>
                 </div>
-                <div className="absolute rounded-full" style={{ width: 12, height: 12, background: "#7C3AED", top: 48, right: 28, boxShadow: "0 0 12px rgba(124,58,237,0.8)" }} />
-                <div className="absolute rounded-full" style={{ width: 8, height: 8, background: "#A78BFA", bottom: 60, left: 20, boxShadow: "0 0 10px rgba(167,139,250,0.6)" }} />
-                <div className="absolute rounded-full" style={{ width: 5, height: 5, background: "#6EE7B7", top: 90, left: 14, boxShadow: "0 0 8px rgba(110,231,183,0.6)" }} />
+                <motion.div
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute rounded-full"
+                  style={{ width: 12, height: 12, background: "#7C3AED", top: 48, right: 28, boxShadow: "0 0 12px rgba(124,58,237,0.8)" }}
+                />
+                <motion.div
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  className="absolute rounded-full"
+                  style={{ width: 8, height: 8, background: "#A78BFA", bottom: 60, left: 20, boxShadow: "0 0 10px rgba(167,139,250,0.6)" }}
+                />
+                <motion.div
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                  className="absolute rounded-full"
+                  style={{ width: 5, height: 5, background: "#6EE7B7", top: 90, left: 14, boxShadow: "0 0 8px rgba(110,231,183,0.6)" }}
+                />
               </div>
             </motion.div>
 
@@ -236,13 +303,16 @@ export default function Hero() {
       {/* STATS STRIP */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4">
+          <motion.div
+            variants={statVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-2 md:grid-cols-4"
+          >
             {stats.map((s, i) => (
               <motion.div
                 key={s.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.55 + i * 0.08 }}
+                variants={statItem}
                 className="py-6 px-5"
                 style={{ borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}
               >
@@ -254,7 +324,7 @@ export default function Hero() {
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
