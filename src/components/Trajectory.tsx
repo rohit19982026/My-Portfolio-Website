@@ -38,7 +38,7 @@ const roles = [
 ];
 
 const education = {
-  degree: "B.Tech, Computer Science",
+  degree: "Bachelor of Computer Application",
   institution: "Brainware University, Kolkata",
   year: "2017 – 2020",
   grade: "CGPA: 7.5 / 10",
@@ -90,7 +90,6 @@ export default function Trajectory() {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-12">
-          {/* Work history */}
           <div className="lg:col-span-2">
             <div className="relative">
               <div
@@ -164,14 +163,12 @@ export default function Trajectory() {
             </div>
           </div>
 
-          {/* Right panel */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="space-y-5"
           >
-            {/* Education */}
             <div
               className="p-5 rounded-2xl"
               style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
@@ -186,7 +183,6 @@ export default function Trajectory() {
               <p className="font-mono text-[11px] text-[#6B6B8A] mt-0.5">{education.year} · {education.grade}</p>
             </div>
 
-            {/* Certifications */}
             <div
               className="p-5 rounded-2xl"
               style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
@@ -216,7 +212,6 @@ export default function Trajectory() {
               </ul>
             </div>
 
-            {/* Award */}
             <div
               className="p-5 rounded-2xl"
               style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.05)" }}

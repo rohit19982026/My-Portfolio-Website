@@ -16,8 +16,8 @@ const links = [
   },
   {
     label: "PHONE",
-    value: "+91 62945 15177",
-    href: "tel:+916294515177",
+    value: "+91 89677 25119",
+    href: "tel:+918967725119",
   },
 ];
 
@@ -93,7 +93,6 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-14">
-          {/* Left — contact info + availability */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -136,7 +135,6 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right — engagement types */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
