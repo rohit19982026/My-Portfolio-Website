@@ -190,10 +190,12 @@ export default function Hero() {
             </h2>
             <p className="text-base text-[#64748B] leading-relaxed mb-4">
               Not a coordinator.{" "}
-              <strong className="text-[#0F172A] font-semibold">A delivery architect</strong>{" "}
-              who instruments budget burn like a P&amp;L owner, builds change-order business cases before teams hit funding cliffs, and closed{" "}
-              <strong className="text-[#0F172A] font-semibold">$831K in scope expansion</strong>{" "}
-              mid-engagement — approved in 10 business days.
+              <strong className="text-[#0F172A] font-semibold">A delivery architect.</strong>{" "}
+              On a $1.37M program, my EAC model caught a 74%-budget&nbsp;/&nbsp;51%-scope mismatch
+              six weeks before SOW expiry — long enough to build the commercial case, present to
+              the client CFO, and close an{" "}
+              <strong className="text-[#0F172A] font-semibold">$831K change order</strong>{" "}
+              before anyone had to cut scope. That&apos;s what financial governance looks like in practice.
             </p>
             <p className="text-base text-[#64748B] leading-relaxed mb-8 border-l-4 border-[#2563EB] pl-4 italic">
               The engineering belongs to the team. The plan, the controls, the commercial
