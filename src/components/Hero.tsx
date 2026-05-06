@@ -3,16 +3,16 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "$3.5M+", label: "Portfolio Value" },
-  { value: "6",      label: "Programs Delivered" },
+  { value: "15+",    label: "Programs Delivered" },
+  { value: "$5M+",   label: "Largest P&L Owned" },
   { value: "99.98%", label: "Budget Execution" },
-  { value: "$831K",  label: "Largest CO Closed" },
+  { value: "10+",    label: "Enterprise Accounts" },
 ];
 
 const socials = [
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/rohit-kumar-singh",
+    href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
         <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
@@ -21,21 +21,21 @@ const socials = [
     ),
   },
   {
-    label: "GitHub",
-    href: "https://github.com/rohit19982026",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      </svg>
-    ),
-  },
-  {
     label: "Email",
-    href: "#contact",
+    href: "mailto:singhrohit.25119@gmail.com",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
         <polyline points="22,6 12,13 2,6" />
+      </svg>
+    ),
+  },
+  {
+    label: "Phone",
+    href: "tel:+916294515177",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
       </svg>
     ),
   },
@@ -57,7 +57,6 @@ export default function Hero() {
       className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden"
       style={{ background: "#0F0F14" }}
     >
-      {/* Subtle ambient glow behind the photo side */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -71,12 +70,11 @@ export default function Hero() {
         }}
       />
 
-      {/* ── MAIN CONTENT ── */}
       <div className="flex-1 flex items-center">
         <div className="max-w-6xl mx-auto px-6 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
-            {/* ── LEFT ── */}
+            {/* LEFT */}
             <div>
               <motion.p
                 {...fade(0.05)}
@@ -107,7 +105,7 @@ export default function Hero() {
                   animation: "gradient-shift 6s linear infinite",
                 }}
               >
-                Technical Program
+                Technical Project
                 <br />
                 Manager
               </motion.h1>
@@ -117,9 +115,10 @@ export default function Hero() {
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
                 style={{ color: "#6B6B8A" }}
               >
-                I own scope baseline, EVM, change control, and exec reporting
-                end-to-end — and build AI agents that automate the parts that
-                should never have been manual.
+                15+ data platform and AI programs delivered end-to-end at phData.
+                P&L from $500K to $5M+. I understand what&apos;s being built well
+                enough to catch scope risk before it becomes a commercial problem —
+                and I automate the reporting before anyone has to ask.
               </motion.p>
 
               <motion.div {...fade(0.34)} className="flex gap-3 mb-8">
@@ -180,7 +179,7 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* ── RIGHT — Photo frame ── */}
+            {/* RIGHT — Photo frame */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -225,7 +224,6 @@ export default function Hero() {
                     </span>
                   </div>
                 </div>
-
                 <div className="absolute rounded-full" style={{ width: 12, height: 12, background: "#7C3AED", top: 48, right: 28, boxShadow: "0 0 12px rgba(124,58,237,0.8)" }} />
                 <div className="absolute rounded-full" style={{ width: 8, height: 8, background: "#A78BFA", bottom: 60, left: 20, boxShadow: "0 0 10px rgba(167,139,250,0.6)" }} />
                 <div className="absolute rounded-full" style={{ width: 5, height: 5, background: "#6EE7B7", top: 90, left: 14, boxShadow: "0 0 8px rgba(110,231,183,0.6)" }} />
@@ -236,7 +234,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── STATS STRIP ── */}
+      {/* STATS STRIP */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4">
