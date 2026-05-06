@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const links = [
   { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com" },
@@ -12,40 +12,6 @@ const links = [
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [error, setError] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    setError(false);
-    const form = e.currentTarget;
-    try {
-      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
-        method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        setError(true);
-      }
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const inputClass =
-    "w-full px-4 py-3 rounded-xl text-[14px] font-heading text-[#0F172A] placeholder-[#94A3B8] outline-none transition-all";
-  const inputStyle = {
-    background: "#ffffff",
-    border: "1px solid #E2E8F0",
-  };
 
   return (
     <section
@@ -90,13 +56,13 @@ export default function Contact() {
             <br />data &amp; AI program?
           </h2>
           <p className="text-[16px] text-[#64748B] max-w-xl leading-relaxed">
-            Let&apos;s talk. Whether it&apos;s a platform migration, a program rescue, or a
-            managed delivery engagement — I&apos;d rather understand the problem first.
+            Whether it&apos;s a platform migration, a program rescue, or a managed delivery
+            engagement — reach out directly and I&apos;ll respond within 24 hours.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-14">
-          {/* Contact info */}
+        <div className="grid md:grid-cols-2 gap-14 items-start">
+          {/* Contact links */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -129,7 +95,7 @@ export default function Contact() {
               />
               <div>
                 <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#10B981]">
-                  ● OPEN FOR PROGRAMS
+                  OPEN FOR PROGRAMS
                 </p>
                 <p className="font-mono text-[10px] text-[#94A3B8] mt-0.5">
                   Bengaluru, India · IST · Available globally
@@ -138,77 +104,48 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* CTA cards */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-4"
           >
-            {submitted ? (
-              <div
-                className="flex flex-col items-center justify-center text-center p-10 rounded-2xl h-full"
-                style={{ border: "1px solid rgba(16,185,129,0.25)", background: "rgba(16,185,129,0.05)" }}
+            {[
+              {
+                label: "PLATFORM MIGRATION",
+                text: "Redshift → Databricks, SQL Server → Snowflake, Hadoop → Snowflake — scoped, governed, and delivered.",
+              },
+              {
+                label: "PROGRAM RESCUE",
+                text: "Stalled delivery, missing governance, budget overrun risk, or stakeholder misalignment — I've fixed all of them.",
+              },
+              {
+                label: "MANAGED POD",
+                text: "Ongoing data engineering retainer with embedded PMO governance, financial oversight, and renewal track record.",
+              },
+            ].map((card, i) => (
+              <motion.div
+                key={card.label}
+                initial={{ opacity: 0, y: 16 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
+                className="p-5 rounded-xl"
+                style={{ background: "#ffffff", border: "1px solid #E2E8F0" }}
               >
-                <span className="text-4xl mb-4">✅</span>
-                <h3 className="font-heading font-bold text-[#0F172A] text-[22px] mb-2 tracking-tight">
-                  Message received.
-                </h3>
-                <p className="text-[14px] text-[#64748B]">I&apos;ll respond within 24 hours.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Name</label>
-                    <input name="name" required type="text" placeholder="Your name"
-                      className={inputClass} style={inputStyle}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }} />
-                  </div>
-                  <div>
-                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Email</label>
-                    <input name="email" required type="email" placeholder="your@email.com"
-                      className={inputClass} style={inputStyle}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }} />
-                  </div>
-                </div>
-                <div>
-                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Engagement type</label>
-                  <select name="type"
-                    className={inputClass} style={{ ...inputStyle, cursor: "pointer" }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }}>
-                    <option value="">Select commercial model</option>
-                    <option>Fixed-Price Program</option>
-                    <option>Time &amp; Materials</option>
-                    <option>Managed Services / Pod</option>
-                    <option>Advisory / Consulting</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Tell me about the program</label>
-                  <textarea name="message" required rows={5}
-                    placeholder="Stack, scale, timeline, what's broken or what needs building..."
-                    className={`${inputClass} resize-none`} style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }} />
-                </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="gradient-bg w-full py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-white transition-all duration-200 disabled:opacity-60 hover:brightness-110"
-                >
-                  {loading ? "Sending..." : "Let's Talk →"}
-                </button>
-                {error && (
-                  <p className="text-[12px] text-center text-[#EF4444] mt-2">
-                    Something went wrong. Email me directly at singhrohit.25119@gmail.com
-                  </p>
-                )}
-              </form>
-            )}
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#2563EB] mb-1.5">
+                  {card.label}
+                </p>
+                <p className="text-[13px] text-[#64748B] leading-relaxed">{card.text}</p>
+              </motion.div>
+            ))}
+
+            <a
+              href="mailto:singhrohit.25119@gmail.com"
+              className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-white gradient-bg hover:opacity-90 transition-opacity mt-2"
+            >
+              Email Me Directly →
+            </a>
           </motion.div>
         </div>
       </div>
