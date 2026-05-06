@@ -41,11 +41,13 @@ const socials = [
   },
 ];
 
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 function fade(delay = 0) {
   return {
     initial: { opacity: 0, y: 18 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.65, delay, ease: EASE },
   };
 }
 
@@ -76,7 +78,6 @@ export default function Hero() {
 
             {/* ── LEFT ── */}
             <div>
-              {/* Greeting */}
               <motion.p
                 {...fade(0.05)}
                 className="text-[15px] mb-1"
@@ -85,7 +86,6 @@ export default function Hero() {
                 Hi, I am
               </motion.p>
 
-              {/* Name */}
               <motion.h2
                 {...fade(0.12)}
                 className="text-[22px] font-semibold mb-4"
@@ -94,7 +94,6 @@ export default function Hero() {
                 Rohit Kumar Singh
               </motion.h2>
 
-              {/* Role — big accent title */}
               <motion.h1
                 {...fade(0.2)}
                 className="font-display font-bold leading-[1.0] tracking-[-0.02em] mb-5"
@@ -113,7 +112,6 @@ export default function Hero() {
                 Manager
               </motion.h1>
 
-              {/* One-liner */}
               <motion.p
                 {...fade(0.28)}
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
@@ -124,7 +122,6 @@ export default function Hero() {
                 should never have been manual.
               </motion.p>
 
-              {/* Social icons */}
               <motion.div {...fade(0.34)} className="flex gap-3 mb-8">
                 {socials.map((s) => (
                   <a
@@ -149,7 +146,6 @@ export default function Hero() {
                 ))}
               </motion.div>
 
-              {/* CTAs */}
               <motion.div {...fade(0.4)} className="flex flex-wrap gap-3">
                 <a
                   href="#work"
@@ -188,25 +184,18 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
               className="flex justify-center md:justify-end"
             >
               <div className="relative" style={{ width: 380, height: 420 }}>
-                {/* Outer decorative ring */}
                 <div
                   className="absolute inset-0 rounded-full"
                   style={{ border: "1px solid rgba(124,58,237,0.15)" }}
                 />
-                {/* Second ring */}
                 <div
                   className="absolute rounded-full"
-                  style={{
-                    inset: "16px",
-                    border: "1px dashed rgba(124,58,237,0.12)",
-                  }}
+                  style={{ inset: "16px", border: "1px dashed rgba(124,58,237,0.12)" }}
                 />
-
-                {/* Main circle */}
                 <div
                   className="absolute overflow-hidden rounded-full"
                   style={{
@@ -217,7 +206,7 @@ export default function Hero() {
                   }}
                 >
                   {/*
-                    REPLACE THIS BLOCK with your photo:
+                    Replace with your photo:
                     <img src="/photo.jpg" alt="Rohit Kumar Singh"
                          className="w-full h-full object-cover object-top" />
                   */}
@@ -237,34 +226,9 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Accent dots */}
-                <div
-                  className="absolute rounded-full"
-                  style={{
-                    width: 12, height: 12,
-                    background: "#7C3AED",
-                    top: 48, right: 28,
-                    boxShadow: "0 0 12px rgba(124,58,237,0.8)",
-                  }}
-                />
-                <div
-                  className="absolute rounded-full"
-                  style={{
-                    width: 8, height: 8,
-                    background: "#A78BFA",
-                    bottom: 60, left: 20,
-                    boxShadow: "0 0 10px rgba(167,139,250,0.6)",
-                  }}
-                />
-                <div
-                  className="absolute rounded-full"
-                  style={{
-                    width: 5, height: 5,
-                    background: "#6EE7B7",
-                    top: 90, left: 14,
-                    boxShadow: "0 0 8px rgba(110,231,183,0.6)",
-                  }}
-                />
+                <div className="absolute rounded-full" style={{ width: 12, height: 12, background: "#7C3AED", top: 48, right: 28, boxShadow: "0 0 12px rgba(124,58,237,0.8)" }} />
+                <div className="absolute rounded-full" style={{ width: 8, height: 8, background: "#A78BFA", bottom: 60, left: 20, boxShadow: "0 0 10px rgba(167,139,250,0.6)" }} />
+                <div className="absolute rounded-full" style={{ width: 5, height: 5, background: "#6EE7B7", top: 90, left: 14, boxShadow: "0 0 8px rgba(110,231,183,0.6)" }} />
               </div>
             </motion.div>
 
@@ -283,14 +247,9 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.55 + i * 0.08 }}
                 className="py-6 px-5"
-                style={{
-                  borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                }}
+                style={{ borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}
               >
-                <p
-                  className="font-display text-[28px] font-bold leading-none tracking-tight mb-1"
-                  style={{ color: "#A78BFA" }}
-                >
+                <p className="font-display text-[28px] font-bold leading-none tracking-tight mb-1" style={{ color: "#A78BFA" }}>
                   {s.value}
                 </p>
                 <p className="text-[12px]" style={{ color: "#6B6B8A" }}>
