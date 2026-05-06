@@ -29,29 +29,26 @@ export default function Contact() {
   }
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl text-[14px] font-heading text-[#EDE9FE] placeholder-[#6B6B8A] outline-none transition-all";
+    "w-full px-4 py-3 rounded-xl text-[14px] font-heading text-[#0F172A] placeholder-[#94A3B8] outline-none transition-all";
   const inputStyle = {
-    background: "#1B1B2A",
-    border: "1px solid rgba(167,139,250,0.18)",
+    background: "#ffffff",
+    border: "1px solid #E2E8F0",
   };
 
   return (
     <section
       id="contact"
-      className="py-24 relative overflow-hidden"
-      style={{
-        background: "radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.18), transparent 65%), #0A0A12",
-        borderTop: "1px solid rgba(167,139,250,0.14)",
-      }}
+      className="py-24 section-alt relative overflow-hidden"
+      style={{ borderTop: "1px solid #E2E8F0" }}
     >
-      {/* Glow orb */}
+      {/* Subtle glow orb */}
       <div
         className="absolute pointer-events-none rounded-full"
         style={{
           width: 500,
           height: 500,
-          background: "#8B5CF6",
-          opacity: 0.08,
+          background: "#2563EB",
+          opacity: 0.04,
           filter: "blur(80px)",
           top: -100,
           left: "50%",
@@ -69,18 +66,18 @@ export default function Contact() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
               06 / LET&apos;S BUILD SOMETHING
             </span>
           </div>
           <h2
-            className="font-display font-bold tracking-tight leading-[0.97] mb-5"
+            className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             Got a <span className="gradient-text italic font-normal">complex</span>
             <br />data &amp; AI program?
           </h2>
-          <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
+          <p className="text-[16px] text-[#64748B] max-w-xl leading-relaxed">
             Let&apos;s talk. Whether it&apos;s a platform migration, a program rescue, or a
             managed delivery engagement — I&apos;d rather understand the problem first.
           </p>
@@ -96,12 +93,12 @@ export default function Contact() {
             <div className="space-y-5 mb-10">
               {links.map((link) => (
                 <div key={link.label} className="flex items-center gap-4 group">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A] w-20 shrink-0">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8] w-20 shrink-0">
                     {link.label}
                   </span>
                   <a
                     href={link.href}
-                    className="text-[14px] font-semibold text-[#A8A4C7] group-hover:text-[#A78BFA] transition-colors"
+                    className="text-[14px] font-semibold text-[#64748B] group-hover:text-[#2563EB] transition-colors"
                   >
                     {link.value}
                   </a>
@@ -112,17 +109,17 @@ export default function Contact() {
             {/* Availability badge */}
             <div
               className="inline-flex items-center gap-3 px-5 py-3.5 rounded-xl"
-              style={{ border: "1px solid rgba(110,231,183,0.25)", background: "rgba(110,231,183,0.06)" }}
+              style={{ border: "1px solid rgba(16,185,129,0.25)", background: "rgba(16,185,129,0.06)" }}
             >
               <span
-                className="w-2.5 h-2.5 rounded-full bg-[#6EE7B7] shrink-0"
+                className="w-2.5 h-2.5 rounded-full bg-[#10B981] shrink-0"
                 style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
               />
               <div>
-                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">
+                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#10B981]">
                   ● OPEN FOR PROGRAMS
                 </p>
-                <p className="font-mono text-[10px] text-[#6B6B8A] mt-0.5">
+                <p className="font-mono text-[10px] text-[#94A3B8] mt-0.5">
                   Bengaluru, India · IST · Available globally
                 </p>
               </div>
@@ -138,38 +135,38 @@ export default function Contact() {
             {submitted ? (
               <div
                 className="flex flex-col items-center justify-center text-center p-10 rounded-2xl h-full"
-                style={{ border: "1px solid rgba(110,231,183,0.25)", background: "rgba(110,231,183,0.05)" }}
+                style={{ border: "1px solid rgba(16,185,129,0.25)", background: "rgba(16,185,129,0.05)" }}
               >
                 <span className="text-4xl mb-4">✅</span>
-                <h3 className="font-display font-bold text-[#EDE9FE] text-[22px] mb-2 tracking-tight">
+                <h3 className="font-heading font-bold text-[#0F172A] text-[22px] mb-2 tracking-tight">
                   Message received.
                 </h3>
-                <p className="text-[14px] text-[#A8A4C7]">I&apos;ll respond within 24 hours.</p>
+                <p className="text-[14px] text-[#64748B]">I&apos;ll respond within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Name</label>
+                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Name</label>
                     <input name="name" required type="text" placeholder="Your name"
                       className={inputClass} style={inputStyle}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }} />
+                      onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }} />
                   </div>
                   <div>
-                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Email</label>
+                    <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Email</label>
                     <input name="email" required type="email" placeholder="your@email.com"
                       className={inputClass} style={inputStyle}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }} />
+                      onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }} />
                   </div>
                 </div>
                 <div>
-                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Engagement type</label>
+                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Engagement type</label>
                   <select name="type"
                     className={inputClass} style={{ ...inputStyle, cursor: "pointer" }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }}>
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }}>
                     <option value="">Select commercial model</option>
                     <option>Fixed-Price Program</option>
                     <option>Time &amp; Materials</option>
@@ -179,18 +176,17 @@ export default function Contact() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B6B8A] mb-1.5">Tell me about the program</label>
+                  <label className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">Tell me about the program</label>
                   <textarea name="message" required rows={5}
                     placeholder="Stack, scale, timeline, what's broken or what needs building..."
                     className={`${inputClass} resize-none`} style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.5)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.18)"; }} />
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)"; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = "#E2E8F0"; e.currentTarget.style.boxShadow = "none"; }} />
                 </div>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 disabled:opacity-60 hover:brightness-110"
-                  style={{ background: "#A78BFA", boxShadow: "0 0 24px rgba(167,139,250,0.3)" }}
+                  className="gradient-bg w-full py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-white transition-all duration-200 disabled:opacity-60 hover:brightness-110"
                 >
                   {loading ? "Sending..." : "Let's Talk →"}
                 </button>

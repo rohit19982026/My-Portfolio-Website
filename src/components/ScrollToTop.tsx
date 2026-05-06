@@ -21,12 +21,8 @@ export default function ScrollToTop() {
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-8 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:brightness-110"
-          style={{
-            background: "#A78BFA",
-            boxShadow: "0 0 20px rgba(167,139,250,0.4)",
-            color: "#0A0A12",
-          }}
+          className="gradient-bg fixed bottom-8 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:brightness-110"
+          style={{ boxShadow: "0 4px 14px rgba(37,99,235,0.3)", color: "#ffffff" }}
           aria-label="Scroll to top"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

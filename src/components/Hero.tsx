@@ -4,14 +4,16 @@ import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const industries = [
-  ["EdTech", "K-12 to higher-ed"],
-  ["Enterprise SaaS", "Fortune 500"],
-  ["Investment Mgmt", "regulated"],
-  ["MarTech / AdTech", "B2B2C"],
-  ["Software Intelligence", "code analytics"],
-  ["Industrial Mfg", "PIPL · global"],
-  ["Healthcare", "HIPAA"],
-  ["Filtration", "OT / IoT"],
+  "EdTech", "Enterprise SaaS", "Investment Management",
+  "MarTech / AdTech", "Software Intelligence", "Industrial Manufacturing",
+  "Healthcare", "Filtration Technology",
+];
+
+const stats = [
+  { value: "$3.5M+", label: "Portfolio Value", sub: "Multi-commercial · Active" },
+  { value: "10+",   label: "Programs Delivered", sub: "End-to-end ownership" },
+  { value: "99.98%", label: "Budget Execution", sub: "Avg. across all programs" },
+  { value: "3×",    label: "Continents", sub: "Follow-the-sun governance" },
 ];
 
 function useCounter(target: number, decimals: number, active: boolean) {
@@ -19,7 +21,7 @@ function useCounter(target: number, decimals: number, active: boolean) {
   useEffect(() => {
     if (!active) return;
     const start = performance.now();
-    const dur = 1600;
+    const dur = 1400;
     const tick = (now: number) => {
       const t = Math.min((now - start) / dur, 1);
       const eased = 1 - Math.pow(1 - t, 3);
@@ -31,268 +33,196 @@ function useCounter(target: number, decimals: number, active: boolean) {
   return val;
 }
 
-function StatCell({
-  label,
-  target,
-  decimals,
-  prefix,
-  suffix,
-  delta,
+function StatCard({
+  stat,
   active,
   delay,
 }: {
-  label: string;
-  target: number;
-  decimals: number;
-  prefix?: string;
-  suffix?: string;
-  delta: string;
+  stat: { value: string; label: string; sub: string };
   active: boolean;
   delay: number;
 }) {
-  const val = useCounter(target, decimals, active);
+  const isNumeric = /^[\d.]+/.test(stat.value);
+  const prefix = stat.value.startsWith("$") ? "$" : "";
+  const suffix = stat.value.endsWith("+") ? "+" : stat.value.endsWith("%") ? "%" : stat.value.endsWith("×") ? "×" : "";
+  const numericStr = stat.value.replace(/[$+%×]/g, "");
+  const target = parseFloat(numericStr) || 0;
+  const decimals = numericStr.includes(".") ? numericStr.split(".")[1].length : 0;
+  const counted = useCounter(target, decimals, active && isNumeric);
+
+  const display = isNumeric ? `${prefix}${counted}${suffix}` : stat.value;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={active ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
-      className="p-4 relative"
-      style={{
-        background: "rgba(0,0,0,0.35)",
-        border: "1px solid rgba(255,255,255,0.06)",
-        borderRadius: 10,
-      }}
+      transition={{ duration: 0.5, delay }}
+      className="p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]"
     >
-      {/* Bottom accent line */}
-      <span
-        className="absolute bottom-0 left-0 h-[2px] w-[60%] rounded-bl-[10px]"
-        style={{ background: "linear-gradient(90deg, #A78BFA, transparent)" }}
-      />
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#6B6B8A] mb-3">{label}</p>
-      <p className="font-display text-[38px] leading-none font-bold tracking-tight text-[#EDE9FE]">
-        {prefix}{val}{suffix}
-      </p>
-      <p className="mt-2 font-mono text-[10px] tracking-[0.1em] text-[#6EE7B7] flex items-center gap-2">
-        <span
-          className="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"
-          style={{ animation: "ticker-blink 1.4s ease-in-out infinite" }}
-        />
-        {delta}
-      </p>
+      <div className="font-heading text-3xl font-bold gradient-text tracking-tight leading-none mb-1">
+        {display}
+      </div>
+      <div className="text-xs font-semibold text-[#0F172A] mb-0.5">{stat.label}</div>
+      <div className="text-[11px] text-[#64748B]">{stat.sub}</div>
     </motion.div>
   );
 }
 
-// Word-rise: each word clips from overflow:hidden container
-function WordRise({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <span
-      style={{
-        display: "inline-block",
-        overflow: "hidden",
-        paddingBottom: "0.08em",
-        marginBottom: "-0.08em",
-        verticalAlign: "bottom",
-      }}
-    >
-      <motion.span
-        className={className}
-        style={{ display: "inline-block" }}
-        initial={{ y: "115%" }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {children}
-      </motion.span>
-    </span>
-  );
-}
-
 export default function Hero() {
-  const panelRef = useRef(null);
-  const panelInView = useInView(panelRef, { once: true, margin: "-80px" });
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
 
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] bg-[#0A0A12] relative overflow-hidden">
-      {/* Grid background */}
-      <div className="absolute inset-0 hero-grid pointer-events-none" />
+    <section className="min-h-screen flex flex-col pt-16 bg-white hero-grid relative overflow-hidden">
+      {/* Bottom fade */}
+      <div className="absolute bottom-[80px] left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
 
-      {/* Glow orbs */}
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          width: 600,
-          height: 600,
-          background: "#8B5CF6",
-          opacity: 0.12,
-          filter: "blur(80px)",
-          top: -200,
-          left: -100,
-          animation: "orb-float 14s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          width: 500,
-          height: 500,
-          background: "#F0ABFC",
-          opacity: 0.08,
-          filter: "blur(80px)",
-          top: 300,
-          right: -150,
-          animation: "orb-float-2 18s ease-in-out infinite",
-        }}
-      />
+      <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20 relative z-20">
 
-      <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20 relative z-10">
-        {/* Available pill */}
+        {/* Availability + location pill */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] text-[#A8A4C7] w-fit"
-          style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.06)" }}
+          className="flex flex-wrap items-center gap-3 mb-10"
         >
-          <span
-            className="w-2 h-2 rounded-full bg-[#6EE7B7]"
-            style={{ boxShadow: "0 0 10px #6EE7B7", animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-          AVAILABLE FOR PROGRAMS · BENGALURU IN · UTC+5:30
-        </motion.div>
-
-        {/* H1 — word rise */}
-        <h1
-          className="font-display leading-[0.93] tracking-[-0.04em] mb-8"
-          style={{ fontSize: "clamp(64px, 11vw, 148px)" }}
-        >
-          <WordRise delay={0.05}>Programs</WordRise>
-          <br />
-          <WordRise delay={0.17}>that </WordRise>
-          <WordRise delay={0.22}>
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] text-xs font-semibold text-[#2563EB]">
             <span
-              className="italic font-normal"
-              style={{
-                background: "linear-gradient(90deg, #A78BFA 0%, #F0ABFC 50%, #A78BFA 100%)",
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                animation: "gradient-shift 6s linear infinite",
-              }}
-            >
-              hold
-            </span>
-          </WordRise>
-          <br />
-          <WordRise delay={0.36}>under load.</WordRise>
-        </h1>
-
-        {/* Sub */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="text-[17px] leading-[1.65] text-[#A8A4C7] max-w-[680px] mb-10"
-        >
-          Senior <em className="not-italic text-[#A78BFA] font-semibold">Technical Program Manager</em>{" "}
-          for data &amp; AI delivery — $3.5M+ portfolio, 10+ enterprise programs, 99.98% budget
-          execution. I own scope baseline, EVM, change control, and exec reporting end-to-end —
-          and{" "}
-          <strong className="font-semibold text-[#EDE9FE]">
-            build AI agents that automate the parts of program management that should never have
-            been manual
-          </strong>
-          .
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="flex flex-wrap gap-3 mb-14"
-        >
-          <a
-            href="#work"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110 active:scale-95"
-            style={{ background: "#A78BFA", boxShadow: "0 0 28px rgba(167,139,250,0.4)" }}
-          >
-            See the work →
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-[#EDE9FE] transition-all duration-200 hover:bg-[rgba(167,139,250,0.08)]"
-            style={{ border: "1px solid rgba(167,139,250,0.3)" }}
-          >
-            Email me ✉
-          </a>
+              className="w-2 h-2 rounded-full bg-[#10B981]"
+              style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
+            />
+            Open to opportunities — globally
+          </span>
+          <span className="text-xs text-[#94A3B8] font-mono tracking-wider">
+            Bengaluru, India · Remote-first · IST (UTC+5:30)
+          </span>
         </motion.div>
 
-        {/* Live status panel */}
-        <motion.div
-          ref={panelRef}
-          initial={{ opacity: 0, y: 24 }}
-          animate={panelInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative rounded-xl p-6 overflow-hidden"
-          style={{
-            background: "linear-gradient(180deg, rgba(167,139,250,0.05), rgba(167,139,250,0.01))",
-            border: "1px solid rgba(167,139,250,0.14)",
-          }}
-        >
-          {/* Top accent line */}
-          <span
-            className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, #A78BFA, transparent)" }}
-          />
+        {/* Main grid */}
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
 
-          <div className="flex justify-between items-center mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6B6B8A]">
-              // PROGRAM{" "}
-              <span className="text-[#A78BFA]">OPERATING SYSTEM</span> · LIVE PORTFOLIO
-            </p>
-            <div className="hidden sm:flex gap-4 font-mono text-[10px] tracking-[0.14em] text-[#6B6B8A]">
-              <span>STATUS · <span className="text-[#6EE7B7]">GREEN</span></span>
-              <span>SYNC · LIVE</span>
-              <span>VER · 26.5.1</span>
+          {/* Left col — identity + CTAs */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-2 flex flex-col gap-6"
+          >
+            {/* Avatar */}
+            <div className="w-20 h-20 rounded-2xl gradient-bg flex items-center justify-center text-white text-2xl font-heading font-bold shadow-lg">
+              RKS
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCell label="Portfolio Value"  target={3.5}  decimals={1} prefix="$" suffix="M+" delta="multi-commercial"       active={panelInView} delay={0.15} />
-            <StatCell label="Programs Owned"   target={10}   decimals={0}             suffix="+"   delta="end-to-end"             active={panelInView} delay={0.25} />
-            <StatCell label="Budget Execution" target={99.98} decimals={2}            suffix="%"   delta="avg. across portfolio"  active={panelInView} delay={0.35} />
-            <StatCell label="Geo Coverage"     target={3}    decimals={0}             suffix="×"   delta="continents · FTS gov"   active={panelInView} delay={0.45} />
-          </div>
-        </motion.div>
+            {/* Name + title */}
+            <div>
+              <h1 className="font-heading text-3xl font-bold text-[#0F172A] leading-tight mb-1">
+                Rohit Kumar Singh
+              </h1>
+              <p className="text-sm font-semibold text-[#2563EB] tracking-wide uppercase mb-1">
+                Technical Project Manager
+              </p>
+              <p className="text-xs text-[#64748B] font-medium">
+                Data & AI Program Delivery · 5+ Years · phData
+              </p>
+            </div>
+
+            {/* Credentials */}
+            <div className="flex flex-wrap gap-2">
+              {["PSM1", "ITIL", "Innovation Award"].map((c) => (
+                <span
+                  key={c}
+                  className="text-xs font-semibold px-3 py-1 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] text-[#2563EB]"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+
+            {/* Engagement models */}
+            <div>
+              <p className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-[#94A3B8] mb-2">
+                // ENGAGEMENT MODELS
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["Fixed-Price", "Time & Materials", "Managed Services"].map((m) => (
+                  <span
+                    key={m}
+                    className="text-xs font-medium px-3 py-1 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] text-[#64748B]"
+                  >
+                    {m}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="#work"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white text-sm font-bold gradient-bg hover:opacity-90 transition-opacity"
+              >
+                See the Work →
+              </a>
+              <a
+                href="mailto:singhrohit.25119@gmail.com"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-bold border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#EFF6FF] transition-colors"
+              >
+                Get in Touch ✉
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Right col — value prop + stats */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-3"
+          >
+            {/* Value prop headline */}
+            <p className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-4">
+              // WHAT I DELIVER
+            </p>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-[#0F172A] leading-snug mb-4">
+              I take complex{" "}
+              <span className="gradient-text">data & AI programs</span>{" "}
+              from ambiguous brief to delivered outcome — on time, on budget, with full governance.
+            </h2>
+            <p className="text-base text-[#64748B] leading-relaxed mb-4">
+              Most projects don&apos;t fail because of bad engineering. They fail because of{" "}
+              <strong className="text-[#0F172A] font-semibold">unclear scope, untracked dependencies, unmanaged budget, and no one owning the critical path.</strong>{" "}
+              That&apos;s exactly what I fix.
+            </p>
+            <p className="text-base text-[#64748B] leading-relaxed mb-8 border-l-4 border-[#2563EB] pl-4 italic">
+              The engineering belongs to the team. The plan, the controls, the cross-functional
+              alignment, and the outcome — that belongs to me.
+            </p>
+
+            {/* Stats grid */}
+            <div ref={statsRef} className="grid grid-cols-2 gap-3">
+              {stats.map((stat, i) => (
+                <StatCard
+                  key={stat.label}
+                  stat={stat}
+                  active={statsInView}
+                  delay={0.1 + i * 0.1}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Industries marquee */}
-      <div
-        className="relative py-5 overflow-hidden"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-      >
+      <div className="relative border-t border-[#E2E8F0] py-4 overflow-hidden bg-white z-20">
         {/* Fade masks */}
-        <span className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(90deg, #0A0A12, transparent)" }} />
-        <span className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(-90deg, #0A0A12, transparent)" }} />
-
+        <span className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />
+        <span className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-white to-transparent" />
         <div className="flex animate-marquee">
-          {[...industries, ...industries].map(([name, sub], i) => (
-            <span key={i} className="inline-flex items-center gap-2 px-6 shrink-0">
-              <span className="font-display text-[20px] font-normal text-[#A8A4C7] tracking-[-0.01em]">{name}</span>
-              <span className="font-display italic text-[16px] text-[#A78BFA]">{sub}</span>
-              <span className="text-[#6B6B8A] ml-4">◆</span>
+          {[...industries, ...industries].map((ind, i) => (
+            <span key={i} className="inline-flex items-center gap-3 px-5 shrink-0">
+              <span className="text-sm font-semibold text-[#334155]">{ind}</span>
+              <span className="text-[#2563EB]">·</span>
             </span>
           ))}
         </div>

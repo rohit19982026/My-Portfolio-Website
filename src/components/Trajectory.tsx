@@ -9,7 +9,7 @@ const roles = [
     title: "Project Manager, Data Platform Analytics",
     org: "phData · Snowflake Elite Partner · Bengaluru",
     current: true,
-    color: "#A78BFA",
+    color: "#2563EB",
     bullets: [
       "Run PMO governance across 4–6 concurrent Data Platform and Analytics programs — RACI maintained from kickoff through delivery close, WBS tracked throughout, decision logs updated every sprint.",
       "Own full financial management for all active programs — monthly invoicing, budget forecast vs. actuals, burn-down reporting, and variance flags to client PMO and internal leadership.",
@@ -26,7 +26,7 @@ const roles = [
     title: "Change Manager — IT Infrastructure",
     org: "British Telecom (BT) · Kolkata",
     current: false,
-    color: "#6EE7B7",
+    color: "#06B6D4",
     bullets: [
       "Managed ITIL-compliant IT infrastructure change programs — CAB governance, risk assessment frameworks, rollback planning, and post-implementation validation for 50+ changes annually. Maintained 99.9% uptime across critical telecom infrastructure.",
       "Owned cross-functional stakeholder communication for all change events — pre-change briefings, real-time status updates during change windows, and post-implementation reports to business and technology leadership.",
@@ -62,7 +62,7 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="trajectory" className="py-24 bg-[#0A0A12]">
+    <section id="trajectory" className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -73,19 +73,20 @@ export default function Trajectory() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
               05 / TRAJECTORY
             </span>
           </div>
           <h2
-            className="font-display font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
+            className="font-heading font-bold tracking-tight leading-tight mb-4"
+            style={{ fontSize: "clamp(36px, 5vw, 60px)" }}
           >
-            The <span className="gradient-text italic font-normal">seat</span><br />I sit in.
+            Where I&apos;ve been,{" "}
+            <span className="gradient-text">what I built.</span>
           </h2>
-          <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
-            5+ years owning programs — not participating in them. Full PMO lifecycle from
-            presales scoping through delivery close.
+          <p className="text-base text-[#64748B] max-w-xl leading-relaxed">
+            5+ years owning programs — not participating in them. Full lifecycle from
+            presales scoping through delivery close, with financial governance at every stage.
           </p>
         </motion.div>
 
@@ -93,11 +94,7 @@ export default function Trajectory() {
           {/* Work history */}
           <div className="lg:col-span-2">
             <div className="relative">
-              <div
-                className="absolute left-0 top-2 bottom-2 w-px"
-                style={{ background: "linear-gradient(180deg, #A78BFA, rgba(167,139,250,0.1))" }}
-              />
-
+              <div className="absolute left-0 top-2 bottom-2 w-px bg-[#BFDBFE]" />
               <div className="space-y-12">
                 {roles.map((role, i) => (
                   <motion.div
@@ -108,41 +105,30 @@ export default function Trajectory() {
                     className="pl-8 relative"
                   >
                     <div
-                      className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-[#0A0A12] -translate-x-1/2"
+                      className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-white -translate-x-1/2"
                       style={{ backgroundColor: role.color }}
                     />
 
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A]">
+                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8]">
                         {role.period}
                       </p>
                       {role.current && (
-                        <span
-                          className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wide"
-                          style={{ background: "rgba(110,231,183,0.1)", color: "#6EE7B7", border: "1px solid rgba(110,231,183,0.25)" }}
-                        >
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wide bg-[#ECFDF5] text-[#10B981] border border-[#10B981]/30">
                           CURRENT
                         </span>
                       )}
                     </div>
 
-                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-[#EDE9FE] mb-1">
-                      {role.title}
-                    </h3>
-                    <p
-                      className="font-mono text-[11px] font-bold uppercase tracking-wider mb-5"
-                      style={{ color: role.color }}
-                    >
+                    <h3 className="font-heading text-xl font-bold text-[#0F172A] mb-0.5">{role.title}</h3>
+                    <p className="font-mono text-[11px] font-bold uppercase tracking-wider mb-4" style={{ color: role.color }}>
                       {role.org}
                     </p>
 
-                    <ul className="space-y-3 mb-5">
+                    <ul className="space-y-2.5 mb-5">
                       {role.bullets.map((b, bi) => (
-                        <li key={bi} className="flex gap-3 text-[13.5px] text-[#A8A4C7] leading-relaxed">
-                          <span
-                            className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full"
-                            style={{ backgroundColor: role.color }}
-                          />
+                        <li key={bi} className="flex gap-2.5 text-sm text-[#64748B] leading-relaxed">
+                          <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.color }} />
                           {b}
                         </li>
                       ))}
@@ -152,13 +138,8 @@ export default function Trajectory() {
                       {role.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="font-mono text-[10px] px-2.5 py-1 rounded-full font-semibold"
-                          style={{
-                            borderColor: `${role.color}35`,
-                            backgroundColor: `${role.color}0D`,
-                            border: `1px solid ${role.color}35`,
-                            color: role.color,
-                          }}
+                          className="font-mono text-[10px] px-2.5 py-1 rounded-full font-semibold border"
+                          style={{ borderColor: `${role.color}35`, backgroundColor: `${role.color}0D`, color: role.color }}
                         >
                           {tag}
                         </span>
@@ -178,44 +159,27 @@ export default function Trajectory() {
             className="space-y-5"
           >
             {/* Education */}
-            <div
-              className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
-            >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
-                // EDUCATION
-              </p>
-              <p className="font-display font-bold text-[#EDE9FE] text-[15px] leading-snug mb-1">
-                {education.degree}
-              </p>
-              <p className="font-mono text-[11px] text-[#A8A4C7] font-medium">{education.institution}</p>
-              <p className="font-mono text-[11px] text-[#6B6B8A] mt-0.5">{education.year} · {education.grade}</p>
+            <div className="p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#2563EB] mb-3">// EDUCATION</p>
+              <p className="font-heading font-bold text-[#0F172A] text-sm leading-snug mb-1">{education.degree}</p>
+              <p className="text-xs text-[#334155] font-medium">{education.institution}</p>
+              <p className="text-xs text-[#64748B] mt-0.5">{education.year} · {education.grade}</p>
             </div>
 
             {/* Certifications */}
-            <div
-              className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
-            >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
-                // CERTIFICATIONS & COURSES
-              </p>
+            <div className="p-5 rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF]">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#2563EB] mb-3">// CERTIFICATIONS & COURSES</p>
               <ul className="space-y-2.5">
                 {certifications.map((c) => (
                   <li key={c.name} className="flex items-start gap-2">
-                    <span
-                      className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0"
-                      style={
-                        c.type === "cert"
-                          ? { background: "#A78BFA", color: "#0A0A12" }
-                          : { background: "rgba(255,255,255,0.07)", color: "#6B6B8A" }
-                      }
-                    >
+                    <span className={`mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0 ${
+                      c.type === "cert" ? "bg-[#2563EB] text-white" : "bg-[#E2E8F0] text-[#64748B]"
+                    }`}>
                       {c.type === "cert" ? "CERT" : "COURSE"}
                     </span>
                     <div>
-                      <p className="font-heading text-[12px] font-semibold text-[#EDE9FE] leading-tight">{c.name}</p>
-                      <p className="font-mono text-[10px] text-[#6B6B8A]">{c.issuer}</p>
+                      <p className="text-xs font-semibold text-[#0F172A] leading-tight">{c.name}</p>
+                      <p className="font-mono text-[10px] text-[#94A3B8]">{c.issuer}</p>
                     </div>
                   </li>
                 ))}
@@ -223,17 +187,12 @@ export default function Trajectory() {
             </div>
 
             {/* Award */}
-            <div
-              className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.05)" }}
-            >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#FBBF24" }}>
-                // AWARD
-              </p>
-              <p className="font-display font-bold text-[#EDE9FE] text-[14px] mb-2 flex items-center gap-2">
+            <div className="p-5 rounded-2xl border-2 border-[#F59E0B]/40 bg-[#FFFBEB]">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#F59E0B] mb-2">// AWARD</p>
+              <p className="font-heading font-bold text-[#0F172A] text-sm mb-2 flex items-center gap-2">
                 🏆 {award.title}
               </p>
-              <p className="text-[12.5px] text-[#A8A4C7] leading-relaxed">{award.desc}</p>
+              <p className="text-xs text-[#64748B] leading-relaxed">{award.desc}</p>
             </div>
           </motion.div>
         </div>
