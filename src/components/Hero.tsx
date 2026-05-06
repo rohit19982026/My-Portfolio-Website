@@ -184,18 +184,20 @@ export default function Hero() {
               // WHAT I DELIVER
             </p>
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-[#0F172A] leading-snug mb-4">
-              I take complex{" "}
-              <span className="gradient-text">data & AI programs</span>{" "}
-              from ambiguous brief to delivered outcome — on time, on budget, with full governance.
+              Six{" "}
+              <span className="gradient-text">data platform programs</span>.{" "}
+              $3.5M+ in contract value. Every delivery date met, every margin target protected.
             </h2>
             <p className="text-base text-[#64748B] leading-relaxed mb-4">
-              Most projects don&apos;t fail because of bad engineering. They fail because of{" "}
-              <strong className="text-[#0F172A] font-semibold">unclear scope, untracked dependencies, unmanaged budget, and no one owning the critical path.</strong>{" "}
-              That&apos;s exactly what I fix.
+              Not a coordinator.{" "}
+              <strong className="text-[#0F172A] font-semibold">A delivery architect</strong>{" "}
+              who instruments budget burn like a P&amp;L owner, builds change-order business cases before teams hit funding cliffs, and closed{" "}
+              <strong className="text-[#0F172A] font-semibold">$831K in scope expansion</strong>{" "}
+              mid-engagement — approved in 10 business days.
             </p>
             <p className="text-base text-[#64748B] leading-relaxed mb-8 border-l-4 border-[#2563EB] pl-4 italic">
-              The engineering belongs to the team. The plan, the controls, the cross-functional
-              alignment, and the outcome — that belongs to me.
+              The engineering belongs to the team. The plan, the controls, the commercial
+              outcome — that belongs to me.
             </p>
 
             {/* Stats grid */}

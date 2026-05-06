@@ -11,13 +11,13 @@ const roles = [
     current: true,
     color: "#2563EB",
     bullets: [
-      "Run PMO governance across 4–6 concurrent Data Platform and Analytics programs — RACI maintained from kickoff through delivery close, WBS tracked throughout, decision logs updated every sprint.",
-      "Own full financial management for all active programs — monthly invoicing, budget forecast vs. actuals, burn-down reporting, and variance flags to client PMO and internal leadership.",
-      "Manage C-level, VP, and Technical Director stakeholders on the client side — weekly status reporting, QBR facilitation, and escalation management.",
-      "Own presales-to-delivery lifecycle — review technical scope with Principal Architects during presales, size engineering effort, structure SOWs for delivery governance from day one.",
-      "Identify and develop account expansion opportunities — QBRs consistently surface new Analytics, GenAI, and data platform workstreams through structured discovery.",
-      "Built AI agents using Glean (Salesforce, Slack, Google Drive MCP connectors), Claude, and n8n — automated project provisioning from signed SOWs, cross-program financial status rollup, and executive Slack updates.",
-      "Maintain program-level risk registers with escalation protocols — each risk documented with probability, impact, owner, mitigation plan, and escalation trigger.",
+      "Managed 4–6 concurrent data platform programs simultaneously — $3.5M+ total portfolio value, zero programs in red status across 3+ years of delivery.",
+      "Maintained 99.98% average budget execution across all active programs — EAC/ETC/CPI tracking, monthly burn forecasting, and variance escalations before they became client conversations.",
+      "Closed $831K in mid-engagement scope expansion on a single program — built the commercial case, presented to client CFO and VP Engineering, secured approval in 10 business days.",
+      "Cleared 17 external blockers in 8 weeks on a stalled $1.37M engagement — triggered VP-level escalation with data, not complaints; engineering velocity recovered within two sprints.",
+      "Cut UAT cycle from 11 to 4 days on a managed retainer by publishing approval-latency metrics to client leadership — not by improving testing, but by making the delay visible to people with authority to act.",
+      "Built production AI agents (Glean + Claude + n8n) that cut project provisioning from 3 hours to 15 minutes, automated weekly cross-program status reporting, and triggered client Slack notifications without manual intervention — saving 5+ hours per week in PM overhead.",
+      "Owned presales-to-delivery scoping on 10+ engagements — reviewed technical scope with Principal Architects, sized engineering effort, and structured SOWs with change-control governance that held under 14 undocumented scope additions.",
     ],
     tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "Scrum Master (PSM1)", "AI Agent Builder"],
   },
@@ -28,9 +28,8 @@ const roles = [
     current: false,
     color: "#06B6D4",
     bullets: [
-      "Managed ITIL-compliant IT infrastructure change programs — CAB governance, risk assessment frameworks, rollback planning, and post-implementation validation for 50+ changes annually. Maintained 99.9% uptime across critical telecom infrastructure.",
-      "Owned cross-functional stakeholder communication for all change events — pre-change briefings, real-time status updates during change windows, and post-implementation reports to business and technology leadership.",
-      "ITIL governance, PMO documentation standards, structured change delivery discipline, and financial impact assessment frameworks all carried directly into data platform program management.",
+      "Maintained 99.9% uptime across critical telecom infrastructure — CAB governance, risk assessment, and rollback planning for 50+ changes annually with zero unplanned outages attributable to change events.",
+      "Owned stakeholder communication across all change events — pre-change briefings, real-time status during windows, and post-implementation reports to business and technology leadership.",
     ],
     tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Cross-functional Communication"],
   },
@@ -54,7 +53,7 @@ const certifications = [
 
 const award = {
   title: "phData Innovation Award",
-  desc: "Recognised for building production AI agents (Glean + Claude + n8n) that automated project provisioning from signed SOWs, generated weekly program status reports, and sent automated client notifications to email and Slack.",
+  desc: "Recognised for building production AI agents (Glean + Claude + n8n) that cut project provisioning from 3 hours to 15 minutes, automated weekly status reporting across 4+ active programs, and triggered client Slack notifications without manual intervention — saving 5+ hours of PM overhead per week.",
 };
 
 export default function Trajectory() {
