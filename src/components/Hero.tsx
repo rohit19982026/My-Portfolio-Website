@@ -19,7 +19,7 @@ function useCounter(target: number, decimals: number, active: boolean) {
   useEffect(() => {
     if (!active) return;
     const start = performance.now();
-    const dur = 1600;
+    const dur = 1400;
     const tick = (now: number) => {
       const t = Math.min((now - start) / dur, 1);
       const eased = 1 - Math.pow(1 - t, 3);
@@ -31,12 +31,12 @@ function useCounter(target: number, decimals: number, active: boolean) {
   return val;
 }
 
-function StatCell({
+function StatCard({
   label,
   target,
   decimals,
-  prefix,
-  suffix,
+  prefix = "",
+  suffix = "",
   sub,
   active,
   delay,
@@ -53,25 +53,21 @@ function StatCell({
   const val = useCounter(target, decimals, active);
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={active ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay }}
-      className="p-4 relative"
+      transition={{ duration: 0.5, delay }}
+      className="rounded-xl p-5"
       style={{
-        background: "rgba(0,0,0,0.3)",
-        border: "1px solid rgba(255,255,255,0.06)",
-        borderRadius: 10,
+        background: "#FFFFFF",
+        border: "1px solid #EAE6F4",
+        boxShadow: "0 1px 4px rgba(109,40,217,0.05), 0 2px 12px rgba(0,0,0,0.03)",
       }}
     >
-      <span
-        className="absolute bottom-0 left-0 h-[2px] w-[55%] rounded-bl-[10px]"
-        style={{ background: "linear-gradient(90deg, #A78BFA, transparent)" }}
-      />
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#6B6B8A] mb-2">{label}</p>
-      <p className="font-display text-[34px] leading-none font-bold tracking-tight text-[#EDE9FE]">
+      <p className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#9090A8] mb-2">{label}</p>
+      <p className="font-display text-[32px] leading-none font-bold tracking-tight text-[#111118]">
         {prefix}{val}{suffix}
       </p>
-      <p className="mt-2 font-mono text-[10px] tracking-[0.08em] text-[#6B6B8A]">{sub}</p>
+      <p className="mt-2 text-[11px] text-[#9090A8]">{sub}</p>
     </motion.div>
   );
 }
@@ -79,31 +75,24 @@ function StatCell({
 export default function Hero() {
   const proofRef = useRef(null);
   const statsRef = useRef(null);
-  const proofInView = useInView(proofRef, { once: true, margin: "-60px" });
-  const statsInView = useInView(statsRef, { once: true, margin: "-60px" });
+  const proofInView = useInView(proofRef, { once: true, margin: "-40px" });
+  const statsInView = useInView(statsRef, { once: true, margin: "-40px" });
 
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] bg-[#0A0A12] relative overflow-hidden">
-      {/* Grid */}
-      <div className="absolute inset-0 hero-grid pointer-events-none" />
-
-      {/* Glow orbs */}
+    <section
+      className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden"
+      style={{ background: "#FAFAF8" }}
+    >
+      {/* Faint ambient glow — top right, barely visible */}
       <div
-        className="absolute pointer-events-none rounded-full"
+        className="absolute pointer-events-none"
         style={{
-          width: 560, height: 560,
-          background: "#8B5CF6", opacity: 0.1,
-          filter: "blur(90px)", top: -180, left: -80,
-          animation: "orb-float 14s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          width: 440, height: 440,
-          background: "#F0ABFC", opacity: 0.07,
-          filter: "blur(80px)", top: 340, right: -120,
-          animation: "orb-float-2 18s ease-in-out infinite",
+          width: 700,
+          height: 700,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(109,40,217,0.07) 0%, transparent 70%)",
+          top: -200,
+          right: -200,
         }}
       />
 
@@ -113,226 +102,187 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] text-[#A8A4C7] w-fit"
-          style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.06)" }}
+          transition={{ duration: 0.4 }}
+          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-[11px] font-mono tracking-[0.14em] text-[#5A5A78] w-fit"
+          style={{ background: "#F0EDFB", border: "1px solid #DDD6FE" }}
         >
           <span
-            className="w-2 h-2 rounded-full bg-[#6EE7B7]"
-            style={{ boxShadow: "0 0 10px #6EE7B7", animation: "pulse-dot 2s ease-in-out infinite" }}
+            className="w-2 h-2 rounded-full"
+            style={{
+              background: "#059669",
+              boxShadow: "0 0 8px rgba(5,150,105,0.5)",
+              animation: "pulse-dot 2s ease-in-out infinite",
+            }}
           />
           OPEN TO ROLES · BENGALURU IN · UTC+5:30
         </motion.div>
 
-        {/* Headline — two lines, distinct treatment */}
-        <div className="mb-6">
-          <motion.h1
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display leading-[0.92] tracking-[-0.03em] text-[#EDE9FE]"
-            style={{ fontSize: "clamp(52px, 9vw, 120px)" }}
-          >
-            Not a coordinator.
-          </motion.h1>
-          <motion.h1
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display leading-[0.92] tracking-[-0.03em]"
-            style={{ fontSize: "clamp(52px, 9vw, 120px)" }}
-          >
-            <span
-              className="italic font-normal"
-              style={{
-                background: "linear-gradient(90deg, #A78BFA 0%, #F0ABFC 50%, #A78BFA 100%)",
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                animation: "gradient-shift 6s linear infinite",
-              }}
-            >
-              A delivery architect.
-            </span>
-          </motion.h1>
-        </div>
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display leading-[0.93] tracking-[-0.03em] text-[#111118]"
+          style={{ fontSize: "clamp(48px, 8.5vw, 112px)" }}
+        >
+          Not a coordinator.
+        </motion.h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display leading-[0.93] tracking-[-0.03em] mb-8"
+          style={{
+            fontSize: "clamp(48px, 8.5vw, 112px)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            color: "#6D28D9",
+          }}
+        >
+          A delivery architect.
+        </motion.h1>
 
         {/* One-line context */}
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-[17px] leading-[1.6] text-[#A8A4C7] max-w-[640px] mb-10"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-[17px] leading-[1.65] max-w-[620px] mb-10"
+          style={{ color: "#4A4A62" }}
         >
           Six data platform programs.{" "}
-          <span className="text-[#EDE9FE] font-semibold">$3.5M+ in contract value.</span>{" "}
+          <strong className="font-semibold" style={{ color: "#111118" }}>$3.5M+ in contract value.</strong>{" "}
           Every delivery date met, every margin target protected.
         </motion.p>
 
         {/* ── PROOF OF WORK CARD ── */}
         <motion.div
           ref={proofRef}
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={proofInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.08 }}
-          className="mb-10 relative rounded-xl overflow-hidden"
+          transition={{ duration: 0.65, delay: 0.05 }}
+          className="mb-10 rounded-2xl overflow-hidden"
           style={{
-            background: "linear-gradient(160deg, rgba(167,139,250,0.07), rgba(167,139,250,0.02))",
-            border: "1px solid rgba(167,139,250,0.18)",
+            background: "#FFFFFF",
+            border: "1px solid #E4DFF5",
+            borderLeft: "4px solid #6D28D9",
+            boxShadow: "0 4px 24px rgba(109,40,217,0.07), 0 1px 6px rgba(0,0,0,0.04)",
           }}
         >
-          {/* Top accent */}
-          <span
-            className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, #A78BFA, transparent 60%)" }}
-          />
-          {/* Left accent bar */}
-          <span
-            className="absolute top-0 left-0 bottom-0 w-[3px]"
-            style={{ background: "linear-gradient(180deg, #A78BFA, rgba(167,139,250,0.1))" }}
-          />
+          <div className="px-7 py-6 md:px-8 md:py-7">
+            {/* Card label */}
+            <p className="text-[10px] font-mono uppercase tracking-[0.2em] mb-5" style={{ color: "#9090A8" }}>
+              A recent example
+            </p>
 
-          <div className="pl-8 pr-6 py-6">
-            {/* Card header */}
-            <div className="flex items-center justify-between mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6B6B8A]">
-                // PROOF OF WORK ·{" "}
-                <span className="text-[#A78BFA]">EVM IN PRACTICE</span>
-              </p>
-              <span
-                className="font-mono text-[10px] tracking-[0.12em] text-[#6EE7B7] flex items-center gap-2"
-              >
-                <span
-                  className="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"
-                  style={{ animation: "ticker-blink 1.4s ease-in-out infinite" }}
-                />
-                RESOLVED
-              </span>
-            </div>
+            {/* Story — plain prose, their exact words */}
+            <p className="text-[16px] md:text-[17px] leading-[1.75] mb-5" style={{ color: "#111118" }}>
+              On a{" "}
+              <span className="font-semibold">$1.37M program</span>, my EAC model caught a{" "}
+              <span className="font-semibold" style={{ color: "#6D28D9" }}>74%&#8209;budget&nbsp;/&nbsp;51%&#8209;scope mismatch</span>{" "}
+              six weeks before SOW expiry — long enough to build the commercial case, present to
+              the client CFO, and close an{" "}
+              <span className="font-semibold" style={{ color: "#059669" }}>$831K change order</span>{" "}
+              before anyone had to cut scope.
+            </p>
 
-            {/* Story body */}
-            <div className="grid md:grid-cols-[1fr_auto] gap-6 items-start">
-              <div className="space-y-4 font-mono text-[13px] leading-[1.7]">
-                <p className="text-[#6B6B8A]">
-                  <span className="text-[#A8A4C7]">Program ·</span>{" "}
-                  $1.37M Snowflake data platform migration
-                </p>
-
-                <div>
-                  <p className="text-[#6B6B8A] mb-1">EAC model surfaced, six weeks before SOW expiry:</p>
-                  <div className="pl-4 space-y-1" style={{ borderLeft: "2px solid rgba(167,139,250,0.25)" }}>
-                    <p>
-                      <span className="text-[#F0ABFC] font-bold">74%</span>
-                      <span className="text-[#6B6B8A]"> budget consumed</span>
-                    </p>
-                    <p>
-                      <span className="text-[#F0ABFC] font-bold">51%</span>
-                      <span className="text-[#6B6B8A]"> scope delivered</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-[#6B6B8A] mb-1">Response:</p>
-                  <div className="pl-4 space-y-1" style={{ borderLeft: "2px solid rgba(110,231,183,0.25)" }}>
-                    <p className="text-[#A8A4C7]">→ Built the commercial case</p>
-                    <p className="text-[#A8A4C7]">→ Presented to client CFO</p>
-                    <p className="text-[#A8A4C7]">→ Closed{" "}
-                      <span className="text-[#6EE7B7] font-bold">$831K change order</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Outcome callout */}
-              <div
-                className="shrink-0 rounded-lg p-4 text-center min-w-[140px]"
-                style={{
-                  background: "rgba(110,231,183,0.06)",
-                  border: "1px solid rgba(110,231,183,0.15)",
-                }}
-              >
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6B6B8A] mb-2">Change order</p>
-                <p className="font-display text-[40px] font-bold leading-none text-[#6EE7B7] tracking-tight">$831K</p>
-                <p className="font-mono text-[10px] text-[#6B6B8A] mt-2">no scope cuts</p>
-              </div>
-            </div>
-
-            {/* Closing line */}
             <p
-              className="mt-5 pt-4 font-mono text-[11px] tracking-[0.08em] text-[#6B6B8A] italic"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+              className="text-[14px] italic mb-6"
+              style={{ color: "#9090A8" }}
             >
               That&apos;s what financial governance looks like in practice.
             </p>
+
+            {/* Outcome metrics row */}
+            <div
+              className="flex flex-wrap gap-x-8 gap-y-3 pt-5"
+              style={{ borderTop: "1px solid #F0EDF8" }}
+            >
+              <div>
+                <p className="font-display text-[28px] font-bold leading-none tracking-tight" style={{ color: "#059669" }}>$831K</p>
+                <p className="text-[11px] mt-1" style={{ color: "#9090A8" }}>change order closed</p>
+              </div>
+              <div>
+                <p className="font-display text-[28px] font-bold leading-none tracking-tight" style={{ color: "#6D28D9" }}>6 weeks</p>
+                <p className="text-[11px] mt-1" style={{ color: "#9090A8" }}>before SOW expiry</p>
+              </div>
+              <div>
+                <p className="font-display text-[28px] font-bold leading-none tracking-tight" style={{ color: "#111118" }}>Zero</p>
+                <p className="text-[11px] mt-1" style={{ color: "#9090A8" }}>scope cuts</p>
+              </div>
+            </div>
           </div>
         </motion.div>
 
         {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.45 }}
           className="flex flex-wrap gap-3 mb-12"
         >
           <a
             href="#work"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110 active:scale-95"
-            style={{ background: "#A78BFA", boxShadow: "0 0 28px rgba(167,139,250,0.35)" }}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-[12px] font-mono font-bold uppercase tracking-[0.12em] transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+            style={{
+              background: "#6D28D9",
+              color: "#FFFFFF",
+              boxShadow: "0 4px 20px rgba(109,40,217,0.3)",
+            }}
           >
             See all six programs →
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-[#EDE9FE] transition-all duration-200 hover:bg-[rgba(167,139,250,0.08)]"
-            style={{ border: "1px solid rgba(167,139,250,0.3)" }}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-[12px] font-mono font-bold uppercase tracking-[0.12em] transition-all duration-200 hover:bg-[#F0EDFB]"
+            style={{
+              border: "1px solid #C4B5FD",
+              color: "#4A4A62",
+            }}
           >
             Email me ✉
           </a>
         </motion.div>
 
-        {/* Stats panel */}
+        {/* Stats grid */}
         <motion.div
           ref={statsRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={statsInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="relative rounded-xl p-5 overflow-hidden"
-          style={{
-            background: "linear-gradient(180deg, rgba(167,139,250,0.04), rgba(167,139,250,0.01))",
-            border: "1px solid rgba(167,139,250,0.1)",
-          }}
+          initial={{ opacity: 0 }}
+          animate={statsInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-3"
         >
-          <span
-            className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, #A78BFA, transparent)" }}
-          />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCell label="Portfolio Value"   target={3.5}   decimals={1} prefix="$" suffix="M+" sub="across 6 programs"           active={statsInView} delay={0.1} />
-            <StatCell label="Data Programs"      target={6}     decimals={0}             suffix=""   sub="end-to-end ownership"        active={statsInView} delay={0.2} />
-            <StatCell label="Budget Execution"   target={99.98} decimals={2}            suffix="%"  sub="avg. across portfolio"        active={statsInView} delay={0.3} />
-            <StatCell label="Largest CO Closed"  target={831}   decimals={0} prefix="$" suffix="K"  sub="from EAC catch, no scope cut" active={statsInView} delay={0.4} />
-          </div>
+          <StatCard label="Portfolio Value"  target={3.5}   decimals={1} prefix="$" suffix="M+" sub="across 6 programs"            active={statsInView} delay={0.08} />
+          <StatCard label="Data Programs"    target={6}     decimals={0}                         sub="end-to-end ownership"         active={statsInView} delay={0.16} />
+          <StatCard label="Budget Execution" target={99.98} decimals={2}             suffix="%"  sub="avg. across portfolio"         active={statsInView} delay={0.24} />
+          <StatCard label="Largest CO"       target={831}   decimals={0} prefix="$" suffix="K"  sub="no scope cuts"                active={statsInView} delay={0.32} />
         </motion.div>
 
       </div>
 
       {/* Industries marquee */}
       <div
-        className="relative py-5 overflow-hidden"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+        className="relative py-4 overflow-hidden"
+        style={{
+          borderTop: "1px solid #EAE6F4",
+          borderBottom: "1px solid #EAE6F4",
+          background: "#F5F3FF",
+        }}
       >
-        <span className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(90deg, #0A0A12, transparent)" }} />
-        <span className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(-90deg, #0A0A12, transparent)" }} />
+        <span
+          className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(90deg, #F5F3FF, transparent)" }}
+        />
+        <span
+          className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(-90deg, #F5F3FF, transparent)" }}
+        />
         <div className="flex animate-marquee">
           {[...industries, ...industries].map(([name, sub], i) => (
-            <span key={i} className="inline-flex items-center gap-2 px-6 shrink-0">
-              <span className="font-display text-[19px] font-normal text-[#A8A4C7] tracking-[-0.01em]">{name}</span>
-              <span className="font-display italic text-[15px] text-[#A78BFA]">{sub}</span>
-              <span className="text-[#6B6B8A] ml-4">◆</span>
+            <span key={i} className="inline-flex items-center gap-2 px-5 shrink-0">
+              <span className="font-display text-[17px] font-normal tracking-tight" style={{ color: "#4A4A62" }}>{name}</span>
+              <span className="font-display italic text-[14px]" style={{ color: "#6D28D9" }}>{sub}</span>
+              <span className="ml-3" style={{ color: "#C4B5FD" }}>◆</span>
             </span>
           ))}
         </div>
