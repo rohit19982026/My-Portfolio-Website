@@ -58,7 +58,7 @@ export default function Trajectory() {
         {/* Header */}
         <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#06B6D4" }}>
               04 / TRAJECTORY
             </span>
           </div>

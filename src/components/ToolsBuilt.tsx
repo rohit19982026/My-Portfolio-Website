@@ -56,12 +56,12 @@ const tools = [
 
 export default function ToolsBuilt() {
   return (
-    <section id="tools" className="py-24 bg-white">
+    <section id="tools" className="py-24" style={{ background: "#F9F8F6" }}>
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#10B981" }}>
               03 / TOOLS I&apos;VE BUILT
             </span>
           </div>
@@ -84,7 +84,7 @@ export default function ToolsBuilt() {
         {/* EOM Billing Skill — featured */}
         <div
           className="reveal rounded-2xl p-8 mb-8"
-          style={{ border: "2px solid #10B981", background: "#ffffff", animationDelay: "0.1s" }}
+          style={{ border: "2px solid #10B981", background: "#ffffff", animationDelay: "0.1s", boxShadow: "0 4px 24px rgba(16,185,129,0.1)" }}
         >
           <div className="grid md:grid-cols-3 gap-8 items-center">
             <div className="md:col-span-2">
