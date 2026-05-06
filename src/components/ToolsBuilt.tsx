@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -43,7 +45,6 @@ const agents = [
 export default function ToolsBuilt() {
   return (
     <section id="tools" className="py-24 bg-[#0A0A12] relative overflow-hidden">
-      {/* Ambient orb */}
       <div
         className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
@@ -86,7 +87,6 @@ export default function ToolsBuilt() {
             so I spend time on decisions, not formatting.
           </p>
 
-          {/* Tech badges */}
           <div className="flex items-center gap-3 flex-wrap">
             <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#6B6B8A]">
               Built with
@@ -132,11 +132,8 @@ export default function ToolsBuilt() {
           >
             <div
               className="rounded-[15px] p-7 md:p-8"
-              style={{
-                background: "linear-gradient(145deg, #0E0E1C 0%, #0A0A14 100%)",
-              }}
+              style={{ background: "linear-gradient(145deg, #0E0E1C 0%, #0A0A14 100%)" }}
             >
-              {/* Award badge */}
               <div className="flex items-center gap-3 mb-5">
                 <span
                   className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
@@ -169,16 +166,17 @@ export default function ToolsBuilt() {
                     EOM Billing Assistant
                   </h3>
                   <p className="text-[14px] text-[#6A6A9A] leading-[1.75] mb-3">
-                    At the end of every month, PMs manually cross-check time entries, hunt for discrepancies,
-                    and write billing summaries for finance. It takes hours and it&apos;s the same process every time.
+                    At the end of every month, PMs manually cross-check time entries, hunt for
+                    discrepancies, and write billing summaries for finance. It takes hours and
+                    it&apos;s the same process every time.
                   </p>
                   <p className="text-[14px] text-[#6A6A9A] leading-[1.75]">
-                    This agent reads the raw time data, finds the issues, explains them, and writes the
-                    finance-ready summary — automatically. Deployed to the full phData PMO team in one month.
+                    This agent reads the raw time data, finds the issues, explains them, and writes
+                    the finance-ready summary — automatically. Deployed to the full phData PMO team
+                    in one month.
                   </p>
                 </div>
 
-                {/* Stats */}
                 <div className="md:col-span-2 grid grid-cols-2 gap-3">
                   {[
                     { value: "60%", label: "Time saved" },
@@ -226,7 +224,6 @@ export default function ToolsBuilt() {
                 border: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              {/* Category */}
               <span
                 className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest inline-block mb-4"
                 style={{
@@ -237,30 +234,17 @@ export default function ToolsBuilt() {
               >
                 {agent.category}
               </span>
-
-              {/* Title */}
-              <h3
-                className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE] group-hover:text-white transition-colors"
-              >
+              <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE] group-hover:text-white transition-colors">
                 {agent.title}
               </h3>
-
-              {/* What it does */}
-              <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">
-                {agent.what}
-              </p>
-
-              {/* Proof */}
-              <p
-                className="font-mono text-[10px] font-semibold"
-                style={{ color: agent.accent }}
-              >
+              <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">{agent.what}</p>
+              <p className="font-mono text-[10px] font-semibold" style={{ color: agent.accent }}>
                 → {agent.proof}
               </p>
             </motion.div>
           ))}
 
-          {/* Meta card: Agentic Workflow Designer */}
+          {/* Meta card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -286,8 +270,8 @@ export default function ToolsBuilt() {
               Agentic Workflow Designer
             </h3>
             <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">
-              A meta-skill that encodes how to design, build, and ship a new agent — prompt structure,
-              model choice, validation. New agent design to deployed: under 4 hours.
+              A meta-skill that encodes how to design, build, and ship a new agent — prompt
+              structure, model choice, validation. New agent design to deployed: under 4 hours.
             </p>
             <p className="font-mono text-[10px] font-semibold" style={{ color: "#A78BFA" }}>
               → Underlies all 5 agents above
