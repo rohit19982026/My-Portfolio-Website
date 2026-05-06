@@ -1,188 +1,174 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { caseStudies } from "@/lib/caseStudies";
 
 const modelColor: Record<string, string> = {
-  "T&M":          "#2563EB",
-  "FIXED-PRICE":  "#10B981",
-  "MANAGED":      "#06B6D4",
+  "T&M":         "#2563EB",
+  "FIXED-PRICE": "#10B981",
+  "MANAGED":     "#06B6D4",
 };
 
 const modelBg: Record<string, string> = {
-  "T&M":          "rgba(37,99,235,0.10)",
-  "FIXED-PRICE":  "rgba(16,185,129,0.10)",
-  "MANAGED":      "rgba(6,182,212,0.10)",
+  "T&M":         "rgba(37,99,235,0.08)",
+  "FIXED-PRICE": "rgba(16,185,129,0.08)",
+  "MANAGED":     "rgba(6,182,212,0.08)",
 };
 
 function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: number }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.06 }}
-      className="rounded-xl overflow-hidden card-hover"
+    <div
+      className="rounded-2xl overflow-hidden"
       style={{ border: "1px solid #E2E8F0", background: "#ffffff" }}
     >
-      {/* Row header */}
+      {/* Collapsed header */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left p-6 flex items-start gap-5 group"
+        className="w-full text-left group"
+        aria-expanded={open}
       >
-        {/* Number */}
-        <span className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#94A3B8] shrink-0 pt-1">
-          {study.number}
-        </span>
+        <div className="p-5 md:p-6">
+          {/* Top row: badges + expand icon */}
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-mono text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE]">
+                {study.type}
+              </span>
+              <span
+                className="font-mono text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest"
+                style={{ color: modelColor[study.model], backgroundColor: modelBg[study.model] }}
+              >
+                {study.model}
+              </span>
+              <span className="font-mono text-[9px] text-[#94A3B8] tracking-wider">
+                {study.year}
+              </span>
+            </div>
 
-        <div className="flex-1 min-w-0">
-          {/* Type badge + model badge */}
-          <div className="flex flex-wrap items-center gap-2 mb-2">
-            <span className="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] uppercase tracking-wider">
-              {study.type}
-            </span>
-            <span
-              className="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded uppercase tracking-wider"
-              style={{ color: modelColor[study.model], backgroundColor: modelBg[study.model] }}
-            >
-              {study.model}
-            </span>
+            {/* Desktop metrics + icon */}
+            <div className="flex items-center gap-6 shrink-0">
+              <div className="hidden lg:flex gap-5">
+                {study.metrics.slice(0, 2).map((m) => (
+                  <div key={m.label} className="text-right">
+                    <div className="font-heading text-[18px] font-bold text-[#2563EB] leading-none">
+                      {m.value}
+                    </div>
+                    <div className="font-mono text-[9px] uppercase tracking-wider text-[#94A3B8] mt-0.5">
+                      {m.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <span
+                className="text-lg text-[#CBD5E1] group-hover:text-[#2563EB] transition-all"
+                style={{
+                  transform: open ? "rotate(45deg)" : "none",
+                  transition: "transform 0.25s, color 0.2s",
+                  display: "block",
+                }}
+              >
+                ↗
+              </span>
+            </div>
           </div>
 
           {/* Title */}
-          <h3 className="font-heading text-lg md:text-xl font-bold leading-snug text-[#0F172A] group-hover:text-[#2563EB] transition-colors mb-1">
+          <h3 className="font-heading text-[17px] md:text-xl font-bold leading-snug text-[#0F172A] group-hover:text-[#2563EB] transition-colors mb-2">
             {study.title}
           </h3>
 
-          {/* Outcome / specifics line */}
-          <p className="text-[12px] text-[#64748B] mb-2 leading-relaxed font-mono">{study.outcome}</p>
-
-          {/* Industry + year */}
-          <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-[#94A3B8] tracking-[0.08em] uppercase">
-            <span>{study.industry}</span>
-            <span>·</span>
-            <span>{study.year}</span>
-          </div>
+          {/* Key detail line — plain text, not mono */}
+          <p className="text-[13px] text-[#64748B] leading-relaxed">
+            {study.outcome}
+          </p>
         </div>
-
-        {/* Quick metrics (desktop) */}
-        <div className="hidden lg:flex gap-3 shrink-0 mr-4">
-          {study.metrics.slice(0, 2).map((m) => (
-            <div key={m.label} className="text-right">
-              <div className="font-heading text-[20px] font-bold tracking-tight text-[#2563EB] leading-none">
-                {m.value}
-              </div>
-              <div className="font-mono text-[9px] uppercase tracking-wider text-[#94A3B8] mt-0.5">
-                {m.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <span
-          className="text-xl text-[#94A3B8] group-hover:text-[#2563EB] transition-all shrink-0 mt-0.5"
-          style={{ transform: open ? "rotate(45deg)" : "none", transition: "transform 0.25s, color 0.2s" }}
-        >
-          ↗
-        </span>
       </button>
 
-      {/* Expanded detail */}
+      {/* Expanded panel */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div
-              className="px-6 pb-8 pt-2"
-              style={{ borderTop: "1px solid #E2E8F0" }}
-            >
+            <div className="px-5 md:px-6 pb-7" style={{ borderTop: "1px solid #F1F5F9" }}>
+
               {/* Context */}
-              <p className="text-[14px] leading-relaxed text-[#64748B] mb-6 max-w-3xl pt-4">
+              <p className="text-[13.5px] leading-relaxed text-[#64748B] pt-5 mb-6 max-w-3xl">
                 {study.context}
               </p>
 
-              {/* The move that mattered */}
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#2563EB] mb-4">
+              {/* Moves */}
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[#2563EB] mb-4">
                 // THE MOVE THAT MATTERED
               </p>
-              <ul className="space-y-3 mb-6 max-w-3xl">
+              <ul className="space-y-4 mb-6 max-w-3xl">
                 {study.moves.map((move, i) => (
-                  <li key={i} className="flex gap-3 text-[13.5px] text-[#64748B] leading-relaxed">
-                    <span className="text-[#2563EB] font-bold shrink-0 mt-0.5">→</span>
+                  <li key={i} className="flex gap-3 text-[13px] text-[#64748B] leading-relaxed">
+                    <span className="text-[#2563EB] font-bold shrink-0 mt-0.5 text-sm">→</span>
                     {move}
                   </li>
                 ))}
               </ul>
 
-              {/* Result */}
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#10B981] mb-6 px-3 py-2 rounded w-fit"
-                style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
+              {/* Result badge */}
+              <div
+                className="inline-flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider px-4 py-2 rounded-full mb-6"
+                style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", color: "#10B981" }}
+              >
                 {study.result}
-              </p>
+              </div>
 
-              {/* Metrics + stack */}
-              <div className="flex flex-wrap gap-3 items-start">
-                <div className="flex flex-wrap gap-2">
-                  {study.metrics.map((m) => (
-                    <div
-                      key={m.label}
-                      className="px-4 py-3 rounded-xl text-center min-w-[80px]"
-                      style={{ background: "#EFF6FF", border: "1px solid #BFDBFE" }}
-                    >
-                      <div className="font-heading font-bold text-[20px] tracking-tight text-[#0F172A] leading-none">
-                        {m.value}
-                      </div>
-                      <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-[#94A3B8] mt-1">
-                        {m.label}
-                      </div>
+              {/* Metrics row */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {study.metrics.map((m) => (
+                  <div
+                    key={m.label}
+                    className="px-4 py-3 rounded-xl text-center min-w-[76px]"
+                    style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}
+                  >
+                    <div className="font-heading font-bold text-[18px] tracking-tight text-[#0F172A] leading-none">
+                      {m.value}
                     </div>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-1.5 items-center pt-1">
-                  {study.stack.map((s) => (
-                    <span
-                      key={s}
-                      className="font-mono text-[11px] font-semibold px-2.5 py-1 rounded-md"
-                      style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", color: "#64748B" }}
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
+                    <div className="font-mono text-[8px] font-bold uppercase tracking-wider text-[#94A3B8] mt-1">
+                      {m.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Stack pills */}
+              <div className="flex flex-wrap gap-1.5">
+                {study.stack.map((s) => (
+                  <span
+                    key={s}
+                    className="text-[11px] font-medium px-2.5 py-1 rounded-lg text-[#64748B]"
+                    style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}
+                  >
+                    {s}
+                  </span>
+                ))}
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
 export default function Work() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section id="work" className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
+        <div className="mb-12 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
               01 / WORK
@@ -203,29 +189,27 @@ export default function Work() {
             </strong>{" "}
             — anonymized by industry, real on the numbers and the judgment calls behind them.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Case study cards */}
-        <div className="space-y-4">
+        {/* Case study list */}
+        <div className="space-y-3">
           {caseStudies.map((study, i) => (
             <CaseStudyRow key={study.id} study={study} index={i} />
           ))}
         </div>
 
         {/* Pull quote */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 p-10 rounded-2xl text-center relative overflow-hidden"
+        <div
+          className="reveal mt-14 p-8 md:p-10 rounded-2xl text-center"
           style={{
-            background: "radial-gradient(ellipse at 30% 20%, rgba(37,99,235,0.07), transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(6,182,212,0.05), transparent 60%), #EFF6FF",
+            background: "#EFF6FF",
             border: "1px solid #BFDBFE",
+            animationDelay: "0.4s",
           }}
         >
           <p
-            className="font-heading font-normal leading-[1.18] tracking-tight text-[#0F172A] max-w-3xl mx-auto"
-            style={{ fontSize: "clamp(26px, 3.5vw, 40px)" }}
+            className="font-heading font-normal leading-[1.2] tracking-tight text-[#0F172A] max-w-3xl mx-auto"
+            style={{ fontSize: "clamp(22px, 3vw, 36px)" }}
           >
             Most PMs{" "}
             <em className="text-[#2563EB]">coordinate</em>.{" "}
@@ -233,10 +217,10 @@ export default function Work() {
             P&amp;L owner, and build AI tooling that{" "}
             <em className="text-[#2563EB]">compounds my own throughput</em>.
           </p>
-          <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-[#94A3B8]">
+          <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-[#94A3B8]">
             — THE PHILOSOPHY
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
