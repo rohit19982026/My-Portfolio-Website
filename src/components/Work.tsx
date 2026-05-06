@@ -35,34 +35,38 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
         onClick={() => setOpen(!open)}
         className="w-full text-left p-6 flex items-start gap-5 group"
       >
-        {/* Number + badge */}
-        <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
-          <span className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#94A3B8]">
-            {study.number}
-          </span>
-          <span
-            className="text-[9px] font-mono font-bold px-2 py-0.5 rounded"
-            style={{ background: "rgba(16,185,129,0.10)", color: "#10B981" }}
-          >
-            ● LIVE
-          </span>
-        </div>
+        {/* Number */}
+        <span className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#94A3B8] shrink-0 pt-1">
+          {study.number}
+        </span>
 
         <div className="flex-1 min-w-0">
-          <h3 className="font-heading text-lg md:text-[22px] font-bold leading-tight tracking-tight text-[#0F172A] group-hover:text-[#2563EB] transition-colors mb-1">
-            {study.title}
-          </h3>
-          <p className="text-xs text-[#64748B] mb-2 leading-snug">{study.outcome}</p>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-[#94A3B8] tracking-[0.1em]">
-            <span className="uppercase">{study.industry}</span>
-            <span>·</span>
-            <span>{study.year}</span>
+          {/* Type badge + model badge */}
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] uppercase tracking-wider">
+              {study.type}
+            </span>
             <span
-              className="px-2 py-0.5 rounded text-[10px] font-bold"
+              className="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded uppercase tracking-wider"
               style={{ color: modelColor[study.model], backgroundColor: modelBg[study.model] }}
             >
               {study.model}
             </span>
+          </div>
+
+          {/* Title */}
+          <h3 className="font-heading text-lg md:text-xl font-bold leading-snug text-[#0F172A] group-hover:text-[#2563EB] transition-colors mb-1">
+            {study.title}
+          </h3>
+
+          {/* Outcome / specifics line */}
+          <p className="text-[12px] text-[#64748B] mb-2 leading-relaxed font-mono">{study.outcome}</p>
+
+          {/* Industry + year */}
+          <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-[#94A3B8] tracking-[0.08em] uppercase">
+            <span>{study.industry}</span>
+            <span>·</span>
+            <span>{study.year}</span>
           </div>
         </div>
 
