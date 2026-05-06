@@ -15,17 +15,29 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState(false);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    setError(false);
     const form = e.currentTarget;
-    await fetch("https://formspree.io/f/YOUR_FORM_ID", {
-      method: "POST",
-      body: new FormData(form),
-      headers: { Accept: "application/json" },
-    });
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const inputClass =
@@ -190,6 +202,11 @@ export default function Contact() {
                 >
                   {loading ? "Sending..." : "Let's Talk →"}
                 </button>
+                {error && (
+                  <p className="text-[12px] text-center text-[#EF4444] mt-2">
+                    Something went wrong. Email me directly at singhrohit.25119@gmail.com
+                  </p>
+                )}
               </form>
             )}
           </motion.div>
