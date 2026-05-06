@@ -21,9 +21,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
                 <li key={label}>
-                  <a href={href} className="font-mono text-[12px] transition-colors" style={{ color: "#475569" }}
-                    onMouseOver={e => (e.currentTarget.style.color = "#60A5FA")}
-                    onMouseOut={e => (e.currentTarget.style.color = "#475569")}
+                  <a href={href} className="font-mono text-[12px] transition-colors hover-blue" style={{ color: "#475569" }}
                   >
                     → {label}
                   </a>
@@ -40,9 +38,7 @@ export default function Footer() {
                 ["Call", "tel:+918967725119"],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <a href={href} className="font-mono text-[12px] transition-colors" style={{ color: "#475569" }}
-                    onMouseOver={e => (e.currentTarget.style.color = "#60A5FA")}
-                    onMouseOut={e => (e.currentTarget.style.color = "#475569")}
+                  <a href={href} className="font-mono text-[12px] transition-colors hover-blue" style={{ color: "#475569" }}
                   >
                     → {label}
                   </a>

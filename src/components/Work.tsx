@@ -16,7 +16,7 @@ const modelBg: Record<string, string> = {
   "MANAGED":     "rgba(6,182,212,0.08)",
 };
 
-function CaseStudyRow({ study }: { study: typeof caseStudies[0] }) {
+function CaseStudyRow({ study }: { study: (typeof caseStudies)[0] }) {
   const [open, setOpen] = useState(false);
   const accentColor = modelColor[study.model];
 
@@ -176,7 +176,7 @@ export default function Work() {
 
         <div className="space-y-3">
           {caseStudies.map((study, i) => (
-            <CaseStudyRow key={study.id} study={study} index={i} />
+            <CaseStudyRow key={study.id} study={study} />
           ))}
         </div>
 

@@ -74,11 +74,9 @@ export default function Contact() {
                   </span>
                   <a
                     href={link.href}
-                    className="text-[14px] font-semibold transition-colors"
+                    className="text-[14px] font-semibold transition-colors hover-white"
                     style={{ color: "#94A3B8" }}
-                    onMouseOver={e => (e.currentTarget.style.color = "#ffffff")}
-                    onMouseOut={e => (e.currentTarget.style.color = "#94A3B8")}
-                  >
+                    >
                     {link.value}
                   </a>
                 </div>

@@ -89,6 +89,10 @@ h1, h2, h3, h4, h5, h6 {
   50%       { opacity: 0.8; box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
 }
 
+/* Hover utilities for server components (no JS event handlers) */
+.hover-white:hover  { color: #ffffff !important; }
+.hover-blue:hover   { color: #60A5FA !important; }
+
 /* CSS reveal animations — used by server components instead of Framer Motion */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
