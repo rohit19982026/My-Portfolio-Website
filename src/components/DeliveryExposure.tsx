@@ -63,8 +63,8 @@ export default function DeliveryExposure() {
           </h2>
           <p className="text-[15px] text-[#64748B] max-w-2xl leading-relaxed mb-4">
             I&apos;m a Technical Program Manager, not a hands-on engineer. What follows is the
-            technology surface area I&apos;ve owned delivery across — enough fluency to scope,
-            sequence, govern risk, and make defensible trade-offs in architecture conversations.
+            technology surface area I&apos;ve owned delivery across — enough to scope, sequence,
+            and govern risk without needing the engineering team to translate everything.
           </p>
           <p
             className="text-[14px] text-[#64748B] font-semibold italic px-4 py-2.5 rounded-lg w-fit"

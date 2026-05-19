@@ -297,9 +297,7 @@ export default function Work() {
             </span>.
           </h2>
           <p className="text-[15px] text-[#55557A] max-w-2xl leading-relaxed">
-            End-to-end across{" "}
-            <span className="text-[#A78BFA] font-medium">scope baseline, governance cadence, EVM tracking, change control and executive close-out</span>{" "}
-            — anonymized by industry, real on the numbers.
+            Client names are anonymized. The contracts, timelines, and outcomes are real.
           </p>
         </motion.div>
 
@@ -309,31 +307,6 @@ export default function Work() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 32, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-          className="mt-16"
-        >
-          <div className="rounded-2xl p-px" style={{ background: "linear-gradient(135deg, rgba(167,139,250,0.35) 0%, rgba(124,58,237,0.15) 35%, rgba(110,231,183,0.2) 100%)" }}>
-            <div className="rounded-[15px] px-8 py-12 md:px-14 md:py-14 text-center relative overflow-hidden" style={{ background: "linear-gradient(145deg, #0E0E1C 0%, #0A0A14 100%)" }}>
-              <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 55% at 50% 115%, rgba(124,58,237,0.14) 0%, transparent 65%)" }} />
-              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(110,231,183,0.08) 0%, transparent 70%)", filter: "blur(20px)" }} />
-              <div className="font-heading font-black leading-none select-none mb-4 relative" style={{ fontSize: "clamp(80px, 10vw, 110px)", background: "linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", opacity: 0.18, lineHeight: 0.7 }}>"</div>
-              <p className="font-heading font-light leading-[1.3] tracking-tight text-[#EDE9FE] max-w-3xl mx-auto relative" style={{ fontSize: "clamp(19px, 2.5vw, 30px)" }}>
-                Most PMs <em className="not-italic font-normal" style={{ color: "#A78BFA" }}>coordinate</em>.{" "}
-                <strong className="font-bold text-white">I architect delivery</strong>, protect margin like a P&amp;L owner, and build AI tooling that{" "}
-                <em className="not-italic font-normal" style={{ color: "#6EE7B7" }}>compounds my own throughput</em>.
-              </p>
-              <div className="mt-8 flex items-center justify-center gap-3 relative">
-                <div className="h-px w-12" style={{ background: "linear-gradient(90deg, transparent, rgba(167,139,250,0.4))" }} />
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#35355A]">The Philosophy</p>
-                <div className="h-px w-12" style={{ background: "linear-gradient(90deg, rgba(167,139,250,0.4), transparent)" }} />
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

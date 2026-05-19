@@ -11,13 +11,12 @@ const roles = [
     current: true,
     color: "#A78BFA",
     bullets: [
-      "Governed 4–5 concurrent data platform, cloud migration, and GenAI programs (Snowflake, AWS, Databricks, dbt) — full SDLC ownership from initiation through closure; program roadmaps, delivery governance, and executive stakeholder alignment across all workstreams.",
-      "Owned P&L from $500K to $5M+ — financial forecasting, revenue recognition, margin management, budget variance control, and invoicing approvals; maintained target margins across all active programs.",
-      "Served as primary executive stakeholder liaison — ran QBRs with VP and Director-level clients across 10+ enterprise accounts; translated engineering delivery into business-language reporting. Issues surfaced in the report, not on the call.",
-      "Engineered PMO automation using Glean AI agents and Google Apps Script — eliminated manual status reporting, automated OKR tracking, deployed real-time Slack program health dashboards; recovered ~8 hours/week of delivery team capacity.",
-      "Led SOW negotiation and pre-sales scoping — defined delivery estimates, validated technical feasibility, and drove commercial terms on contract extensions and new statements of work.",
-      "Managed cross-functional teams of 15–30 across data engineering, analytics, DevOps, and client stakeholders — resource allocation, capacity planning, and dependency management across concurrent workstreams.",
-      "No program missed a critical delivery milestone across 15+ engagements over 3 years.",
+      "Ran 4–5 concurrent programs at any given time — Snowflake migrations, Databricks builds, cloud data warehouse projects, GenAI tooling. Full SDLC ownership on each: scoping, delivery governance, stakeholder management, commercial close.",
+      "Owned the commercial model on each program — EAC forecasting, invoicing, margin tracking, budget variance. Contracts ranged from $500K to $5M+.",
+      "Primary exec contact on 10+ enterprise accounts. Ran QBRs with VP and Director-level stakeholders. Wrote the reporting so issues surfaced on the page, not in the meeting.",
+      "Built PMO automation using Glean AI agents and Google Apps Script — automated status reporting, OKR tracking, and Slack program health dashboards. Saved roughly 8 hours/week of PM admin time.",
+      "Involved in pre-sales scoping and SOW negotiation — defined delivery estimates, validated feasibility, drove commercial terms on extensions and new engagements.",
+      "Managed delivery teams of 15–30: data engineers, analytics, DevOps, client stakeholders. Resource allocation and dependency management across parallel workstreams.",
     ],
     tags: ["PMO Governance", "Financial Management ($5M+ P&L)", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "AI Agent Builder", "Scrum Master (PSM1)", "Risk Register"],
   },
@@ -84,7 +83,7 @@ export default function Trajectory() {
           className="mb-14"
         >
           <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA] block mb-5">
-            02 / TRAJECTORY
+            03 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
@@ -94,7 +93,7 @@ export default function Trajectory() {
               className="font-display font-bold tracking-tight leading-[0.97] mb-5"
               style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#EDE9FE" }}
             >
-              The <span style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} className="italic font-normal">seat</span><br />I sit in.
+              Where I&apos;ve{" "}<span style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} className="italic font-normal">worked</span>.
             </motion.h2>
           </div>
           <motion.p
@@ -103,7 +102,7 @@ export default function Trajectory() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed"
           >
-            5+ years owning programs end-to-end — not participating in them. From ITIL change governance at BT to full P&L ownership across 15+ data platform and AI programs at phData.
+            Five years across two companies — ITIL change governance at BT, then full program ownership across data platform and AI delivery at phData.
           </motion.p>
         </motion.div>
 

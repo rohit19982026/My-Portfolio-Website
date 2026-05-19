@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const links = [
   { label: "Work",       href: "#work" },
-  { label: "Tools",      href: "#tools" },
+  { label: "AI Skills",  href: "/ai-skills" },
   { label: "Trajectory", href: "#trajectory" },
   { label: "Contact",    href: "#contact" },
 ];
@@ -50,9 +50,6 @@ export default function Navbar() {
           </div>
           <span className="font-mono text-sm font-semibold tracking-wide" style={{ color: "#EDE9FE" }}>
             rohit.singh
-          </span>
-          <span className="font-mono text-[10px] tracking-[0.18em] hidden sm:inline" style={{ color: "#6B6B8A" }}>
-            // TPM &apos;26
           </span>
         </a>
 

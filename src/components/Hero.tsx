@@ -98,17 +98,6 @@ export default function Hero() {
 
             {/* LEFT */}
             <div>
-              {/* Hi I am */}
-              <motion.p
-                initial={{ opacity: 0, x: -20, filter: "blur(8px)" }}
-                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                transition={{ ...SPRING, delay: 0.05 }}
-                className="text-[15px] mb-1"
-                style={{ color: "#9090A8" }}
-              >
-                Hi, I am
-              </motion.p>
-
               {/* Name — clip reveal */}
               <div style={{ overflow: "hidden", marginBottom: "16px" }}>
                 <motion.h2
@@ -153,10 +142,10 @@ export default function Hero() {
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
                 style={{ color: "#6B6B8A" }}
               >
-                15+ data platform and AI programs delivered end-to-end at phData.
-                P&L from $500K to $5M+. I understand what&apos;s being built well
-                enough to catch scope risk before it becomes a commercial problem —
-                and I automate the reporting before anyone has to ask.
+                Five years running data and AI programs at phData — Snowflake
+                migrations, Databricks builds, cloud data warehouses, GenAI tooling.
+                Contracts from $500K to $5M+. My job is keeping the commercial
+                model honest and the delivery on track.
               </motion.p>
 
               {/* Social icons — stagger spring */}

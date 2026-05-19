@@ -23,7 +23,7 @@ const engagementTypes = [
   {
     icon: "🚨",
     title: "Program Rescue",
-    desc: "Scope drift, budget bleed, stalled delivery. I stabilise fast and restore exec confidence.",
+    desc: "Scope drift, budget bleed, stalled delivery. I come in, diagnose quickly, and get things moving again.",
   },
 ];
 
