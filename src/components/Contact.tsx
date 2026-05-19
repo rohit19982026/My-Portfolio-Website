@@ -18,7 +18,7 @@ const engagementTypes = [
   {
     icon: "🤖",
     title: "GenAI Program Delivery",
-    desc: "LLM integrations, AI agent builds, and AI-augmented engineering programs — delivery governance, commercial ownership, and outcome accountability applied the same as any other program.",
+    desc: "LLM integrations, AI agent builds, and AI-augmented engineering programs. Same governance and commercial ownership as any other program.",
   },
   {
     icon: "🚨",
@@ -72,7 +72,7 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">04 / LET&apos;S TALK</span>
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">06 / LET&apos;S TALK</span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
               initial={{ y: "105%" }}

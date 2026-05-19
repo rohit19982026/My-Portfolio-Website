@@ -1,20 +1,20 @@
 const featured = [
   {
     num: "01 / ARCHITECTURE",
-    title: "Delivery structure over delivery hope.",
+    title: "Build the structure around the constraints.",
     titleEmphasis: "structure",
     body: "On a 19-week regulated migration with a 3-week compliance blackout in the middle, I decomposed the WBS into 6 parallel epic tracks with explicit float at every handoff. Float held for 14 of 19 weeks. Delivered on the contractual date.",
   },
   {
     num: "02 / FINANCE",
-    title: "The commercial model is part of the job.",
+    title: "Own the commercial numbers.",
     titleEmphasis: "commercial",
     body: "On a $1.37M T&M program, my EAC model flagged a 74%-budget / 51%-scope gap six weeks before SOW expiry. I built the commercial case, presented to the client CFO and VP Engineering, and closed an $831K change order in 10 business days. Budget execution: 99.98% of SOW target.",
   },
   {
     num: "03 / RISK",
-    title: "Catching risk early.",
-    titleEmphasis: "early",
+    title: "Track what sprint velocity won’t show you.",
+    titleEmphasis: "velocity",
     body: "On a fixed-price M&A cutover, a throughput model flagged a pacing risk in week 5 with 11 weeks of runway remaining. On a managed retainer, publishing UAT aging metrics to client leadership cut sign-off from 11 days to 4 within 6 weeks.",
   },
 ];

@@ -83,7 +83,7 @@ export default function Trajectory() {
           className="mb-14"
         >
           <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">
-            03 / TRAJECTORY
+            05 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2

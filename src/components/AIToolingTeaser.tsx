@@ -52,7 +52,7 @@ export default function AIToolingTeaser() {
           className="mb-12"
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">
-            02 / AI TOOLING I&apos;VE SHIPPED
+            03 / AI TOOLING I&apos;VE SHIPPED
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
@@ -72,7 +72,7 @@ export default function AIToolingTeaser() {
             Runs in production.
           </h2>
           <p className="text-[15px] text-[#7A6E9A] max-w-lg leading-relaxed">
-            6 AI agents deployed across the phData PMO. Each encodes a domain workflow that used to run manually — now they run on demand, in seconds.
+            6 AI agents in production across the phData PMO. Four highlighted below — each replaced a manual workflow that was consuming PM time with zero judgment value.
           </p>
         </motion.div>
 

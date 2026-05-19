@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const stats = [
   { value: "15+",    label: "Programs Delivered" },
   { value: "$5M+",   label: "Largest P&L Owned" },
-  { value: "99.98%", label: "Budget Execution" },
+  { value: "99.98%", label: "Peak Budget Exec." },
   { value: "10+",    label: "Enterprise Accounts" },
 ];
 
@@ -142,10 +142,11 @@ export default function Hero() {
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
                 style={{ color: "#3D3358" }}
               >
-                Five years running data and AI programs at phData — Snowflake
-                migrations, Databricks builds, cloud data warehouses, GenAI tooling.
-                Contracts from $500K to $5M+. My job is keeping the commercial
-                model honest and the delivery on track.
+                Five years in technology delivery — ITIL change governance at BT,
+                then data and AI programs at phData: Snowflake migrations, Databricks
+                builds, cloud data warehouses, GenAI tooling. Contracts from $500K
+                to $5M+. My job is keeping the commercial model honest and the
+                delivery on track.
               </motion.p>
 
               {/* Social icons — stagger spring */}

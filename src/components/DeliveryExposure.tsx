@@ -31,6 +31,7 @@ const stacks = [
     pillBg: "rgba(124,58,237,0.08)",
     pillBorder: "rgba(124,58,237,0.2)",
     items: ["Glean Agent Builder", "Claude (Anthropic)", "n8n (workflow automation)", "Google Apps Script", "Salesforce MCP", "Slack MCP", "Google Drive MCP"],
+    note: "This stack powers the 6 AI agents currently running in production across the phData PMO.",
   },
 ];
 
@@ -106,6 +107,11 @@ export default function DeliveryExposure() {
                   </span>
                 ))}
               </div>
+              {"note" in stack && stack.note && (
+                <p className="font-mono text-[10px] mt-3 pt-3" style={{ color: "#7A6E9A", borderTop: "1px solid #E2E8F0" }}>
+                  → {stack.note}
+                </p>
+              )}
             </motion.div>
           ))}
         </div>

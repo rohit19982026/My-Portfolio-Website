@@ -8,6 +8,7 @@ const ACCENT: Record<string, string> = {
   "T&M":         "#7C3AED",
   "FIXED-PRICE": "#059669",
   "MANAGED":     "#0891B2",
+  "INTERNAL":    "#D97706",
 };
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -345,13 +346,13 @@ export default function Work() {
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">01 / WORK</p>
           <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-6" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}>
-            Six programs.{" "}
+            Seven programs.{" "}
             <span className="italic font-normal" style={{ background: "linear-gradient(130deg, #C4B5FD 0%, #A78BFA 50%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Real numbers
             </span>.
           </h2>
           <p className="text-[15px] text-[#7A6E9A] max-w-2xl leading-relaxed">
-            Client names are anonymized. The contracts, timelines, and outcomes are real.
+            Six client engagements, one internal AI platform build. Client names are anonymized. Contracts, timelines, and outcomes are real.
           </p>
         </motion.div>
 

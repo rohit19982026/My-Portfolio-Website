@@ -6,7 +6,7 @@ export interface CaseStudy {
   outcome: string;
   industry: string;
   year: string;
-  model: "T&M" | "FIXED-PRICE" | "MANAGED";
+  model: "T&M" | "FIXED-PRICE" | "MANAGED" | "INTERNAL";
   context: string;
   role: string;
   actions: string[];
@@ -36,7 +36,7 @@ export const caseStudies: CaseStudy[] = [
       "Instituted formal change control governance requiring cost estimate, timeline impact, and risk sign-off before any scope addition was actioned — processed 14 additions while protecting margin to 99.98% of SOW target",
     ],
     decisions: [
-      "Escalating to VP-level on 3 critical blockers (60+ days stalled) before the client team raised it themselves — required data-backed justification and strong executive trust, but unblocked dependencies that had been invisible to leadership",
+      "Escalating to VP-level on 3 blockers stalled 60+ days before the client team raised them — required hard data on aging and days-to-deadline to make the case, and a willingness to create short-term discomfort in the relationship. All 3 were resolved in the same meeting.",
       "Framing the $831K change order as a scope expansion the client needed, not a budget problem the vendor had — required structuring the commercial case around their business priorities, not our exposure",
     ],
     result: "✓ 96% SCOPE DELIVERED · 99.98% BUDGET EXECUTION · $831K EXPANSION APPROVED · ENGAGEMENT RENEWED",
@@ -65,7 +65,7 @@ export const caseStudies: CaseStudy[] = [
     actions: [
       "Redesigned the delivery model from velocity-based to throughput-based tracking — per-pod weekly targets by object complexity tier anchored to the M&A cutover date, surfacing a pacing risk in Week 5 with 11 weeks of runway remaining",
       "Built knowledge resilience into the team structure before Sprint 1 — critical-path role mapping, knowledge transfer plans for 7 positions, and cross-regional training; when 2 engineers exited mid-program, no sprint was disrupted",
-      "Governed AI-assisted development under compliance constraints — designed an audit-ready governance framework with review checklists and per-sprint productivity tracking, securing compliance clearance and documenting a 30% velocity uplift",
+      "Governed AI-assisted development (GitHub Copilot) under client compliance constraints — per-sprint code review checklists, output audit trails, and productivity tracking. Secured compliance sign-off and documented a 30% story-point velocity uplift across the migration sprints",
     ],
     decisions: [
       "Redesigning the tracking model at program start rather than discovering its limitations at week 10 — required upfront investment and a conversation with engineering leads who were used to velocity-based tracking",
@@ -168,13 +168,46 @@ export const caseStudies: CaseStudy[] = [
       "Treating Lunar New Year as a program design constraint to re-baseline around, not a scheduling exception to absorb in real-time — that decision was made in week 1, when there was still time to restructure the schedule",
     ],
     result: "✓ LIVE IN 6 WEEKS · PIPL-COMPLIANT · ZERO COMPLIANCE FAILURES · 3-TIMEZONE DELIVERY",
-    stack: ["Snowflake", "SAP ECC", "Oracle R12", "PIPL Compliance Framework", "Kantata"],
+    stack: ["Snowflake", "SAP ECC", "Oracle R12", "Kantata", "MS Project"],
     metrics: [
       { label: "GO-LIVE", value: "6 WEEKS" },
       { label: "TIME ZONES", value: "3" },
       { label: "COMPLIANCE", value: "PIPL" },
       { label: "COMP. FAILURES", value: "ZERO" },
       { label: "REGIONS", value: "US · IN · CN" },
+    ],
+  },
+  {
+    id: "pmo-ai-agent-platform",
+    number: "007",
+    type: "AI AUTOMATION",
+    title: "PMO AI Agent Platform — phData Internal",
+    outcome: "Glean + Claude + n8n · 6 Agents in Production · ~8hrs/week Recovered · phData Innovation Award",
+    industry: "PROFESSIONAL SERVICES · DATA & AI CONSULTING",
+    year: "2024–25",
+    model: "INTERNAL",
+    context:
+      "Designed, built, and deployed a PMO AI agent platform for the phData delivery organisation — 6 agents running on Glean Agent Builder, Claude, n8n, and Google Apps Script. The starting point: ~8 hours per week of PM time across active programs was going to billing reconciliation, status report generation, steerco deck drafting, and sprint health scoring.",
+    role:
+      "Sole designer and builder of the agent platform. Identified the automation candidates, built and tested each agent, governed the PMO-wide deployment, and owned the ongoing iteration.",
+    actions: [
+      "Built the Billing Compliance Agent to automate end-of-month invoicing reconciliation — deployed PMO-wide within 1 month, achieving >95% accuracy and recovering 60% of the time previously spent on billing compliance per program",
+      "Built the Velocity & Blocker Tracker to ingest sprint CSV data and output a ranked scorecard with PM action items — a 20–30 minute manual review per program replaced with a 2-minute automated output",
+      "Built the Project Health Scanner — runs a full health check across 4+ active programs simultaneously, surfacing RAG status and escalation candidates in the time the manual checklist took for one",
+      "Built the Steerco Comms Engine — drafts a steerco deck from program data inputs in under 20 minutes, with separate tone variants for CFO and VP Engineering audiences, replacing 2–3 hours of manual preparation per steerco",
+    ],
+    decisions: [
+      "Building on Glean Agent Builder rather than the Claude API directly — Glean was already the PMO's knowledge and search layer; native integration meant agents could draw on live program data, Salesforce, and Google Drive without a separate integration build",
+      "Sequencing with the Billing Compliance Agent first — highest PM pain, most measurable accuracy, fastest to validate. Getting the first agent to PMO-wide deployment in 1 month established credibility for the remaining builds",
+    ],
+    result: "✓ 6 AGENTS IN PRODUCTION · ~8HRS/WEEK RECOVERED · 60% BILLING TIME SAVED · phData INNOVATION AWARD",
+    stack: ["Glean Agent Builder", "Claude (Anthropic)", "n8n", "Google Apps Script", "Salesforce MCP", "Slack MCP"],
+    metrics: [
+      { label: "AGENTS BUILT", value: "6" },
+      { label: "TIME RECOVERED", value: "~8 HRS/WK" },
+      { label: "BILLING SAVED", value: "60%" },
+      { label: "ACCURACY", value: ">95%" },
+      { label: "DEPLOYMENT", value: "1 MONTH" },
     ],
   },
   {
