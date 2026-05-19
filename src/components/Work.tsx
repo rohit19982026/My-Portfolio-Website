@@ -224,39 +224,14 @@ function CaseStudyCard({
                     <p className="text-[13px] leading-[1.75] text-[#6A6A9A] max-w-3xl">{study.role}</p>
                   </motion.div>
 
-                  {/* 3. Challenges */}
+                  {/* 3. Key Actions */}
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.15 }}
                   >
-                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#F87171" }}>
-                      03 · CHALLENGES
-                    </p>
-                    <ul className="space-y-2.5 max-w-3xl">
-                      {study.challenges.map((c, i) => (
-                        <motion.li
-                          key={i}
-                          initial={{ opacity: 0, x: -12 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.18 + i * 0.06 }}
-                          className="flex gap-3 text-[13px] text-[#6A6A9A] leading-[1.7]"
-                        >
-                          <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#F87171] opacity-70" />
-                          {c}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
-
-                  {/* 4. Actions */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                  >
                     <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#60A5FA" }}>
-                      04 · ACTIONS
+                      03 · KEY ACTIONS
                     </p>
                     <ul className="space-y-3 max-w-3xl">
                       {study.actions.map((a, i) => (
@@ -264,11 +239,36 @@ function CaseStudyCard({
                           key={i}
                           initial={{ opacity: 0, x: -12 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.22 + i * 0.06 }}
+                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.18 + i * 0.06 }}
                           className="flex gap-3 text-[13px] text-[#6A6A9A] leading-[1.75]"
                         >
                           <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#60A5FA" }}>›</span>
                           {a}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </motion.div>
+
+                  {/* 4. Challenges & Decisions */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#F87171" }}>
+                      04 · CHALLENGES &amp; DECISIONS
+                    </p>
+                    <ul className="space-y-2.5 max-w-3xl">
+                      {study.decisions.map((d, i) => (
+                        <motion.li
+                          key={i}
+                          initial={{ opacity: 0, x: -12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.22 + i * 0.06 }}
+                          className="flex gap-3 text-[13px] text-[#6A6A9A] leading-[1.7]"
+                        >
+                          <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#F87171] opacity-70" />
+                          {d}
                         </motion.li>
                       ))}
                     </ul>
