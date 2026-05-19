@@ -64,14 +64,14 @@ const statItem = {
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden bg-[#0A0A12]">
+    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden bg-white">
       <div
         className="absolute pointer-events-none"
         style={{
           width: 700,
           height: 700,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)",
           top: "50%",
           right: "-160px",
           transform: "translateY(-50%)",
@@ -105,7 +105,7 @@ export default function Hero() {
                   animate={{ y: "0%" }}
                   transition={{ ...SPRING, delay: 0.12 }}
                   className="text-[22px] font-semibold"
-                  style={{ color: "#EDE9FE" }}
+                  style={{ color: "#1A0A2E" }}
                 >
                   Rohit Kumar Singh
                 </motion.h2>
@@ -140,7 +140,7 @@ export default function Hero() {
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
-                style={{ color: "#6B6B8A" }}
+                style={{ color: "#3D3358" }}
               >
                 Five years running data and AI programs at phData — Snowflake
                 migrations, Databricks builds, cloud data warehouses, GenAI tooling.
@@ -244,8 +244,8 @@ export default function Hero() {
                   className="absolute overflow-hidden rounded-full"
                   style={{
                     inset: "32px",
-                    background: "linear-gradient(160deg, #1A1A2E 0%, #0F0F18 100%)",
-                    border: "2px solid rgba(124,58,237,0.2)",
+                    background: "linear-gradient(160deg, #F5F0FF 0%, #EDE9FE 100%)",
+                    border: "2px solid rgba(124,58,237,0.25)",
                     boxShadow: "0 0 60px rgba(124,58,237,0.12) inset",
                   }}
                 >
@@ -258,7 +258,7 @@ export default function Hero() {
                     </span>
                     <span
                       className="font-mono text-[11px] tracking-[0.22em] uppercase"
-                      style={{ color: "#6B6B8A" }}
+                      style={{ color: "#7A6E9A" }}
                     >
                       Add your photo
                     </span>
@@ -290,7 +290,7 @@ export default function Hero() {
       </div>
 
       {/* STATS STRIP */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ borderTop: "1px solid rgba(124,58,237,0.08)" }}>
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             variants={statVariants}
@@ -303,12 +303,12 @@ export default function Hero() {
                 key={s.label}
                 variants={statItem}
                 className="py-6 px-5"
-                style={{ borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}
+                style={{ borderRight: i < stats.length - 1 ? "1px solid rgba(124,58,237,0.08)" : "none" }}
               >
-                <p className="font-display text-[28px] font-bold leading-none tracking-tight mb-1" style={{ color: "#A78BFA" }}>
+                <p className="font-display text-[28px] font-bold leading-none tracking-tight mb-1" style={{ color: "#7C3AED" }}>
                   {s.value}
                 </p>
-                <p className="text-[12px]" style={{ color: "#6B6B8A" }}>
+                <p className="text-[12px]" style={{ color: "#7A6E9A" }}>
                   {s.label}
                 </p>
               </motion.div>

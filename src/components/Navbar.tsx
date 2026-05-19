@@ -23,9 +23,9 @@ export default function Navbar() {
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled ? "rgba(15,15,20,0.92)" : "transparent",
+        background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(124,58,237,0.1)" : "none",
       }}
     >
       <div className="max-w-6xl mx-auto px-6 h-[64px] flex items-center justify-between">
@@ -48,7 +48,7 @@ export default function Navbar() {
               }}
             />
           </div>
-          <span className="font-mono text-sm font-semibold tracking-wide" style={{ color: "#EDE9FE" }}>
+          <span className="font-mono text-sm font-semibold tracking-wide" style={{ color: "#1A0A2E" }}>
             rohit.singh
           </span>
         </a>
@@ -59,8 +59,8 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#EDE9FE] hover:bg-[rgba(255,255,255,0.05)]"
-              style={{ color: "#A8A4C7" }}
+              className="px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#1A0A2E] hover:bg-[rgba(124,58,237,0.05)]"
+              style={{ color: "#3D3358" }}
             >
               {link.label}
             </a>
@@ -79,7 +79,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2 text-[#A8A4C7] hover:text-[#A78BFA] transition-colors"
+          className="md:hidden p-2 text-[#3D3358] hover:text-[#7C3AED] transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -98,8 +98,8 @@ export default function Navbar() {
         <div
           className="md:hidden px-6 pb-5"
           style={{
-            background: "#13131F",
-            borderBottom: "1px solid rgba(167,139,250,0.1)",
+            background: "#FFFFFF",
+            borderBottom: "1px solid rgba(124,58,237,0.1)",
           }}
         >
           {links.map((link) => (
@@ -107,8 +107,8 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="block py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#A8A4C7] hover:text-[#A78BFA] transition-colors"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+              className="block py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#3D3358] hover:text-[#7C3AED] transition-colors"
+              style={{ borderBottom: "1px solid rgba(124,58,237,0.06)" }}
             >
               {link.label}
             </a>

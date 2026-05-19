@@ -8,35 +8,35 @@ const tools = [
     category: "EOM Automation",
     title: "Billing Compliance Agent",
     proof: "60% time saved · >95% accuracy · PMO-wide deployment in 1 month",
-    accent: "#6EE7B7",
+    accent: "#059669",
   },
   {
     category: "Sprint Intelligence",
     title: "Velocity & Blocker Tracker",
     proof: "CSV → ranked scorecard + PM action items in under 2 min",
-    accent: "#A78BFA",
+    accent: "#7C3AED",
   },
   {
     category: "Program Health",
     title: "Project Health Scanner",
     proof: "Replaces a 2-hour manual checklist across 4+ active programs",
-    accent: "#67E8F9",
+    accent: "#0891B2",
   },
   {
     category: "Stakeholder Comms",
     title: "Steerco Comms Engine",
     proof: "Steerco deck drafted in under 20 min · CFO vs VP Engineering tone",
-    accent: "#FCD34D",
+    accent: "#D97706",
   },
 ];
 
 export default function AIToolingTeaser() {
   return (
-    <section id="tools" className="py-24 bg-[#0A0A12] relative overflow-hidden">
+    <section id="tools" className="py-24 bg-[#FFFFFF] relative overflow-hidden">
       <div
         className="absolute top-0 left-0 w-[600px] h-[400px] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse, rgba(167,139,250,0.06) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse, rgba(124,58,237,0.03) 0%, transparent 65%)",
           filter: "blur(1px)",
         }}
       />
@@ -51,12 +51,12 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12"
         >
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#A78BFA] mb-5">
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">
             02 / AI TOOLING I&apos;VE SHIPPED
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#EDE9FE" }}
+            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#1A0A2E" }}
           >
             Built with{" "}
             <span
@@ -71,7 +71,7 @@ export default function AIToolingTeaser() {
             <br />
             Runs in production.
           </h2>
-          <p className="text-[15px] text-[#55557A] max-w-lg leading-relaxed">
+          <p className="text-[15px] text-[#7A6E9A] max-w-lg leading-relaxed">
             6 AI agents deployed across the phData PMO. Each encodes a domain workflow that used to run manually — now they run on demand, in seconds.
           </p>
         </motion.div>
@@ -88,7 +88,7 @@ export default function AIToolingTeaser() {
               whileHover={{ y: -4, transition: { type: "spring", stiffness: 350, damping: 25 } }}
               className="rounded-2xl p-6"
               style={{
-                background: "rgba(13,13,26,0.85)",
+                background: "#FFFFFF",
                 border: `1px solid ${tool.accent}20`,
               }}
             >
@@ -102,13 +102,13 @@ export default function AIToolingTeaser() {
                 {tool.award && (
                   <span
                     className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
-                    style={{ color: "#FCD34D", background: "rgba(252,211,77,0.1)", border: "1px solid rgba(252,211,77,0.25)" }}
+                    style={{ color: "#D97706", background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.2)" }}
                   >
                     🏆 Innovation Award
                   </span>
                 )}
               </div>
-              <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE]">{tool.title}</h3>
+              <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#1A0A2E]">{tool.title}</h3>
               <p className="font-mono text-[11px] leading-relaxed" style={{ color: tool.accent }}>
                 → {tool.proof}
               </p>
@@ -135,7 +135,7 @@ export default function AIToolingTeaser() {
             See full capability diagrams
             <span style={{ fontSize: 14 }}>→</span>
           </a>
-          <p className="font-mono text-[10px] text-[#35355A] uppercase tracking-wider">
+          <p className="font-mono text-[10px] text-[#AAA0C8] uppercase tracking-wider">
             Animated flow diagrams · Architecture · Tech stack
           </p>
         </motion.div>

@@ -6,9 +6,9 @@ import { useRef } from "react";
 const stacks = [
   {
     label: "// DATA PLATFORMS DELIVERED ON",
-    color: "#2563EB",
-    pillBg: "rgba(37,99,235,0.08)",
-    pillBorder: "rgba(37,99,235,0.2)",
+    color: "#7C3AED",
+    pillBg: "rgba(124,58,237,0.08)",
+    pillBorder: "rgba(124,58,237,0.2)",
     items: ["Snowflake", "Databricks", "Amazon Redshift", "SQL Server", "Hadoop / HDFS", "SigmaBI"],
   },
   {
@@ -27,9 +27,9 @@ const stacks = [
   },
   {
     label: "// AI & AUTOMATION LAYER I'VE BUILT",
-    color: "#2563EB",
-    pillBg: "rgba(37,99,235,0.08)",
-    pillBorder: "rgba(37,99,235,0.2)",
+    color: "#7C3AED",
+    pillBg: "rgba(124,58,237,0.08)",
+    pillBorder: "rgba(124,58,237,0.2)",
     items: ["Glean Agent Builder", "Claude (Anthropic)", "n8n (workflow automation)", "Google Apps Script", "Salesforce MCP", "Slack MCP", "Google Drive MCP"],
   },
 ];
@@ -50,7 +50,7 @@ export default function DeliveryExposure() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#2563EB]">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED]">
               04 / DELIVERY EXPOSURE
             </span>
           </div>
@@ -61,14 +61,14 @@ export default function DeliveryExposure() {
             Programs I&apos;ve delivered<br />
             across <span className="gradient-text italic font-normal">these stacks</span>.
           </h2>
-          <p className="text-[15px] text-[#64748B] max-w-2xl leading-relaxed mb-4">
+          <p className="text-[15px] text-[#3D3358] max-w-2xl leading-relaxed mb-4">
             I&apos;m a Technical Program Manager, not a hands-on engineer. What follows is the
             technology surface area I&apos;ve owned delivery across — enough to scope, sequence,
             and govern risk without needing the engineering team to translate everything.
           </p>
           <p
-            className="text-[14px] text-[#64748B] font-semibold italic px-4 py-2.5 rounded-lg w-fit"
-            style={{ borderLeft: "3px solid #2563EB", background: "rgba(37,99,235,0.04)" }}
+            className="text-[14px] text-[#3D3358] font-semibold italic px-4 py-2.5 rounded-lg w-fit"
+            style={{ borderLeft: "3px solid #7C3AED", background: "rgba(124,58,237,0.04)" }}
           >
             The engineering belongs to the team. The plan, the controls, and the outcome belong to me.
           </p>
@@ -115,10 +115,10 @@ export default function DeliveryExposure() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.5 }}
-          className="font-mono text-[11px] text-[#94A3B8] rounded-xl p-4 max-w-3xl"
-          style={{ border: "1px dashed #BFDBFE" }}
+          className="font-mono text-[11px] text-[#7A6E9A] rounded-xl p-4 max-w-3xl"
+          style={{ border: "1px dashed rgba(124,58,237,0.2)" }}
         >
-          <span className="text-[#2563EB]">// </span>
+          <span className="text-[#7C3AED]">// </span>
           Read this as delivery surface area, not a technical skills inventory. My value is in
           program design, financial governance, and risk anticipation across these technologies
           — not in writing the code that runs on them.

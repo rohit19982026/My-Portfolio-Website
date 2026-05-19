@@ -21,18 +21,18 @@ const featured = [
 
 export default function Approach() {
   return (
-    <section id="approach" style={{ background: "#0F172A" }} className="py-24">
+    <section id="approach" style={{ background: "#F7F4FF" }} className="py-24">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Header */}
         <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#60A5FA" }}>
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#7C3AED" }}>
               02 / APPROACH
             </span>
           </div>
           <h2
-            className="font-heading font-bold tracking-tight leading-[0.97] mb-5 text-white"
+            className="font-heading font-bold tracking-tight leading-[0.97] mb-5 text-[#1A0A2E]"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             How I run{" "}
@@ -47,28 +47,28 @@ export default function Approach() {
               key={i}
               className="reveal p-7 rounded-2xl"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "#FFFFFF",
+                border: "1px solid rgba(124,58,237,0.12)",
                 animationDelay: `${0.1 + i * 0.1}s`,
               }}
             >
               <span
                 className="inline-block font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded mb-7"
-                style={{ color: "#60A5FA", border: "1px solid rgba(96,165,250,0.3)" }}
+                style={{ color: "#7C3AED", border: "1px solid rgba(124,58,237,0.25)" }}
               >
                 {card.num}
               </span>
-              <h3 className="font-heading text-[24px] font-bold leading-tight tracking-tight mb-4 text-white">
+              <h3 className="font-heading text-[24px] font-bold leading-tight tracking-tight mb-4 text-[#1A0A2E]">
                 {card.title.split(card.titleEmphasis).map((part, j, arr) =>
                   j < arr.length - 1 ? (
                     <span key={j}>
                       {part}
-                      <em className="not-italic" style={{ color: "#60A5FA" }}>{card.titleEmphasis}</em>
+                      <em className="not-italic" style={{ color: "#7C3AED" }}>{card.titleEmphasis}</em>
                     </span>
                   ) : part
                 )}
               </h3>
-              <p className="text-[13.5px] leading-relaxed" style={{ color: "#94A3B8" }}>{card.body}</p>
+              <p className="text-[13.5px] leading-relaxed" style={{ color: "#3D3358" }}>{card.body}</p>
             </div>
           ))}
         </div>
