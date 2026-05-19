@@ -1,8 +1,7 @@
 import Hero from "@/components/Hero";
 import Work from "@/components/Work";
 import Approach from "@/components/Approach";
-import ToolsBuilt from "@/components/ToolsBuilt";
-import AIPMOSkills from "@/components/AIPMOSkills";
+import AIToolingTeaser from "@/components/AIToolingTeaser";
 import DeliveryExposure from "@/components/DeliveryExposure";
 import Trajectory from "@/components/Trajectory";
 import Contact from "@/components/Contact";
@@ -14,8 +13,7 @@ export default function Home() {
       <Hero />
       <Work />
       <Approach />
-      <ToolsBuilt />
-      <AIPMOSkills />
+      <AIToolingTeaser />
       <DeliveryExposure />
       <Trajectory />
       <Contact />

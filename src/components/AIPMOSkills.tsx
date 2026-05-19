@@ -502,6 +502,33 @@ export default function AIPMOSkills() {
             ))}
           </div>
         </motion.div>
+
+        {/* ── CTA to dedicated page ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={flowInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="text-center mt-12"
+        >
+          <a
+            href="/ai-skills"
+            className="inline-flex items-center gap-3 px-7 py-3 rounded-full font-medium text-sm"
+            style={{
+              background: "linear-gradient(135deg,#7C3AED,#6D28D9)",
+              color: "#fff",
+              textDecoration: "none",
+              boxShadow: "0 4px 20px rgba(124,58,237,0.32)",
+              fontFamily: "monospace",
+              letterSpacing: "0.06em",
+            }}
+          >
+            Explore full skill diagrams
+            <span style={{ fontSize: 16 }}>→</span>
+          </a>
+          <p className="mt-3 text-xs" style={{ color: "#9E92C8" }}>
+            Animated flow diagrams · Capability breakdowns · Tech stack
+          </p>
+        </motion.div>
       </div>
     </section>
   );
