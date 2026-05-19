@@ -198,71 +198,125 @@ function CaseStudyCard({
                   className="mx-7"
                   style={{ height: "1px", background: `linear-gradient(90deg, transparent, ${accent}30, transparent)` }}
                 />
-                <div className="px-7 md:px-8 pt-6 pb-7 space-y-6">
-                  <motion.p
-                    initial={{ opacity: 0, filter: "blur(6px)" }}
-                    animate={{ opacity: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 0.5, delay: 0.05 }}
-                    className="text-[13px] leading-[1.8] text-[#6A6A9A] max-w-3xl"
-                  >
-                    {study.context}
-                  </motion.p>
+                <div className="px-7 md:px-8 pt-6 pb-7 space-y-7">
 
-                  <div>
-                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-4" style={{ color: accent }}>
-                      ◆  THE MOVE THAT MATTERED
+                  {/* 1. Context */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.05 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-2.5" style={{ color: accent }}>
+                      01 · CONTEXT
                     </p>
-                    <ul className="space-y-4 max-w-3xl">
-                      {study.moves.map((move, i) => (
+                    <p className="text-[13px] leading-[1.8] text-[#6A6A9A] max-w-3xl">{study.context}</p>
+                  </motion.div>
+
+                  {/* 2. Your Role */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-2.5" style={{ color: "#6EE7B7" }}>
+                      02 · YOUR ROLE
+                    </p>
+                    <p className="text-[13px] leading-[1.75] text-[#6A6A9A] max-w-3xl">{study.role}</p>
+                  </motion.div>
+
+                  {/* 3. Challenges */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.15 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#F87171" }}>
+                      03 · CHALLENGES
+                    </p>
+                    <ul className="space-y-2.5 max-w-3xl">
+                      {study.challenges.map((c, i) => (
                         <motion.li
                           key={i}
-                          initial={{ opacity: 0, x: -16, filter: "blur(6px)" }}
-                          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                          transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 + i * 0.08 }}
-                          className="flex gap-3 text-[13px] text-[#6A6A9A] leading-[1.75]"
+                          initial={{ opacity: 0, x: -12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.18 + i * 0.06 }}
+                          className="flex gap-3 text-[13px] text-[#6A6A9A] leading-[1.7]"
                         >
-                          <span className="shrink-0 font-bold mt-0.5 text-base" style={{ color: accent }}>›</span>
-                          {move}
+                          <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#F87171] opacity-70" />
+                          {c}
                         </motion.li>
                       ))}
                     </ul>
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: "spring", stiffness: 120, damping: 18, delay: 0.25 }}
-                    className="inline-flex items-center text-[9px] font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-full"
-                    style={{ background: `${accent}0E`, border: `1px solid ${accent}28`, color: accent }}
-                  >
-                    {study.result}
                   </motion.div>
 
-                  <div className="flex flex-wrap gap-3">
-                    {study.metrics.map((m, i) => (
-                      <motion.div
-                        key={m.label}
-                        initial={{ opacity: 0, scale: 0.85, y: 12 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ type: "spring", stiffness: 110, damping: 18, delay: 0.15 + i * 0.05 }}
-                        className="px-5 py-4 rounded-xl text-center"
-                        style={{ background: `linear-gradient(145deg, ${accent}0A, ${accent}05)`, border: `1px solid ${accent}20`, minWidth: "80px" }}
-                      >
-                        <div className="font-mono font-black text-[16px] tabular-nums leading-none" style={{ color: accent }}>
-                          {m.value}
-                        </div>
-                        <div className="font-mono text-[8px] font-bold uppercase tracking-wider text-[#35355A] mt-2">{m.label}</div>
-                      </motion.div>
-                    ))}
-                  </div>
+                  {/* 4. Actions */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#60A5FA" }}>
+                      04 · ACTIONS
+                    </p>
+                    <ul className="space-y-3 max-w-3xl">
+                      {study.actions.map((a, i) => (
+                        <motion.li
+                          key={i}
+                          initial={{ opacity: 0, x: -12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.22 + i * 0.06 }}
+                          className="flex gap-3 text-[13px] text-[#6A6A9A] leading-[1.75]"
+                        >
+                          <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#60A5FA" }}>›</span>
+                          {a}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </motion.div>
 
-                  <div className="flex flex-wrap gap-2">
+                  {/* 5. Outcome */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.28 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#FCD34D" }}>
+                      05 · OUTCOME
+                    </p>
+                    <div
+                      className="inline-flex items-center text-[9px] font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-full mb-4"
+                      style={{ background: `${accent}0E`, border: `1px solid ${accent}28`, color: accent }}
+                    >
+                      {study.result}
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      {study.metrics.map((m, i) => (
+                        <motion.div
+                          key={m.label}
+                          initial={{ opacity: 0, scale: 0.85, y: 8 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          transition={{ type: "spring", stiffness: 110, damping: 18, delay: 0.3 + i * 0.05 }}
+                          className="px-5 py-4 rounded-xl text-center"
+                          style={{ background: `linear-gradient(145deg, ${accent}0A, ${accent}05)`, border: `1px solid ${accent}20`, minWidth: "80px" }}
+                        >
+                          <div className="font-mono font-black text-[16px] tabular-nums leading-none" style={{ color: accent }}>
+                            {m.value}
+                          </div>
+                          <div className="font-mono text-[8px] font-bold uppercase tracking-wider text-[#35355A] mt-2">{m.label}</div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Stack */}
+                  <div className="flex flex-wrap gap-2 pt-1">
                     {study.stack.map((s) => (
                       <span key={s} className="text-[11px] font-medium px-3 py-1.5 rounded-lg text-[#5A5A7A]" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
                         {s}
                       </span>
                     ))}
                   </div>
+
                 </div>
               </motion.div>
             )}
