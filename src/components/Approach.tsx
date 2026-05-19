@@ -3,7 +3,7 @@ const featured = [
     num: "01 / ARCHITECTURE",
     title: "Delivery structure over delivery hope.",
     titleEmphasis: "structure",
-    body: "On a 19-week regulated migration with a 3-week compliance blackout in the middle, a flat delivery plan would have serialised work that could run in parallel. I decomposed the WBS into 6 parallel epic tracks with explicit float at every handoff. Float held for 14 of 19 weeks. The contractual date was met on the day it was signed for.",
+    body: "On a 19-week regulated migration with a 3-week compliance blackout in the middle, I decomposed the WBS into 6 parallel epic tracks with explicit float at every handoff. Float held for 14 of 19 weeks. Delivered on the contractual date.",
   },
   {
     num: "02 / FINANCE",
@@ -15,7 +15,7 @@ const featured = [
     num: "03 / RISK",
     title: "Catching risk early.",
     titleEmphasis: "early",
-    body: "On a fixed-price M&A cutover, a factory-model burndown flagged a pacing risk in week 5 with 11 weeks of runway remaining — before any engineer felt it. On a managed retainer, publishing UAT aging metrics cut sign-off from 11 days to 4. The data surfaced the problem while there was still time to act.",
+    body: "On a fixed-price M&A cutover, a throughput model flagged a pacing risk in week 5 with 11 weeks of runway remaining. On a managed retainer, publishing UAT aging metrics to client leadership cut sign-off from 11 days to 4 within 6 weeks.",
   },
 ];
 

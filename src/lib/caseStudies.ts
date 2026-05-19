@@ -37,7 +37,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     decisions: [
       "Escalating to VP-level on 3 critical blockers (60+ days stalled) before the client team raised it themselves — required data-backed justification and strong executive trust, but unblocked dependencies that had been invisible to leadership",
-      "Framing the $831K commercial recovery around the client's own business priorities rather than as a PM-driven renegotiation — the difference between a change order being approved in 10 days versus a drawn-out commercial dispute",
+      "Framing the $831K change order as a scope expansion the client needed, not a budget problem the vendor had — required structuring the commercial case around their business priorities, not our exposure",
     ],
     result: "✓ 96% SCOPE DELIVERED · 99.98% BUDGET EXECUTION · $831K EXPANSION APPROVED · ENGAGEMENT RENEWED",
     stack: ["MWAA (Airflow on AWS)", "dbt", "AWS", "Snowflake", "Jira / Confluence"],
@@ -59,7 +59,7 @@ export const caseStudies: CaseStudy[] = [
     year: "2025–26",
     model: "FIXED-PRICE",
     context:
-      "Led a $669K fixed-price migration of ~2,300 production data objects from Amazon Redshift to Databricks Unity Catalog against an immovable 16-week M&A cutover deadline. An 11-engineer US-India pod operating across two time zones with zero schedule buffer on a hard contractual date. On fixed-price delivery, margin is the only buffer — there is no renegotiation.",
+      "Led a $669K fixed-price migration of ~2,300 production data objects from Amazon Redshift to Databricks Unity Catalog against an immovable 16-week M&A cutover deadline. An 11-engineer US-India pod, two time zones, zero schedule buffer.",
     role:
       "Governed fixed-price delivery end-to-end — delivery model architecture, risk governance, cross-regional team management, and commercial margin protection on an M&A-deadline-constrained program.",
     actions: [
@@ -68,7 +68,7 @@ export const caseStudies: CaseStudy[] = [
       "Governed AI-assisted development under compliance constraints — designed an audit-ready governance framework with review checklists and per-sprint productivity tracking, securing compliance clearance and documenting a 30% velocity uplift",
     ],
     decisions: [
-      "Redesigning the tracking model at program start rather than discovering its limitations at week 10 — required upfront planning investment but eliminated the risk of a deadline miss that standard sprint velocity would never have predicted",
+      "Redesigning the tracking model at program start rather than discovering its limitations at week 10 — required upfront investment and a conversation with engineering leads who were used to velocity-based tracking",
       "Absorbing the 2-engineer departure mid-program rather than escalating to client or requesting timeline relief — enabled by the knowledge transfer infrastructure built in advance, protecting both margin and the client relationship",
     ],
     result: "✓ M&A CUTOVER DELIVERED ON DATE · ~2,300 OBJECTS MIGRATED · FULL MARGIN PROTECTED",
@@ -91,13 +91,13 @@ export const caseStudies: CaseStudy[] = [
     year: "2024",
     model: "FIXED-PRICE",
     context:
-      "Governed a $180.5K fixed-price migration of 189 regulated reporting objects from SQL Server to Snowflake for an investment management firm operating under financial services change-management regulations. A 19-week window with a 3-week year-end blackout mid-program and compliance approval gates on every production deployment. No schedule buffer — every over-budget hour came directly out of margin.",
+      "Governed a $180.5K fixed-price migration of 189 regulated reporting objects from SQL Server to Snowflake for an investment management firm operating under financial services change-management regulations. A 19-week window with a 3-week year-end blackout mid-program and compliance approval gates on every production deployment.",
     role:
       "Led fixed-price delivery governance — WBS architecture, schedule risk management, compliance gate sequencing, and margin protection against a zero-buffer contractual deadline.",
     actions: [
       "Architected a parallel delivery structure — 6 concurrent epic tracks with float allocations and cross-track dependency mapping, sustaining 3 tracks through the regulatory blackout on non-production work with no idle time",
       "Built a weighted completion model layered on EVM — differentiating high-complexity regulated objects from routine ones, surfacing a schedule risk 4 weeks before it would have appeared on velocity, enabling proactive resequencing while float remained",
-      "Orchestrated a pre-blackout re-baselining — front-loading vendor development and back-loading compliance gates, converting the fixed 3-week constraint into a managed schedule event with zero critical-path impact",
+      "Orchestrated a pre-blackout re-baselining 3 weeks in advance — front-loading vendor development, back-loading compliance gates, and entering the blackout with no open critical-path dependencies",
     ],
     decisions: [
       "Choosing a weighted EVM model over standard burndown — required upfront calibration effort but delivered early-warning capability that a completion count alone could not provide on a regulation-constrained migration",
@@ -132,7 +132,7 @@ export const caseStudies: CaseStudy[] = [
       "Orchestrated a cross-program governance forum, mapping infrastructure overlap and eliminating 3 duplicate components — avoiding ~$40K in rework and recovering 4 engineering weeks across both SOWs",
     ],
     decisions: [
-      "Investing 9 days in program foundation before authorising any engineering work — the short-term pressure to start delivery immediately would have created far more expensive structural failures mid-sprint",
+      "Investing 9 days in program foundation before authorising any engineering work — there was pressure to start development on day one, and holding that line required strong account-level buy-in",
       "Proactively surfacing the cross-program infrastructure overlap with account leadership rather than allowing both programs to build in parallel — required cross-team coordination and a difficult conversation, but protected budget and client trust on both engagements",
     ],
     result: "✓ SPRINT 1 ON PLAN · GREEN STATUS EVERY STEERCO · ~$40K INFRASTRUCTURE REWORK AVOIDED",
@@ -159,13 +159,13 @@ export const caseStudies: CaseStudy[] = [
     role:
       "Led multi-regional program delivery — compliance governance, go-live planning, and async stakeholder operating model design for a 3-timezone, regulation-constrained program with no schedule margin.",
     actions: [
-      "Integrated compliance governance into the delivery model before development began — every PIPL checkpoint mapped into the WBS with named owners, cycle time estimates, and entry/exit criteria, converting reactive compliance risk into a managed schedule event",
+      "Integrated compliance governance into the delivery model before development began — every PIPL checkpoint mapped into the WBS with named owners, cycle time estimates, and entry/exit criteria, so no production release reached a compliance gate unprepared",
       "Orchestrated a pre-Lunar New Year re-baselining — front-loading vendor development and back-loading client validation gates, absorbing the 2-week holiday with zero critical-path impact",
       "Designed an async-first stakeholder operating model — shared decision registers with named owners and resolution deadlines replacing synchronous steercos, enabling 3-timezone alignment without decision latency",
     ],
     decisions: [
       "Redesigning the stakeholder model to async-first rather than accepting 24–48 hour decision lag — required executive buy-in to change a familiar governance format, but eliminated a bottleneck that would have accumulated across the full 6-week window",
-      "Treating Lunar New Year as a program design constraint to re-baseline around, not a scheduling exception to manage in real-time — the difference between entering go-live week with a clean critical path versus a backlog of unresolved approvals",
+      "Treating Lunar New Year as a program design constraint to re-baseline around, not a scheduling exception to absorb in real-time — that decision was made in week 1, when there was still time to restructure the schedule",
     ],
     result: "✓ LIVE IN 6 WEEKS · PIPL-COMPLIANT · ZERO COMPLIANCE FAILURES · 3-TIMEZONE DELIVERY",
     stack: ["Snowflake", "SAP ECC", "Oracle R12", "PIPL Compliance Framework", "Kantata"],
@@ -193,11 +193,11 @@ export const caseStudies: CaseStudy[] = [
     actions: [
       "Redesigned the intake governance model — replaced ad-hoc sprint negotiation with a weighted framework (RICE-style with visible trade-off matrices) that reduced intake decision time from 2 weeks to 48 hours and removed the PM as the de facto priority arbiter",
       "Instrumented the full delivery pipeline and launched a weekly health reporting cadence — UAT aging, approval latency, and blocker age by owner visible to client engineering leadership — reducing the average UAT cycle from 11 days to 4 within 6 weeks",
-      "Built the account operating model for sustained partnership: engineering leads owning sprint reviews, 48-hour pre-read cadence for stakeholder syncs, monthly metrics published to client leadership, and documented decision rights eliminating undocumented scope additions",
+      "Built the account operating model with the renewal in mind: engineering leads owning sprint reviews, 48-hour pre-read cadence for stakeholder syncs, monthly metrics to client leadership, and a formal decision rights document that stopped undocumented scope additions",
     ],
     decisions: [
       "Making UAT latency data visible to the client's own leadership — required transparency about a process that reflected poorly on the client side, but drove the accountability needed to resolve a delay the delivery team could not fix on their own",
-      "Investing PM capacity in building a renewal-oriented operating model rather than focusing exclusively on sprint delivery — the operating model, not delivery metrics alone, was what secured the renewal without re-bid",
+      "Investing PM capacity in building the renewal operating model rather than focusing exclusively on sprint delivery — the renewal conversation started 4 months early, and the operating model was the evidence that made it straightforward",
     ],
     result: "✓ RENEWED WITHOUT RE-BID · UAT CYCLE 11 DAYS → 4 DAYS · INTAKE VELOCITY 3× FASTER",
     stack: ["Snowflake", "dbt", "Airflow", "Sigma BI", "Jira / Confluence"],

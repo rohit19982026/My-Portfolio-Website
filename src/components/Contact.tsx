@@ -13,12 +13,12 @@ const engagementTypes = [
   {
     icon: "🏗️",
     title: "Platform Build / Migration",
-    desc: "Snowflake, Databricks, AWS — end-to-end program ownership from scoping through delivery close.",
+    desc: "Snowflake, Databricks, AWS — full program ownership from SOW signature through delivery close.",
   },
   {
     icon: "🤖",
     title: "GenAI Program Delivery",
-    desc: "LLM integrations, AI agent builds, and AI-augmented engineering programs with real delivery governance.",
+    desc: "LLM integrations, AI agent builds, and AI-augmented engineering programs — delivery governance, commercial ownership, and outcome accountability applied the same as any other program.",
   },
   {
     icon: "🚨",
