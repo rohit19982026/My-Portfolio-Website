@@ -52,7 +52,7 @@ export default function DeliveryExposure() {
         >
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED]">
-              04 / DELIVERY EXPOSURE
+              05 / DELIVERY EXPOSURE
             </span>
           </div>
           <h2

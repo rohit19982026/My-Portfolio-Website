@@ -72,7 +72,7 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">06 / LET&apos;S TALK</span>
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">07 / LET&apos;S TALK</span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
               initial={{ y: "105%" }}
