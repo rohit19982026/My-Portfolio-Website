@@ -250,20 +250,13 @@ export default function Hero() {
                     boxShadow: "0 0 60px rgba(124,58,237,0.12) inset",
                   }}
                 >
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-                    <span
-                      className="font-display font-bold"
-                      style={{ fontSize: 88, lineHeight: 1, color: "#7C3AED", opacity: 0.9 }}
-                    >
-                      R
-                    </span>
-                    <span
-                      className="font-mono text-[11px] tracking-[0.22em] uppercase"
-                      style={{ color: "#7A6E9A" }}
-                    >
-                      Add your photo
-                    </span>
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/photo.jpg"
+                    alt="Rohit Kumar Singh"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: "center 15%" }}
+                  />
                 </div>
                 <motion.div
                   animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
