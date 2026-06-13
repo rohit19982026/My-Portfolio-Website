@@ -177,7 +177,7 @@ export default function Trajectory() {
                             variants={tagItemVariants}
                             whileHover={{ scale: 1.06, y: -2, boxShadow: `0 8px 20px ${role.color}45` }}
                             transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                            className="font-mono text-[10px] px-3 py-1.5 rounded-md font-bold uppercase tracking-[0.12em] cursor-default"
+                            className="font-mono text-[11.5px] px-3.5 py-2 rounded-md font-bold uppercase tracking-[0.04em] cursor-default"
                             style={{ backgroundColor: role.color, color: "#FFFFFF" }}
                           >
                             // {tag}
@@ -188,7 +188,7 @@ export default function Trajectory() {
                             variants={tagItemVariants}
                             whileHover={{ scale: 1.06, y: -2, backgroundColor: `${role.color}1F`, borderColor: role.color, boxShadow: `0 6px 16px ${role.color}26` }}
                             transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                            className="inline-flex items-center gap-2 font-mono text-[10px] px-3 py-1.5 rounded-md font-semibold cursor-default"
+                            className="inline-flex items-center gap-2 font-mono text-[11.5px] px-3.5 py-2 rounded-md font-semibold cursor-default"
                             style={{ border: `1px solid ${role.color}35`, backgroundColor: `${role.color}0D`, color: role.color }}
                           >
                             <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.color }} />
