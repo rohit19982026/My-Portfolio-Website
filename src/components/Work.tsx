@@ -448,15 +448,31 @@ export default function Work() {
           className="mb-14"
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#1D4ED8] mb-5">04 / WORK</p>
-          <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-6" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}>
+          <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-5" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}>
             Seven programs.{" "}
             <span className="font-normal" style={{ background: "linear-gradient(130deg, #93C5FD 0%, #60A5FA 50%, #1D4ED8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Real numbers
             </span>.
           </h2>
-          <p className="text-[15px] text-[#94A3B8] max-w-2xl leading-relaxed">
-            Six client engagements, one internal AI platform build. Client names are anonymized. Contracts, timelines, and outcomes are real.
+          <p className="text-[16px] text-[#475569] max-w-2xl leading-relaxed mb-5">
+            Contracts, timelines, and outcomes below are real — only client names are anonymized.
           </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <span
+              className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-md"
+              style={{ color: "#1D4ED8", background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.18)" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#1D4ED8" }} />
+              6 Client Engagements
+            </span>
+            <span
+              className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-md"
+              style={{ color: "#D97706", background: "rgba(217,119,6,0.06)", border: "1px solid rgba(217,119,6,0.18)" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#D97706" }} />
+              1 Internal Build
+            </span>
+          </div>
         </motion.div>
 
         <div className="space-y-4">
