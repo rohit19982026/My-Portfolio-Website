@@ -27,7 +27,7 @@ export default function TimelineStrip({
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] mb-1.5" style={{ color: accent }}>
             {m.label}
           </p>
-          <p className="text-[12px] leading-[1.6] text-[#3D3358]">{m.detail}</p>
+          <p className="text-[12px] leading-[1.6] text-[#475569]">{m.detail}</p>
         </motion.div>
       ))}
     </div>

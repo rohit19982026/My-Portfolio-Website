@@ -3,10 +3,10 @@
 import Link from "next/link";
 
 /* ─── colour tokens ─────────────────────────────────────────────── */
-const P  = "#7C3AED";
-const P2 = "#6D28D9";
-const PA = "#A78BFA";
-const PB = "#EDE9FF";
+const P  = "#1D4ED8";
+const P2 = "#1E40AF";
+const PA = "#60A5FA";
+const PB = "#EFF6FF";
 const SF = "#3B6EF0";
 const SP = "#129B86";
 const EM = "#E0743A";
@@ -14,9 +14,9 @@ const OK = "#1F9D57";
 const BAD = "#D5503E";
 const WARN = "#B07D12";
 const VIOLET = "#9B59D0";
-const T1 = "#1A0A2E";
-const T2 = "#3D3358";
-const T3 = "#7A6E9A";
+const T1 = "#0F172A";
+const T2 = "#475569";
+const T3 = "#94A3B8";
 const BG = "#FBFBFD";
 const SURFACE = "#F5F6F9";
 const BORDER = "#E6E8EE";

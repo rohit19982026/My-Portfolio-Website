@@ -25,7 +25,7 @@ export default function Navbar() {
       style={{
         background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(124,58,237,0.1)" : "none",
+        borderBottom: scrolled ? "1px solid #E2E8F0" : "none",
       }}
     >
       <div className="max-w-6xl mx-auto px-6 h-[64px] flex items-center justify-between">
@@ -34,8 +34,8 @@ export default function Navbar() {
           <div
             className="w-9 h-9 rounded-[10px] flex items-center justify-center font-mono font-black text-sm text-white relative overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, #A78BFA, #6D28D9)",
-              boxShadow: "0 0 18px rgba(109,40,217,0.4)",
+              background: "linear-gradient(135deg, #60A5FA, #1E40AF)",
+              boxShadow: "0 0 18px rgba(30,64,175,0.35)",
             }}
           >
             R
@@ -48,7 +48,7 @@ export default function Navbar() {
               }}
             />
           </div>
-          <span className="font-mono text-sm font-semibold tracking-wide" style={{ color: "#1A0A2E" }}>
+          <span className="font-mono text-sm font-semibold tracking-wide" style={{ color: "#0F172A" }}>
             rohit.singh
           </span>
         </a>
@@ -59,8 +59,8 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#1A0A2E] hover:bg-[rgba(124,58,237,0.05)]"
-              style={{ color: "#3D3358" }}
+              className="px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#0F172A] hover:bg-[rgba(29,78,216,0.05)]"
+              style={{ color: "#475569" }}
             >
               {link.label}
             </a>
@@ -69,8 +69,8 @@ export default function Navbar() {
             href="#contact"
             className="ml-3 px-4 py-2 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full text-white transition-all duration-200 hover:opacity-90"
             style={{
-              background: "linear-gradient(135deg, #7C3AED, #6D28D9)",
-              boxShadow: "0 2px 14px rgba(109,40,217,0.4)",
+              background: "linear-gradient(135deg, #1D4ED8, #1E40AF)",
+              boxShadow: "0 2px 14px rgba(30,64,175,0.35)",
             }}
           >
             Hire Me ↗
@@ -79,7 +79,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2 text-[#3D3358] hover:text-[#7C3AED] transition-colors"
+          className="md:hidden p-2 text-[#475569] hover:text-[#1D4ED8] transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -99,7 +99,7 @@ export default function Navbar() {
           className="md:hidden px-6 pb-5"
           style={{
             background: "#FFFFFF",
-            borderBottom: "1px solid rgba(124,58,237,0.1)",
+            borderBottom: "1px solid #E2E8F0",
           }}
         >
           {links.map((link) => (
@@ -107,8 +107,8 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="block py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#3D3358] hover:text-[#7C3AED] transition-colors"
-              style={{ borderBottom: "1px solid rgba(124,58,237,0.06)" }}
+              className="block py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#475569] hover:text-[#1D4ED8] transition-colors"
+              style={{ borderBottom: "1px solid #F1F5F9" }}
             >
               {link.label}
             </a>
@@ -117,7 +117,7 @@ export default function Navbar() {
             href="#contact"
             onClick={() => setMenuOpen(false)}
             className="mt-4 inline-block px-5 py-2.5 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full text-white"
-            style={{ background: "linear-gradient(135deg, #7C3AED, #6D28D9)" }}
+            style={{ background: "linear-gradient(135deg, #1D4ED8, #1E40AF)" }}
           >
             Hire Me ↗
           </a>

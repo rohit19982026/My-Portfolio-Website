@@ -9,7 +9,7 @@ const roles = [
     title: "Technical Project Manager — Data & AI",
     org: "phData · Snowflake Elite Partner · Kolkata",
     current: true,
-    color: "#7C3AED",
+    color: "#1D4ED8",
     bullets: [
       "4–5 concurrent programs at all times — Snowflake migrations, Databricks builds, cloud data warehouse projects, GenAI tooling. Full ownership from SOW signature to delivery close.",
       "P&L ownership on every active program. $500K to $5M+ contract range. EAC modelling, invoicing governance, margin tracking, and budget variance management across all concurrent engagements.",
@@ -82,7 +82,7 @@ export default function Trajectory() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#1D4ED8] block mb-5">
             02 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
@@ -91,16 +91,16 @@ export default function Trajectory() {
               animate={inView ? { y: "0%" } : {}}
               transition={{ type: "spring", stiffness: 65, damping: 16, delay: 0.1 }}
               className="font-display font-bold tracking-tight leading-[0.97] mb-5"
-              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}
+              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}
             >
-              Where I&apos;ve{" "}<span style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} className="font-normal">worked</span>.
+              Where I&apos;ve{" "}<span className="gradient-text font-normal">worked</span>.
             </motion.h2>
           </div>
           <motion.p
             initial={{ opacity: 0, filter: "blur(8px)" }}
             animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="text-[16px] text-[#3D3358] max-w-xl leading-relaxed"
+            className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
           >
             Five years across two companies — ITIL change governance at BT, then full program ownership across data platform and AI delivery at phData.
           </motion.p>
@@ -110,11 +110,10 @@ export default function Trajectory() {
           {/* Timeline */}
           <div className="lg:col-span-2">
             <div className="relative">
-              {/* Animated timeline line */}
               <motion.div
                 className="absolute left-0 top-2 bottom-2 w-px"
                 style={{
-                  background: "linear-gradient(180deg, #7C3AED, rgba(124,58,237,0.1))",
+                  background: "linear-gradient(180deg, #1D4ED8, rgba(29,78,216,0.1))",
                   transformOrigin: "top",
                   scaleY: 0,
                 }}
@@ -138,16 +137,16 @@ export default function Trajectory() {
                       style={{ backgroundColor: role.color }}
                     />
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#7A6E9A]">{role.period}</p>
+                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8]">{role.period}</p>
                       {role.current && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wide" style={{ background: "rgba(110,231,183,0.1)", color: "#6EE7B7", border: "1px solid rgba(110,231,183,0.25)" }}>CURRENT</span>
+                        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wide" style={{ background: "rgba(110,231,183,0.1)", color: "#6EE7B7", border: "1px solid rgba(110,231,183,0.25)" }}>CURRENT</span>
                       )}
                     </div>
-                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-[#1A0A2E] mb-1">{role.title}</h3>
+                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-[#0F172A] mb-1">{role.title}</h3>
                     <p className="font-mono text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.color }}>{role.org}</p>
                     <ul className="space-y-3 mb-5">
                       {role.bullets.map((b, bi) => (
-                        <li key={bi} className="flex gap-3 text-[13.5px] text-[#3D3358] leading-relaxed">
+                        <li key={bi} className="flex gap-3 text-[13.5px] text-[#475569] leading-relaxed">
                           <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.color }} />
                           {b}
                         </li>
@@ -159,7 +158,7 @@ export default function Trajectory() {
                           key={tag}
                           whileHover={{ scale: 1.05, y: -1 }}
                           transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                          className="font-mono text-[10px] px-2.5 py-1 rounded-full font-semibold cursor-default"
+                          className="font-mono text-[10px] px-2.5 py-1 rounded-md font-semibold cursor-default"
                           style={{ border: `1px solid ${role.color}35`, backgroundColor: `${role.color}0D`, color: role.color }}
                         >
                           {tag}
@@ -172,7 +171,7 @@ export default function Trajectory() {
             </div>
           </div>
 
-          {/* Sidebar — stagger */}
+          {/* Sidebar */}
           <motion.div
             variants={sidebarVariants}
             initial="hidden"
@@ -182,27 +181,27 @@ export default function Trajectory() {
             <motion.div
               variants={sidebarItem}
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(124,58,237,0.15)", background: "#F7F4FF" }}
+              style={{ border: "1px solid #E2E8F0", background: "#F8FAFC" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#7C3AED] mb-3">// EDUCATION</p>
-              <p className="font-display font-bold text-[#1A0A2E] text-[15px] leading-snug mb-1">{education.degree}</p>
-              <p className="font-mono text-[11px] text-[#3D3358] font-medium">{education.institution}</p>
-              <p className="font-mono text-[11px] text-[#7A6E9A] mt-0.5">{education.year} · {education.grade}</p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#1D4ED8] mb-3">// EDUCATION</p>
+              <p className="font-display font-bold text-[#0F172A] text-[15px] leading-snug mb-1">{education.degree}</p>
+              <p className="font-mono text-[11px] text-[#475569] font-medium">{education.institution}</p>
+              <p className="font-mono text-[11px] text-[#94A3B8] mt-0.5">{education.year} · {education.grade}</p>
             </motion.div>
 
             <motion.div
               variants={sidebarItem}
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(124,58,237,0.15)", background: "#F7F4FF" }}
+              style={{ border: "1px solid #E2E8F0", background: "#F8FAFC" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#7C3AED] mb-3">// CERTIFICATIONS</p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#0891B2] mb-3">// CERTIFICATIONS</p>
               <ul className="space-y-2.5">
                 {certifications.map((c) => (
                   <li key={c.name} className="flex items-start gap-2">
-                    <span className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0" style={c.type === "cert" ? { background: "#7C3AED", color: "#FFFFFF" } : { background: "rgba(124,58,237,0.06)", color: "#7A6E9A" }}>{c.type === "cert" ? "CERT" : "COURSE"}</span>
+                    <span className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0" style={c.type === "cert" ? { background: "#1D4ED8", color: "#FFFFFF" } : { background: "rgba(29,78,216,0.06)", color: "#94A3B8" }}>{c.type === "cert" ? "CERT" : "COURSE"}</span>
                     <div>
-                      <p className="font-heading text-[12px] font-semibold text-[#1A0A2E] leading-tight">{c.name}</p>
-                      <p className="font-mono text-[10px] text-[#7A6E9A]">{c.issuer}</p>
+                      <p className="font-heading text-[12px] font-semibold text-[#0F172A] leading-tight">{c.name}</p>
+                      <p className="font-mono text-[10px] text-[#94A3B8]">{c.issuer}</p>
                     </div>
                   </li>
                 ))}
@@ -215,8 +214,8 @@ export default function Trajectory() {
               style={{ border: "1px solid rgba(217,119,6,0.3)", background: "rgba(217,119,6,0.05)" }}
             >
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#D97706" }}>// AWARD</p>
-              <p className="font-display font-bold text-[#1A0A2E] text-[14px] mb-2">🏆 {award.title}</p>
-              <p className="text-[12.5px] text-[#3D3358] leading-relaxed">{award.desc}</p>
+              <p className="font-display font-bold text-[#0F172A] text-[14px] mb-2">🏆 {award.title}</p>
+              <p className="text-[12.5px] text-[#475569] leading-relaxed">{award.desc}</p>
             </motion.div>
           </motion.div>
         </div>

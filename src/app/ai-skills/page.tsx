@@ -3,15 +3,15 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /* ─── colour tokens ──────────────────────────────────────────────── */
-const P  = "#7C3AED";   // primary purple
-const P2 = "#6D28D9";   // deep purple
-const PA = "#A78BFA";   // soft lavender
-const PB = "#EDE9FF";   // pale lavender bg
+const P  = "#1D4ED8";   // primary purple
+const P2 = "#1E40AF";   // deep purple
+const PA = "#60A5FA";   // soft lavender
+const PB = "#EFF6FF";   // pale lavender bg
 const BL = "#0891B2";   // blue accent
 const GR = "#059669";   // green accent
-const T1 = "#1A1040";   // dark text
-const T2 = "#5B4F8A";   // mid text
-const T3 = "#9E92C8";   // light text
+const T1 = "#0F172A";   // dark text
+const T2 = "#475569";   // mid text
+const T3 = "#94A3B8";   // light text
 
 /* ─── sidebar nav items ──────────────────────────────────────────── */
 const NAV = [
@@ -26,9 +26,9 @@ const NAV = [
 /* ─── inline global styles (no CSS module needed) ───────────────── */
 const GLOBAL_CSS = `
   html { scroll-behavior: smooth; }
-  .aisk-body { font-family: 'DM Sans', system-ui, sans-serif; background: #F8F7FF; color: ${T2}; }
+  .aisk-body { font-family: 'DM Sans', system-ui, sans-serif; background: #F8FAFC; color: ${T2}; }
   .aisk-sidebar-link { display: flex; align-items: center; gap: 12px; padding: 9px 12px; font-size: 13px; color: ${T3}; text-decoration: none; border-radius: 8px; transition: all 0.18s; border-left: 2px solid transparent; margin-left: -2px; font-weight: 500; cursor: pointer; }
-  .aisk-sidebar-link:hover { color: ${T1}; background: rgba(124,58,237,0.06); }
+  .aisk-sidebar-link:hover { color: ${T1}; background: rgba(29,78,216,0.06); }
   .aisk-sidebar-link.active { color: ${P}; background: ${PB}; border-left-color: ${P}; }
   .aisk-sidebar-link .num { font-family: monospace; font-size: 11px; color: ${T3}; min-width: 22px; }
   .aisk-sidebar-link.active .num { color: ${P}; }
@@ -47,21 +47,21 @@ const GLOBAL_CSS = `
   .aisk-reveal.d2 { transition-delay:0.2s; }
   .aisk-reveal.d3 { transition-delay:0.3s; }
 
-  .aisk-flow-card { background:#fff; border:1.5px solid rgba(124,58,237,0.18); border-radius:14px; padding:16px 14px; transition:all 0.35s; }
-  .aisk-flow-card:hover, .aisk-flow-card.lit { border-color:${P}; box-shadow:0 0 0 4px ${PB}, 0 4px 20px rgba(124,58,237,0.2); transform:translateY(-3px); }
+  .aisk-flow-card { background:#fff; border:1.5px solid rgba(29,78,216,0.18); border-radius:14px; padding:16px 14px; transition:all 0.35s; }
+  .aisk-flow-card:hover, .aisk-flow-card.lit { border-color:${P}; box-shadow:0 0 0 4px ${PB}, 0 4px 20px rgba(29,78,216,0.2); transform:translateY(-3px); }
 
-  .aisk-takeaway { background:rgba(124,58,237,0.06); border-left:3px solid ${P}; padding:14px 20px; border-radius:6px 12px 12px 6px; margin:24px 0; font-size:14px; color:${T2}; line-height:1.6; }
+  .aisk-takeaway { background:rgba(29,78,216,0.06); border-left:3px solid ${P}; padding:14px 20px; border-radius:6px 12px 12px 6px; margin:24px 0; font-size:14px; color:${T2}; line-height:1.6; }
   .aisk-takeaway strong { color:${P}; }
 
-  .aisk-phase-dot { width:32px; height:32px; border-radius:50%; background:#fff; border:1.5px solid rgba(124,58,237,0.22); display:inline-flex; align-items:center; justify-content:center; font-family:monospace; font-size:10px; font-weight:600; color:${T3}; margin-bottom:8px; }
+  .aisk-phase-dot { width:32px; height:32px; border-radius:50%; background:#fff; border:1.5px solid rgba(29,78,216,0.22); display:inline-flex; align-items:center; justify-content:center; font-family:monospace; font-size:10px; font-weight:600; color:${T3}; margin-bottom:8px; }
   .aisk-phase-item.lit .aisk-phase-dot { border-color:${P}; background:${P}; color:#fff; box-shadow:0 0 0 4px ${PB}; }
 
-  .aisk-cap-row { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid rgba(124,58,237,0.08); }
+  .aisk-cap-row { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid rgba(29,78,216,0.08); }
   .aisk-cap-row:last-child { border-bottom:none; }
 
   .rf-arrow-el { transition: all 0.35s; }
   .rf-node-el { transition: all 0.35s; }
-  .rf-node-el.active rect { filter: drop-shadow(0 4px 16px rgba(124,58,237,0.28)); }
+  .rf-node-el.active rect { filter: drop-shadow(0 4px 16px rgba(29,78,216,0.28)); }
   .rf-node-el.dim { opacity: 0.45; }
 
   @media(max-width:960px){
@@ -102,7 +102,7 @@ function SectionHead({ num, title, accent, lede }: { num: string; title: string;
    ══════════════════════════════════════════════════════════════════ */
 function SprintDiagram() {
   return (
-    <div style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(124,58,237,0.06)", margin:"24px 0" }}>
+    <div style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(29,78,216,0.06)", margin:"24px 0" }}>
       <svg viewBox="0 0 820 260" style={{ width:"100%", height:"auto", display:"block", overflow:"visible" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="s-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -157,7 +157,7 @@ function SprintDiagram() {
 
         {/* ── Node 3: Velocity Engine ── */}
         <g>
-          <rect x="450" y="30" width="180" height="100" rx="12" fill={PB} stroke={P} strokeWidth="2" style={{ filter:`drop-shadow(0 4px 16px rgba(124,58,237,0.18))` }}/>
+          <rect x="450" y="30" width="180" height="100" rx="12" fill={PB} stroke={P} strokeWidth="2" style={{ filter:`drop-shadow(0 4px 16px rgba(29,78,216,0.18))` }}/>
           <text x="540" y="58" textAnchor="middle" style={{ fontFamily:"'Sora',system-ui", fontSize:14, fontWeight:700, fill:T1 }}>Velocity Engine</text>
           <text x="540" y="76" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:P }}>scorecard ranking</text>
           <text x="540" y="92" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:P }}>blocker age tiers</text>
@@ -219,7 +219,7 @@ function SprintDiagram() {
           { n:"03", t:"Compute", s:"Scorecards, trends, blockers" },
           { n:"04", t:"Output", s:"Ranked PM report + action items" },
         ].map(s => (
-          <div key={s.n} style={{ background:"#F8F7FF", border:`1px solid rgba(124,58,237,0.1)`, borderRadius:10, padding:"12px", textAlign:"center" }}>
+          <div key={s.n} style={{ background:"#F8FAFC", border:`1px solid rgba(29,78,216,0.1)`, borderRadius:10, padding:"12px", textAlign:"center" }}>
             <div style={{ fontFamily:"monospace", fontSize:10, color:P, letterSpacing:"0.14em", fontWeight:700, marginBottom:4 }}>STEP {s.n}</div>
             <div style={{ fontFamily:"'Sora',system-ui", fontSize:13, fontWeight:600, color:T1, marginBottom:4 }}>{s.t}</div>
             <div style={{ fontSize:11, color:T3, lineHeight:1.4 }}>{s.s}</div>
@@ -246,7 +246,7 @@ function BillingDiagram() {
   const W = 820, nodeW = 96, nodeH = 70, y = 80, gapX = (W - phases.length * nodeW) / (phases.length + 1);
 
   return (
-    <div style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(124,58,237,0.06)", margin:"24px 0" }}>
+    <div style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(29,78,216,0.06)", margin:"24px 0" }}>
       <svg viewBox={`0 0 ${W} 200`} style={{ width:"100%", height:"auto", display:"block" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -267,7 +267,7 @@ function BillingDiagram() {
               <rect x={x} y={y} width={nodeW} height={nodeH} rx="12"
                 fill={isLast ? P : PB}
                 stroke={P} strokeWidth={isLast ? 2 : 1.5}
-                style={isLast ? { filter:`drop-shadow(0 4px 16px rgba(124,58,237,0.3))` } : {}}
+                style={isLast ? { filter:`drop-shadow(0 4px 16px rgba(29,78,216,0.3))` } : {}}
               />
               <text x={cx} y={y + 24} textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:isLast?"#fff":P, fontWeight:700, letterSpacing:"0.1em" }}>{ph.id}</text>
               <text x={cx} y={y + 42} textAnchor="middle" style={{ fontFamily:"'Sora',system-ui", fontSize:12, fontWeight:600, fill:isLast?"#fff":T1 }}>{ph.label}</text>
@@ -320,7 +320,7 @@ function BillingDiagram() {
    ══════════════════════════════════════════════════════════════════ */
 function AgentDiagram() {
   return (
-    <div style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(124,58,237,0.06)", margin:"24px 0" }}>
+    <div style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(29,78,216,0.06)", margin:"24px 0" }}>
       <svg viewBox="0 0 820 280" style={{ width:"100%", height:"auto", display:"block" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="a-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -361,7 +361,7 @@ function AgentDiagram() {
 
         {/* ── Auto Mode box ── */}
         <g>
-          <rect x="240" y="30" width="140" height="80" rx="12" fill="rgba(124,58,237,0.06)" stroke={PA} strokeWidth="1.5"/>
+          <rect x="240" y="30" width="140" height="80" rx="12" fill="rgba(29,78,216,0.06)" stroke={PA} strokeWidth="1.5"/>
           <text x="310" y="55" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:P, letterSpacing:"0.12em", fontWeight:600 }}>AUTO MODE</text>
           <text x="310" y="73" textAnchor="middle" style={{ fontFamily:"'Sora',system-ui", fontSize:12, fontWeight:600, fill:T1 }}>Plan & Execute</text>
           <text x="310" y="90" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:T3 }}>adaptive reasoning</text>
@@ -406,7 +406,7 @@ function AgentDiagram() {
           { label:"Sub-agent", sub:"isolated ctx", y:254 },
         ].map((s, i) => (
           <g key={s.label}>
-            <rect x="435" y={s.y - 14} width="130" height="26" rx="8" fill={i===0 ? PB : "#F8F7FF"} stroke={i===0 ? P : "rgba(124,58,237,0.18)"} strokeWidth="1.2"/>
+            <rect x="435" y={s.y - 14} width="130" height="26" rx="8" fill={i===0 ? PB : "#F8FAFC"} stroke={i===0 ? P : "rgba(29,78,216,0.18)"} strokeWidth="1.2"/>
             <text x="500" y={s.y + 4} textAnchor="middle" style={{ fontFamily:"'Sora',system-ui", fontSize:11.5, fontWeight:600, fill:i===0 ? P : T1 }}>{s.label}</text>
             <text x="620" y={s.y + 4} style={{ fontFamily:"monospace", fontSize:10, fill:T3 }}>{s.sub}</text>
           </g>
@@ -424,8 +424,8 @@ function AgentDiagram() {
       </svg>
 
       {/* Model routing table */}
-      <div style={{ marginTop:16, background:"#F8F7FF", borderRadius:12, border:`1px solid rgba(124,58,237,0.1)`, overflow:"hidden" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", borderBottom:`1px solid rgba(124,58,237,0.1)`, background:PB }}>
+      <div style={{ marginTop:16, background:"#F8FAFC", borderRadius:12, border:`1px solid rgba(29,78,216,0.1)`, overflow:"hidden" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", borderBottom:`1px solid rgba(29,78,216,0.1)`, background:PB }}>
           {["Task Complexity","Model","Mode"].map(h => (
             <div key={h} style={{ padding:"8px 14px", fontFamily:"monospace", fontSize:10, letterSpacing:"0.14em", textTransform:"uppercase", color:P, fontWeight:600 }}>{h}</div>
           ))}
@@ -435,9 +435,9 @@ function AgentDiagram() {
           ["Moderate reasoning (3–4 conditions)", "Sonnet 4.6", "Thinking"],
           ["Complex / portfolio-wide / EOM audit", "Opus 4.6", "Deep Reasoning"],
         ].map((row, i) => (
-          <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", borderBottom: i<2 ? `1px solid rgba(124,58,237,0.07)` : "none" }}>
-            <div style={{ padding:"9px 14px", fontSize:13, color:T2, borderRight:`1px solid rgba(124,58,237,0.07)` }}>{row[0]}</div>
-            <div style={{ padding:"9px 14px", fontFamily:"monospace", fontSize:12, color:P, fontWeight:600, borderRight:`1px solid rgba(124,58,237,0.07)` }}>{row[1]}</div>
+          <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", borderBottom: i<2 ? `1px solid rgba(29,78,216,0.07)` : "none" }}>
+            <div style={{ padding:"9px 14px", fontSize:13, color:T2, borderRight:`1px solid rgba(29,78,216,0.07)` }}>{row[0]}</div>
+            <div style={{ padding:"9px 14px", fontFamily:"monospace", fontSize:12, color:P, fontWeight:600, borderRight:`1px solid rgba(29,78,216,0.07)` }}>{row[1]}</div>
             <div style={{ padding:"9px 14px", fontFamily:"monospace", fontSize:12, color:T3 }}>{row[2]}</div>
           </div>
         ))}
@@ -451,7 +451,7 @@ function AgentDiagram() {
    ══════════════════════════════════════════════════════════════════ */
 function TokenDiagram() {
   return (
-    <div style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(124,58,237,0.06)", margin:"24px 0" }}>
+    <div style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.14)`, borderRadius:18, padding:"28px 24px", boxShadow:"0 4px 20px rgba(29,78,216,0.06)", margin:"24px 0" }}>
       <svg viewBox="0 0 820 240" style={{ width:"100%", height:"auto", display:"block" }} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="t-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -489,7 +489,7 @@ function TokenDiagram() {
 
         {/* ── Triage Gate ── */}
         <g>
-          <rect x="200" y="55" width="140" height="90" rx="12" fill={PB} stroke={P} strokeWidth="2" style={{ filter:`drop-shadow(0 4px 16px rgba(124,58,237,0.2))` }}/>
+          <rect x="200" y="55" width="140" height="90" rx="12" fill={PB} stroke={P} strokeWidth="2" style={{ filter:`drop-shadow(0 4px 16px rgba(29,78,216,0.2))` }}/>
           <text x="270" y="80" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:P, fontWeight:700, letterSpacing:"0.14em" }}>TRIAGE GATE</text>
           <text x="270" y="97" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:T2 }}>≥400 lines?</text>
           <text x="270" y="112" textAnchor="middle" style={{ fontFamily:"monospace", fontSize:10, fill:T2 }}>≥5× / week?</text>
@@ -595,15 +595,15 @@ export default function AISkillsPage() {
 
         {/* ── background aurora ── */}
         <div style={{ position:"fixed", inset:0, pointerEvents:"none", zIndex:0, overflow:"hidden" }}>
-          <div style={{ position:"absolute", width:500, height:500, borderRadius:"50%", filter:"blur(120px)", background:"radial-gradient(circle,rgba(124,58,237,0.12),transparent 65%)", top:"5%", right:"-5%", animation:"aisk-drift1 28s ease-in-out infinite", opacity:0.6 }}/>
+          <div style={{ position:"absolute", width:500, height:500, borderRadius:"50%", filter:"blur(120px)", background:"radial-gradient(circle,rgba(29,78,216,0.12),transparent 65%)", top:"5%", right:"-5%", animation:"aisk-drift1 28s ease-in-out infinite", opacity:0.6 }}/>
           <div style={{ position:"absolute", width:400, height:400, borderRadius:"50%", filter:"blur(120px)", background:"radial-gradient(circle,rgba(109,40,217,0.1),transparent 65%)", bottom:"5%", left:"-5%", animation:"aisk-drift2 32s ease-in-out infinite", opacity:0.5 }}/>
-          <div style={{ position:"fixed", inset:0, backgroundImage:"linear-gradient(rgba(124,58,237,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.025) 1px,transparent 1px)", backgroundSize:"56px 56px", WebkitMaskImage:"radial-gradient(ellipse 80% 80% at center,black 0%,transparent 75%)", maskImage:"radial-gradient(ellipse 80% 80% at center,black 0%,transparent 75%)" }}/>
+          <div style={{ position:"fixed", inset:0, backgroundImage:"linear-gradient(rgba(29,78,216,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(29,78,216,0.025) 1px,transparent 1px)", backgroundSize:"56px 56px", WebkitMaskImage:"radial-gradient(ellipse 80% 80% at center,black 0%,transparent 75%)", maskImage:"radial-gradient(ellipse 80% 80% at center,black 0%,transparent 75%)" }}/>
         </div>
 
         {/* ── topbar ── */}
-        <header style={{ position:"fixed", top:0, left:0, right:0, zIndex:50, background:"rgba(248,247,255,0.88)", backdropFilter:"blur(20px)", borderBottom:`1px solid rgba(124,58,237,0.1)`, padding:"14px 32px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+        <header style={{ position:"fixed", top:0, left:0, right:0, zIndex:50, background:"rgba(248,247,255,0.88)", backdropFilter:"blur(20px)", borderBottom:`1px solid rgba(29,78,216,0.1)`, padding:"14px 32px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <a href="/" style={{ display:"flex", alignItems:"center", gap:12, textDecoration:"none" }}>
-            <div style={{ width:30, height:30, background:`linear-gradient(135deg,${PA},${P2})`, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"monospace", fontWeight:800, fontSize:14, color:"#fff", boxShadow:`0 4px 14px rgba(124,58,237,0.3)` }}>R</div>
+            <div style={{ width:30, height:30, background:`linear-gradient(135deg,${PA},${P2})`, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"monospace", fontWeight:800, fontSize:14, color:"#fff", boxShadow:`0 4px 14px rgba(29,78,216,0.3)` }}>R</div>
             <span style={{ fontFamily:"monospace", fontWeight:700, fontSize:13, color:T1, letterSpacing:"0.12em", textTransform:"uppercase" }}>rohit.singh</span>
           </a>
           <div style={{ fontFamily:"monospace", fontSize:11, color:T3, letterSpacing:"0.1em", display:"flex", alignItems:"center", gap:10 }}>
@@ -613,15 +613,15 @@ export default function AISkillsPage() {
         </header>
 
         {/* ── read progress bar ── */}
-        <div style={{ position:"fixed", top:58, left:0, right:0, height:2, background:`rgba(124,58,237,0.1)`, zIndex:40 }}>
-          <div style={{ height:"100%", background:`linear-gradient(90deg,${P},${PA})`, width:`${progress}%`, transition:"width 0.1s linear", boxShadow:`0 0 8px rgba(124,58,237,0.4)` }}/>
+        <div style={{ position:"fixed", top:58, left:0, right:0, height:2, background:`rgba(29,78,216,0.1)`, zIndex:40 }}>
+          <div style={{ height:"100%", background:`linear-gradient(90deg,${P},${PA})`, width:`${progress}%`, transition:"width 0.1s linear", boxShadow:`0 0 8px rgba(29,78,216,0.4)` }}/>
         </div>
 
         {/* ── layout ── */}
         <div style={{ display:"grid", gridTemplateColumns:"280px 1fr", minHeight:"100vh", paddingTop:60, position:"relative", zIndex:2 }}>
 
           {/* SIDEBAR */}
-          <aside className="aisk-sidebar" style={{ position:"fixed", top:60, bottom:0, left:0, width:280, padding:"36px 24px 36px 32px", borderRight:`1px solid rgba(124,58,237,0.1)`, overflowY:"auto", background:"rgba(248,247,255,0.75)", backdropFilter:"blur(12px)" }}>
+          <aside className="aisk-sidebar" style={{ position:"fixed", top:60, bottom:0, left:0, width:280, padding:"36px 24px 36px 32px", borderRight:`1px solid rgba(29,78,216,0.1)`, overflowY:"auto", background:"rgba(248,247,255,0.75)", backdropFilter:"blur(12px)" }}>
             <div style={{ fontFamily:"monospace", fontSize:10, fontWeight:500, letterSpacing:"0.2em", textTransform:"uppercase", color:T3, marginBottom:16 }}>On this page</div>
             <ul style={{ listStyle:"none", display:"flex", flexDirection:"column", gap:2 }}>
               {NAV.map(n => (
@@ -639,9 +639,9 @@ export default function AISkillsPage() {
           <main className="aisk-main" style={{ gridColumn:2, marginLeft:280, paddingBottom:120 }}>
 
             {/* ══ HERO ══════════════════════════════════════════════ */}
-            <section id="hero" ref={el => { sectionRefs.current.hero = el; }} style={{ padding:"52px 0 40px", borderBottom:`1px solid rgba(124,58,237,0.1)` }}>
+            <section id="hero" ref={el => { sectionRefs.current.hero = el; }} style={{ padding:"52px 0 40px", borderBottom:`1px solid rgba(29,78,216,0.1)` }}>
               <div style={{ maxWidth:820, margin:"0 auto", padding:"0 56px" }}>
-                <div style={{ display:"inline-flex", alignItems:"center", gap:10, fontFamily:"monospace", fontSize:11, letterSpacing:"0.2em", textTransform:"uppercase", color:P, fontWeight:500, padding:"6px 14px", background:PB, border:`1px solid rgba(124,58,237,0.25)`, borderRadius:100, marginBottom:28 }}>
+                <div style={{ display:"inline-flex", alignItems:"center", gap:10, fontFamily:"monospace", fontSize:11, letterSpacing:"0.2em", textTransform:"uppercase", color:P, fontWeight:500, padding:"6px 14px", background:PB, border:`1px solid rgba(29,78,216,0.25)`, borderRadius:100, marginBottom:28 }}>
                   <span style={{ width:6, height:6, background:P, borderRadius:"50%", boxShadow:`0 0 8px ${P}` }}/>
                   AI Engineering · PM Tooling
                 </div>
@@ -654,14 +654,14 @@ export default function AISkillsPage() {
                 </p>
                 <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
                   {["→ Sprint Intelligence","→ Billing Compliance","→ Agent Orchestration","→ Token Optimizer"].map(l => (
-                    <span key={l} style={{ fontFamily:"monospace", fontSize:11, padding:"6px 12px", background:"#fff", border:`1px solid rgba(124,58,237,0.18)`, borderRadius:100, color:T2, boxShadow:"0 1px 4px rgba(124,58,237,0.06)" }}>{l}</span>
+                    <span key={l} style={{ fontFamily:"monospace", fontSize:11, padding:"6px 12px", background:"#fff", border:`1px solid rgba(29,78,216,0.18)`, borderRadius:100, color:T2, boxShadow:"0 1px 4px rgba(29,78,216,0.06)" }}>{l}</span>
                   ))}
                 </div>
               </div>
             </section>
 
             {/* ══ § 01 — SPRINT INTELLIGENCE ════════════════════════ */}
-            <section id="sprint" ref={el => { sectionRefs.current.sprint = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(124,58,237,0.08)`, scrollMarginTop:80 }}>
+            <section id="sprint" ref={el => { sectionRefs.current.sprint = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(29,78,216,0.08)`, scrollMarginTop:80 }}>
               <div style={{ maxWidth:820, margin:"0 auto", padding:"0 56px" }}>
                 <div ref={registerReveal} className="aisk-reveal">
                   <SectionHead num="01 — Sprint Intelligence" title="Velocity &" accent="Blocker Analytics" lede="Parses raw ticket export CSVs into ranked team scorecards, week-on-week trend arrows, blocker age escalations, and auto-generated PM action items — all in under 2 minutes." />
@@ -670,7 +670,7 @@ export default function AISkillsPage() {
                 <div ref={registerReveal} className="aisk-reveal d1"><SprintDiagram /></div>
 
                 <h3 ref={registerReveal} className="aisk-reveal d1" style={{ fontFamily:"'Sora',system-ui", fontSize:18, fontWeight:600, color:T1, margin:"20px 0 10px" }}>Key capabilities</h3>
-                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(124,58,237,0.05)" }}>
+                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(29,78,216,0.05)" }}>
                   {[
                     "Ranked scorecards sorted by gap-to-weekly-target with week-on-week trend arrows (↑↓→)",
                     "Blocker age tiers — Fresh (0–6d) / Monitor (7–29d) / Escalate (30–89d) / Critical (90d+) — using status-change timestamps, never ticket-created dates",
@@ -688,7 +688,7 @@ export default function AISkillsPage() {
             </section>
 
             {/* ══ § 02 — BILLING COMPLIANCE ═════════════════════════ */}
-            <section id="billing" ref={el => { sectionRefs.current.billing = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(124,58,237,0.08)`, scrollMarginTop:80, background:"rgba(248,247,255,0.5)" }}>
+            <section id="billing" ref={el => { sectionRefs.current.billing = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(29,78,216,0.08)`, scrollMarginTop:80, background:"rgba(248,247,255,0.5)" }}>
               <div style={{ maxWidth:820, margin:"0 auto", padding:"0 56px" }}>
                 <div ref={registerReveal} className="aisk-reveal">
                   <SectionHead num="02 — Billing Compliance" title="End-of-Month" accent="Financial Audit" lede="Multi-phase audit that queries live PSA/CRM data, validates rate card alignment, surfaces timecard approval gaps, checks purchase order compliance, and produces an action-first compliance dashboard." />
@@ -697,7 +697,7 @@ export default function AISkillsPage() {
                 <div ref={registerReveal} className="aisk-reveal d1"><BillingDiagram /></div>
 
                 <h3 ref={registerReveal} className="aisk-reveal d1" style={{ fontFamily:"'Sora',system-ui", fontSize:18, fontWeight:600, color:T1, margin:"20px 0 10px" }}>Key capabilities</h3>
-                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(124,58,237,0.05)" }}>
+                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(29,78,216,0.05)" }}>
                   {[
                     "Rate card validation: flags zero rates, bill-above-list anomalies, and OTD discount consistency across all billable assignments",
                     "Opportunity cross-validation: assignment rates checked against original sold rates, with OTD % verified uniformly applied",
@@ -715,7 +715,7 @@ export default function AISkillsPage() {
             </section>
 
             {/* ══ § 03 — AGENT ORCHESTRATION ════════════════════════ */}
-            <section id="agent" ref={el => { sectionRefs.current.agent = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(124,58,237,0.08)`, scrollMarginTop:80 }}>
+            <section id="agent" ref={el => { sectionRefs.current.agent = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(29,78,216,0.08)`, scrollMarginTop:80 }}>
               <div style={{ maxWidth:820, margin:"0 auto", padding:"0 56px" }}>
                 <div ref={registerReveal} className="aisk-reveal">
                   <SectionHead num="03 — Agent Orchestration" title="Agentic Workflow" accent="Design System" lede="Complete reference for designing, prompting, and debugging multi-step AI agents — covering mode selection, step-type rules, memory management, model routing, and data verification patterns." />
@@ -724,7 +724,7 @@ export default function AISkillsPage() {
                 <div ref={registerReveal} className="aisk-reveal d1"><AgentDiagram /></div>
 
                 <h3 ref={registerReveal} className="aisk-reveal d1" style={{ fontFamily:"'Sora',system-ui", fontSize:18, fontWeight:600, color:T1, margin:"20px 0 10px" }}>Key capabilities</h3>
-                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(124,58,237,0.05)" }}>
+                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(29,78,216,0.05)" }}>
                   {[
                     "Mode selection guide: Auto vs Workflow with a production-readiness checklist before publishing",
                     "Step-type decision matrix: Think / Respond / Plan & Execute / Branch / Wait / Sub-agent with crash rules (never two consecutive Think steps)",
@@ -742,7 +742,7 @@ export default function AISkillsPage() {
             </section>
 
             {/* ══ § 04 — TOKEN OPTIMIZER ════════════════════════════ */}
-            <section id="optimizer" ref={el => { sectionRefs.current.optimizer = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(124,58,237,0.08)`, scrollMarginTop:80, background:"rgba(248,247,255,0.5)" }}>
+            <section id="optimizer" ref={el => { sectionRefs.current.optimizer = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(29,78,216,0.08)`, scrollMarginTop:80, background:"rgba(248,247,255,0.5)" }}>
               <div style={{ maxWidth:820, margin:"0 auto", padding:"0 56px" }}>
                 <div ref={registerReveal} className="aisk-reveal">
                   <SectionHead num="04 — Token Optimizer" title="AI Workflow" accent="Cost Engine" lede="Audits skills, prompts, and Claude Code workflows for token efficiency — applying a 4-question triage gate and 5 optimization levers. Reports realized vs theoretical savings with honest trade-off disclosure." />
@@ -751,7 +751,7 @@ export default function AISkillsPage() {
                 <div ref={registerReveal} className="aisk-reveal d1"><TokenDiagram /></div>
 
                 <h3 ref={registerReveal} className="aisk-reveal d1" style={{ fontFamily:"'Sora',system-ui", fontSize:18, fontWeight:600, color:T1, margin:"20px 0 10px" }}>Key capabilities</h3>
-                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(124,58,237,0.05)" }}>
+                <div ref={registerReveal} className="aisk-reveal d2" style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.12)`, borderRadius:14, padding:"4px 20px 4px", boxShadow:"0 2px 12px rgba(29,78,216,0.05)" }}>
                   {[
                     "Triage gate: 4-question gate (size, frequency, architecture, cache reuse) before any optimization work begins",
                     "Progressive disclosure: pushes reference content out of always-loaded layer into on-demand files — biggest single lever",
@@ -794,7 +794,7 @@ export default function AISkillsPage() {
                     { name:"Markdown / HTML", cat:"Output",     color:P  },
                     { name:"Next.js",         cat:"Portfolio",  color:T2 },
                   ].map(t => (
-                    <div key={t.name} style={{ background:"#fff", border:`1px solid rgba(124,58,237,0.12)`, borderRadius:12, padding:"14px 16px", boxShadow:"0 2px 8px rgba(124,58,237,0.04)", transition:"all 0.25s" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px rgba(124,58,237,0.12)`; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(124,58,237,0.04)"; }}>
+                    <div key={t.name} style={{ background:"#fff", border:`1px solid rgba(29,78,216,0.12)`, borderRadius:12, padding:"14px 16px", boxShadow:"0 2px 8px rgba(29,78,216,0.04)", transition:"all 0.25s" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px rgba(29,78,216,0.12)`; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(29,78,216,0.04)"; }}>
                       <div style={{ fontFamily:"'Sora',system-ui", fontSize:13.5, fontWeight:600, color:T1, marginBottom:4 }}>{t.name}</div>
                       <div style={{ fontFamily:"monospace", fontSize:10, color:t.color, letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:500 }}>{t.cat}</div>
                     </div>
@@ -802,7 +802,7 @@ export default function AISkillsPage() {
                 </div>
 
                 {/* closing CTA */}
-                <div ref={registerReveal} className="aisk-reveal d2" style={{ marginTop:48, textAlign:"center", padding:"60px 24px", background:`linear-gradient(135deg,rgba(124,58,237,0.07),rgba(109,40,217,0.05))`, border:`1px solid rgba(124,58,237,0.18)`, borderRadius:20 }}>
+                <div ref={registerReveal} className="aisk-reveal d2" style={{ marginTop:48, textAlign:"center", padding:"60px 24px", background:`linear-gradient(135deg,rgba(29,78,216,0.07),rgba(109,40,217,0.05))`, border:`1px solid rgba(29,78,216,0.18)`, borderRadius:20 }}>
                   <h3 style={{ fontFamily:"'Sora',system-ui", fontSize:"clamp(26px,3.5vw,42px)", fontWeight:700, color:T1, letterSpacing:"-0.025em", lineHeight:1.1, marginBottom:14 }}>
                     Built by a PM.<br/>
                     <span style={{ background:`linear-gradient(135deg,${P},${PA})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Runs like engineering.</span>
@@ -810,13 +810,13 @@ export default function AISkillsPage() {
                   <p style={{ color:T2, fontSize:16, maxWidth:520, margin:"0 auto 28px", lineHeight:1.6 }}>
                     These skills encode domain logic that used to live only in people's heads — now they run on demand, in seconds, with the same output every time.
                   </p>
-                  <a href="/#contact" style={{ display:"inline-block", padding:"12px 28px", background:`linear-gradient(135deg,${P},${P2})`, color:"#fff", borderRadius:100, fontFamily:"monospace", fontSize:12, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", textDecoration:"none", boxShadow:`0 4px 20px rgba(124,58,237,0.35)` }}>
+                  <a href="/#contact" style={{ display:"inline-block", padding:"12px 28px", background:`linear-gradient(135deg,${P},${P2})`, color:"#fff", borderRadius:100, fontFamily:"monospace", fontSize:12, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", textDecoration:"none", boxShadow:`0 4px 20px rgba(29,78,216,0.35)` }}>
                     Talk to me ↗
                   </a>
                 </div>
 
                 {/* footer */}
-                <div style={{ marginTop:40, paddingTop:20, borderTop:`1px solid rgba(124,58,237,0.1)`, display:"flex", justifyContent:"space-between", alignItems:"center", fontFamily:"monospace", fontSize:11, color:T3, letterSpacing:"0.08em", textTransform:"uppercase" }}>
+                <div style={{ marginTop:40, paddingTop:20, borderTop:`1px solid rgba(29,78,216,0.1)`, display:"flex", justifyContent:"space-between", alignItems:"center", fontFamily:"monospace", fontSize:11, color:T3, letterSpacing:"0.08em", textTransform:"uppercase" }}>
                   <span>rohit.singh · AI Skills</span>
                   <a href="/" style={{ color:P, textDecoration:"none" }}>← Back to portfolio</a>
                 </div>
@@ -829,7 +829,7 @@ export default function AISkillsPage() {
         {/* scroll-to-top */}
         <button
           onClick={() => window.scrollTo({ top:0, behavior:"smooth" })}
-          style={{ position:"fixed", bottom:32, right:32, width:44, height:44, background:P, color:"#fff", border:"none", borderRadius:"50%", cursor:"pointer", fontSize:18, boxShadow:`0 8px 24px rgba(124,58,237,0.35)`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, opacity: progress > 10 ? 1 : 0, transform: progress > 10 ? "translateY(0)" : "translateY(20px)", transition:"all 0.3s", zIndex:40 }}
+          style={{ position:"fixed", bottom:32, right:32, width:44, height:44, background:P, color:"#fff", border:"none", borderRadius:"50%", cursor:"pointer", fontSize:18, boxShadow:`0 8px 24px rgba(29,78,216,0.35)`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, opacity: progress > 10 ? 1 : 0, transform: progress > 10 ? "translateY(0)" : "translateY(20px)", transition:"all 0.3s", zIndex:40 }}
         >↑</button>
       </div>
     </>

@@ -82,7 +82,7 @@ export default function ToolsBuilt() {
             <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#6B6B8A]">Built with</span>
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className="font-mono text-[10px] font-bold px-3 py-1.5 rounded-full cursor-default"
+              className="font-mono text-[10px] font-bold px-3 py-1.5 rounded-md cursor-default"
               style={{ color: "#C4B5FD", background: "rgba(167,139,250,0.1)", border: "1px solid rgba(167,139,250,0.25)" }}
             >
               Claude · Anthropic
@@ -90,7 +90,7 @@ export default function ToolsBuilt() {
             <span className="text-[#35355A] font-mono text-[10px]">&amp;</span>
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className="font-mono text-[10px] font-bold px-3 py-1.5 rounded-full cursor-default"
+              className="font-mono text-[10px] font-bold px-3 py-1.5 rounded-md cursor-default"
               style={{ color: "#6EE7B7", background: "rgba(110,231,183,0.1)", border: "1px solid rgba(110,231,183,0.25)" }}
             >
               Glean
@@ -109,11 +109,11 @@ export default function ToolsBuilt() {
           <div className="rounded-2xl p-px" style={{ background: "linear-gradient(135deg, rgba(110,231,183,0.4) 0%, rgba(110,231,183,0.1) 40%, transparent 70%)" }}>
             <div className="rounded-[15px] p-7 md:p-8" style={{ background: "linear-gradient(145deg, #0E0E1C 0%, #0A0A14 100%)" }}>
               <div className="flex items-center gap-3 mb-5">
-                <span className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest" style={{ color: "#6EE7B7", background: "rgba(110,231,183,0.12)", border: "1px solid rgba(110,231,183,0.3)" }}>Featured Build</span>
+                <span className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest" style={{ color: "#6EE7B7", background: "rgba(110,231,183,0.12)", border: "1px solid rgba(110,231,183,0.3)" }}>Featured Build</span>
                 <motion.span
                   animate={{ boxShadow: ["0 0 0px rgba(252,211,77,0)", "0 0 12px rgba(252,211,77,0.4)", "0 0 0px rgba(252,211,77,0)"] }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
+                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest"
                   style={{ color: "#FCD34D", background: "rgba(252,211,77,0.1)", border: "1px solid rgba(252,211,77,0.25)" }}
                 >
                   🏆 phData Innovation Award
@@ -167,7 +167,7 @@ export default function ToolsBuilt() {
               className="group rounded-2xl p-6"
               style={{ background: "rgba(13,13,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <span className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest inline-block mb-4" style={{ color: agent.accent, background: `${agent.accent}12`, border: `1px solid ${agent.accent}25` }}>{agent.category}</span>
+              <span className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest inline-block mb-4" style={{ color: agent.accent, background: `${agent.accent}12`, border: `1px solid ${agent.accent}25` }}>{agent.category}</span>
               <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE] group-hover:text-white transition-colors">{agent.title}</h3>
               <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">{agent.what}</p>
               <p className="font-mono text-[10px] font-semibold" style={{ color: agent.accent }}>→ {agent.proof}</p>
@@ -180,7 +180,7 @@ export default function ToolsBuilt() {
             className="rounded-2xl p-6"
             style={{ background: "linear-gradient(145deg, rgba(167,139,250,0.08), rgba(10,10,18,0.9))", border: "1px solid rgba(167,139,250,0.15)" }}
           >
-            <span className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest inline-block mb-4" style={{ color: "#A78BFA", background: "rgba(167,139,250,0.12)", border: "1px solid rgba(167,139,250,0.25)" }}>How I build these</span>
+            <span className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest inline-block mb-4" style={{ color: "#A78BFA", background: "rgba(167,139,250,0.12)", border: "1px solid rgba(167,139,250,0.25)" }}>How I build these</span>
             <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#EDE9FE]">Agentic Workflow Designer</h3>
             <p className="text-[13px] text-[#55557A] leading-[1.7] mb-5">A meta-skill that encodes how to design, build, and ship a new agent — prompt structure, model choice, validation. New agent design to deployed: under 4 hours.</p>
             <p className="font-mono text-[10px] font-semibold" style={{ color: "#A78BFA" }}>→ Underlies all 5 agents above</p>

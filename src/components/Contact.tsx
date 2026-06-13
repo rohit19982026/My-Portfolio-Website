@@ -53,14 +53,15 @@ export default function Contact() {
     <section
       id="contact"
       className="py-24 relative overflow-hidden"
-      style={{
-        background: "#FFFFFF",
-        borderTop: "1px solid rgba(124,58,237,0.1)",
-      }}
+      style={{ background: "#FFFFFF" }}
     >
       <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, #E2E8F0 20%, #E2E8F0 80%, transparent)" }}
+      />
+      <div
         className="absolute pointer-events-none rounded-full"
-        style={{ width: 500, height: 500, background: "#8B5CF6", opacity: 0.04, filter: "blur(80px)", top: -100, left: "50%", transform: "translateX(-50%)" }}
+        style={{ width: 500, height: 500, background: "#1D4ED8", opacity: 0.03, filter: "blur(80px)", top: -100, left: "50%", transform: "translateX(-50%)" }}
       />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -72,17 +73,17 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">09 / LET&apos;S TALK</span>
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#1D4ED8] block mb-5">09 / LET&apos;S TALK</span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
               initial={{ y: "105%" }}
               animate={inView ? { y: "0%" } : {}}
               transition={{ type: "spring", stiffness: 65, damping: 16, delay: 0.1 }}
               className="font-display font-bold tracking-tight leading-[0.97] mb-5"
-              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}
+              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}
             >
               Got a{" "}
-              <span className="font-normal" style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>complex</span>
+              <span className="font-normal" style={{ background: "linear-gradient(135deg, #60A5FA, #1D4ED8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>complex</span>
               <br />data &amp; AI program?
             </motion.h2>
           </div>
@@ -90,14 +91,14 @@ export default function Contact() {
             initial={{ opacity: 0, filter: "blur(8px)" }}
             animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, delay: 0.28 }}
-            className="text-[16px] text-[#3D3358] max-w-xl leading-relaxed"
+            className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
           >
             Whether it&apos;s a platform migration, a GenAI delivery, or a program that needs
             rescuing — I&apos;d rather understand the problem first before discussing engagement.
           </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-14">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-14">
           {/* Left — contact links */}
           <motion.div
             variants={linkVariants}
@@ -107,12 +108,12 @@ export default function Contact() {
             <div className="space-y-5 mb-10">
               {links.map((link) => (
                 <motion.div key={link.label} variants={linkItem} className="flex items-center gap-4 group">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#7A6E9A] w-20 shrink-0">{link.label}</span>
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8] w-20 shrink-0">{link.label}</span>
                   <motion.a
                     href={link.href}
                     whileHover={{ x: 4 }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    className="text-[14px] font-semibold text-[#3D3358] hover:text-[#7C3AED] transition-colors"
+                    className="text-[14px] font-semibold text-[#475569] hover:text-[#1D4ED8] transition-colors"
                     target={link.label === "LINKEDIN" ? "_blank" : undefined}
                     rel={link.label === "LINKEDIN" ? "noopener noreferrer" : undefined}
                   >
@@ -134,7 +135,7 @@ export default function Contact() {
               />
               <div>
                 <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">OPEN FOR PROGRAMS</p>
-                <p className="font-mono text-[10px] text-[#7A6E9A] mt-0.5">Kolkata, India · IST · Available globally</p>
+                <p className="font-mono text-[10px] text-[#94A3B8] mt-0.5">Kolkata, India · IST · Available globally</p>
               </div>
             </motion.div>
           </motion.div>
@@ -152,12 +153,12 @@ export default function Contact() {
                 variants={cardItem}
                 whileHover={{ x: 4, transition: { type: "spring", stiffness: 350, damping: 25 } }}
                 className="flex gap-4 p-5 rounded-2xl cursor-default"
-                style={{ background: "#F7F4FF", border: "1px solid rgba(124,58,237,0.12)" }}
+                style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}
               >
                 <span className="text-2xl shrink-0">{e.icon}</span>
                 <div>
-                  <p className="font-semibold text-[#1A0A2E] text-[14px] mb-1">{e.title}</p>
-                  <p className="text-[13px] text-[#3D3358] leading-relaxed">{e.desc}</p>
+                  <p className="font-semibold text-[#0F172A] text-[14px] mb-1">{e.title}</p>
+                  <p className="text-[13px] text-[#475569] leading-relaxed">{e.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -169,7 +170,7 @@ export default function Contact() {
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
               href="mailto:singhrohit.25119@gmail.com"
               className="w-full mt-2 py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-white flex items-center justify-center gap-2"
-              style={{ background: "#7C3AED", boxShadow: "0 0 24px rgba(109,40,217,0.3)" }}
+              style={{ background: "#1D4ED8", boxShadow: "0 0 24px rgba(30,64,175,0.25)" }}
             >
               Email Me Directly →
             </motion.a>

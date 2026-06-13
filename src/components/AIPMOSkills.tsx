@@ -3,9 +3,9 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 
-const PURPLE = "#7C3AED";
-const PURPLE_SOFT = "#A78BFA";
-const PURPLE_BG = "#EDE9FF";
+const PRIMARY = "#1D4ED8";
+const PRIMARY_SOFT = "#60A5FA";
+const PRIMARY_BG = "#DBEAFE";
 
 const skills = [
   {
@@ -13,9 +13,9 @@ const skills = [
     icon: "⚡",
     label: "Sprint Intelligence",
     title: "Velocity & Blocker Analytics Engine",
-    color: PURPLE,
-    accentBg: "#F5F3FF",
-    accentBorder: "#DDD6FE",
+    color: PRIMARY,
+    accentBg: "#EFF6FF",
+    accentBorder: "#BFDBFE",
     summary:
       "Transforms raw ticket export CSVs into a ranked team velocity report — per-engineer scorecards, week-on-week trends, and auto-generated PM action items.",
     capabilities: [
@@ -160,7 +160,7 @@ export default function AIPMOSkills() {
   return (
     <section
       id="ai-skills"
-      style={{ background: "#F3F1FF" }}
+      style={{ background: "#F8FAFC" }}
       className="py-24"
     >
       <div className="max-w-6xl mx-auto px-6">
@@ -174,18 +174,18 @@ export default function AIPMOSkills() {
         >
           <span
             className="text-xs font-bold uppercase tracking-[0.18em] px-4 py-1.5 rounded-full inline-block mb-5"
-            style={{ background: PURPLE_BG, color: PURPLE }}
+            style={{ background: PRIMARY_BG, color: PRIMARY }}
           >
             AI Engineering
           </span>
           <h2
             className="font-heading text-4xl sm:text-5xl font-bold mb-5"
-            style={{ color: "#1A1040" }}
+            style={{ color: "#0F172A" }}
           >
             AI Agent Skills{" "}
             <span
               style={{
-                background: `linear-gradient(135deg, ${PURPLE} 0%, #6D28D9 60%, ${PURPLE_SOFT} 100%)`,
+                background: `linear-gradient(135deg, ${PRIMARY} 0%, #1E40AF 60%, ${PRIMARY_SOFT} 100%)`,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -196,7 +196,7 @@ export default function AIPMOSkills() {
           </h2>
           <p
             className="text-lg max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "#5B4F8A" }}
+            style={{ color: "#475569" }}
           >
             A suite of custom agent skills — sprint velocity tracking, billing
             compliance auditing, agentic workflow design, and AI cost
@@ -216,8 +216,8 @@ export default function AIPMOSkills() {
                 className="px-5 py-2.5 rounded-full text-sm font-semibold border-2 transition-all duration-200"
                 style={{
                   background: activeSkill === i ? s.color : "white",
-                  borderColor: activeSkill === i ? s.color : "#DDD6FE",
-                  color: activeSkill === i ? "white" : "#5B4F8A",
+                  borderColor: activeSkill === i ? s.color : "#E2E8F0",
+                  color: activeSkill === i ? "white" : "#475569",
                 }}
               >
                 {s.icon} {s.label}
@@ -253,13 +253,13 @@ export default function AIPMOSkills() {
                         </div>
                         <h3
                           className="font-heading text-2xl font-bold mb-3"
-                          style={{ color: "#1A1040" }}
+                          style={{ color: "#0F172A" }}
                         >
                           {s.title}
                         </h3>
                         <p
                           className="text-sm leading-relaxed mb-6"
-                          style={{ color: "#5B4F8A" }}
+                          style={{ color: "#475569" }}
                         >
                           {s.summary}
                         </p>
@@ -328,35 +328,35 @@ export default function AIPMOSkills() {
           <div className="text-center mb-6">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: PURPLE_SOFT }}
+              style={{ color: PRIMARY_SOFT }}
             >
               System Architecture
             </span>
           </div>
           <div
             className="rounded-2xl overflow-hidden border-2"
-            style={{ borderColor: "#312E81" }}
+            style={{ borderColor: "#1E3A8A" }}
           >
             {/* Terminal title bar */}
             <div
               className="px-5 py-3 flex items-center gap-2"
-              style={{ background: "#1E1B4B" }}
+              style={{ background: "#0F172A" }}
             >
               <span className="w-3 h-3 rounded-full bg-red-400" />
               <span className="w-3 h-3 rounded-full bg-yellow-400" />
               <span className="w-3 h-3 rounded-full bg-green-400" />
               <span
                 className="ml-3 text-xs font-mono"
-                style={{ color: "#A5B4FC" }}
+                style={{ color: "#93C5FD" }}
               >
                 ai-pm-platform / architecture.txt
               </span>
             </div>
             {/* Diagram content */}
-            <div style={{ background: "#0F0C29" }} className="px-6 py-6">
+            <div style={{ background: "#0B1220" }} className="px-6 py-6">
               <pre
                 className="text-xs font-mono leading-relaxed overflow-x-auto"
-                style={{ color: "#C4B5FD" }}
+                style={{ color: "#93C5FD" }}
               >
                 {ASCII_DIAGRAM}
               </pre>
@@ -375,13 +375,13 @@ export default function AIPMOSkills() {
           <div className="text-center mb-10">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: "#5B4F8A" }}
+              style={{ color: "#475569" }}
             >
               How It Works
             </span>
             <h3
               className="font-heading text-2xl font-bold mt-2"
-              style={{ color: "#1A1040" }}
+              style={{ color: "#0F172A" }}
             >
               From trigger to PM action — in seconds
             </h3>
@@ -392,7 +392,7 @@ export default function AIPMOSkills() {
             {/* Connector line (desktop) */}
             <div
               className="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-0.5"
-              style={{ background: "linear-gradient(90deg, #DDD6FE, #A78BFA, #7C3AED, #DDD6FE)" }}
+              style={{ background: "linear-gradient(90deg, #BFDBFE, #60A5FA, #1D4ED8, #BFDBFE)" }}
             />
 
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -409,25 +409,25 @@ export default function AIPMOSkills() {
                     className="relative w-16 h-16 rounded-full flex items-center justify-center text-2xl mb-4 border-4 z-10"
                     style={{
                       background: "white",
-                      borderColor: PURPLE_SOFT,
-                      boxShadow: `0 0 0 6px #F3F1FF`,
+                      borderColor: PRIMARY_SOFT,
+                      boxShadow: `0 0 0 6px #F8FAFC`,
                     }}
                   >
                     {step.icon}
                   </div>
                   <div
                     className="text-xs font-bold uppercase tracking-widest mb-1"
-                    style={{ color: PURPLE }}
+                    style={{ color: PRIMARY }}
                   >
                     Step {step.step}
                   </div>
                   <div
                     className="font-heading font-bold text-base mb-2"
-                    style={{ color: "#1A1040" }}
+                    style={{ color: "#0F172A" }}
                   >
                     {step.label}
                   </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "#5B4F8A" }}>
+                  <p className="text-xs leading-relaxed" style={{ color: "#475569" }}>
                     {step.desc}
                   </p>
                 </motion.div>
@@ -452,15 +452,15 @@ export default function AIPMOSkills() {
             <div
               key={stat.label}
               className="rounded-2xl p-5 text-center border"
-              style={{ background: "white", borderColor: "#DDD6FE" }}
+              style={{ background: "white", borderColor: "#E2E8F0" }}
             >
               <div
                 className="font-heading text-2xl font-bold mb-1"
-                style={{ color: PURPLE }}
+                style={{ color: PRIMARY }}
               >
                 {stat.value}
               </div>
-              <div className="text-xs leading-tight" style={{ color: "#7B6BAB" }}>
+              <div className="text-xs leading-tight" style={{ color: "#94A3B8" }}>
                 {stat.label}
               </div>
             </div>
@@ -476,7 +476,7 @@ export default function AIPMOSkills() {
         >
           <p
             className="text-xs font-bold uppercase tracking-widest mb-5"
-            style={{ color: "#9E92C8" }}
+            style={{ color: "#94A3B8" }}
           >
             Tech Stack
           </p>
@@ -487,14 +487,14 @@ export default function AIPMOSkills() {
                 className="flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium"
                 style={{
                   background: "white",
-                  borderColor: "#DDD6FE",
+                  borderColor: "#E2E8F0",
                   color: "#374151",
                 }}
               >
                 {tool.name}
                 <span
                   className="text-xs border-l pl-2"
-                  style={{ color: "#9E92C8", borderColor: "#DDD6FE" }}
+                  style={{ color: "#94A3B8", borderColor: "#E2E8F0" }}
                 >
                   {tool.category}
                 </span>
@@ -514,10 +514,10 @@ export default function AIPMOSkills() {
             href="/ai-skills"
             className="inline-flex items-center gap-3 px-7 py-3 rounded-full font-medium text-sm"
             style={{
-              background: "linear-gradient(135deg,#7C3AED,#6D28D9)",
+              background: "linear-gradient(135deg,#1D4ED8,#1E40AF)",
               color: "#fff",
               textDecoration: "none",
-              boxShadow: "0 4px 20px rgba(124,58,237,0.32)",
+              boxShadow: "0 4px 20px rgba(30,64,175,0.32)",
               fontFamily: "monospace",
               letterSpacing: "0.06em",
             }}
@@ -525,7 +525,7 @@ export default function AIPMOSkills() {
             Explore full skill diagrams
             <span style={{ fontSize: 16 }}>→</span>
           </a>
-          <p className="mt-3 text-xs" style={{ color: "#9E92C8" }}>
+          <p className="mt-3 text-xs" style={{ color: "#94A3B8" }}>
             Animated flow diagrams · Capability breakdowns · Tech stack
           </p>
         </motion.div>

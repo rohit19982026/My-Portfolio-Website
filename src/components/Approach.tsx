@@ -13,26 +13,28 @@ const featured = [
   },
   {
     num: "03 / RISK",
-    title: "Track what sprint velocity won’t show you.",
+    title: "Track what sprint velocity won't show you.",
     titleEmphasis: "velocity",
     body: "On a fixed-price M&A cutover, a throughput model flagged a pacing risk in week 5 with 11 weeks of runway remaining — the cutover landed on date with full margin protected. On a managed retainer I inherited with a renewal at risk of a competitive re-bid, publishing UAT aging metrics directly to client leadership cut sign-off from 11 days to 4 within 6 weeks — and helped turn the renewal conversation around.",
   },
 ];
 
+const ACCENT_COLORS = ["#1D4ED8", "#0891B2", "#D97706"];
+
 export default function Approach() {
   return (
-    <section id="approach" style={{ background: "#F7F4FF" }} className="py-24">
+    <section id="approach" style={{ background: "#F8FAFC" }} className="py-24">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Header */}
         <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#7C3AED" }}>
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#1D4ED8" }}>
               05 / APPROACH
             </span>
           </div>
           <h2
-            className="font-heading font-bold tracking-tight leading-[0.97] mb-5 text-[#1A0A2E]"
+            className="font-heading font-bold tracking-tight leading-[0.97] mb-5 text-[#0F172A]"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             How I run{" "}
@@ -41,34 +43,34 @@ export default function Approach() {
         </div>
 
         {/* 3 featured cards */}
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((card, i) => (
             <div
               key={i}
               className="reveal p-7 rounded-2xl"
               style={{
                 background: "#FFFFFF",
-                border: "1px solid rgba(124,58,237,0.12)",
+                border: "1px solid #E2E8F0",
                 animationDelay: `${0.1 + i * 0.1}s`,
               }}
             >
               <span
-                className="inline-block font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded mb-7"
-                style={{ color: "#7C3AED", border: "1px solid rgba(124,58,237,0.25)" }}
+                className="inline-block font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded-md mb-7"
+                style={{ color: ACCENT_COLORS[i], border: `1px solid ${ACCENT_COLORS[i]}40` }}
               >
                 {card.num}
               </span>
-              <h3 className="font-heading text-[24px] font-bold leading-tight tracking-tight mb-4 text-[#1A0A2E]">
+              <h3 className="font-heading text-[24px] font-bold leading-tight tracking-tight mb-4 text-[#0F172A]">
                 {card.title.split(card.titleEmphasis).map((part, j, arr) =>
                   j < arr.length - 1 ? (
                     <span key={j}>
                       {part}
-                      <em className="not-italic" style={{ color: "#7C3AED" }}>{card.titleEmphasis}</em>
+                      <em className="not-italic" style={{ color: ACCENT_COLORS[i] }}>{card.titleEmphasis}</em>
                     </span>
                   ) : part
                 )}
               </h3>
-              <p className="text-[13.5px] leading-relaxed" style={{ color: "#3D3358" }}>{card.body}</p>
+              <p className="text-[13.5px] leading-relaxed" style={{ color: "#475569" }}>{card.body}</p>
             </div>
           ))}
         </div>

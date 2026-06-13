@@ -33,7 +33,7 @@ const tools = [
     category: "Sprint Intelligence",
     title: "Velocity & Blocker Tracker",
     proof: "CSV → ranked scorecard + PM action items in under 2 min",
-    accent: "#7C3AED",
+    accent: "#1D4ED8",
   },
   {
     category: "Program Health",
@@ -55,7 +55,7 @@ export default function AIToolingTeaser() {
       <div
         className="absolute top-0 left-0 w-[600px] h-[400px] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse, rgba(124,58,237,0.03) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse, rgba(29,78,216,0.03) 0%, transparent 65%)",
           filter: "blur(1px)",
         }}
       />
@@ -70,17 +70,17 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12"
         >
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#1D4ED8] mb-5">
             06 / AI TOOLING I&apos;VE SHIPPED
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#1A0A2E" }}
+            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#0F172A" }}
           >
             Built with{" "}
             <span
               style={{
-                background: "linear-gradient(130deg, #A78BFA 0%, #7C3AED 100%)",
+                background: "linear-gradient(130deg, #60A5FA 0%, #1D4ED8 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -90,7 +90,7 @@ export default function AIToolingTeaser() {
             <br />
             Runs in production.
           </h2>
-          <p className="text-[15px] text-[#7A6E9A] max-w-lg leading-relaxed">
+          <p className="text-[15px] text-[#94A3B8] max-w-lg leading-relaxed">
             6 AI agents in production across the phData PMO. Four highlighted below — each replaced a manual workflow that was consuming PM time with zero judgment value.
           </p>
         </motion.div>
@@ -113,21 +113,21 @@ export default function AIToolingTeaser() {
             >
               <div className="flex items-center gap-2 mb-4">
                 <span
-                  className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
+                  className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
                   style={{ color: tool.accent, background: `${tool.accent}12`, border: `1px solid ${tool.accent}30` }}
                 >
                   {tool.category}
                 </span>
                 {tool.award && (
                   <span
-                    className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
+                    className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
                     style={{ color: "#D97706", background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.2)" }}
                   >
                     🏆 Innovation Award
                   </span>
                 )}
               </div>
-              <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#1A0A2E]">{tool.title}</h3>
+              <h3 className="font-heading font-bold text-[16px] leading-snug mb-3 text-[#0F172A]">{tool.title}</h3>
               <p className="font-mono text-[11px] leading-relaxed" style={{ color: tool.accent }}>
                 → {tool.proof}
               </p>
@@ -143,7 +143,7 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10"
         >
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#7C3AED" }}>
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#0891B2" }}>
             // HOW I THINK ABOUT AI IN DELIVERY
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
@@ -155,12 +155,12 @@ export default function AIToolingTeaser() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
                 className="p-5 rounded-2xl"
-                style={{ background: "#F7F4FF", border: "1px solid rgba(124,58,237,0.1)" }}
+                style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}
               >
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "#7C3AED" }}>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "#1D4ED8" }}>
                   {p.label}
                 </p>
-                <p className="text-[13px] leading-relaxed" style={{ color: "#3D3358" }}>
+                <p className="text-[13px] leading-relaxed" style={{ color: "#475569" }}>
                   {p.body}
                 </p>
               </motion.div>
@@ -180,14 +180,14 @@ export default function AIToolingTeaser() {
             href="/ai-skills"
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:opacity-90"
             style={{
-              background: "linear-gradient(135deg, #7C3AED, #6D28D9)",
-              boxShadow: "0 4px 20px rgba(109,40,217,0.35)",
+              background: "linear-gradient(135deg, #1D4ED8, #1E40AF)",
+              boxShadow: "0 4px 20px rgba(30,64,175,0.3)",
             }}
           >
             See full capability diagrams
             <span style={{ fontSize: 14 }}>→</span>
           </a>
-          <p className="font-mono text-[10px] text-[#AAA0C8] uppercase tracking-wider">
+          <p className="font-mono text-[10px] text-[#CBD5E1] uppercase tracking-wider">
             Animated flow diagrams · Architecture · Tech stack
           </p>
         </motion.div>

@@ -88,7 +88,7 @@ export default function Expertise() {
             >
               <div className="flex items-start justify-between mb-3">
                 <span className="text-3xl">{d.icon}</span>
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${d.tagColor}`}>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-md ${d.tagColor}`}>
                   {d.tag}
                 </span>
               </div>

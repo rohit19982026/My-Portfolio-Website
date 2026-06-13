@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
+import AmbientBackground from "@/components/AmbientBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -11,7 +12,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
@@ -65,9 +66,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${plusJakarta.variable} h-full`}
+      className={`${inter.variable} ${spaceGrotesk.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-white text-[#0F172A] antialiased">
+        <AmbientBackground />
         <ScrollProgress />
         <Navbar />
         <main className="flex-1">{children}</main>

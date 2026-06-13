@@ -82,15 +82,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {/* Meta row */}
           <div className="flex flex-wrap gap-2 mb-5">
             <span
-              className="text-xs font-bold px-3 py-1 rounded-full text-white"
+              className="text-xs font-bold px-3 py-1 rounded-md text-white"
               style={{ backgroundColor: project.accentColor }}
             >
               {project.industry}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-full bg-white border border-[#bfdbfe] text-[#6b7280]">
+            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#bfdbfe] text-[#6b7280]">
               {project.duration}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-full bg-white border border-[#bfdbfe] text-[#6b7280]">
+            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#bfdbfe] text-[#6b7280]">
               {project.role}
             </span>
           </div>
@@ -149,7 +149,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2.5 py-1 rounded-full bg-white border border-[#bfdbfe] text-[#2563eb] font-medium"
+                      className="text-xs px-2.5 py-1 rounded-md bg-white border border-[#bfdbfe] text-[#2563eb] font-medium"
                     >
                       {tag}
                     </span>

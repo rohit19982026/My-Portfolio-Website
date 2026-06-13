@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import AnimatedCounter from "./AnimatedCounter";
+import { useMagnetic } from "@/hooks/useMagnetic";
 
 const stats = [
   { value: "$5M+",   label: "Largest P&L Owned" },
@@ -62,6 +64,9 @@ const statItem = {
 };
 
 export default function Hero() {
+  const magneticWork = useMagnetic(0.25);
+  const magneticCV = useMagnetic(0.25);
+
   return (
     <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden bg-white">
       <div
@@ -70,7 +75,7 @@ export default function Hero() {
           width: 700,
           height: 700,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(29,78,216,0.06) 0%, transparent 70%)",
           top: "50%",
           right: "-160px",
           transform: "translateY(-50%)",
@@ -85,7 +90,7 @@ export default function Hero() {
           width: 400,
           height: 400,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(110,231,183,0.04) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(8,145,178,0.04) 0%, transparent 70%)",
           top: "20%",
           left: "-80px",
         }}
@@ -95,20 +100,20 @@ export default function Hero() {
         <div className="max-w-6xl mx-auto px-6 w-full">
           <div>
             <div>
-              {/* Name — clip reveal */}
+              {/* Name */}
               <div style={{ overflow: "hidden", marginBottom: "16px" }}>
                 <motion.h2
                   initial={{ y: "110%" }}
                   animate={{ y: "0%" }}
                   transition={{ ...SPRING, delay: 0.12 }}
                   className="text-[22px] font-semibold"
-                  style={{ color: "#1A0A2E" }}
+                  style={{ color: "#0F172A" }}
                 >
                   Rohit Kumar Singh
                 </motion.h2>
               </div>
 
-              {/* Title — clip reveal */}
+              {/* Title */}
               <div style={{ overflow: "hidden", marginBottom: "20px" }}>
                 <motion.h1
                   initial={{ y: "105%", rotate: 2 }}
@@ -117,7 +122,7 @@ export default function Hero() {
                   className="font-display font-bold leading-[1.0] tracking-[-0.02em]"
                   style={{
                     fontSize: "clamp(38px, 5.5vw, 68px)",
-                    background: "linear-gradient(135deg, #A78BFA 0%, #7C3AED 60%, #A78BFA 100%)",
+                    background: "linear-gradient(135deg, #60A5FA 0%, #1D4ED8 60%, #0891B2 100%)",
                     backgroundSize: "200% auto",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -131,13 +136,13 @@ export default function Hero() {
                 </motion.h1>
               </div>
 
-              {/* Description — blur fade */}
+              {/* Description */}
               <motion.p
                 initial={{ opacity: 0, filter: "blur(12px)", y: 8 }}
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
-                style={{ color: "#3D3358" }}
+                style={{ color: "#475569" }}
               >
                 Five years in technology delivery — ITIL change governance at BT,
                 then data and AI programs at phData: Snowflake migrations, Databricks
@@ -146,7 +151,7 @@ export default function Hero() {
                 delivery on track.
               </motion.p>
 
-              {/* Social icons — stagger spring */}
+              {/* Social icons */}
               <motion.div
                 variants={socialVariants}
                 initial="hidden"
@@ -164,9 +169,9 @@ export default function Hero() {
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                     className="w-10 h-10 rounded-full flex items-center justify-center"
                     style={{
-                      background: "rgba(124,58,237,0.12)",
-                      border: "1px solid rgba(124,58,237,0.25)",
-                      color: "#A78BFA",
+                      background: "rgba(29,78,216,0.08)",
+                      border: "1px solid rgba(29,78,216,0.2)",
+                      color: "#60A5FA",
                     }}
                   >
                     {s.icon}
@@ -174,7 +179,7 @@ export default function Hero() {
                 ))}
               </motion.div>
 
-              {/* Buttons — stagger spring */}
+              {/* Buttons */}
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -191,9 +196,9 @@ export default function Hero() {
                   href="#work"
                   className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
                   style={{
-                    background: "linear-gradient(135deg, #7C3AED, #6D28D9)",
+                    background: "linear-gradient(135deg, #1D4ED8, #1E40AF)",
                     color: "#FFFFFF",
-                    boxShadow: "0 4px 20px rgba(109,40,217,0.4)",
+                    boxShadow: "0 4px 20px rgba(30,64,175,0.35)",
                   }}
                 >
                   See My Work
@@ -211,8 +216,8 @@ export default function Hero() {
                   className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
                   style={{
                     background: "transparent",
-                    border: "1px solid rgba(124,58,237,0.4)",
-                    color: "#A78BFA",
+                    border: "1px solid rgba(29,78,216,0.35)",
+                    color: "#60A5FA",
                   }}
                 >
                   Download CV
@@ -225,25 +230,29 @@ export default function Hero() {
       </div>
 
       {/* STATS STRIP */}
-      <div style={{ borderTop: "1px solid rgba(124,58,237,0.08)" }}>
+      <div
+        className="h-px w-full"
+        style={{ background: "linear-gradient(90deg, transparent, #E2E8F0 20%, #E2E8F0 80%, transparent)" }}
+      />
+      <div>
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             variants={statVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-3"
+            className="grid grid-cols-1 sm:grid-cols-3"
           >
             {stats.map((s, i) => (
               <motion.div
                 key={s.label}
                 variants={statItem}
                 className="py-6 px-5"
-                style={{ borderRight: i < stats.length - 1 ? "1px solid rgba(124,58,237,0.08)" : "none" }}
+                style={{ borderRight: i < stats.length - 1 ? "1px solid #E2E8F0" : "none" }}
               >
-                <p className="font-display text-[28px] font-bold leading-none tracking-tight mb-1" style={{ color: "#7C3AED" }}>
+                <p className="font-display text-[28px] font-bold leading-none tracking-tight mb-1" style={{ color: "#1D4ED8" }}>
                   {s.value}
                 </p>
-                <p className="text-[12px]" style={{ color: "#7A6E9A" }}>
+                <p className="text-[12px]" style={{ color: "#94A3B8" }}>
                   {s.label}
                 </p>
               </motion.div>
