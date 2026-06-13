@@ -1,7 +1,6 @@
 import Hero from "@/components/Hero";
 import ImpactSummary from "@/components/ImpactSummary";
 import Work from "@/components/Work";
-import Approach from "@/components/Approach";
 import AIToolingTeaser from "@/components/AIToolingTeaser";
 import SolutionDesignTeaser from "@/components/SolutionDesignTeaser";
 import DeliveryExposure from "@/components/DeliveryExposure";
@@ -16,7 +15,6 @@ export default function Home() {
       <Trajectory />
       <ImpactSummary />
       <Work />
-      <Approach />
       <AIToolingTeaser />
       <DeliveryExposure />
       <SolutionDesignTeaser />

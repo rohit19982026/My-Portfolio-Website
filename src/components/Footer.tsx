@@ -22,7 +22,7 @@ export default function Footer() {
               // EXPLORE
             </p>
             <ul className="space-y-2">
-              {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Exposure", "#exposure"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
+              {[["Work", "#work"], ["Tools", "#tools"], ["Exposure", "#exposure"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
                 <li key={label}>
                   <a
                     href={href}
