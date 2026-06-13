@@ -21,6 +21,10 @@ export interface CaseStudy {
   result: string;
   stack: string[];
   metrics: { label: string; value: string }[];
+  learnings: {
+    worked: string;
+    differently: string;
+  };
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -61,6 +65,12 @@ export const caseStudies: CaseStudy[] = [
       { label: "SCOPE DELIVERED", value: "96%" },
       { label: "BLOCKERS CLEARED", value: "17" },
     ],
+    learnings: {
+      worked:
+        "Building the dependency governance framework with named owners and aging counters first — having hard data on aging gave the leverage that informal escalations on 3 stalled blockers hadn't.",
+      differently:
+        "Stand up the dependency aging tracker from day one of the program rather than after Q1 — by the time it existed, 17 items had already accumulated 60+ days of staleness that then took 8 weeks to clear.",
+    },
   },
   {
     id: "redshift-databricks",
@@ -104,6 +114,12 @@ export const caseStudies: CaseStudy[] = [
       { label: "TEAM SIZE", value: "11 ENG" },
       { label: "REGIONS", value: "US + INDIA" },
     ],
+    learnings: {
+      worked:
+        "Redesigning the tracking model to throughput-based before Sprint 1 — it surfaced the Week 5 pacing risk with 11 weeks of runway remaining, early enough to course-correct without touching the M&A cutover date.",
+      differently:
+        "Build knowledge-transfer plans for all 11 roles at kickoff, not just the 7 flagged as critical-path — the 2 engineers who exited mid-program weren't on that original list, and only existing KT infrastructure absorbed the gap without disrupting a sprint.",
+    },
   },
   {
     id: "sql-server-snowflake",
@@ -142,6 +158,12 @@ export const caseStudies: CaseStudy[] = [
       { label: "EPIC TRACKS", value: "6 PARALLEL" },
       { label: "MARGIN", value: "PROTECTED" },
     ],
+    learnings: {
+      worked:
+        "Re-baselining 3 weeks ahead of the blackout — front-loading vendor development and back-loading compliance gates — meant the team entered the blackout with no open critical-path dependencies.",
+      differently:
+        "Introduce the weighted EVM model at kickoff instead of partway through — a plain completion-count view wouldn't have surfaced the schedule risk 4 weeks early, and earlier visibility would have created even more room to re-sequence around the blackout.",
+    },
   },
   {
     id: "identity-resolution",
@@ -185,6 +207,12 @@ export const caseStudies: CaseStudy[] = [
       { label: "INFRA SAVED", value: "~$40K" },
       { label: "STATUS", value: "GREEN" },
     ],
+    learnings: {
+      worked:
+        "Holding the line on 9 days of foundation-building before authorising engineering work — despite pressure to start day one, it meant Sprint 1 landed on plan with a 23-item RAID log and full RACI already in place.",
+      differently:
+        "Surface cross-program infrastructure overlaps in week 1 as a standing check, not just when architecture sessions happen to reveal them — the ~$40K avoided and 4 engineering weeks recovered here suggest earlier visibility compounds further on accounts running multiple parallel programs.",
+    },
   },
   {
     id: "snowflake-china",
@@ -223,6 +251,12 @@ export const caseStudies: CaseStudy[] = [
       { label: "COMP. FAILURES", value: "ZERO" },
       { label: "REGIONS", value: "US · IN · CN" },
     ],
+    learnings: {
+      worked:
+        "Redesigning the stakeholder model to async-first with decision registers in week 1 — it eliminated the 24–48 hour decision lag before it could accumulate across the 6-week window.",
+      differently:
+        "Map PIPL checkpoints into the WBS during SOW negotiation rather than at kickoff — locking in compliance cycle times before the schedule is finalised would have created extra runway around the Lunar New Year holiday baked into this 6-week window.",
+    },
   },
   {
     id: "pmo-ai-agent-platform",
@@ -262,6 +296,12 @@ export const caseStudies: CaseStudy[] = [
       { label: "ACCURACY", value: ">95%" },
       { label: "DEPLOYMENT", value: "1 MONTH" },
     ],
+    learnings: {
+      worked:
+        "Sequencing the Billing Compliance Agent first — highest PM pain, most measurable accuracy — built the credibility from a 1-month PMO-wide deployment and >95% accuracy that made the next 5 agents an easier sell.",
+      differently:
+        "Build the Velocity & Blocker Tracker and Project Health Scanner against a shared program-data layer from the start instead of sequentially — both ingest similar sprint and program data, and a shared foundation built once would have sped up both.",
+    },
   },
   {
     id: "managed-de-pod",
@@ -301,5 +341,11 @@ export const caseStudies: CaseStudy[] = [
       { label: "RENEWAL", value: "NO RE-BID" },
       { label: "STATUS", value: "EMBEDDED" },
     ],
+    learnings: {
+      worked:
+        "Making UAT aging visible to the client's own leadership through a weekly health reporting cadence — it cut the cycle from 11 days to 4 within 6 weeks and built the trust that carried into the renewal conversation.",
+      differently:
+        "Put the renewal-focused operating model — decision rights doc, engineering leads owning sprint reviews — in place from day one of the retainer rather than waiting for handover; it took until 4 months before renewal to build, and an embedded retainer benefits from that structure from the start.",
+    },
   },
 ];

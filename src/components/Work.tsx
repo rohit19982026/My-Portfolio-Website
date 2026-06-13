@@ -412,6 +412,31 @@ function CaseStudyCard({
                     </div>
                   </motion.div>
 
+                  {/* 6. Learnings */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.34 }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#0891B2" }}>
+                      06 · LOOKING BACK
+                    </p>
+                    <div className="grid gap-3 sm:grid-cols-2 max-w-3xl">
+                      <div className="rounded-xl p-4" style={{ background: "rgba(8,145,178,0.04)", border: "1px solid rgba(8,145,178,0.18)" }}>
+                        <p className="font-mono text-[9px] font-bold uppercase tracking-wider mb-2" style={{ color: "#0891B2" }}>
+                          What Worked
+                        </p>
+                        <p className="text-[13px] leading-[1.7] text-[#475569]">{study.learnings.worked}</p>
+                      </div>
+                      <div className="rounded-xl p-4" style={{ background: "rgba(148,163,184,0.05)", border: "1px solid #E2E8F0" }}>
+                        <p className="font-mono text-[9px] font-bold uppercase tracking-wider mb-2" style={{ color: "#94A3B8" }}>
+                          Next Time
+                        </p>
+                        <p className="text-[13px] leading-[1.7] text-[#475569]">{study.learnings.differently}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+
                   {/* Stack */}
                   <div className="flex flex-wrap gap-2 pt-1">
                     {study.stack.map((s) => (
