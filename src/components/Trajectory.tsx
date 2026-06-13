@@ -69,6 +69,15 @@ const sidebarItem = {
   visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 90, damping: 20 } },
 };
 
+const tagListVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.15 } },
+};
+const tagItemVariants = {
+  hidden: { opacity: 0, scale: 0.8, y: 10, filter: "blur(4px)" },
+  visible: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 320, damping: 22 } },
+};
+
 export default function Trajectory() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -155,19 +164,39 @@ export default function Trajectory() {
                         </li>
                       ))}
                     </ul>
-                    <div className="flex flex-wrap gap-2">
-                      {role.tags.map((tag) => (
-                        <motion.span
-                          key={tag}
-                          whileHover={{ scale: 1.05, y: -1 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                          className="font-mono text-[10px] px-2.5 py-1 rounded-md font-semibold cursor-default"
-                          style={{ border: `1px solid ${role.color}35`, backgroundColor: `${role.color}0D`, color: role.color }}
-                        >
-                          {tag}
-                        </motion.span>
-                      ))}
-                    </div>
+                    <motion.div
+                      variants={tagListVariants}
+                      initial="hidden"
+                      animate={inView ? "visible" : "hidden"}
+                      className="flex flex-wrap gap-2"
+                    >
+                      {role.tags.map((tag, ti) =>
+                        ti === 0 ? (
+                          <motion.span
+                            key={tag}
+                            variants={tagItemVariants}
+                            whileHover={{ scale: 1.06, y: -2, boxShadow: `0 8px 20px ${role.color}45` }}
+                            transition={{ type: "spring", stiffness: 400, damping: 18 }}
+                            className="font-mono text-[10px] px-3 py-1.5 rounded-md font-bold uppercase tracking-[0.12em] cursor-default"
+                            style={{ backgroundColor: role.color, color: "#FFFFFF" }}
+                          >
+                            // {tag}
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key={tag}
+                            variants={tagItemVariants}
+                            whileHover={{ scale: 1.06, y: -2, backgroundColor: `${role.color}1F`, borderColor: role.color, boxShadow: `0 6px 16px ${role.color}26` }}
+                            transition={{ type: "spring", stiffness: 400, damping: 18 }}
+                            className="inline-flex items-center gap-2 font-mono text-[10px] px-3 py-1.5 rounded-md font-semibold cursor-default"
+                            style={{ border: `1px solid ${role.color}35`, backgroundColor: `${role.color}0D`, color: role.color }}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.color }} />
+                            {tag}
+                          </motion.span>
+                        )
+                      )}
+                    </motion.div>
                   </motion.div>
                 ))}
               </div>
