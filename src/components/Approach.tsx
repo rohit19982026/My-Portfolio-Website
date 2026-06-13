@@ -3,19 +3,19 @@ const featured = [
     num: "01 / ARCHITECTURE",
     title: "Build the structure around the constraints.",
     titleEmphasis: "structure",
-    body: "On a 19-week regulated migration with a 3-week compliance blackout mid-program, I decomposed the WBS into 6 parallel epic tracks with float at every handoff — delivered on the contractual date with margin intact. On a PIPL-regulated deployment across US/India/China, the same instinct ran in reverse: every compliance checkpoint was mapped into the WBS before development began, then the schedule was re-baselined around a 2-week holiday with zero critical-path impact. Different regulations, same rule — compliance gates are schedule inputs, not surprises.",
+    body: "Compliance windows, blackout periods, and fixed cutover dates aren't risks to route around later — they're inputs to the work breakdown structure from day one. I map every external constraint into the plan before development starts, then build float at the handoffs that absorb slippage. When a regulatory blackout or an immovable deadline arrives, it's already priced into the schedule — not a fire drill three weeks before it hits.",
   },
   {
     num: "02 / FINANCE",
     title: "Own the commercial numbers.",
     titleEmphasis: "commercial",
-    body: "On a $1.37M T&M program, my EAC model flagged a 74%-budget / 51%-scope gap six weeks before SOW expiry. I built the commercial case, presented to the client CFO and VP Engineering, and closed an $831K change order in 10 business days — 99.98% budget execution. On a $600K migration I was assigned to with zero delivery structure in place, the same instinct caught a cross-program infrastructure overlap before it became unbudgeted rework — avoiding ~$40K and protecting margin on two SOWs at once.",
+    body: "Most PMs treat budget-vs-scope drift as someone else's problem until it's a write-off. I track Estimate-at-Completion against delivered scope every sprint, not just at milestones — so a widening gap shows up as a conversation to have with the client now, not a loss to absorb later. A gap caught early is a change-order opportunity; a gap caught late is a margin problem with your name on it.",
   },
   {
     num: "03 / RISK",
     title: "Track what sprint velocity won't show you.",
     titleEmphasis: "velocity",
-    body: "On a fixed-price M&A cutover, a throughput model flagged a pacing risk in week 5 with 11 weeks of runway remaining — the cutover landed on date with full margin protected. On a managed retainer I inherited with a renewal at risk of a competitive re-bid, publishing UAT aging metrics directly to client leadership cut sign-off from 11 days to 4 within 6 weeks — and helped turn the renewal conversation around.",
+    body: "Velocity tells you the team is busy. It doesn't tell you whether you'll land on the date, or whether the client still trusts the plan. I run a second signal alongside it — a throughput-vs-runway model, or sign-off aging shared directly with client leadership — so the slip is visible while there's still runway to correct it, and the client is seeing the same data I am.",
   },
 ];
 
