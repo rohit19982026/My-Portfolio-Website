@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import ImpactSummary from "@/components/ImpactSummary";
 import Work from "@/components/Work";
 import Approach from "@/components/Approach";
 import AIToolingTeaser from "@/components/AIToolingTeaser";
@@ -12,11 +13,12 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ImpactSummary />
       <Work />
       <Approach />
       <AIToolingTeaser />
-      <SolutionDesignTeaser />
       <DeliveryExposure />
+      <SolutionDesignTeaser />
       <Trajectory />
       <Contact />
       <Footer />

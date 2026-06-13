@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "15+",    label: "Programs Delivered" },
   { value: "$5M+",   label: "Largest P&L Owned" },
   { value: "99.98%", label: "Peak Budget Exec." },
   { value: "10+",    label: "Enterprise Accounts" },
@@ -290,7 +289,7 @@ export default function Hero() {
             variants={statVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-2 md:grid-cols-4"
+            className="grid grid-cols-3"
           >
             {stats.map((s, i) => (
               <motion.div

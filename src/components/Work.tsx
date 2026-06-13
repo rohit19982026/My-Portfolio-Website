@@ -3,12 +3,20 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { caseStudies } from "@/lib/caseStudies";
+import TimelineStrip from "./TimelineStrip";
 
 const ACCENT: Record<string, string> = {
   "T&M":         "#7C3AED",
   "FIXED-PRICE": "#059669",
   "MANAGED":     "#0891B2",
   "INTERNAL":    "#D97706",
+};
+
+const MODE_LABEL: Record<string, string> = {
+  kickoff:   "DAY-ONE ASSIGNMENT",
+  assigned:  "MID-PROGRAM RESCUE",
+  inherited: "INHERITED AT HANDOVER",
+  built:     "SELF-INITIATED",
 };
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -32,6 +40,8 @@ function CaseStudyCard({
   const [hovered, setHovered] = useState(false);
   const accent = ACCENT[study.model];
   const active = open || hovered;
+  const [hi1, hi2] = study.headlineMetrics ?? [0, 1];
+  const headlineMetrics = [study.metrics[hi1], study.metrics[hi2]];
 
   return (
     <motion.div
@@ -106,6 +116,12 @@ function CaseStudyCard({
                   >
                     {study.model}
                   </span>
+                  <span
+                    className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
+                    style={{ color: "#AAA0C8", background: "transparent", border: "1px dashed rgba(170,160,200,0.35)" }}
+                  >
+                    {MODE_LABEL[study.entry.mode]}
+                  </span>
                   <span className="font-mono text-[10px] text-[#AAA0C8]">{study.year}</span>
                 </div>
                 <motion.div
@@ -137,7 +153,7 @@ function CaseStudyCard({
                 </div>
 
                 <div className="hidden lg:flex gap-7 shrink-0 pb-1">
-                  {study.metrics.slice(0, 2).map((m) => (
+                  {headlineMetrics.map((m) => (
                     <div key={m.label} className="text-right">
                       <div
                         className="font-mono font-black tabular-nums leading-none transition-colors duration-300"
@@ -173,7 +189,7 @@ function CaseStudyCard({
                   )}
                 </div>
                 <div className="flex lg:hidden gap-5 shrink-0">
-                  {study.metrics.slice(0, 2).map((m) => (
+                  {headlineMetrics.map((m) => (
                     <div key={m.label} className="text-right">
                       <div className="font-mono font-black tabular-nums text-[16px] leading-none" style={{ color: accent }}>
                         {m.value}
@@ -201,6 +217,22 @@ function CaseStudyCard({
                 />
                 <div className="px-7 md:px-8 pt-6 pb-7 space-y-7">
 
+                  {/* How I came into the picture */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.02 }}
+                    className="pl-5 max-w-3xl"
+                    style={{ borderLeft: `3px solid ${accent}50` }}
+                  >
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-2" style={{ color: "#AAA0C8" }}>
+                      HOW I CAME INTO THE PICTURE
+                    </p>
+                    <p className="text-[14px] md:text-[15px] leading-[1.7] italic" style={{ color: "#1A0A2E" }}>
+                      {study.entry.narrative}
+                    </p>
+                  </motion.div>
+
                   {/* 1. Context */}
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
@@ -225,55 +257,112 @@ function CaseStudyCard({
                     <p className="text-[13px] leading-[1.75] text-[#3D3358] max-w-3xl">{study.role}</p>
                   </motion.div>
 
-                  {/* 3. Key Actions */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.15 }}
-                  >
-                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#2563EB" }}>
-                      03 · KEY ACTIONS
-                    </p>
-                    <ul className="space-y-3 max-w-3xl">
-                      {study.actions.map((a, i) => (
-                        <motion.li
-                          key={i}
-                          initial={{ opacity: 0, x: -12 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.18 + i * 0.06 }}
-                          className="flex gap-3 text-[13px] text-[#3D3358] leading-[1.75]"
-                        >
-                          <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#2563EB" }}>›</span>
-                          {a}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
+                  {/* 3 & 4. Actions / Decisions — ordering and labels vary by spotlight */}
+                  {study.spotlight === "decisions" ? (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.15 }}
+                      >
+                        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#DC2626" }}>
+                          03 · THE CALL I HAD TO MAKE
+                        </p>
+                        <ul className="space-y-2.5 max-w-3xl">
+                          {study.decisions.map((d, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.18 + i * 0.06 }}
+                              className="flex gap-3 text-[13px] text-[#3D3358] leading-[1.7]"
+                            >
+                              <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#DC2626] opacity-70" />
+                              {d}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
 
-                  {/* 4. Challenges & Decisions */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                  >
-                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#DC2626" }}>
-                      04 · CHALLENGES &amp; DECISIONS
-                    </p>
-                    <ul className="space-y-2.5 max-w-3xl">
-                      {study.decisions.map((d, i) => (
-                        <motion.li
-                          key={i}
-                          initial={{ opacity: 0, x: -12 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.22 + i * 0.06 }}
-                          className="flex gap-3 text-[13px] text-[#3D3358] leading-[1.7]"
-                        >
-                          <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#DC2626] opacity-70" />
-                          {d}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                      >
+                        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#2563EB" }}>
+                          04 · KEY ACTIONS
+                        </p>
+                        <ul className="space-y-3 max-w-3xl">
+                          {study.actions.map((a, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.22 + i * 0.06 }}
+                              className="flex gap-3 text-[13px] text-[#3D3358] leading-[1.75]"
+                            >
+                              <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#2563EB" }}>›</span>
+                              {a}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    </>
+                  ) : (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.15 }}
+                      >
+                        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#2563EB" }}>
+                          03 · {study.spotlight === "timeline" && study.timeline ? "HOW IT UNFOLDED" : "KEY ACTIONS"}
+                        </p>
+                        {study.spotlight === "timeline" && study.timeline ? (
+                          <TimelineStrip milestones={study.timeline} accent={accent} />
+                        ) : (
+                          <ul className="space-y-3 max-w-3xl">
+                            {study.actions.map((a, i) => (
+                              <motion.li
+                                key={i}
+                                initial={{ opacity: 0, x: -12 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.18 + i * 0.06 }}
+                                className="flex gap-3 text-[13px] text-[#3D3358] leading-[1.75]"
+                              >
+                                <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#2563EB" }}>›</span>
+                                {a}
+                              </motion.li>
+                            ))}
+                          </ul>
+                        )}
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                      >
+                        <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#DC2626" }}>
+                          04 · {study.spotlight === "stakeholder" ? "STAKEHOLDER REALIGNMENT" : "CHALLENGES & DECISIONS"}
+                        </p>
+                        <ul className="space-y-2.5 max-w-3xl">
+                          {study.decisions.map((d, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.22 + i * 0.06 }}
+                              className="flex gap-3 text-[13px] text-[#3D3358] leading-[1.7]"
+                            >
+                              <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#DC2626] opacity-70" />
+                              {d}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    </>
+                  )}
 
                   {/* 5. Outcome */}
                   <motion.div
@@ -344,7 +433,7 @@ export default function Work() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mb-14"
         >
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">01 / WORK</p>
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">02 / WORK</p>
           <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-6" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}>
             Seven programs.{" "}
             <span className="italic font-normal" style={{ background: "linear-gradient(130deg, #C4B5FD 0%, #A78BFA 50%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>

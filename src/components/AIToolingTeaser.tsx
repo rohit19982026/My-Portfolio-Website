@@ -2,6 +2,25 @@
 
 import { motion } from "framer-motion";
 
+const pov = [
+  {
+    label: "Governance",
+    body: "AI-assisted development needs the same audit trail as anything else in a regulated program. On the Redshift-to-Databricks migration, GitHub Copilot ran under client compliance constraints — per-sprint review checklists and output audit trails — and still delivered a documented 30% velocity uplift.",
+  },
+  {
+    label: "Build vs. buy",
+    body: "Build on the platform that's already the org's knowledge layer, not the flashiest API. The agent platform runs on Glean, not a raw LLM integration — because Glean was already the PMO's search and permissions layer, so agents could read live program data, Salesforce, and Drive without a separate integration build.",
+  },
+  {
+    label: "Adoption sequencing",
+    body: "Ship the highest-pain, most-measurable agent first to earn the right to build the rest. The Billing Compliance Agent went PMO-wide in 1 month with >95% accuracy — that result is what got the next 5 agents funded.",
+  },
+  {
+    label: "Measurement discipline",
+    body: "A 30% velocity uplift or a >95% accuracy figure is only worth citing if it's backed by an audit trail, not a vibe. Both numbers above came from sprint-level tracking and per-run accuracy logs — the same rigor I'd apply to a budget variance report.",
+  },
+];
+
 const tools = [
   {
     award: true,
@@ -52,7 +71,7 @@ export default function AIToolingTeaser() {
           className="mb-12"
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">
-            03 / AI TOOLING I&apos;VE SHIPPED
+            04 / AI TOOLING I&apos;VE SHIPPED
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
@@ -115,6 +134,39 @@ export default function AIToolingTeaser() {
             </motion.div>
           ))}
         </div>
+
+        {/* AI point of view */}
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-10"
+        >
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#7C3AED" }}>
+            // HOW I THINK ABOUT AI IN DELIVERY
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {pov.map((p, i) => (
+              <motion.div
+                key={p.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.07 }}
+                className="p-5 rounded-2xl"
+                style={{ background: "#F7F4FF", border: "1px solid rgba(124,58,237,0.1)" }}
+              >
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "#7C3AED" }}>
+                  {p.label}
+                </p>
+                <p className="text-[13px] leading-relaxed" style={{ color: "#3D3358" }}>
+                  {p.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* CTA */}
         <motion.div

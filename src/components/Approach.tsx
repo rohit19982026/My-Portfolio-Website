@@ -3,19 +3,19 @@ const featured = [
     num: "01 / ARCHITECTURE",
     title: "Build the structure around the constraints.",
     titleEmphasis: "structure",
-    body: "On a 19-week regulated migration with a 3-week compliance blackout in the middle, I decomposed the WBS into 6 parallel epic tracks with explicit float at every handoff. Float held for 14 of 19 weeks. Delivered on the contractual date.",
+    body: "On a 19-week regulated migration with a 3-week compliance blackout mid-program, I decomposed the WBS into 6 parallel epic tracks with float at every handoff — delivered on the contractual date with margin intact. On a PIPL-regulated deployment across US/India/China, the same instinct ran in reverse: every compliance checkpoint was mapped into the WBS before development began, then the schedule was re-baselined around a 2-week holiday with zero critical-path impact. Different regulations, same rule — compliance gates are schedule inputs, not surprises.",
   },
   {
     num: "02 / FINANCE",
     title: "Own the commercial numbers.",
     titleEmphasis: "commercial",
-    body: "On a $1.37M T&M program, my EAC model flagged a 74%-budget / 51%-scope gap six weeks before SOW expiry. I built the commercial case, presented to the client CFO and VP Engineering, and closed an $831K change order in 10 business days. Budget execution: 99.98% of SOW target.",
+    body: "On a $1.37M T&M program, my EAC model flagged a 74%-budget / 51%-scope gap six weeks before SOW expiry. I built the commercial case, presented to the client CFO and VP Engineering, and closed an $831K change order in 10 business days — 99.98% budget execution. On a $600K migration I was assigned to with zero delivery structure in place, the same instinct caught a cross-program infrastructure overlap before it became unbudgeted rework — avoiding ~$40K and protecting margin on two SOWs at once.",
   },
   {
     num: "03 / RISK",
     title: "Track what sprint velocity won’t show you.",
     titleEmphasis: "velocity",
-    body: "On a fixed-price M&A cutover, a throughput model flagged a pacing risk in week 5 with 11 weeks of runway remaining. On a managed retainer, publishing UAT aging metrics to client leadership cut sign-off from 11 days to 4 within 6 weeks.",
+    body: "On a fixed-price M&A cutover, a throughput model flagged a pacing risk in week 5 with 11 weeks of runway remaining — the cutover landed on date with full margin protected. On a managed retainer I inherited with a renewal at risk of a competitive re-bid, publishing UAT aging metrics directly to client leadership cut sign-off from 11 days to 4 within 6 weeks — and helped turn the renewal conversation around.",
   },
 ];
 
@@ -28,7 +28,7 @@ export default function Approach() {
         <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#7C3AED" }}>
-              02 / APPROACH
+              03 / APPROACH
             </span>
           </div>
           <h2

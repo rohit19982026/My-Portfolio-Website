@@ -109,7 +109,7 @@ export default function DealDeskPage() {
             </h1>
             <p style={{ fontSize: 16.5, color: T2, maxWidth: "62ch", marginTop: 18, lineHeight: 1.6 }}>
               A sales rep needs three answers before closing a deal — what we discounted on similar deals, who has to approve it, and which contract template applies.
-              Each one lives somewhere different. This case study designs a Glean agent that returns all three with sources in minutes, and lays out the architecture, workflow, trust model, and rollout.
+              Each one lives somewhere different. This is the design work for a Glean agent that returns all three with sources in minutes — architecture, workflow, trust model, and rollout sequencing, worked through from a blank page the same way I&apos;d scope it for a client.
             </p>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, marginTop: 38, borderTop: `1px solid ${BORDER_STRONG}`, paddingTop: 22 }}>
@@ -577,7 +577,7 @@ export default function DealDeskPage() {
         {/* ─── FOOTER ─── */}
         <div style={{ padding: "46px 0 64px", textAlign: "center", color: T3, fontSize: 13, borderTop: `1px solid ${BORDER}` }}>
           <p style={{ marginBottom: 10 }}>
-            Solution design case study · Deal Desk Acceleration Agent on Glean. Business-case figures are illustrative until calibrated with real before/after timings.
+            Solution design · Deal Desk Acceleration Agent on Glean. This is design and architecture work, not a delivered program — the agent platform on the homepage is where the production numbers live.
           </p>
           <Link href="/" style={{ color: P, fontWeight: 600, textDecoration: "none" }}>
             ← Back to portfolio

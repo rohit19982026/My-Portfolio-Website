@@ -7,6 +7,13 @@ export interface CaseStudy {
   industry: string;
   year: string;
   model: "T&M" | "FIXED-PRICE" | "MANAGED" | "INTERNAL";
+  entry: {
+    mode: "kickoff" | "assigned" | "inherited" | "built";
+    narrative: string;
+  };
+  spotlight: "decisions" | "metrics" | "timeline" | "scale" | "stakeholder";
+  timeline?: { label: string; detail: string }[];
+  headlineMetrics?: [number, number];
   context: string;
   role: string;
   actions: string[];
@@ -26,8 +33,14 @@ export const caseStudies: CaseStudy[] = [
     industry: "ENTERPRISE SAAS · MARKETING TECH",
     year: "2024–26",
     model: "T&M",
+    entry: {
+      mode: "kickoff",
+      narrative:
+        "Staffed as PM when the $1.37M SOW was signed — the delivery plan and team were already in motion. By the end of Q1, 17 unresolved external dependencies and unchecked scope growth were the first signs that the plan I'd inherited needed a governance layer it didn't have.",
+    },
+    spotlight: "decisions",
     context:
-      "A $1.37M T&M engagement to modernise a marketing data platform for an Enterprise SaaS company using MWAA and dbt on AWS. By Q1 end, 17 unresolved external dependency workstreams were consuming ~40% of sprint capacity, and unchecked scope growth was eroding budget headroom faster than delivery was progressing. At the prevailing burn rate, the program was heading toward funding exhaustion with 40% of contracted scope undelivered.",
+      "By Q1 end, 17 unresolved external dependency workstreams were consuming ~40% of sprint capacity, and unchecked scope growth was eroding budget headroom faster than delivery was progressing. At the prevailing burn rate, the program was heading toward funding exhaustion with 40% of contracted scope undelivered.",
     role:
       "Led end-to-end program delivery with full commercial ownership of the $1.37M SOW. Accountable for dependency governance, executive stakeholder engagement at CFO and VP Engineering level, and leading the commercial recovery through an $831K scope expansion.",
     actions: [
@@ -58,8 +71,19 @@ export const caseStudies: CaseStudy[] = [
     industry: "EDTECH · K-12 & HIGHER EDUCATION",
     year: "2025–26",
     model: "FIXED-PRICE",
+    entry: {
+      mode: "kickoff",
+      narrative:
+        "Brought on as PM at signature of the $669K fixed-price SOW, with a 16-week M&A cutover deadline already locked in and an 11-engineer US-India pod still to be stood up and structured from scratch.",
+    },
+    spotlight: "timeline",
+    timeline: [
+      { label: "WEEK 1", detail: "Redesigned the tracking model — throughput-based, anchored to the M&A cutover date" },
+      { label: "WEEK 5", detail: "Pacing risk surfaced with 11 weeks of runway remaining" },
+      { label: "WEEK 16", detail: "M&A cutover delivered on date, full margin protected" },
+    ],
     context:
-      "Led a $669K fixed-price migration of ~2,300 production data objects from Amazon Redshift to Databricks Unity Catalog against an immovable 16-week M&A cutover deadline. An 11-engineer US-India pod, two time zones, zero schedule buffer.",
+      "A $669K fixed-price migration of ~2,300 production data objects from Amazon Redshift to Databricks Unity Catalog against an immovable cutover deadline. Two time zones, zero schedule buffer.",
     role:
       "Governed fixed-price delivery end-to-end — delivery model architecture, risk governance, cross-regional team management, and commercial margin protection on an M&A-deadline-constrained program.",
     actions: [
@@ -90,8 +114,14 @@ export const caseStudies: CaseStudy[] = [
     industry: "INVESTMENT MANAGEMENT · REGULATED FINANCIAL SERVICES",
     year: "2024",
     model: "FIXED-PRICE",
+    entry: {
+      mode: "kickoff",
+      narrative:
+        "Assigned as PM when this $180.5K fixed-price SOW was signed, with the 19-week regulated migration window and compliance gate structure already set by the client's change-management calendar — including a 3-week year-end blackout I'd have to plan around from day one.",
+    },
+    spotlight: "metrics",
     context:
-      "Governed a $180.5K fixed-price migration of 189 regulated reporting objects from SQL Server to Snowflake for an investment management firm operating under financial services change-management regulations. A 19-week window with a 3-week year-end blackout mid-program and compliance approval gates on every production deployment.",
+      "A $180.5K fixed-price migration of 189 regulated reporting objects from SQL Server to Snowflake for an investment management firm operating under financial services change-management regulations. Compliance approval gates on every production deployment, zero schedule buffer.",
     role:
       "Led fixed-price delivery governance — WBS architecture, schedule risk management, compliance gate sequencing, and margin protection against a zero-buffer contractual deadline.",
     actions: [
@@ -122,8 +152,19 @@ export const caseStudies: CaseStudy[] = [
     industry: "MARTECH / ADTECH · B2B2C DATA PLATFORM",
     year: "2024",
     model: "T&M",
+    entry: {
+      mode: "assigned",
+      narrative:
+        "Assumed program leadership on this $600K T&M migration with no delivery structure in place — no PEP, no WBS, no RAID log, no sprint backlog — and Sprint 1 eleven days away.",
+    },
+    spotlight: "timeline",
+    timeline: [
+      { label: "DAY 0", detail: "Assigned — no PEP, no WBS, no RAID log, Sprint 1 eleven days out" },
+      { label: "DAY 9", detail: "Full delivery framework built — WBS, backlogs, RAID, RACI, governance cadence" },
+      { label: "SPRINT 1", detail: "Delivered on plan — green status at every steerco" },
+    ],
     context:
-      "Assumed program leadership on a $600K T&M Hadoop-to-Snowflake migration with no delivery structure in place — no PEP, no WBS, no RAID log, no sprint backlog. A parallel data platform program on the same account had already provisioned overlapping infrastructure, creating unbudgeted duplicate build risk across both SOWs. Sprint 1 was eleven days away.",
+      "A parallel data platform program on the same account had already provisioned overlapping infrastructure, creating unbudgeted duplicate build risk across both SOWs.",
     role:
       "Led program recovery — built the complete delivery framework from scratch, governed architecture risk across both programs, and orchestrated cross-program infrastructure deduplication to protect budget on both engagements.",
     actions: [
@@ -154,8 +195,14 @@ export const caseStudies: CaseStudy[] = [
     industry: "INDUSTRIAL MANUFACTURING · GLOBAL OPERATIONS",
     year: "2024",
     model: "T&M",
+    entry: {
+      mode: "kickoff",
+      narrative:
+        "Assigned as PM at SOW signature for this T&M Snowflake deployment — a 6-week go-live window, PIPL compliance gates, and a 3-timezone US/India/China delivery team were already defined before delivery planning began.",
+    },
+    spotlight: "scale",
     context:
-      "Governed a T&M deployment of a PIPL-compliant Snowflake platform for a global industrial manufacturer's China factory operations — connecting machine-level production data to plant management reporting. Three delivery teams across US, India, and China time zones. PIPL compliance review gates on every production release, a 2-week Lunar New Year holiday inside a 6-week delivery window, and a 10.5-hour time zone spread creating structural decision latency.",
+      "A Snowflake platform for a global industrial manufacturer's China factory operations — connecting machine-level production data to plant management reporting. PIPL compliance review gates on every production release, a 2-week Lunar New Year holiday inside the 6-week window, and a 10.5-hour time zone spread creating structural decision latency.",
     role:
       "Led multi-regional program delivery — compliance governance, go-live planning, and async stakeholder operating model design for a 3-timezone, regulation-constrained program with no schedule margin.",
     actions: [
@@ -186,8 +233,14 @@ export const caseStudies: CaseStudy[] = [
     industry: "PROFESSIONAL SERVICES · DATA & AI CONSULTING",
     year: "2024–25",
     model: "INTERNAL",
+    entry: {
+      mode: "built",
+      narrative:
+        "Self-initiated. No one assigned this — I identified that ~8 hours per week of PM time across active programs was going into billing reconciliation, status reporting, steerco deck drafting, and sprint health scoring, then designed and built the platform to recover it.",
+    },
+    spotlight: "metrics",
     context:
-      "Designed, built, and deployed a PMO AI agent platform for the phData delivery organisation — 6 agents running on Glean Agent Builder, Claude, n8n, and Google Apps Script. The starting point: ~8 hours per week of PM time across active programs was going to billing reconciliation, status report generation, steerco deck drafting, and sprint health scoring.",
+      "A PMO AI agent platform for the phData delivery organisation — 6 agents running on Glean Agent Builder, Claude, n8n, and Google Apps Script, covering billing reconciliation, status report generation, steerco deck drafting, and sprint health scoring.",
     role:
       "Sole designer and builder of the agent platform. Identified the automation candidates, built and tested each agent, governed the PMO-wide deployment, and owned the ongoing iteration.",
     actions: [
@@ -219,8 +272,15 @@ export const caseStudies: CaseStudy[] = [
     industry: "SOFTWARE INTELLIGENCE · B2B SAAS",
     year: "ONGOING",
     model: "MANAGED",
+    entry: {
+      mode: "inherited",
+      narrative:
+        "Took ownership of this managed retainer mid-stream, at handover. Backlog growing 3× faster than capacity, stakeholder alignment broken across three business owners, UAT sign-off averaging 11 days past SLA, and the 12-month renewal at risk of a competitive re-bid.",
+    },
+    spotlight: "stakeholder",
+    headlineMetrics: [1, 3],
     context:
-      "Took ownership of a managed data engineering retainer for a B2B SaaS Software Intelligence company — a dedicated pod ingesting 12+ source systems into a Snowflake medallion architecture. At handover: backlog growing 3× faster than capacity, stakeholder alignment broken across three business owners, UAT sign-off averaging 11 days past SLA, and the 12-month commercial renewal was at risk of a competitive re-bid.",
+      "A managed data engineering retainer for a B2B SaaS Software Intelligence company — a dedicated pod ingesting 12+ source systems into a Snowflake medallion architecture.",
     role:
       "Led delivery operating model design and account retention — governing intake process, stakeholder alignment, delivery health reporting, and the commercial renewal strategy.",
     actions: [

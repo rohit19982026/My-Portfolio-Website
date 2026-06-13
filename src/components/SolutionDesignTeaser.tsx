@@ -21,13 +21,13 @@ export default function SolutionDesignTeaser() {
           className="mb-12"
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">
-            04 / SOLUTION DESIGN
+            06 / SOLUTION DESIGN
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#1A0A2E" }}
           >
-            Designs I&apos;ve{" "}
+            How I{" "}
             <span
               style={{
                 background: "linear-gradient(130deg, #A78BFA 0%, #7C3AED 100%)",
@@ -35,11 +35,11 @@ export default function SolutionDesignTeaser() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              published
+              design from zero
             </span>.
           </h2>
           <p className="text-[15px] text-[#7A6E9A] max-w-lg leading-relaxed">
-            Agent architectures and program designs published as full case studies — separate from delivered work. Each one solves a real category of problem from end to end.
+            The PMO agent platform above is shipped and in production. This is the other half of how I work with AI — architecting a new agent from a blank page: trust model, rollout sequencing, and the judgment calls before a single line of automation runs.
           </p>
         </motion.div>
 
@@ -114,7 +114,7 @@ export default function SolutionDesignTeaser() {
               </div>
 
               <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "#7C3AED" }}>
-                Read the full case study
+                Read the design walkthrough
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function SolutionDesignTeaser() {
           transition={{ delay: 0.3 }}
           className="font-mono text-[10px] text-[#7A6E9A] mt-6 text-center"
         >
-          // Solution design, not a delivered program. Figures in the business case are calibrated to industry assumptions until validated against a real team.
+          // A design walkthrough, not a delivered program — the PMO agent platform (above) is where the delivered numbers live. This shows the architecture and rollout thinking behind a new agent, end to end.
         </motion.p>
       </div>
     </section>
