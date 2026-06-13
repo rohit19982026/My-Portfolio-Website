@@ -470,7 +470,7 @@ export default function Work() {
               style={{ color: "#D97706", background: "rgba(217,119,6,0.06)", border: "1px solid rgba(217,119,6,0.18)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#D97706" }} />
-              1 Internal Build
+              1 Self-Initiated Build
             </span>
           </div>
         </motion.div>
