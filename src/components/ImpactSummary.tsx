@@ -46,17 +46,18 @@ export default function ImpactSummary() {
               key={stat.label}
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+              whileHover={{ y: -4, transition: { type: "spring", stiffness: 350, damping: 25 } }}
               transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 + i * 0.07 }}
-              className="p-5 rounded-2xl bg-white"
-              style={{ border: "1px solid #E2E8F0" }}
+              className="flex flex-col p-5 rounded-2xl bg-white"
+              style={{ border: "1px solid #E2E8F0", minHeight: 192 }}
             >
-              <p className="font-display text-[32px] font-bold leading-none tracking-tight mb-2" style={{ color: "#1D4ED8" }}>
+              <p className="font-display tracking-tight mb-3" style={{ fontSize: "clamp(28px, 3.2vw, 38px)", fontWeight: 700, lineHeight: 1, color: "#1D4ED8" }}>
                 {stat.value}
               </p>
-              <p className="text-[12px] font-semibold mb-2" style={{ color: "#0F172A" }}>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "#0F172A" }}>
                 {stat.label}
               </p>
-              <p className="text-[11px] leading-relaxed" style={{ color: "#94A3B8" }}>
+              <p className="text-[12px] leading-relaxed mt-auto" style={{ color: "#94A3B8" }}>
                 {stat.detail}
               </p>
             </motion.div>
@@ -71,21 +72,22 @@ export default function ImpactSummary() {
           className="rounded-2xl overflow-hidden"
           style={{ border: "1px solid #E2E8F0" }}
         >
-          <div className="px-6 pt-6 pb-2 bg-white">
+          <div className="px-6 py-4 flex items-center gap-2.5" style={{ background: "#FFFFFF", borderBottom: "1px solid #E2E8F0" }}>
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#0891B2" }} />
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "#0891B2" }}>
               {transformation.label}
             </p>
           </div>
           <div className="grid md:grid-cols-2">
-            <div className="p-6 bg-white">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2.5 text-[#CBD5E1]">
+            <div className="p-6 md:border-r" style={{ background: "#FFFFFF", borderColor: "#E2E8F0" }}>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2.5" style={{ color: "#94A3B8" }}>
                 {transformation.before.heading}
               </p>
               <p className="text-[13.5px] leading-relaxed" style={{ color: "#475569" }}>
                 {transformation.before.body}
               </p>
             </div>
-            <div className="p-6" style={{ background: "linear-gradient(145deg, rgba(29,78,216,0.04), rgba(8,145,178,0.03))" }}>
+            <div className="p-6" style={{ background: "linear-gradient(145deg, rgba(29,78,216,0.05), rgba(8,145,178,0.04))" }}>
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2.5" style={{ color: "#1D4ED8" }}>
                 {transformation.after.heading}
               </p>
