@@ -30,7 +30,6 @@ const roles = [
     current: false,
     color: "#059669",
     bullets: [
-      "Three promotions in 2.5 years — Trainee Associate to Change Management Specialist. Each step came from taking on more ownership of change events, not time in role.",
       "CAB governance, risk assessment, rollback planning, and post-implementation validation across 50+ changes a year. ITIL-compliant throughout. 99.9% uptime on telecom infrastructure.",
       "Change authorisation on firewall, SSL, inter-switch link, and ACL requests — corporate and public sector accounts. Standard, Normal, Expedited, and Emergency change categories all owned.",
       "Communication across all change windows — pre-change briefings, real-time status during execution, and post-implementation reports to business and technology leadership.",
