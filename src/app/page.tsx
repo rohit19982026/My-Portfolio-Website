@@ -13,13 +13,13 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Trajectory />
       <ImpactSummary />
       <Work />
       <Approach />
       <AIToolingTeaser />
       <DeliveryExposure />
       <SolutionDesignTeaser />
-      <Trajectory />
       <Contact />
       <Footer />
     </>

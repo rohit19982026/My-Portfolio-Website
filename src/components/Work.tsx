@@ -433,10 +433,10 @@ export default function Work() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mb-14"
         >
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">02 / WORK</p>
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">04 / WORK</p>
           <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-6" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}>
             Seven programs.{" "}
-            <span className="italic font-normal" style={{ background: "linear-gradient(130deg, #C4B5FD 0%, #A78BFA 50%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <span className="font-normal" style={{ background: "linear-gradient(130deg, #C4B5FD 0%, #A78BFA 50%, #7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Real numbers
             </span>.
           </h2>

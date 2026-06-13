@@ -72,7 +72,7 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">08 / LET&apos;S TALK</span>
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">09 / LET&apos;S TALK</span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
               initial={{ y: "105%" }}
@@ -82,7 +82,7 @@ export default function Contact() {
               style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}
             >
               Got a{" "}
-              <span className="italic font-normal" style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>complex</span>
+              <span className="font-normal" style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>complex</span>
               <br />data &amp; AI program?
             </motion.h2>
           </div>

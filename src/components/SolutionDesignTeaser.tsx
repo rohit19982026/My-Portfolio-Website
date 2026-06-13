@@ -21,7 +21,7 @@ export default function SolutionDesignTeaser() {
           className="mb-12"
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#7C3AED] mb-5">
-            06 / SOLUTION DESIGN
+            08 / SOLUTION DESIGN
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"

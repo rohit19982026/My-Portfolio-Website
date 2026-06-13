@@ -52,7 +52,7 @@ export default function DeliveryExposure() {
         >
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED]">
-              05 / DELIVERY EXPOSURE
+              07 / DELIVERY EXPOSURE
             </span>
           </div>
           <h2
@@ -60,7 +60,7 @@ export default function DeliveryExposure() {
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             Programs I&apos;ve delivered<br />
-            across <span className="gradient-text italic font-normal">these stacks</span>.
+            across <span className="gradient-text font-normal">these stacks</span>.
           </h2>
           <p className="text-[15px] text-[#3D3358] max-w-2xl leading-relaxed mb-4">
             I&apos;m a Technical Program Manager, not a hands-on engineer. What follows is the

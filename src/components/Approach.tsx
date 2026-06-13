@@ -28,7 +28,7 @@ export default function Approach() {
         <div className="mb-14 reveal" style={{ animationDelay: "0.05s" }}>
           <div className="flex items-center gap-3 mb-5">
             <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#7C3AED" }}>
-              03 / APPROACH
+              05 / APPROACH
             </span>
           </div>
           <h2
@@ -36,7 +36,7 @@ export default function Approach() {
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             How I run{" "}
-            <span className="gradient-text italic font-normal">programs</span>.
+            <span className="gradient-text font-normal">programs</span>.
           </h2>
         </div>
 

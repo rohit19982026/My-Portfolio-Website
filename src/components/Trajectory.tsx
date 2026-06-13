@@ -83,7 +83,7 @@ export default function Trajectory() {
           className="mb-14"
         >
           <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7C3AED] block mb-5">
-            07 / TRAJECTORY
+            02 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
@@ -93,7 +93,7 @@ export default function Trajectory() {
               className="font-display font-bold tracking-tight leading-[0.97] mb-5"
               style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#1A0A2E" }}
             >
-              Where I&apos;ve{" "}<span style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} className="italic font-normal">worked</span>.
+              Where I&apos;ve{" "}<span style={{ background: "linear-gradient(135deg, #A78BFA, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} className="font-normal">worked</span>.
             </motion.h2>
           </div>
           <motion.p

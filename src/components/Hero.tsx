@@ -93,9 +93,7 @@ export default function Hero() {
 
       <div className="flex-1 flex items-center">
         <div className="max-w-6xl mx-auto px-6 w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-            {/* LEFT */}
+          <div>
             <div>
               {/* Name — clip reveal */}
               <div style={{ overflow: "hidden", marginBottom: "16px" }}>
@@ -221,62 +219,6 @@ export default function Hero() {
                 </motion.a>
               </motion.div>
             </div>
-
-            {/* RIGHT — Photo frame — spring tilt */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.78, rotate: -6, filter: "blur(12px)" }}
-              animate={{ opacity: 1, scale: 1, rotate: 0, filter: "blur(0px)" }}
-              transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.15 }}
-              className="flex justify-center md:justify-end"
-            >
-              <div className="relative" style={{ width: 380, height: 420 }}>
-                <motion.div
-                  animate={{ rotate: [0, 1, -1, 0] }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-0 rounded-full"
-                  style={{ border: "1px solid rgba(124,58,237,0.15)" }}
-                />
-                <div
-                  className="absolute rounded-full"
-                  style={{ inset: "16px", border: "1px dashed rgba(124,58,237,0.12)" }}
-                />
-                <div
-                  className="absolute overflow-hidden rounded-full"
-                  style={{
-                    inset: "32px",
-                    background: "linear-gradient(160deg, #F5F0FF 0%, #EDE9FE 100%)",
-                    border: "2px solid rgba(124,58,237,0.25)",
-                    boxShadow: "0 0 60px rgba(124,58,237,0.12) inset",
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/photo.jpg"
-                    alt="Rohit Kumar Singh"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: "center 15%" }}
-                  />
-                </div>
-                <motion.div
-                  animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute rounded-full"
-                  style={{ width: 12, height: 12, background: "#7C3AED", top: 48, right: 28, boxShadow: "0 0 12px rgba(124,58,237,0.8)" }}
-                />
-                <motion.div
-                  animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                  className="absolute rounded-full"
-                  style={{ width: 8, height: 8, background: "#A78BFA", bottom: 60, left: 20, boxShadow: "0 0 10px rgba(167,139,250,0.6)" }}
-                />
-                <motion.div
-                  animate={{ scale: [1, 1.5, 1] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                  className="absolute rounded-full"
-                  style={{ width: 5, height: 5, background: "#6EE7B7", top: 90, left: 14, boxShadow: "0 0 8px rgba(110,231,183,0.6)" }}
-                />
-              </div>
-            </motion.div>
 
           </div>
         </div>
