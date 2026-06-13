@@ -30,11 +30,11 @@ const roles = [
     current: false,
     color: "#059669",
     bullets: [
-      "CAB governance, risk assessment, rollback planning, and post-implementation validation across 50+ changes a year. ITIL-compliant throughout. 99.9% uptime on telecom infrastructure.",
+      "CAB governance, risk assessment, rollback planning, and post-implementation validation across 50+ changes a year — ITIL-compliant throughout, against a 99.9% uptime SLA on telecom infrastructure.",
       "Change authorisation on firewall, SSL, inter-switch link, and ACL requests — corporate and public sector accounts. Standard, Normal, Expedited, and Emergency change categories all owned.",
       "Communication across all change windows — pre-change briefings, real-time status during execution, and post-implementation reports to business and technology leadership.",
     ],
-    tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Infrastructure Change Mgmt"],
+    tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime SLA", "Change Risk Assessment", "Infrastructure Change Mgmt"],
   },
 ];
 

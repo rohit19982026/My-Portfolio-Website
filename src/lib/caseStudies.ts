@@ -33,35 +33,35 @@ export const caseStudies: CaseStudy[] = [
     number: "001",
     type: "PLATFORM BUILD",
     title: "Turning Dependency Gridlock Into a Funded Scope Expansion",
-    outcome: "MWAA & dbt · $1.37M T&M · $831K Scope Expansion · 2-Year Engagement",
+    outcome: "MWAA & dbt · ~$1.4M T&M · $831K Scope Expansion · 2-Year Engagement",
     industry: "ENTERPRISE SAAS · MARKETING TECH",
     year: "2024–26",
     model: "T&M",
     entry: {
       mode: "kickoff",
       narrative:
-        "Staffed as PM when the $1.37M SOW was signed — the delivery plan and team were already in motion. By the end of Q1, 17 unresolved external dependencies and unchecked scope growth were the first signs that the plan I'd inherited needed a governance layer it didn't have.",
+        "Staffed as PM when the ~$1.4M SOW was signed — the delivery plan and team were already in motion. By the end of Q1, 17 unresolved external dependencies and unchecked scope growth were the first signs that the plan I'd inherited needed a governance layer it didn't have.",
     },
     spotlight: "decisions",
     context:
       "By Q1 end, 17 unresolved external dependency workstreams were consuming ~40% of sprint capacity, and unchecked scope growth was eroding budget headroom faster than delivery was progressing. At the prevailing burn rate, the program was heading toward funding exhaustion with 40% of contracted scope undelivered.",
     role:
-      "Led end-to-end program delivery with full commercial ownership of the $1.37M SOW. Accountable for dependency governance, executive stakeholder engagement at CFO and VP Engineering level, and leading the commercial recovery through an $831K scope expansion.",
+      "Led end-to-end program delivery with full commercial ownership of the ~$1.4M SOW. Accountable for dependency governance, executive stakeholder engagement at CFO and VP Engineering level, and leading the commercial recovery through an $831K scope expansion.",
     actions: [
       "Established a dependency governance framework with named client-side owners, aging counters, and steerco-level accountability — clearing all 17 blockers within 8 weeks and restoring full engineering velocity",
-      "Identified a 23% scope growth exposure via EAC modelling 6 weeks before SOW expiry, built the commercial business case, and led the client executive presentation — $831K change order approved in 10 business days",
-      "Instituted formal change control governance requiring cost estimate, timeline impact, and risk sign-off before any scope addition was actioned — processed 14 additions while protecting margin to 99.98% of SOW target",
+      "Identified a scope growth exposure via EAC modelling 6 weeks before SOW expiry, built the commercial business case, and led the client executive presentation — $831K change order approved in 10 business days",
+      "Instituted formal change control governance requiring cost estimate, timeline impact, and risk sign-off before any scope addition was actioned — processed 14 additions while keeping margin essentially on target",
     ],
     decisions: [
       "Escalating to VP-level on 3 blockers stalled 60+ days before the client team raised them — required hard data on aging and days-to-deadline to make the case, and a willingness to create short-term discomfort in the relationship. All 3 were resolved in the same meeting.",
       "Framing the $831K change order as a scope expansion the client needed, not a budget problem the vendor had — required structuring the commercial case around their business priorities, not our exposure",
     ],
-    result: "✓ 96% SCOPE DELIVERED · 99.98% BUDGET EXECUTION · $831K EXPANSION APPROVED · ENGAGEMENT RENEWED",
+    result: "✓ 96% SCOPE DELIVERED · BUDGET ESSENTIALLY ON TARGET · $831K EXPANSION APPROVED · ENGAGEMENT RENEWED",
     stack: ["MWAA (Airflow on AWS)", "dbt", "AWS", "Snowflake", "Jira / Confluence"],
     metrics: [
-      { label: "TOTAL VALUE", value: "$1.37M" },
+      { label: "TOTAL VALUE", value: "~$1.4M" },
       { label: "SCOPE EXPANSION", value: "$831K" },
-      { label: "BUDGET EXEC.", value: "99.98%" },
+      { label: "BUDGET EXEC.", value: "~100%" },
       { label: "SCOPE DELIVERED", value: "96%" },
       { label: "BLOCKERS CLEARED", value: "17" },
     ],
@@ -126,18 +126,18 @@ export const caseStudies: CaseStudy[] = [
     number: "003",
     type: "DATA MIGRATION",
     title: "Migrating Regulated Reporting Around a Compliance Blackout",
-    outcome: "SQL Server → Snowflake · $180.5K Fixed-Price · 189 Regulated Objects · Delivered on Contractual Date",
+    outcome: "SQL Server → Snowflake · ~$180K Fixed-Price · 189 Regulated Objects · Delivered on Contractual Date",
     industry: "INVESTMENT MANAGEMENT · REGULATED FINANCIAL SERVICES",
     year: "2024",
     model: "FIXED-PRICE",
     entry: {
       mode: "kickoff",
       narrative:
-        "Assigned as PM when this $180.5K fixed-price SOW was signed, with the 19-week regulated migration window and compliance gate structure already set by the client's change-management calendar — including a 3-week year-end blackout I'd have to plan around from day one.",
+        "Assigned as PM when this ~$180K fixed-price SOW was signed, with the 19-week regulated migration window and compliance gate structure already set by the client's change-management calendar — including a 3-week year-end blackout I'd have to plan around from day one.",
     },
     spotlight: "metrics",
     context:
-      "A $180.5K fixed-price migration of 189 regulated reporting objects from SQL Server to Snowflake for an investment management firm operating under financial services change-management regulations. Compliance approval gates on every production deployment, zero schedule buffer.",
+      "A ~$180K fixed-price migration of 189 regulated reporting objects from SQL Server to Snowflake for an investment management firm operating under financial services change-management regulations. Compliance approval gates on every production deployment, zero schedule buffer.",
     role:
       "Led fixed-price delivery governance — WBS architecture, schedule risk management, compliance gate sequencing, and margin protection against a zero-buffer contractual deadline.",
     actions: [
@@ -152,7 +152,7 @@ export const caseStudies: CaseStudy[] = [
     result: "✓ DELIVERED ON CONTRACTUAL DATE · FULL MARGIN INTACT · CLIENT SIGN-OFF SAME DAY",
     stack: ["Snowflake", "SQL Server", "Qlik Replicate", "Power BI", "MS Project"],
     metrics: [
-      { label: "CONTRACT", value: "$180.5K" },
+      { label: "CONTRACT", value: "~$180K" },
       { label: "OBJECTS", value: "189" },
       { label: "TIMELINE", value: "19 WKS" },
       { label: "EPIC TRACKS", value: "6 PARALLEL" },

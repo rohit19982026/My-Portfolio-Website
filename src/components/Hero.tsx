@@ -1,14 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AnimatedCounter from "./AnimatedCounter";
 import { useMagnetic } from "@/hooks/useMagnetic";
-
-const stats = [
-  { value: "$5M+",   label: "Largest P&L Owned" },
-  { value: "99.98%", label: "Peak Budget Exec." },
-  { value: "10+",    label: "Enterprise Accounts" },
-];
 
 const socials = [
   {
@@ -52,15 +45,6 @@ const socialVariants = {
 const socialItem = {
   hidden: { opacity: 0, y: 16, scale: 0.8 },
   visible: { opacity: 1, y: 0, scale: 1, transition: SPRING_FAST },
-};
-
-const statVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.7 } },
-};
-const statItem = {
-  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { ...SPRING_FAST, duration: 0.5 } },
 };
 
 export default function Hero() {
@@ -226,38 +210,6 @@ export default function Hero() {
             </div>
 
           </div>
-        </div>
-      </div>
-
-      {/* STATS STRIP */}
-      <div
-        className="h-px w-full"
-        style={{ background: "linear-gradient(90deg, transparent, #E2E8F0 20%, #E2E8F0 80%, transparent)" }}
-      />
-      <div>
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div
-            variants={statVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 sm:grid-cols-3"
-          >
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.label}
-                variants={statItem}
-                className="py-6 px-5"
-                style={{ borderRight: i < stats.length - 1 ? "1px solid #E2E8F0" : "none" }}
-              >
-                <p className="font-display text-[28px] font-bold leading-none tracking-tight mb-1" style={{ color: "#1D4ED8" }}>
-                  {s.value}
-                </p>
-                <p className="text-[12px]" style={{ color: "#94A3B8" }}>
-                  {s.label}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
       </div>
     </section>

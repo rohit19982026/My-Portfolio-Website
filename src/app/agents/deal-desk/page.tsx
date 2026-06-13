@@ -179,10 +179,10 @@ export default function DealDeskPage() {
         {/* ─── BUSINESS CASE ─── */}
         <section style={{ padding: "58px 0", borderTop: `1px solid ${BORDER}` }}>
           <Eyebrow>The Business Case</Eyebrow>
-          <SubH>What the time recovery looks like at a representative team size</SubH>
+          <SubH>A projected estimate, at a representative team size</SubH>
           <Lead>
             Selling time recovered = reps × deals per quarter × hours lost searching per deal × time the agent removes.
-            For a 40-rep team working 6 deals each per quarter, with 4 hours of search per deal and 70% of that recovered by the agent:
+            Plugging in a 40-rep team working 6 deals each per quarter, with 4 hours of search per deal and an assumed 70% recovery rate gives:
           </Lead>
 
           <div style={{ display: "grid", gridTemplateColumns: "1.05fr 0.95fr", gap: 18 }} className="dd-grid-2">
@@ -201,12 +201,13 @@ export default function DealDeskPage() {
               ))}
             </div>
             <div className="dd-card" style={{ padding: 26, display: "flex", flexDirection: "column", justifyContent: "center", background: `radial-gradient(120% 120% at 100% 0%, ${PB} 0%, transparent 50%), ${SURFACE}` }}>
+              <div className="dd-mono" style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.07em", color: P2, marginBottom: 6 }}>Projected</div>
               <div className="dd-disp" style={{ fontSize: "clamp(40px, 6vw, 58px)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1, color: P }}>
                 672
               </div>
               <div style={{ fontSize: 14, color: T3, marginTop: 8 }}>hours of selling time recovered per quarter</div>
               <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${BORDER}`, fontSize: 14, color: T2 }}>
-                ≈ <b>84 selling days</b> returned to the field — about <b>one selling week back per rep</b>, every quarter.
+                ≈ <b>84 selling days</b> that would be returned to the field — about <b>one selling week back per rep</b>, every quarter, if built and adopted as designed.
               </div>
             </div>
           </div>
@@ -411,8 +412,8 @@ export default function DealDeskPage() {
         {/* ─── WORKED EXAMPLE ─── */}
         <section style={{ padding: "58px 0", borderTop: `1px solid ${BORDER}` }}>
           <Eyebrow>Worked Example</Eyebrow>
-          <SubH>One real question, answered</SubH>
-          <Lead>A rep is working a $300K mid-market retail deal and asks the agent a single question. Here&apos;s exactly what comes back.</Lead>
+          <SubH>One sample question, walked through</SubH>
+          <Lead>A rep is working a $300K mid-market retail deal and asks the agent a single question. Here&apos;s what the agent&apos;s answer would look like, based on this design.</Lead>
 
           <div style={{ maxWidth: 640, borderRadius: 24, border: `1px solid ${BORDER}`, background: BG, boxShadow: "0 10px 30px rgba(20,22,28,.1), 0 30px 70px rgba(20,22,28,.12)", overflow: "hidden" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "15px 20px", background: "#EDEFF4", borderBottom: `1px solid ${BORDER}` }}>
