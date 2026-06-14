@@ -125,14 +125,15 @@ export default function Hero() {
                 initial={{ opacity: 0, filter: "blur(12px)", y: 8 }}
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[15px] leading-[1.7] max-w-[480px] mb-7"
+                className="text-[15px] leading-[1.7] max-w-[520px] mb-7"
                 style={{ color: "#475569" }}
               >
-                Five years in technology delivery — ITIL change governance at BT,
-                then data and AI programs at phData: Snowflake migrations, Databricks
-                builds, cloud data warehouses, GenAI tooling. Contracts from $500K
-                to $5M+. My job is keeping the commercial model honest and the
-                delivery on track.
+                Five years in delivery — ITIL change at BT, now data and AI programs at
+                phData. I usually run four or five at a time: kickoff to closure on
+                each, weekly cadence in Certinia, Slack, and Jira. The engineers and
+                architects build the platform; I keep it landing — on time, on budget,
+                unblocked, and with nobody surprised. The AI agents on this site are
+                how I keep the grindy parts of the job off everyone&apos;s plate.
               </motion.p>
 
               {/* Social icons */}

@@ -5,50 +5,35 @@ client: "Coursera"
 industry: "EdTech"
 duration: "9 months"
 role: "Technical Project Manager"
-tags: ["Databricks", "Redshift", "ELT", "Migration", "AWS"]
-summary: "Led the full-scale migration of Coursera's data warehouse from Amazon Redshift to Databricks Delta Lake — covering 2,300+ tables and views with zero data loss and no production downtime."
-outcome: "2,300+ objects migrated on schedule with zero data loss"
+tags: ["Databricks", "Redshift", "Unity Catalog", "Migration", "Fixed-Price"]
+summary: "PM engagement on a fixed-price migration of Coursera's data platform from Amazon Redshift to Databricks Unity Catalog — ~2,300 production objects, a US–India engineering pod, and a cutover date already set at SOW signature."
+outcome: "~2,300 objects migrated, cutover delivered, closure checklist run, KT'd to the client team"
 accentColor: "#2563eb"
 order: 1
 ---
 
-## The Problem
+## The engagement
 
-Coursera's analytics infrastructure had grown organically on Amazon Redshift for years. As data volumes scaled with the platform's global expansion, the team faced compounding challenges: slow query performance on large joins, rising compute costs, difficulty supporting concurrent data science workloads, and a lack of a unified data governance layer.
+Coursera had run their analytics on Amazon Redshift for years. They wanted to move to Databricks Delta Lake on Unity Catalog. The architecture and platform choices were made by their team and our architect by the time I came in.
 
-The business needed a modern lakehouse platform that could serve BI, data science, and streaming use cases — without disrupting the hundreds of dashboards and pipelines already in production.
+What I owned was the PM side of getting it across the line: kickoff, sprint cadence, weekly status to AE / SE / client sponsor, the RAID log, financials in Certinia, the cutover comms, and the closure checklist on the way out.
 
-## The Approach
+## What I actually did
 
-The migration was structured in four phases to manage risk and keep production pipelines running throughout:
+**Kickoff and setup.** Picked the engagement up in the sales Slack channel at SOW signature. Read the SOW and scoping doc. Set up the project in Certinia — start/end dates, rates, roles, budget, PO and invoice coding, resources scheduled — and posted in `#pmo-peer-review` for a second pair of eyes. Stood up the Google Drive folder using the standard structure and the Slack project channel (`de-coursera-…`). Ran the 45-minute internal kickoff with AE, SE, and delivery lead. Drafted and rehearsed the external kickoff deck (from the current template, not someone else's customer's). Ran the 1-hour client kickoff with their product owner and sponsor. Welcome email went out the same day with the system access asks — on data work that's always the first thing to block delivery.
 
-**Phase 1 — Discovery & Inventory**
-Catalogued all 2,300+ Redshift objects (tables, views, stored procedures, UDFs) using automated schema extraction. Each object was classified by complexity, downstream dependency count, and migration risk level.
+**Weekly cadence.** Standups, backlog grooming with the team and the client product owner, sprint planning, review/retro. Status report to AE, SE, delivery lead and the client sponsor on the same day each week. 30-minute internal leadership prep before the client-facing leadership meeting (timeline, accomplishments, blockers, risks, collaboration topics). Color status in Certinia honest — flipped to yellow on access delays the client side owned, even when it was easier to leave it green.
 
-**Phase 2 — Architecture Design**
-Designed the target Databricks Delta Lake architecture using a medallion pattern (Bronze → Silver → Gold), Unity Catalog for governance, and cluster policies for cost control. Migration tooling was selected and configured for automated SQL dialect translation.
+**Blockers and escalation.** Access requests to the source systems were the recurring story. The team can't migrate what they can't see, so most of the early-engagement RAID log was access escalations through the client product owner. Two stalled long enough that I escalated to the client sponsor and our AE in the same conversation rather than wait — both unblocked the next week.
 
-**Phase 3 — Iterative Migration**
-Objects were migrated in waves — starting with low-risk, low-dependency tables and working up to complex views and stored procedures. Each wave included data validation (row count checks, hash comparisons, and business rule assertions) before sign-off.
+**Cutover.** Worked the cutover plan with the architect and the client engineering team — comms timeline, rollback window, who was paged, downstream owner sign-offs.
 
-**Phase 4 — Cutover & Stabilization**
-Ran dual-write for two weeks before final cutover, allowing downstream consumers to validate outputs. Post-cutover, a 30-day hypercare period monitored job SLAs and data freshness.
+**Closure.** Ran the Project Closure Checklist. Final invoicing reconciled in Certinia, final status report out, NPS link sent, knowledge transfer to the client team taking the platform forward, access removed across the team.
 
-## Key Decisions
+## What was real about it
 
-- **Chose Delta Lake over Iceberg** for tighter Databricks integration and mature ACID transaction support at the time of the project.
-- **Kept orchestration in Airflow** (existing) rather than migrating to Databricks Workflows — reducing scope and risk for the initial cutover.
-- **Ran validation in parallel** rather than sequentially — cutting validation time by 3x using distributed comparison jobs.
+A two-region engineering pod (US + India) on a fixed-price engagement with a date in the SOW. Engineering owned the technical migration. I owned the project landing — and on fixed-price, that meant being very honest very early about anything that could put the date at risk.
 
-## The Outcome
+## What I'd do differently
 
-| Metric | Result |
-|--------|--------|
-| Tables & views migrated | 2,300+ |
-| Data loss incidents | 0 |
-| Production downtime | 0 hours |
-| Query performance improvement | ~40% avg on Gold layer |
-| Cost reduction (compute) | ~25% post-migration |
-| Timeline | Delivered on schedule |
-
-The migration established Databricks as Coursera's primary data platform and unblocked a subsequent initiative to onboard real-time streaming data from the LMS platform.
+I underestimated how much PM bandwidth a two-region pod would take in the first three weeks. The standup and grooming cadence I'd planned for one pod had to be doubled, and the other program I was covering felt the squeeze. Next time I'd either run thinner ceremony in the second region during the ramp window, or arrange coverage on the other program while a new pod is setting up.

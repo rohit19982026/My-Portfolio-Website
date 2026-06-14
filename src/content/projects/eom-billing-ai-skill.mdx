@@ -1,57 +1,45 @@
 ---
-title: "EOM Billing Assistant: AI Skill for PMO"
+title: "EOM Billing Assistant: An AI Skill for PMO Month-End"
 slug: "eom-billing-ai-skill"
 client: "Internal / phData PMO"
 industry: "Professional Services"
 duration: "3 months"
-role: "Technical PM & AI Skill Builder"
-tags: ["AI", "LLM", "Prompt Engineering", "PMO", "Automation"]
-summary: "Designed and built an AI-powered billing reconciliation skill using LLM orchestration and prompt engineering — reducing end-of-month billing processing time by 60% for the PMO team."
-outcome: "60% reduction in billing reconciliation time"
+role: "PM & Skill Builder"
+tags: ["AI", "Claude", "Glean", "PMO", "Automation"]
+summary: "End-of-month billing reconciliation was eating 3–4 hours per PM per program. The data was structured and the process was repeatable — strong candidate to take off the plate."
+outcome: "~60% of EOM billing time recovered with >95% accuracy on the discrepancy check"
 accentColor: "#10b981"
 order: 3
 ---
 
-## The Problem
+## The problem
 
-At the end of every month, the PMO team spent 3–4 hours manually reconciling project billing data: pulling time entries from the PSA tool, cross-referencing against SOW milestones, flagging discrepancies, and formatting a summary for finance sign-off.
+At end of month, the PMO ritual is the same on every program: pull time entries from the PSA, cross-reference against SOW milestones, flag discrepancies, write a finance-ready summary. It's 3–4 hours of work per PM, per program, every month. Error-prone (manual copy-paste), inconsistent across people, and uses PM time that should go into the parts of the job that need actual judgment.
 
-The process was error-prone (manual copy-paste), inconsistent across team members, and consumed high-value PM time that should have been spent on delivery. The data was structured and repeatable — a strong candidate for AI automation.
+The data was structured and the process was repeatable. Strong candidate for automation.
 
-## The Approach
+## How I built it
 
-**Problem Decomposition**
-Mapped the existing reconciliation workflow into discrete, automatable sub-tasks: data retrieval, comparison logic, anomaly detection, narrative generation, and output formatting. Each sub-task was assessed for LLM suitability vs. deterministic code.
+**Watched my own week first.** Before writing a line of prompt, I worked through a couple of months of my own EOM by hand and listed what the agent would need to do: pull time data, compare against SOW budget, flag overages and underages, produce a plain-English summary for finance, surface anything weird for human review.
 
-**Prompt Engineering Framework**
-Designed a chain-of-thought prompt architecture where the LLM was given role context (billing analyst), structured input data (JSON from the PSA tool), and a step-by-step reasoning scaffold. Output format was strictly controlled using JSON schema in the system prompt.
+**Built on Glean rather than direct API.** Glean was already the PMO's knowledge and search layer. Building the agent there meant it could draw on live program data without me building separate integrations — less impressive on paper, much faster to ship and far easier for the rest of the PMO to adopt.
 
-Key prompts built:
-- **Discrepancy Detector**: Compares billed hours vs. SOW budget per project, flags overages and underages with severity labels.
-- **Narrative Generator**: Produces a plain-English billing summary suitable for finance stakeholders — no jargon, no raw data dumps.
-- **Exception Explainer**: For each flagged discrepancy, generates a probable cause and recommended action based on project context.
+**Three chained prompts, schema-bounded outputs:**
 
-**Integration & Testing**
-The skill was integrated into the phData internal tooling platform. Tested against 6 months of historical billing data, with PM review of AI outputs vs. manually produced summaries — achieving >95% accuracy on discrepancy detection.
+- **Discrepancy detector** — compares billed hours vs SOW budget per program, flags severity.
+- **Narrative generator** — produces the finance-ready summary in plain English.
+- **Exception explainer** — for each flagged discrepancy, generates a probable cause and recommended action from program context.
 
-**Guardrails**
-Built explicit fallback logic: if the LLM output fails schema validation, the skill surfaces raw data for human review rather than silently producing a malformed output.
+**Guardrails.** Schema validation on every LLM output. If the model produced something that didn't parse, the skill surfaced the raw numbers for human review rather than silently producing a malformed summary.
 
-## Key Decisions
+## Outcomes
 
-- **Structured JSON output over free text** — ensures downstream systems can parse AI outputs reliably without fragile regex.
-- **Chain-of-thought prompting over single-shot** — billing reconciliation requires multi-step reasoning; single-shot prompts produced hallucinated figures on edge cases.
-- **PM stays in the loop** — the skill produces a draft for human approval, not autonomous submission. This was a deliberate trust-building choice for v1.
+| Metric | Before | After |
+|--------|--------|-------|
+| Time per PM per program at EOM | 3–4 hrs | ~60–75 min |
+| Discrepancy detection accuracy | n/a (manual) | >95% on the test set |
+| PMO adoption | — | 100% within ~1 month |
 
-## The Outcome
+## What I'd do differently
 
-| Metric | Result |
-|--------|--------|
-| Time to reconcile (before) | 3–4 hours/month |
-| Time to reconcile (after) | ~60–75 minutes/month |
-| Time reduction | ~60% |
-| Discrepancy detection accuracy | >95% on test dataset |
-| Prompts in production | 6 chained prompts |
-| Team adoption | 100% of PMO team within 1 month |
-
-The EOM Billing Skill became the template for phData's broader AI Skill library — demonstrating that high-value PMO workflows can be AI-augmented without replacing human judgment. A follow-on skill for automated project status reporting is in planning.
+I built this and the Sprint Velocity agent against separate data pulls before I'd noticed they ingest almost the same program and sprint data. A shared data layer built once would have sped both up. That's the kind of detour you only notice once you've shipped the first agent — but next time I'd build the data layer second instead of in parallel.

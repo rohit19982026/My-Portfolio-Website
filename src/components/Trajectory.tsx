@@ -11,17 +11,16 @@ const roles = [
     current: true,
     color: "#1D4ED8",
     bullets: [
-      "Governed 4–5 concurrent data platform, cloud migration, and GenAI programs (Snowflake, AWS, Databricks, dbt) — full SDLC ownership from initiation through closure; managed program roadmaps, delivery governance frameworks, and executive stakeholder alignment across all workstreams.",
-      "Engineered PMO automation using Glean AI agents and Google Apps Script — eliminated manual status reporting, automated OKR tracking, and deployed real-time Slack program health dashboards; recovered ~8 hours/week of delivery team capacity across active engagements.",
-      "Owned P&L from $500K to $5M+ — financial forecasting, revenue recognition, margin management, budget variance control, and invoicing approvals; maintained target margins across all active programs.",
-      "Served as primary executive stakeholder liaison — ran QBRs with VP- and Director-level clients across 10+ enterprise accounts; translated engineering delivery into business-language reporting. Issues surfaced in the report, not on the call.",
-      "Led SOW negotiation and pre-sales scoping — defined delivery estimates, validated technical feasibility, and drove commercial terms on contract extensions and new statements of work.",
-      "Owned program risk and issue management — maintained risk registers, resolved escalations before VP involvement, secured phase-gate sign-offs; no program missed a critical delivery milestone.",
-      "Managed cross-functional teams of 15–30 across data engineering, analytics, DevOps, and client stakeholders — resource allocation, capacity planning, and dependency management across concurrent workstreams.",
-      "Led Agile ceremonies (sprint planning, backlog refinement, retrospectives, stand-ups) — maintained velocity visibility and reduced average blocker resolution time across active programs.",
-      "Mentored engineers on delivery practices and program documentation — onboarded new members mid-flight without disrupting active program execution.",
+      "Run delivery on 4–5 concurrent data and AI programs at a time — kickoff to closure, the three-phase phData lifecycle on each one: set it up cleanly, keep it healthy week to week, wrap it without surprises.",
+      "Day-to-day cadence on every program: standups, backlog grooming, sprint planning, review and retro, the 30-minute internal leadership prep, and the client-facing leadership meeting. Weekly status report to AE/SE/delivery lead and the client sponsor on the same day each week.",
+      "Own Certinia setup, weekly timecard check, the month-end ritual, and the project color status. The number the AE sees in the Sigma PMO dashboard matches the number in my status report. AE gets the early signal on burn, change orders, and PO delays — before they become problems.",
+      "Live RAID log on every engagement. On data and ML work the blockers that actually move the needle are access, source-system connectivity, and environment readiness — most of the real work is chasing those down and escalating early when something stalls.",
+      "Cross-functional teams of 15–30 across phData engineering, architecture, client engineers, and stakeholders. Engineers own the build; I keep the stories, acceptance criteria, and story points honest enough that the board can be trusted.",
+      "Support the AE on pre-sales scoping and change orders — sizing delivery, validating technical feasibility with the team, and surfacing scope-growth signals to sales in the weekly leadership prep.",
+      "Built and shipped the PMO AI agents on Glean, Claude, and n8n — billing reconciliation, sprint health, steerco prep, project health scans. Now PMO-wide; recovers ~8 hours a week across the delivery org. phData Innovation Award.",
+      "Onboard mid-program joiners to the team&apos;s rituals — standups, RAID, status cadence, Certinia time entry — without dragging the active sprint. Out-of-office coverage planned every time I take PTO.",
     ],
-    tags: ["PMO Governance", "Financial Management ($5M+ P&L)", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "AI Agent Builder", "Scrum Master (PSM1)", "Risk Register", "Agile Delivery", "Team Leadership (15-30)"],
+    tags: ["Kickoff → Closure", "Certinia & Financials", "RAID & Escalations", "AI Agent Builder", "Scrum Master (PSM1)", "Agile Delivery", "Cross-Timezone Delivery", "Team Leadership (15–30)"],
   },
   {
     period: "AUG 2020 — DEC 2022",
@@ -56,7 +55,7 @@ const certifications = [
 
 const award = {
   title: "phData Innovation Award",
-  desc: "Recognised for building production AI agents (Glean + Claude + n8n) that automated project provisioning from signed SOWs, generated weekly program status reports, and sent automated client notifications to email and Slack — saving ~8 hours/week across active programs.",
+  desc: "Recognised for the PMO AI agent platform — Glean + Claude + n8n agents handling EOM billing reconciliation, sprint health scoring, project health scans, and steerco deck drafting. Recovers about 8 hours a week across the delivery org.",
 };
 
 const sidebarVariants = {
@@ -113,7 +112,7 @@ export default function Trajectory() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
           >
-            Five years across two companies — ITIL change governance at BT, then full program ownership across data platform and AI delivery at phData.
+            Five years across two companies — ITIL change at BT, then data and AI program delivery at phData. Four or five engagements at a time, the same kickoff → execution → closure rhythm on each.
           </motion.p>
         </motion.div>
 

@@ -474,13 +474,16 @@ export default function Work() {
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#1D4ED8] mb-5">04 / WORK</p>
           <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-5" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}>
-            Seven programs.{" "}
+            Four programs.{" "}
             <span className="font-normal" style={{ background: "linear-gradient(130deg, #93C5FD 0%, #60A5FA 50%, #1D4ED8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Real numbers
+              The PM-actual story
             </span>.
           </h2>
           <p className="text-[16px] text-[#475569] max-w-2xl leading-relaxed mb-5">
-            Contracts, timelines, and outcomes below are real — only client names are anonymized.
+            Client names anonymized. The story is the PM work — kickoff, weekly cadence,
+            RAID, status, financials, closure — not the architecture (that&apos;s the
+            engineering team&apos;s). Contract figures intentionally left out; those are AE
+            territory, not what I&apos;m here to show.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <span
@@ -488,7 +491,7 @@ export default function Work() {
               style={{ color: "#1D4ED8", background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.18)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#1D4ED8" }} />
-              6 Client Engagements
+              3 Client Engagements
             </span>
             <span
               className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-md"

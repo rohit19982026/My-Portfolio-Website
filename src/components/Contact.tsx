@@ -12,18 +12,18 @@ const links = [
 const engagementTypes = [
   {
     icon: "🏗️",
-    title: "Platform Build / Migration",
-    desc: "Snowflake, Databricks, AWS — full program ownership from SOW signature through delivery close.",
+    title: "Platform Build or Migration",
+    desc: "Snowflake, Databricks, AWS. PM end-to-end on the engagement — kickoff, sprint cadence, RAID, weekly status, financials, closure.",
   },
   {
     icon: "🤖",
     title: "GenAI Program Delivery",
-    desc: "LLM integrations, AI agent builds, and AI-augmented engineering programs. Same governance and commercial ownership as any other program.",
+    desc: "LLM integrations and AI agent builds. Same three-phase cadence and the same governance the rest of delivery gets — no special treatment because it's AI.",
   },
   {
-    icon: "🚨",
-    title: "Program Rescue",
-    desc: "Scope drift, budget bleed, stalled delivery. I come in, diagnose quickly, and get things moving again.",
+    icon: "🔁",
+    title: "Mid-Stream Pickup",
+    desc: "Inherited engagements where the previous PM is rolling off. Standard PM transition — scope, team, cadence, financials, RAID, access — then back to the regular weekly rhythm.",
   },
 ];
 
@@ -93,8 +93,9 @@ export default function Contact() {
             transition={{ duration: 0.7, delay: 0.28 }}
             className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
           >
-            Whether it&apos;s a platform migration, a GenAI delivery, or a program that needs
-            rescuing — I&apos;d rather understand the problem first before discussing engagement.
+            Platform build, GenAI delivery, or an engagement that needs picking
+            up mid-stream — happy to talk through what the work actually is before
+            anything else.
           </motion.p>
         </motion.div>
 

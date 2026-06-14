@@ -5,19 +5,19 @@ import { motion } from "framer-motion";
 const pov = [
   {
     label: "Governance",
-    body: "AI-assisted development needs the same audit trail as anything else in a regulated program. On the Redshift-to-Databricks migration, GitHub Copilot ran under client compliance constraints — per-sprint review checklists and output audit trails — and still delivered a documented 30% velocity uplift.",
+    body: "AI-assisted development earns the same audit trail as anything else in a delivery program. On a recent migration engagement, Copilot ran inside client compliance constraints — per-sprint review checklists and output audit trails — alongside the normal sprint cadence. The point isn't a flashy uplift number; it's that AI-in-delivery work gets governed the same way the rest of the work does.",
   },
   {
     label: "Build vs. buy",
-    body: "Build on the platform that's already the org's knowledge layer, not the flashiest API. The agent platform runs on Glean, not a raw LLM integration — because Glean was already the PMO's search and permissions layer, so agents could read live program data, Salesforce, and Drive without a separate integration build.",
+    body: "Build on the platform that's already the org's knowledge layer, not the flashiest API. The agent platform runs on Glean — already the PMO's search and permissions layer — so agents could draw on live program data, Salesforce, and Drive without a separate integration build. Less impressive on paper, far faster to ship.",
   },
   {
     label: "Adoption sequencing",
-    body: "Ship the highest-pain, most-measurable agent first to earn the right to build the rest. The Billing Compliance Agent went PMO-wide in 1 month with >95% accuracy — that result is what got the next 5 agents funded.",
+    body: "Ship the highest-pain, most-measurable agent first to earn the right to build the rest. The Billing Compliance Agent went PMO-wide inside a month — that was the credibility the next five agents needed to land.",
   },
   {
     label: "Measurement discipline",
-    body: "A 30% velocity uplift or a >95% accuracy figure is only worth citing if it's backed by an audit trail, not a vibe. Both numbers above came from sprint-level tracking and per-run accuracy logs — the same rigor I'd apply to a budget variance report.",
+    body: "The >95% accuracy figure on the billing agent is worth citing because it's backed by per-run accuracy logs against a test set — the same rigor I'd apply to a Certinia budget variance report. Numbers without that kind of audit trail don't go on a slide.",
   },
 ];
 

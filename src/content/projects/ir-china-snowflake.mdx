@@ -1,55 +1,37 @@
 ---
-title: "IR China: Snowflake Data Platform Implementation"
+title: "Snowflake for a Global Manufacturer's China Operations"
 slug: "ir-china-snowflake"
-client: "IR China"
-industry: "Financial Services / IR"
-duration: "6 months"
+client: "Global Industrial Manufacturer"
+industry: "Industrial Manufacturing"
+duration: "6 weeks"
 role: "Technical Project Manager"
-tags: ["Snowflake", "ELT", "Data Warehouse", "Azure", "RBAC"]
-summary: "Greenfield Snowflake implementation for IR China's investor relations data platform — designing schema architecture, role-based access control, and cross-region data sharing for global operations."
-outcome: "Production platform live in 6 months, serving 5 global regions"
+tags: ["Snowflake", "T&M", "3 Timezones", "Lunar New Year", "Async Delivery"]
+summary: "T&M Snowflake build for a global manufacturer's China factory operations. 3-timezone delivery (US, India, China site) with Lunar New Year inside the window — the PM work was the async cadence design and the re-baselining around the holiday."
+outcome: "Delivered across 3 timezones with Lunar New Year absorbed and closure checklist run"
 accentColor: "#06b6d4"
 order: 2
 ---
 
-## The Problem
+## The engagement
 
-IR China needed a centralized, cloud-native data warehouse to consolidate investor relations data from multiple regional sources across APAC, EMEA, and North America. Their existing setup relied on siloed Excel-based reporting and manual data pulls — creating reconciliation delays, inconsistent metrics, and a compliance blind spot for data access.
+A T&M Snowflake build for a global industrial manufacturer's China factory operations. The architecture and platform decisions were the engineering team's call. What made this one different on the PM side was the geometry: a 10.5-hour timezone spread between the US delivery lead and the client site, with Lunar New Year sitting three weeks into a six-week window.
 
-The mandate: build a governed, scalable data platform that could serve standardized reports globally while enforcing strict data access boundaries between regions.
+## What I actually did
 
-## The Approach
+**Kickoff sequence.** Picked the assignment up in the sales Slack channel. Read the SOW. Set up Certinia (rates, roles, the resource schedule for the US-India team and the client-site liaison), got the PMO peer review done in `#pmo-peer-review`. Built the Slack channel and Google Drive folder. Ran the 45-minute internal kickoff with AE / SE / delivery lead. Scheduled the external kickoff at a time that worked for everyone — the China site joined first thing in their day, the US lead late afternoon theirs. Welcome email out on day one with the access asks.
 
-**Foundation & Architecture**
-Selected Snowflake on Azure for proximity to IR China's existing Azure identity infrastructure. Designed a multi-database schema separating raw ingestion, transformed, and presentation layers — following a warehouse-per-environment model (Dev / UAT / Prod).
+**Async-first cadence by week two.** Within the first ten days it was clear the live weekly client leadership meeting wasn't going to hold — two of the three regions weren't reliably in the same room. So I moved the cadence to async-first: a written status update at a fixed point in each region's day, a shared decision register people could comment on instead of waiting for a meeting, and the live leadership meeting moved from weekly to fortnightly. The sponsor was on board after the fact, but a 1:1 with the China-site product owner before announcing it would have made it a co-decision rather than a heads-up. That's the one I'd do differently.
 
-**Role-Based Access Control (RBAC)**
-Designed a hierarchical RBAC model with 12 custom roles mapping to business functions (regional analyst, global viewer, finance approver, platform admin). All access was provisioned through role grants — no individual user permissions — enabling clean audit trails.
+**Re-baselining around Lunar New Year.** Three weeks in, I walked the AE and the client sponsor through a re-baselined schedule: vendor development front-loaded, client validation back-loaded, no open critical-path work during the holiday. Required a transparent conversation about reshaping the schedule but it meant nobody hit the holiday with anxiety.
 
-**ELT Pipeline Build**
-Built dbt-core models for all transformation logic, with source freshness checks and schema tests enforced at every layer. Fivetran was configured to ingest from five source systems including CRM, fund administration, and trade data APIs.
+**Financials and status.** Certinia clean every week, burn against SOW checked against the Sigma PMO dashboard, color status honest. Two weeks ran yellow on access issues the client team owned, then back to green.
 
-**Cross-Region Data Sharing**
-Used Snowflake Secure Data Sharing to expose curated Gold-layer datasets to regional entities without data duplication — reducing storage costs and ensuring a single source of truth for all downstream consumers.
+**Closure.** Standard closure checklist — final invoicing reconciled, final status, NPS sent, KT to the client's ongoing support team, access removed.
 
-**Stakeholder Enablement**
-Ran three structured enablement sessions for regional analytics leads covering query best practices, dashboard connections (Tableau + Sigma), and the data access request process.
+## What was real about it
 
-## Key Decisions
+The work itself was a standard Snowflake build the engineering team owned. The PM work was design choices about cadence and the calendar — choosing async-first early enough that decision-lag didn't compound, and treating Lunar New Year as a constraint to schedule around in week 3 rather than a thing to absorb in real time.
 
-- **Snowflake over Databricks** for this use case: IR China's workloads were primarily SQL-based BI, not ML — Snowflake's warehouse model and native data sharing fit the requirements better.
-- **dbt over custom SQL scripts** to enforce testability, documentation, and version control across all transformation logic.
-- **Fivetran for ingestion** rather than custom ADF pipelines — reducing pipeline maintenance burden for a lean engineering team.
+## What I'd do differently
 
-## The Outcome
-
-| Metric | Result |
-|--------|--------|
-| Regions served | 5 (APAC, EMEA, NA + 2 sub-regions) |
-| Source systems integrated | 5 |
-| dbt models in production | 60+ |
-| RBAC roles designed | 12 |
-| Time to first production report | 8 weeks from kickoff |
-| Total implementation | 6 months (on schedule) |
-
-The platform replaced all manual Excel reporting and became the single source of truth for investor relations metrics globally. A post-launch audit confirmed zero unauthorized cross-region data access events in the first quarter.
+The cadence change should have been a 1:1 conversation with the client product owner before the leadership meeting, not at it. They were on board after the fact, but it briefly felt like the rhythm had changed without consultation. 15 minutes of pre-conversation would have made it a co-decision.

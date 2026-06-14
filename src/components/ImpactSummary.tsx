@@ -36,14 +36,14 @@ export default function ImpactSummary() {
             <span className="gradient-text font-normal">the shape of it</span>.
           </h2>
           <p className="text-[15px] text-[#475569] max-w-2xl leading-relaxed">
-            Five years, two companies, one pattern: get put in front of a program that&apos;s
-            already moving, find the gap nobody&apos;s tracking, and close it — commercially,
-            operationally, or by building the tool that closes it permanently.
+            Five years across BT and phData. The shape is the same on every engagement:
+            pick it up at kickoff, run the cadence week after week, hand it off cleanly at
+            closure. The numbers below are the steady state, not the heroic moments.
           </p>
         </motion.div>
 
         {/* Block A — stat grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {impactStats.map((stat, i) => {
             const accent = STAT_ACCENTS[i % STAT_ACCENTS.length];
             return (
