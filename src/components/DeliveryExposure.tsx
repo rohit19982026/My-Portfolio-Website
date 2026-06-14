@@ -23,7 +23,7 @@ const stacks = [
     color: "#0891B2",
     pillBg: "rgba(8,145,178,0.08)",
     pillBorder: "rgba(8,145,178,0.2)",
-    items: ["Jira", "Confluence", "Certinia (PSA)", "Sigma PMO Dashboard", "Azure DevOps", "Lattice", "Salesforce", "Slack / Google Drive"],
+    items: ["Jira", "Confluence", "PSA / Time Tracking", "Delivery Reporting Dashboard", "Azure DevOps", "Performance & Feedback Tools", "Salesforce", "Slack / Google Drive"],
   },
   {
     label: "// AI & AUTOMATION LAYER I'VE BUILT",

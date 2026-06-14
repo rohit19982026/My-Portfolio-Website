@@ -128,12 +128,15 @@ export default function Hero() {
                 className="text-[15px] leading-[1.7] max-w-[520px] mb-7"
                 style={{ color: "#475569" }}
               >
-                Five years in delivery — ITIL change at BT, now data and AI programs at
-                phData. I usually run four or five at a time: kickoff to closure on
-                each, weekly cadence in Certinia, Slack, and Jira. The engineers and
-                architects build the platform; I keep it landing — on time, on budget,
-                unblocked, and with nobody surprised. The AI agents on this site are
-                how I keep the grindy parts of the job off everyone&apos;s plate.
+                The best week on a program is the one nobody remembers — nothing
+                escalated, nothing surprised the client, the platform shipped on
+                schedule. Getting there is mostly about noticing the thing that&apos;s
+                about to go wrong before it does, and having the conversation that
+                fixes it while it&apos;s still small. I run four or five data and AI
+                programs like that at a time, working alongside the engineers and
+                architects who build the platforms themselves. The agents on this
+                site are ones I built to buy myself more time for that part of the
+                job.
               </motion.p>
 
               {/* Social icons */}

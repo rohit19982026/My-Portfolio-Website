@@ -476,14 +476,15 @@ export default function Work() {
           <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-5" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}>
             Four programs.{" "}
             <span className="font-normal" style={{ background: "linear-gradient(130deg, #93C5FD 0%, #60A5FA 50%, #1D4ED8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              The PM-actual story
+              What actually happened
             </span>.
           </h2>
           <p className="text-[16px] text-[#475569] max-w-2xl leading-relaxed mb-5">
-            Client names anonymized. The story is the PM work — kickoff, weekly cadence,
-            RAID, status, financials, closure — not the architecture (that&apos;s the
-            engineering team&apos;s). Contract figures intentionally left out; those are AE
-            territory, not what I&apos;m here to show.
+            Client names anonymized, contract figures left out — those are AE territory.
+            What&apos;s here is the part that was mine: the calls I made when something was
+            about to go sideways, alongside the everyday work of keeping four very
+            different programs on track. The architecture is the engineering team&apos;s
+            story to tell.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <span

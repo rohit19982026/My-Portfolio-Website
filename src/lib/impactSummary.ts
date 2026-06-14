@@ -7,23 +7,23 @@ export interface ImpactStat {
 export const impactStats: ImpactStat[] = [
   {
     value: "4–5",
-    label: "Concurrent Programs",
-    detail: "The phData steady-state — part-time on each, switching fast between them to keep all of them healthy.",
+    label: "Programs Run Concurrently",
+    detail: "Each at a different stage — one in kickoff, one mid-cadence, one heading into closure — switching context fast enough that none of them feel like the neglected one.",
   },
   {
-    value: "15+",
-    label: "Programs End-to-End",
-    detail: "Kickoff → execution → closure on each — the standard three-phase phData lifecycle.",
+    value: "10.5 HRS",
+    label: "Widest Timezone Gap Navigated",
+    detail: "A US delivery lead to a client's factory site in China, on a single program — redesigned the whole cadence around the gap instead of fighting it.",
   },
   {
-    value: "5",
-    label: "Industries",
-    detail: "EdTech, MarTech/AdTech, Investment Management, Industrial Manufacturing, B2B SaaS.",
+    value: "100%",
+    label: "PMO Adoption of My AI Agents",
+    detail: "Within about a month of the first one going live — built to get my own hours back, kept because the rest of the PMO wanted theirs back too.",
   },
   {
     value: "3",
-    label: "Countries Delivered Across",
-    detail: "US, India, and a China-site program — up to a 10.5-hour timezone spread on a single engagement.",
+    label: "Engagement Models, 3 Different Definitions of 'On Track'",
+    detail: "Fixed-price, multi-year T&M, and internal builds — each one needs a different conversation about risk, and a different read on what 'green' actually means.",
   },
 ];
 

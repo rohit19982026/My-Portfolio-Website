@@ -4,21 +4,27 @@ import { motion } from "framer-motion";
 
 const pov = [
   {
-    label: "Governance",
-    body: "AI-assisted development earns the same audit trail as anything else in a delivery program. On a recent migration engagement, Copilot ran inside client compliance constraints — per-sprint review checklists and output audit trails — alongside the normal sprint cadence. The point isn't a flashy uplift number; it's that AI-in-delivery work gets governed the same way the rest of the work does.",
+    label: "Why I built it",
+    body: "End-of-month billing reconciliation was 3-4 hours of copy-paste between the time-tracking tool and the SOW budget, every program, every month. I'd done it by hand for two years. The data was structured and the process was identical every time — that's not PM work, that's a script that hasn't been written yet.",
   },
   {
     label: "Build vs. buy",
-    body: "Build on the platform that's already the org's knowledge layer, not the flashiest API. The agent platform runs on Glean — already the PMO's search and permissions layer — so agents could draw on live program data, Salesforce, and Drive without a separate integration build. Less impressive on paper, far faster to ship.",
+    body: "Built on Glean, not a custom API integration — it was already the PMO's knowledge and permissions layer, so an agent there could see live program data, Salesforce, and Drive without a separate integration build. Less impressive on paper, far faster to ship and far easier for the rest of the PMO to pick up.",
   },
   {
     label: "Adoption sequencing",
-    body: "Ship the highest-pain, most-measurable agent first to earn the right to build the rest. The Billing Compliance Agent went PMO-wide inside a month — that was the credibility the next five agents needed to land.",
+    body: "Shipped the billing agent first because it was the highest-pain, most-measurable win — if it didn't hold up, nothing after it would get adopted either. Once it was running PMO-wide inside a month, the next five had an easier path in.",
   },
   {
-    label: "Measurement discipline",
-    body: "The >95% accuracy figure on the billing agent is worth citing because it's backed by per-run accuracy logs against a test set — the same rigor I'd apply to a Certinia budget variance report. Numbers without that kind of audit trail don't go on a slide.",
+    label: "Why the accuracy number is real",
+    body: "The >95% figure on the billing agent isn't a vibe — it's backed by per-run accuracy logs checked against a test set of past reconciliations, the same way I'd back up any number before it went into a status report to a client.",
   },
+];
+
+const proofStrip = [
+  { value: "3-4 hrs → ~60 min", label: "Per PM, per program, at month-end", accent: "#059669" },
+  { value: ">95%", label: "Accuracy on the billing discrepancy check", accent: "#1D4ED8" },
+  { value: "100%", label: "PMO adoption within ~1 month of shipping", accent: "#D97706" },
 ];
 
 const tools = [
@@ -77,7 +83,7 @@ export default function AIToolingTeaser() {
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#0F172A" }}
           >
-            Built with{" "}
+            I automated{" "}
             <span
               style={{
                 background: "linear-gradient(130deg, #60A5FA 0%, #1D4ED8 100%)",
@@ -85,14 +91,37 @@ export default function AIToolingTeaser() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Claude + Glean.
-            </span>
-            <br />
-            Runs in production.
+              my own job
+            </span>{" "}
+            first.
           </h2>
           <p className="text-[15px] text-[#94A3B8] max-w-lg leading-relaxed">
-            6 AI agents in production across the phData PMO. Four highlighted below — each replaced a manual workflow that was consuming PM time with zero judgment value.
+            It started with one agent that did my own end-of-month billing reconciliation
+            — the most boring, most error-prone hour of my month. Once that one held up,
+            the rest of the PMO wanted their hours back too. Six agents now run on Glean,
+            Claude, and n8n across the whole PMO; four are highlighted below.
           </p>
+        </motion.div>
+
+        {/* Proof strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="grid sm:grid-cols-3 gap-px rounded-2xl overflow-hidden mb-10"
+          style={{ border: "1px solid #E2E8F0" }}
+        >
+          {proofStrip.map((p) => (
+            <div key={p.label} className="p-5" style={{ background: "#F8FAFC" }}>
+              <div className="font-mono font-black tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.accent }}>
+                {p.value}
+              </div>
+              <div className="text-[12px] leading-snug" style={{ color: "#64748B" }}>
+                {p.label}
+              </div>
+            </div>
+          ))}
         </motion.div>
 
         {/* Tool cards */}
@@ -144,7 +173,7 @@ export default function AIToolingTeaser() {
           className="mb-10"
         >
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#0891B2" }}>
-            // HOW I THINK ABOUT AI IN DELIVERY
+            // THE STORY BEHIND IT
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             {pov.map((p, i) => (

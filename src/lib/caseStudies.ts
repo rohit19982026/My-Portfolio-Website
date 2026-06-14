@@ -46,19 +46,19 @@ export const caseStudies: CaseStudy[] = [
     context:
       "A fixed-price migration of ~2,300 production data objects from Amazon Redshift to Databricks Unity Catalog. Two pods across US and India. The architecture (Unity Catalog setup, the medallion layering, SQL dialect translation tooling) was the engineering team's and the architect's call. My job was the kickoff, the weekly cadence, the access escalations, the cutover comms, and the closure.",
     role:
-      "PM end-to-end on the engagement. Internal kickoff with AE/SE/delivery lead, external kickoff with the client product owner and sponsor, sprint cadence and ceremonies, weekly status to AE/SE and client sponsor, RAID log, Certinia financials, and the cutover plan with the architect.",
+      "PM end-to-end on the engagement. Internal kickoff with the account team, external kickoff with the client product owner and sponsor, sprint cadence and ceremonies, weekly status to the account team and client sponsor, the RAID log, financial tracking, and the cutover plan with the architect.",
     actions: [
-      "Worked the Project Initiation Checklist on day one — Certinia setup checked against the SOW (dates, rates, roles, budget, PO coding), PMO peer review confirmed in #pmo-peer-review, Slack channel up, internal and external kickoff decks rehearsed, welcome email out with the access asks because access was always going to be the blocker.",
-      "Held the weekly cadence — status report to AE/SE/delivery lead and the client sponsor on the same day each week, the 30-minute internal leadership prep, then the client-facing leadership meeting (timeline, accomplishments, blockers, risks). Kept the Certinia color status honest — went yellow on access delays the client side owned, even when it was easier to leave it green.",
-      "Live RAID log on access requests, environment readiness, and cutover dependencies. Two access requests stalled long enough that I escalated to the client sponsor and our AE in the same conversation rather than wait — both unblocked the next week.",
-      "Worked the cutover plan with the architect and the client engineering team — comms timeline, rollback window, who was paged, downstream owner sign-offs. Then the Project Closure Checklist: final invoicing reconciled in Certinia, final status report, NPS, knowledge transfer to the client team taking it forward, access removed.",
+      "Set up the program on day one against the SOW — budget, roles, and timeline checked, a second PM's eyes on the plan before anything went external, kickoff decks rehearsed for both the internal team and the client. The welcome email went out with the access asks already attached, because access was always going to be the blocker.",
+      "Ran the weekly cadence — same-day status to the account team and the client sponsor, a short internal prep before the client leadership meeting, then the meeting itself. Kept the status color honest even when it cost something: flagged yellow on access delays the client side owned, when leaving it green would have read better for everyone that week.",
+      "Live RAID log on access requests, environment readiness, and cutover dependencies. Two access requests stalled long enough that I escalated to the client sponsor and our account lead in the same conversation rather than wait — both unblocked the next week.",
+      "Worked the cutover plan with the architect and the client engineering team — comms timeline, rollback window, who was paged, downstream sign-offs. Closed the program the way it started: invoicing reconciled, final status sent, knowledge transfer to the team taking it forward, and every access grant removed.",
     ],
     decisions: [
       "Flagged the program yellow in week 4 when an access request had been open three weeks and the client SME had gone quiet — not because anything had broken yet, but because on fixed-price every week of access delay is a week you can't get back, and naming it gave the AE room to talk to the client side. Unblocked the next week.",
       "Pushed back on a mid-program scope addition by getting the architect's estimate in writing, taking it to the AE, and routing it through change-order rather than absorbing it inside the SOW. Short conversation because the math was clear.",
     ],
     result: "✓ ~2,300 OBJECTS MIGRATED · CUTOVER DELIVERED · CLOSURE CHECKLIST RUN · KT'D TO CLIENT TEAM",
-    stack: ["Databricks", "Amazon Redshift", "Unity Catalog", "Azure DevOps", "Jira", "Certinia"],
+    stack: ["Databricks", "Amazon Redshift", "Unity Catalog", "Azure DevOps", "Jira"],
     metrics: [
       { label: "OBJECTS", value: "~2,300" },
       { label: "TEAM", value: "US + INDIA" },
@@ -92,19 +92,19 @@ export const caseStudies: CaseStudy[] = [
     context:
       "A multi-year T&M engagement building a marketing data platform on MWAA (Airflow), dbt, and Snowflake. Multiple stakeholders on the client side with different priorities, a sponsor who needed VP-level updates, and an engineer counterpart on the client team who held the keys to half the source-system access.",
     role:
-      "PM end-to-end. Certinia, weekly status, internal and client leadership meetings, RAID, change-order surfacing, the renewal-adjacent conversations. The engineers and architect owned the build; I held the cadence steady and read the room on the client side.",
+      "PM end-to-end. Financial tracking, weekly status, internal and client leadership meetings, RAID, change-order surfacing, the renewal-adjacent conversations. The engineers and architect owned the build; I held the cadence steady and read the room on the client side.",
     actions: [
       "Ran a steady weekly cadence — status to AE/SE/delivery lead and the client sponsor at the same time each week, the 30-min internal prep before the client leadership meeting, and the client leadership meeting itself with the timeline / accomplishments / blockers / risks frame.",
       "Mapped the stakeholders the slow way. Who actually held decisions vs. influenced them. Which engineer's pings the client took seriously. What the sponsor needed in their report to their own boss. Adjusted the form of the weekly update to fit each audience instead of sending the same note to everyone.",
       "Surfaced scope-growth signals to the AE in the weekly leadership prep — flagged two adjacent problem areas the client mentioned in passing that turned into formal change-order conversations rather than free work.",
-      "Kept Certinia clean every week — timecards in, color status honest, burn vs. SOW tracked alongside the Sigma PMO dashboard so my numbers and leadership's numbers always told the same story.",
+      "Kept the financial tracking clean every week — timecards in, color status honest, burn vs. SOW tracked against the PMO's own reporting so my numbers and leadership's numbers always told the same story.",
     ],
     decisions: [
       "Told the client engineering counterpart, on a fixed-bid adjacent piece, that the six-week wait we'd had on their access grant was the reason a sub-deliverable was going to slip — not as a complaint, as a clean ownership statement. Uncomfortable in the moment; cleared a recurring access-delay pattern for the rest of the engagement.",
       "Held the line on a hallway request for an out-of-scope dashboard. Got the engineer's estimate, sized the change-order with the AE, either it went in officially or it didn't. Lost a small bit of client goodwill that week; kept the budget honest for the year.",
     ],
     result: "✓ MULTI-YEAR T&M · COLOR STATUS HONEST · CHANGE-ORDERS RAISED · ENGAGEMENT RENEWED",
-    stack: ["MWAA (Airflow on AWS)", "dbt", "Snowflake", "AWS", "Jira", "Certinia"],
+    stack: ["MWAA (Airflow on AWS)", "dbt", "Snowflake", "AWS", "Jira"],
     metrics: [
       { label: "MODEL", value: "T&M" },
       { label: "DURATION", value: "2+ YRS" },
@@ -145,17 +145,17 @@ export const caseStudies: CaseStudy[] = [
     role:
       "PM across the timezone spread and the holiday — kickoff, async-first cadence design, weekly status that worked in all three regions, RAID, financials, and closure.",
     actions: [
-      "Worked the kickoff sequence on day one — Certinia setup, PMO peer review confirmed, the Slack channel and Drive folder up, internal kickoff with AE/SE/delivery lead, external kickoff scheduled to work for everyone (the China site joined first thing in their day; the US lead late afternoon theirs).",
+      "Worked the kickoff sequence on day one — financials and tracking set up against the SOW, a second PM's review of the plan, the team workspace stood up, internal kickoff with the account team, and an external kickoff scheduled to actually work across three timezones (the China site joined first thing in their day; the US lead late afternoon in theirs).",
       "Redesigned the weekly cadence as async-first by week two when it became clear two of the three regions wouldn't reliably be in the same live meeting. Written status went out at the same point in each region's day; a shared decision register people could comment on replaced the synchronous decision moments; the live leadership meeting moved from weekly to fortnightly.",
       "Re-baselined the schedule around Lunar New Year three weeks in — front-loaded vendor development, back-loaded client validation, and walked the AE and the client sponsor through the new plan so nobody hit the holiday with open critical-path work.",
-      "Owned the RAID log, the color status in Certinia, the weekly burn vs. the Sigma PMO dashboard, and the closure checklist (final status, NPS, KT to the client's ongoing support team, access removed).",
+      "Owned the RAID log and the weekly color status, tracked burn against the PMO's own reporting every week, and closed the program the same way every program ends — final status, NPS, knowledge transfer to the client's ongoing support team, access removed.",
     ],
     decisions: [
       "Moved the client leadership meeting from weekly synchronous to fortnightly async — felt risky with a client used to live meetings, but stopped a 24-hour decision-lag pattern from compounding across the window.",
       "Treated Lunar New Year as a program design constraint to re-baseline around in week 3, not a thing to absorb in real time — required a transparent conversation with the client about reshaping the schedule, but kept us off any open critical-path work during the holiday.",
     ],
     result: "✓ DELIVERED ACROSS 3 TIMEZONES · LUNAR NEW YEAR ABSORBED · CLOSURE COMPLETE",
-    stack: ["Snowflake", "SAP ECC", "Oracle R12", "Jira", "Certinia"],
+    stack: ["Snowflake", "SAP ECC", "Oracle R12", "Jira"],
     metrics: [
       { label: "TIMEZONES", value: "3" },
       { label: "SPREAD", value: "10.5 HRS" },

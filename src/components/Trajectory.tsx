@@ -11,16 +11,16 @@ const roles = [
     current: true,
     color: "#1D4ED8",
     bullets: [
-      "Run delivery on 4–5 concurrent data and AI programs at a time — kickoff to closure, the three-phase phData lifecycle on each one: set it up cleanly, keep it healthy week to week, wrap it without surprises.",
-      "Day-to-day cadence on every program: standups, backlog grooming, sprint planning, review and retro, the 30-minute internal leadership prep, and the client-facing leadership meeting. Weekly status report to AE/SE/delivery lead and the client sponsor on the same day each week.",
-      "Own Certinia setup, weekly timecard check, the month-end ritual, and the project color status. The number the AE sees in the Sigma PMO dashboard matches the number in my status report. AE gets the early signal on burn, change orders, and PO delays — before they become problems.",
-      "Live RAID log on every engagement. On data and ML work the blockers that actually move the needle are access, source-system connectivity, and environment readiness — most of the real work is chasing those down and escalating early when something stalls.",
-      "Cross-functional teams of 15–30 across phData engineering, architecture, client engineers, and stakeholders. Engineers own the build; I keep the stories, acceptance criteria, and story points honest enough that the board can be trusted.",
-      "Support the AE on pre-sales scoping and change orders — sizing delivery, validating technical feasibility with the team, and surfacing scope-growth signals to sales in the weekly leadership prep.",
-      "Built and shipped the PMO AI agents on Glean, Claude, and n8n — billing reconciliation, sprint health, steerco prep, project health scans. Now PMO-wide; recovers ~8 hours a week across the delivery org. phData Innovation Award.",
-      "Onboard mid-program joiners to the team&apos;s rituals — standups, RAID, status cadence, Certinia time entry — without dragging the active sprint. Out-of-office coverage planned every time I take PTO.",
+      "Run delivery on 4–5 concurrent data and AI programs at a time for phData's Snowflake Elite Partner practice — picking each one up at kickoff, carrying it through a steady weekly cadence, and handing it off clean at closure, often switching between very different clients and timezones in the same afternoon.",
+      "The engineers and architects own the build; I own making sure nothing falls through the cracks between them — reading what's actually going on behind a green status, deciding what gets escalated and when, and having the harder conversation before it becomes the client's problem.",
+      "Run the weekly rhythm that keeps the account team and the client sponsor reading from the same page — status, financials, and a live risk register, but the real work is the judgment call about what gets said out loud and when.",
+      "Built and shipped 6 AI agents (Glean, Claude, n8n) that took the most repeatable parts of the PM job — billing reconciliation, sprint health, steerco prep, program health scans — off the desks of the whole PMO, not just my own. Recognised with phData's Innovation Award.",
+      "Lead cross-functional teams of 15–30 across engineering, architecture, and client-side stakeholders — keep standups, grooming, and sprint ceremonies honest enough that the board can be trusted without me micromanaging it.",
+      "Worked across a 10.5-hour timezone spread on one program — a US delivery lead to a China factory site — and redesigned the cadence around the gap instead of forcing live meetings that were never going to happen.",
+      "Spot scope creep and access blockers early enough to route them through the right conversation — a change order, an escalation, a heads-up to the AE — rather than absorb them quietly and hope they don't compound.",
+      "Onboard new team members mid-program without disrupting the active sprint, and build out-of-office coverage into every PTO so nothing on an active program depends on me being online.",
     ],
-    tags: ["Kickoff → Closure", "Certinia & Financials", "RAID & Escalations", "AI Agent Builder", "Scrum Master (PSM1)", "Agile Delivery", "Cross-Timezone Delivery", "Team Leadership (15–30)"],
+    tags: ["Multi-Program Delivery (4–5 Concurrent)", "Cross-Timezone Delivery", "Stakeholder & Executive Comms", "AI Agent Builder", "Risk & Escalation Management", "Agile Delivery (PSM1)", "Team Leadership (15–30)", "PMO Process Design"],
   },
   {
     period: "AUG 2020 — DEC 2022",
@@ -112,7 +112,7 @@ export default function Trajectory() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
           >
-            Five years across two companies — ITIL change at BT, then data and AI program delivery at phData. Four or five engagements at a time, the same kickoff → execution → closure rhythm on each.
+            Two roles, one throughline: the work that keeps a program on track is rarely the work that&apos;s written down. Process governance at BT, full program ownership at phData — different domains, same instinct for spotting what&apos;s about to go wrong before it does.
           </motion.p>
         </motion.div>
 

@@ -33,12 +33,13 @@ export default function ImpactSummary() {
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}
           >
             Before the case studies,{" "}
-            <span className="gradient-text font-normal">the shape of it</span>.
+            <span className="gradient-text font-normal">what actually moved</span>.
           </h2>
           <p className="text-[15px] text-[#475569] max-w-2xl leading-relaxed">
-            Five years across BT and phData. The shape is the same on every engagement:
-            pick it up at kickoff, run the cadence week after week, hand it off cleanly at
-            closure. The numbers below are the steady state, not the heroic moments.
+            Most of what makes a program succeed doesn&apos;t show up as a number — it&apos;s
+            a conversation that happened a week earlier than it had to, or a cadence
+            redesigned around a problem instead of fought. These four are the closest
+            thing to a paper trail for that kind of work.
           </p>
         </motion.div>
 

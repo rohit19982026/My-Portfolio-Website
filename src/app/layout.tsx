@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Rohit Kumar Singh — Technical Project Manager",
   description:
-    "Technical Project Manager with 5+ years delivering enterprise data & AI programs at phData. $3.5M+ portfolio, 99.98% budget execution. PSM1 · ITIL · Open to global remote roles.",
+    "Technical Project Manager delivering enterprise data & AI programs at phData — kickoff to closure across Snowflake, Databricks, and AI agent platforms. PSM1 · Open to global remote roles.",
   keywords: [
     "Technical Project Manager",
     "Project Manager",
@@ -38,7 +38,6 @@ export const metadata: Metadata = {
     "AI Automation",
     "phData",
     "PSM1",
-    "ITIL",
     "Remote",
     "Bengaluru",
   ],
@@ -46,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rohit Kumar Singh — Technical Project Manager",
     description:
-      "5+ years delivering enterprise data & AI programs. $3.5M+ portfolio · 99.98% budget execution · PSM1 · ITIL · Open to global remote.",
+      "Delivering enterprise data & AI programs at phData — kickoff to closure across Snowflake, Databricks, and AI agent platforms. PSM1 · Open to global remote.",
     type: "website",
     locale: "en_US",
   },
@@ -54,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Rohit Kumar Singh — Technical Project Manager",
     description:
-      "5+ years delivering enterprise data & AI programs. $3.5M+ portfolio · 99.98% budget execution · Open to global remote.",
+      "Delivering enterprise data & AI programs at phData — kickoff to closure across Snowflake, Databricks, and AI agent platforms. Open to global remote.",
   },
 };
 
