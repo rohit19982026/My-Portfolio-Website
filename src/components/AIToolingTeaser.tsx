@@ -57,7 +57,7 @@ const tools = [
 
 export default function AIToolingTeaser() {
   return (
-    <section id="tools" className="py-24 bg-[#FFFFFF] relative overflow-hidden">
+    <section id="tools" className="py-16 sm:py-24 bg-[#FFFFFF] relative overflow-hidden">
       <div
         className="absolute top-0 left-0 w-[600px] h-[400px] pointer-events-none"
         style={{
@@ -203,11 +203,11 @@ export default function AIToolingTeaser() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center gap-6"
+          className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6"
         >
           <a
             href="/ai-skills"
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:opacity-90"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:opacity-90 self-start"
             style={{
               background: "linear-gradient(135deg, #1D4ED8, #1E40AF)",
               boxShadow: "0 4px 20px rgba(30,64,175,0.3)",

@@ -52,7 +52,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-24 relative overflow-hidden"
+      className="py-16 sm:py-24 relative overflow-hidden"
       style={{ background: "#FFFFFF" }}
     >
       <div

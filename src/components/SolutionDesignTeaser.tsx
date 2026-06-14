@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function SolutionDesignTeaser() {
   return (
-    <section id="solution-design" className="py-24 relative overflow-hidden" style={{ background: "#F8FAFC" }}>
+    <section id="solution-design" className="py-16 sm:py-24 relative overflow-hidden" style={{ background: "#F8FAFC" }}>
       <div
         className="absolute pointer-events-none rounded-full"
         style={{ width: 600, height: 600, background: "#1D4ED8", opacity: 0.03, filter: "blur(100px)", top: -100, right: -100 }}

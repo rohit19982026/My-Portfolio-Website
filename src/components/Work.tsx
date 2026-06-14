@@ -183,7 +183,7 @@ function CaseStudyCard({
                 </div>
               </div>
 
-              <div className="flex items-center justify-between gap-3 mt-5 pt-5" style={{ borderTop: "1px solid #F1F5F9" }}>
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mt-5 pt-5" style={{ borderTop: "1px solid #F1F5F9" }}>
                 <div className="flex flex-wrap gap-1.5">
                   {study.stack.slice(0, 4).map((s) => (
                     <span
@@ -458,7 +458,7 @@ function CaseStudyCard({
 
 export default function Work() {
   return (
-    <section id="work" className="py-24 bg-white relative overflow-hidden">
+    <section id="work" className="py-16 sm:py-24 bg-white relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-40 -left-20 w-[700px] h-[700px] rounded-full" style={{ background: "radial-gradient(circle, rgba(29,78,216,0.03) 0%, transparent 65%)", filter: "blur(1px)" }} />
         <div className="absolute bottom-0 -right-20 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(8,145,178,0.02) 0%, transparent 65%)", filter: "blur(1px)" }} />
@@ -473,7 +473,7 @@ export default function Work() {
           className="mb-14"
         >
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#1D4ED8] mb-5">04 / WORK</p>
-          <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-5" style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}>
+          <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-5" style={{ fontSize: "clamp(32px, 5.5vw, 68px)", color: "#0F172A" }}>
             Four programs.{" "}
             <span className="font-normal" style={{ background: "linear-gradient(130deg, #93C5FD 0%, #60A5FA 50%, #1D4ED8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               What actually happened

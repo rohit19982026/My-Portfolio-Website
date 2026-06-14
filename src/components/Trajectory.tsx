@@ -81,7 +81,7 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="trajectory" className="py-24 bg-[#FFFFFF]">
+    <section id="trajectory" className="py-16 sm:py-24 bg-[#FFFFFF]">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Header */}

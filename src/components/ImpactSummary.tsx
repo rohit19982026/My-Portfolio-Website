@@ -14,7 +14,7 @@ export default function ImpactSummary() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="impact" className="py-24 section-alt">
+    <section id="impact" className="py-16 sm:py-24 section-alt">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Header */}
@@ -30,7 +30,7 @@ export default function ImpactSummary() {
           </span>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}
+            style={{ fontSize: "clamp(32px, 5.5vw, 68px)", color: "#0F172A" }}
           >
             Before the case studies,{" "}
             <span className="gradient-text font-normal">what actually moved</span>.

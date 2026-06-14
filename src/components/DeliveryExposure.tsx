@@ -40,7 +40,7 @@ export default function DeliveryExposure() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="exposure" className="py-24 section-alt">
+    <section id="exposure" className="py-16 sm:py-24 section-alt">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
