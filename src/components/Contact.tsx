@@ -2,26 +2,36 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Mail, Phone, Building2, Bot, Repeat, ArrowRight } from "lucide-react";
+import GlassSurface from "./GlassSurface";
+import GlassButton from "./GlassButton";
+
+const LinkedInIcon = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 const links = [
-  { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com" },
-  { label: "LINKEDIN", value: "rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
-  { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119" },
+  { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com", icon: <Mail size={15} strokeWidth={2} /> },
+  { label: "LINKEDIN", value: "rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/", icon: LinkedInIcon },
+  { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119", icon: <Phone size={15} strokeWidth={2} /> },
 ];
 
 const engagementTypes = [
   {
-    icon: "🏗️",
+    icon: Building2,
     title: "Platform Build or Migration",
     desc: "Snowflake, Databricks, AWS. PM end-to-end on the engagement — kickoff, sprint cadence, RAID, weekly status, financials, closure.",
   },
   {
-    icon: "🤖",
+    icon: Bot,
     title: "GenAI Program Delivery",
     desc: "LLM integrations and AI agent builds. Same three-phase cadence and the same governance the rest of delivery gets — no special treatment because it's AI.",
   },
   {
-    icon: "🔁",
+    icon: Repeat,
     title: "Mid-Stream Pickup",
     desc: "Inherited engagements where the previous PM is rolling off. Standard PM transition — scope, team, cadence, financials, RAID, access — then back to the regular weekly rhythm.",
   },
@@ -50,20 +60,7 @@ export default function Contact() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section
-      id="contact"
-      className="py-16 sm:py-24 relative overflow-hidden"
-      style={{ background: "#FFFFFF" }}
-    >
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, #E2E8F0 20%, #E2E8F0 80%, transparent)" }}
-      />
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{ width: 500, height: 500, background: "#1D4ED8", opacity: 0.03, filter: "blur(80px)", top: -100, left: "50%", transform: "translateX(-50%)" }}
-      />
-
+    <section id="contact" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div
@@ -73,17 +70,17 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#1D4ED8] block mb-5">08 / LET&apos;S TALK</span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent)" }}>08 / LET&apos;S TALK</span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
               initial={{ y: "105%" }}
               animate={inView ? { y: "0%" } : {}}
               transition={{ type: "spring", stiffness: 65, damping: 16, delay: 0.1 }}
-              className="font-display font-bold tracking-tight leading-[0.97] mb-5"
-              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}
+              className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
+              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "var(--color-text)" }}
             >
               Got a{" "}
-              <span className="font-normal" style={{ background: "linear-gradient(135deg, #60A5FA, #1D4ED8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>complex</span>
+              <span className="font-normal" style={{ background: "linear-gradient(135deg, var(--color-accent), var(--color-purple))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>complex</span>
               <br />data &amp; AI program?
             </motion.h2>
           </div>
@@ -91,7 +88,8 @@ export default function Contact() {
             initial={{ opacity: 0, filter: "blur(8px)" }}
             animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, delay: 0.28 }}
-            className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
+            className="text-[16px] max-w-xl leading-relaxed"
+            style={{ color: "var(--color-text-secondary)" }}
           >
             Platform build, GenAI delivery, or an engagement that needs picking
             up mid-stream — happy to talk through what the work actually is before
@@ -106,38 +104,42 @@ export default function Contact() {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
           >
-            <div className="space-y-5 mb-10">
+            <div className="space-y-3 mb-10">
               {links.map((link) => (
-                <motion.div key={link.label} variants={linkItem} className="flex items-center gap-4 group">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8] w-20 shrink-0">{link.label}</span>
-                  <motion.a
-                    href={link.href}
-                    whileHover={{ x: 4 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    className="text-[14px] font-semibold text-[#475569] hover:text-[#1D4ED8] transition-colors"
-                    target={link.label === "LINKEDIN" ? "_blank" : undefined}
-                    rel={link.label === "LINKEDIN" ? "noopener noreferrer" : undefined}
-                  >
-                    {link.value}
-                  </motion.a>
-                </motion.div>
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  variants={linkItem}
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="glass flex items-center gap-4 px-4 py-3 rounded-2xl group"
+                  target={link.label === "LINKEDIN" ? "_blank" : undefined}
+                  rel={link.label === "LINKEDIN" ? "noopener noreferrer" : undefined}
+                >
+                  <span className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(10,132,255,0.1)", color: "var(--color-accent)" }}>
+                    {link.icon}
+                  </span>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--color-faint)" }}>{link.label}</p>
+                    <p className="text-[14px] font-semibold" style={{ color: "var(--color-text)" }}>{link.value}</p>
+                  </div>
+                </motion.a>
               ))}
             </div>
 
-            <motion.div
-              variants={linkItem}
-              className="inline-flex items-center gap-3 px-5 py-3.5 rounded-xl"
-              style={{ border: "1px solid rgba(110,231,183,0.25)", background: "rgba(110,231,183,0.06)" }}
-            >
-              <motion.span
-                animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-2.5 h-2.5 rounded-full bg-[#6EE7B7] shrink-0"
-              />
-              <div>
-                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">OPEN FOR PROGRAMS</p>
-                <p className="font-mono text-[10px] text-[#94A3B8] mt-0.5">Kolkata, India · IST · Available globally</p>
-              </div>
+            <motion.div variants={linkItem}>
+              <GlassSurface accent="#30D158" radius="pill" className="inline-flex items-center gap-3 px-5 py-3.5">
+                <motion.span
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ background: "var(--color-green)" }}
+                />
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-green)" }}>OPEN FOR PROGRAMS</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: "var(--color-faint)" }}>Kolkata, India · IST · Available globally</p>
+                </div>
+              </GlassSurface>
             </motion.div>
           </motion.div>
 
@@ -148,33 +150,28 @@ export default function Contact() {
             animate={inView ? "visible" : "hidden"}
             className="space-y-4"
           >
-            {engagementTypes.map((e) => (
-              <motion.div
-                key={e.title}
-                variants={cardItem}
-                whileHover={{ x: 4, transition: { type: "spring", stiffness: 350, damping: 25 } }}
-                className="flex gap-4 p-5 rounded-2xl cursor-default"
-                style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}
-              >
-                <span className="text-2xl shrink-0">{e.icon}</span>
-                <div>
-                  <p className="font-semibold text-[#0F172A] text-[14px] mb-1">{e.title}</p>
-                  <p className="text-[13px] text-[#475569] leading-relaxed">{e.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+            {engagementTypes.map((e) => {
+              const Icon = e.icon;
+              return (
+                <motion.div key={e.title} variants={cardItem}>
+                  <GlassSurface interactive radius="lg" className="flex gap-4 p-5">
+                    <span className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(10,132,255,0.1)", color: "var(--color-accent)" }}>
+                      <Icon size={18} strokeWidth={2} />
+                    </span>
+                    <div>
+                      <p className="font-semibold text-[14px] mb-1" style={{ color: "var(--color-text)" }}>{e.title}</p>
+                      <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{e.desc}</p>
+                    </div>
+                  </GlassSurface>
+                </motion.div>
+              );
+            })}
 
-            <motion.a
-              variants={cardItem}
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 350, damping: 22 }}
-              href="mailto:singhrohit.25119@gmail.com"
-              className="w-full mt-2 py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-white flex items-center justify-center gap-2"
-              style={{ background: "#1D4ED8", boxShadow: "0 0 24px rgba(30,64,175,0.25)" }}
-            >
-              Email Me Directly →
-            </motion.a>
+            <motion.div variants={cardItem} className="pt-2">
+              <GlassButton href="mailto:singhrohit.25119@gmail.com" variant="primary" className="w-full justify-center" icon={<ArrowRight size={15} strokeWidth={2.5} />}>
+                Email Me Directly
+              </GlassButton>
+            </motion.div>
           </motion.div>
         </div>
       </div>

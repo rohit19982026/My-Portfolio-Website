@@ -1,16 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight, Database, FileText, Mail, Workflow } from "lucide-react";
+import GlassSurface from "./GlassSurface";
 
 export default function SolutionDesignTeaser() {
   return (
-    <section id="solution-design" className="py-16 sm:py-24 relative overflow-hidden" style={{ background: "#F8FAFC" }}>
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{ width: 600, height: 600, background: "#1D4ED8", opacity: 0.03, filter: "blur(100px)", top: -100, right: -100 }}
-      />
-
-      <div className="max-w-5xl mx-auto px-6 relative">
+    <section id="solution-design" className="py-16 sm:py-24 relative overflow-hidden section-alt">
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
 
         {/* Header */}
         <motion.div
@@ -20,17 +17,17 @@ export default function SolutionDesignTeaser() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12"
         >
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#1D4ED8] mb-5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent)" }}>
             07 / SOLUTION DESIGN
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "#0F172A" }}
+            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--color-text)" }}
           >
             How I{" "}
             <span
               style={{
-                background: "linear-gradient(130deg, #60A5FA 0%, #1D4ED8 100%)",
+                background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-purple) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -38,173 +35,163 @@ export default function SolutionDesignTeaser() {
               design from zero
             </span>.
           </h2>
-          <p className="text-[15px] text-[#94A3B8] max-w-lg leading-relaxed">
+          <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
             The PMO agent platform above is shipped and in production. This is the other half of how I work with AI — architecting a new agent from a blank page: trust model, rollout sequencing, and the judgment calls before a single line of automation runs.
           </p>
         </motion.div>
 
         {/* Feature card */}
-        <motion.a
-          href="/agents/deal-desk"
+        <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          whileHover={{ y: -4 }}
-          className="block rounded-3xl overflow-hidden group"
-          style={{
-            background: "linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)",
-            border: "1px solid rgba(29,78,216,0.15)",
-            boxShadow: "0 10px 40px rgba(15,23,42,0.05)",
-          }}
         >
-          {/* top accent */}
-          <div className="h-[3px]" style={{ background: "linear-gradient(90deg, #1D4ED8, #0891B2, #1D4ED8)" }} />
+          <motion.a href="/agents/deal-desk" whileHover={{ y: -4 }} className="block group">
+            <GlassSurface accent="#0A84FF" interactive specular radius="lg" className="overflow-hidden">
+              {/* top accent */}
+              <div className="h-[3px]" style={{ background: "linear-gradient(90deg, var(--color-accent), var(--color-teal), var(--color-accent))" }} />
 
-          <div className="grid md:grid-cols-5 gap-0">
-            {/* LEFT — content */}
-            <div className="md:col-span-3 p-8 md:p-10">
-              <div className="flex items-center gap-2 mb-5 flex-wrap">
-                <span
-                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest"
-                  style={{ color: "#1D4ED8", background: "rgba(29,78,216,0.08)", border: "1px solid rgba(29,78,216,0.2)" }}
-                >
-                  Glean Agent
-                </span>
-                <span
-                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest"
-                  style={{ color: "#94A3B8", background: "rgba(148,163,184,0.08)", border: "1px solid rgba(148,163,184,0.15)" }}
-                >
-                  Enterprise Sales
-                </span>
-                <span
-                  className="font-mono text-[9px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest"
-                  style={{ color: "#94A3B8", background: "rgba(148,163,184,0.08)", border: "1px solid rgba(148,163,184,0.15)" }}
-                >
-                  Solution Design
-                </span>
-              </div>
+              <div className="grid md:grid-cols-5 gap-0">
+                {/* LEFT — content */}
+                <div className="md:col-span-3 p-8 md:p-10">
+                  <div className="flex items-center gap-2 mb-5 flex-wrap">
+                    <span
+                      className="text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
+                      style={{ color: "var(--color-accent)", background: "rgba(10,132,255,0.1)", border: "1px solid rgba(10,132,255,0.25)" }}
+                    >
+                      Glean Agent
+                    </span>
+                    <span className="glass text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest" style={{ color: "var(--color-faint)" }}>
+                      Enterprise Sales
+                    </span>
+                    <span className="glass text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest" style={{ color: "var(--color-faint)" }}>
+                      Solution Design
+                    </span>
+                  </div>
 
-              <h3
-                className="font-heading font-bold leading-tight tracking-tight mb-4"
-                style={{ fontSize: "clamp(22px, 2.5vw, 32px)", color: "#0F172A" }}
-              >
-                Deal Desk Acceleration Agent
-              </h3>
-
-              <p className="text-[14px] text-[#475569] leading-relaxed mb-6 max-w-md">
-                A Glean-based agent that answers the three questions a sales rep needs before saying yes to a deal —
-                what we discounted on similar deals, which template applies, and who has to approve it — with sources, in minutes.
-              </p>
-
-              {/* mini-stats */}
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div>
-                  <p className="font-mono font-black tabular-nums text-[20px] leading-none" style={{ color: "#1D4ED8" }}>3</p>
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-[#94A3B8] mt-1.5">Data sources</p>
-                </div>
-                <div>
-                  <p className="font-mono font-black tabular-nums text-[20px] leading-none" style={{ color: "#1D4ED8" }}>8</p>
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-[#94A3B8] mt-1.5">Workflow steps</p>
-                </div>
-                <div>
-                  <p className="font-mono font-black tabular-nums text-[20px] leading-none" style={{ color: "#1D4ED8" }}>4</p>
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-[#94A3B8] mt-1.5">LLMs assigned</p>
-                </div>
-              </div>
-
-              <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "#1D4ED8" }}>
-                Read the design walkthrough
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </div>
-            </div>
-
-            {/* RIGHT — architecture preview */}
-            <div
-              className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
-              style={{ background: "linear-gradient(135deg, rgba(29,78,216,0.03), rgba(8,145,178,0.02))", borderLeft: "1px solid rgba(29,78,216,0.08)" }}
-            >
-              <div
-                className="absolute pointer-events-none rounded-full"
-                style={{ width: 260, height: 260, background: "#1D4ED8", opacity: 0.06, filter: "blur(70px)", top: "20%", right: "-80px" }}
-              />
-
-              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#1D4ED8] mb-4 relative z-10">
-                // ARCHITECTURE
-              </p>
-
-              <div className="space-y-2.5 relative z-10">
-                {[
-                  { label: "Salesforce", sub: "deals, customers", color: "#3B6EF0" },
-                  { label: "SharePoint", sub: "templates, legal", color: "#059669" },
-                  { label: "Email", sub: "approval threads", color: "#D97706" },
-                ].map((s) => (
-                  <div
-                    key={s.label}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg"
-                    style={{ background: "#FFFFFF", border: "1px solid #E2E8F0" }}
+                  <h3
+                    className="font-heading font-bold leading-tight tracking-tight mb-4"
+                    style={{ fontSize: "clamp(22px, 2.5vw, 32px)", color: "var(--color-text)" }}
                   >
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ background: s.color }} />
-                    <div className="min-w-0">
-                      <p className="text-[12px] font-semibold leading-none text-[#0F172A]">{s.label}</p>
-                      <p className="font-mono text-[9px] text-[#94A3B8] mt-1">{s.sub}</p>
+                    Deal Desk Acceleration Agent
+                  </h3>
+
+                  <p className="text-[14px] leading-relaxed mb-6 max-w-md" style={{ color: "var(--color-text-secondary)" }}>
+                    A Glean-based agent that answers the three questions a sales rep needs before saying yes to a deal —
+                    what we discounted on similar deals, which template applies, and who has to approve it — with sources, in minutes.
+                  </p>
+
+                  {/* mini-stats */}
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent)" }}>3</p>
+                      <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Data sources</p>
+                    </div>
+                    <div>
+                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent)" }}>8</p>
+                      <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Workflow steps</p>
+                    </div>
+                    <div>
+                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent)" }}>4</p>
+                      <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>LLMs assigned</p>
                     </div>
                   </div>
-                ))}
-              </div>
 
-              {/* connector with traveling data-flow pulse */}
-              <div className="relative h-7 flex items-center justify-center z-10">
-                <div className="absolute h-full w-px" style={{ background: "linear-gradient(to bottom, rgba(29,78,216,0.35), rgba(29,78,216,0.1))" }} />
-                <motion.span
-                  className="absolute w-1.5 h-1.5 rounded-full"
-                  style={{ background: "#60A5FA", boxShadow: "0 0 8px 2px rgba(96,165,250,0.6)" }}
-                  animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1] }}
-                />
-              </div>
-
-              <div
-                className="px-3 py-2.5 rounded-lg text-center relative z-10"
-                style={{ background: "linear-gradient(135deg, #1D4ED8, #1E40AF)", color: "#FFFFFF", boxShadow: "0 8px 24px rgba(29,78,216,0.3)" }}
-              >
-                <p className="text-[12px] font-bold leading-none">Glean Unified Index</p>
-                <p className="font-mono text-[9px] opacity-85 mt-1">permissions · citations</p>
-              </div>
-
-              {/* connector with traveling data-flow pulse */}
-              <div className="relative h-7 flex items-center justify-center z-10">
-                <div className="absolute h-full w-px" style={{ background: "linear-gradient(to bottom, rgba(29,78,216,0.35), rgba(29,78,216,0.1))" }} />
-                <motion.span
-                  className="absolute w-1.5 h-1.5 rounded-full"
-                  style={{ background: "#60A5FA", boxShadow: "0 0 8px 2px rgba(96,165,250,0.6)" }}
-                  animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1], delay: 0.8 }}
-                />
-              </div>
-
-              <div
-                className="px-3 py-2 rounded-lg flex items-center justify-between gap-3 relative z-10"
-                style={{ background: "#FFFFFF", border: "1.5px solid #1D4ED8" }}
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <span className="w-2 h-2 rounded-full bg-[#1D4ED8] shrink-0" />
-                  <div className="min-w-0">
-                    <p className="text-[12px] font-semibold leading-none text-[#0F172A]">Agent Workflow</p>
-                    <p className="font-mono text-[9px] text-[#94A3B8] mt-1">8 steps · Slack/chat</p>
+                  <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "var(--color-accent)" }}>
+                    Read the design walkthrough
+                    <ArrowRight size={14} strokeWidth={2.5} className="transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
-                <span
-                  className="inline-flex items-center gap-1.5 font-mono text-[8px] font-bold uppercase tracking-wider px-2 py-1 rounded-md shrink-0"
-                  style={{ color: "#D97706", background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.25)" }}
+
+                {/* RIGHT — architecture preview */}
+                <div
+                  className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
+                  style={{ background: "linear-gradient(135deg, rgba(10,132,255,0.05), rgba(100,210,255,0.04))", borderLeft: "1px solid var(--glass-border)" }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#D97706", animation: "pulse-dot 2s ease-in-out infinite" }} />
-                  In design
-                </span>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] mb-4 relative z-10" style={{ color: "var(--color-accent)" }}>
+                    Architecture
+                  </p>
+
+                  <div className="space-y-2.5 relative z-10">
+                    {[
+                      { label: "Salesforce", sub: "deals, customers", color: "#0A84FF", icon: Database },
+                      { label: "SharePoint", sub: "templates, legal", color: "#30D158", icon: FileText },
+                      { label: "Email", sub: "approval threads", color: "#FF9F0A", icon: Mail },
+                    ].map((s) => {
+                      const Icon = s.icon;
+                      return (
+                        <div
+                          key={s.label}
+                          className="glass flex items-center gap-3 px-3 py-2 rounded-2xl"
+                        >
+                          <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: `${s.color}1A`, color: s.color }}>
+                            <Icon size={13} strokeWidth={2} />
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-[12px] font-semibold leading-none" style={{ color: "var(--color-text)" }}>{s.label}</p>
+                            <p className="text-[9px] mt-1" style={{ color: "var(--color-faint)" }}>{s.sub}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* connector with traveling data-flow pulse */}
+                  <div className="relative h-7 flex items-center justify-center z-10">
+                    <div className="absolute h-full w-px" style={{ background: "linear-gradient(to bottom, rgba(10,132,255,0.35), rgba(10,132,255,0.08))" }} />
+                    <motion.span
+                      className="absolute w-1.5 h-1.5 rounded-full"
+                      style={{ background: "var(--color-accent)", boxShadow: "0 0 8px 2px rgba(10,132,255,0.5)" }}
+                      animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: 1.6, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1] }}
+                    />
+                  </div>
+
+                  <div
+                    className="px-3 py-2.5 rounded-2xl text-center relative z-10"
+                    style={{ background: "linear-gradient(135deg, var(--color-accent), var(--color-accent-dk))", color: "#FFFFFF", boxShadow: "0 8px 24px rgba(10,132,255,0.3)" }}
+                  >
+                    <p className="text-[12px] font-bold leading-none">Glean Unified Index</p>
+                    <p className="text-[9px] opacity-85 mt-1">permissions · citations</p>
+                  </div>
+
+                  {/* connector with traveling data-flow pulse */}
+                  <div className="relative h-7 flex items-center justify-center z-10">
+                    <div className="absolute h-full w-px" style={{ background: "linear-gradient(to bottom, rgba(10,132,255,0.35), rgba(10,132,255,0.08))" }} />
+                    <motion.span
+                      className="absolute w-1.5 h-1.5 rounded-full"
+                      style={{ background: "var(--color-accent)", boxShadow: "0 0 8px 2px rgba(10,132,255,0.5)" }}
+                      animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: 1.6, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1], delay: 0.8 }}
+                    />
+                  </div>
+
+                  <div
+                    className="glass px-3 py-2 rounded-2xl flex items-center justify-between gap-3 relative z-10"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(10,132,255,0.1)", color: "var(--color-accent)" }}>
+                        <Workflow size={13} strokeWidth={2} />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-[12px] font-semibold leading-none" style={{ color: "var(--color-text)" }}>Agent Workflow</p>
+                        <p className="text-[9px] mt-1" style={{ color: "var(--color-faint)" }}>8 steps · Slack/chat</p>
+                      </div>
+                    </div>
+                    <span
+                      className="inline-flex items-center gap-1.5 text-[8px] font-bold uppercase tracking-wider px-2 py-1 rounded-full shrink-0"
+                      style={{ color: "var(--color-orange)", background: "rgba(255,159,10,0.1)", border: "1px solid rgba(255,159,10,0.3)" }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-orange)", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                      In design
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </motion.a>
+            </GlassSurface>
+          </motion.a>
+        </motion.div>
 
         {/* disclosure note */}
         <motion.p
@@ -212,9 +199,10 @@ export default function SolutionDesignTeaser() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="font-mono text-[10px] text-[#94A3B8] mt-6 text-center"
+          className="text-[10px] mt-6 text-center"
+          style={{ color: "var(--color-faint)" }}
         >
-          // A design walkthrough, not a delivered program — the PMO agent platform (above) is where the delivered numbers live. This shows the architecture and rollout thinking behind a new agent, end to end.
+          A design walkthrough, not a delivered program — the PMO agent platform (above) is where the delivered numbers live. This shows the architecture and rollout thinking behind a new agent, end to end.
         </motion.p>
       </div>
     </section>
