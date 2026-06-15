@@ -121,14 +121,19 @@ export default function SolutionDesignTeaser() {
 
             {/* RIGHT — architecture preview */}
             <div
-              className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center"
+              className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
               style={{ background: "linear-gradient(135deg, rgba(29,78,216,0.03), rgba(8,145,178,0.02))", borderLeft: "1px solid rgba(29,78,216,0.08)" }}
             >
-              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#1D4ED8] mb-4">
+              <div
+                className="absolute pointer-events-none rounded-full"
+                style={{ width: 260, height: 260, background: "#1D4ED8", opacity: 0.06, filter: "blur(70px)", top: "20%", right: "-80px" }}
+              />
+
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#1D4ED8] mb-4 relative z-10">
                 // ARCHITECTURE
               </p>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2.5 relative z-10">
                 {[
                   { label: "Salesforce", sub: "deals, customers", color: "#3B6EF0" },
                   { label: "SharePoint", sub: "templates, legal", color: "#059669" },
@@ -148,27 +153,54 @@ export default function SolutionDesignTeaser() {
                 ))}
               </div>
 
-              <p className="text-center text-[#1D4ED8] my-2 text-lg leading-none">↓</p>
+              {/* connector with traveling data-flow pulse */}
+              <div className="relative h-7 flex items-center justify-center z-10">
+                <div className="absolute h-full w-px" style={{ background: "linear-gradient(to bottom, rgba(29,78,216,0.35), rgba(29,78,216,0.1))" }} />
+                <motion.span
+                  className="absolute w-1.5 h-1.5 rounded-full"
+                  style={{ background: "#60A5FA", boxShadow: "0 0 8px 2px rgba(96,165,250,0.6)" }}
+                  animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1] }}
+                />
+              </div>
 
               <div
-                className="px-3 py-2.5 rounded-lg text-center"
-                style={{ background: "linear-gradient(135deg, #1D4ED8, #1E40AF)", color: "#FFFFFF" }}
+                className="px-3 py-2.5 rounded-lg text-center relative z-10"
+                style={{ background: "linear-gradient(135deg, #1D4ED8, #1E40AF)", color: "#FFFFFF", boxShadow: "0 8px 24px rgba(29,78,216,0.3)" }}
               >
                 <p className="text-[12px] font-bold leading-none">Glean Unified Index</p>
                 <p className="font-mono text-[9px] opacity-85 mt-1">permissions · citations</p>
               </div>
 
-              <p className="text-center text-[#1D4ED8] my-2 text-lg leading-none">↓</p>
+              {/* connector with traveling data-flow pulse */}
+              <div className="relative h-7 flex items-center justify-center z-10">
+                <div className="absolute h-full w-px" style={{ background: "linear-gradient(to bottom, rgba(29,78,216,0.35), rgba(29,78,216,0.1))" }} />
+                <motion.span
+                  className="absolute w-1.5 h-1.5 rounded-full"
+                  style={{ background: "#60A5FA", boxShadow: "0 0 8px 2px rgba(96,165,250,0.6)" }}
+                  animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1], delay: 0.8 }}
+                />
+              </div>
 
               <div
-                className="px-3 py-2 rounded-lg flex items-center gap-3"
+                className="px-3 py-2 rounded-lg flex items-center justify-between gap-3 relative z-10"
                 style={{ background: "#FFFFFF", border: "1.5px solid #1D4ED8" }}
               >
-                <span className="w-2 h-2 rounded-full bg-[#1D4ED8] shrink-0" />
-                <div>
-                  <p className="text-[12px] font-semibold leading-none text-[#0F172A]">Agent Workflow</p>
-                  <p className="font-mono text-[9px] text-[#94A3B8] mt-1">8 steps · Slack/chat</p>
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="w-2 h-2 rounded-full bg-[#1D4ED8] shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-[12px] font-semibold leading-none text-[#0F172A]">Agent Workflow</p>
+                    <p className="font-mono text-[9px] text-[#94A3B8] mt-1">8 steps · Slack/chat</p>
+                  </div>
                 </div>
+                <span
+                  className="inline-flex items-center gap-1.5 font-mono text-[8px] font-bold uppercase tracking-wider px-2 py-1 rounded-md shrink-0"
+                  style={{ color: "#D97706", background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.25)" }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#D97706", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                  In design
+                </span>
               </div>
             </div>
           </div>
