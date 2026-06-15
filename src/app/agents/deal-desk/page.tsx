@@ -3,29 +3,29 @@
 import Link from "next/link";
 
 /* ─── colour tokens ─────────────────────────────────────────────── */
-const P  = "#1D4ED8";
-const P2 = "#1E40AF";
-const PA = "#60A5FA";
-const PB = "#EFF6FF";
-const SF = "#3B6EF0";
-const SP = "#129B86";
-const EM = "#E0743A";
-const OK = "#1F9D57";
-const BAD = "#D5503E";
+const P  = "#0A84FF";
+const P2 = "#0066CC";
+const PA = "#64D2FF";
+const PB = "#EAF4FF";
+const SF = "#5AC8FA";
+const SP = "#00C7BE";
+const EM = "#FF9F0A";
+const OK = "#30D158";
+const BAD = "#FF375F";
 const WARN = "#B07D12";
-const VIOLET = "#9B59D0";
-const T1 = "#0F172A";
-const T2 = "#475569";
-const T3 = "#94A3B8";
+const VIOLET = "#BF5AF2";
+const T1 = "#1D1D1F";
+const T2 = "#6E6E73";
+const T3 = "#AEAEB2";
 const BG = "#FBFBFD";
-const SURFACE = "#F5F6F9";
-const BORDER = "#E6E8EE";
-const BORDER_STRONG = "#D3D7E0";
+const SURFACE = "#F5F5F7";
+const BORDER = "#E5E5EA";
+const BORDER_STRONG = "#D1D1D6";
 
 const GLOBAL_CSS = `
-  .dd-body { font-family: 'Inter', system-ui, sans-serif; background: ${BG}; color: ${T1}; line-height: 1.6; -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
+  .dd-body { font-family: var(--font-body); background: ${BG}; color: ${T1}; line-height: 1.6; -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
   .dd-mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
-  .dd-disp { font-family: 'Plus Jakarta Sans', 'Space Grotesk', system-ui, sans-serif; }
+  .dd-disp { font-family: var(--font-heading); }
 
   .dd-card { background: linear-gradient(180deg, ${SURFACE}, color-mix(in srgb, ${SURFACE} 70%, ${BG})); border: 1px solid ${BORDER}; border-radius: 16px; transition: transform .2s, box-shadow .2s; }
   .dd-card:hover { transform: translateY(-3px); box-shadow: 0 4px 14px rgba(20,22,28,.06), 0 16px 40px rgba(20,22,28,.07); }

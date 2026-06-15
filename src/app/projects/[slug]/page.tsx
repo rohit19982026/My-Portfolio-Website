@@ -19,22 +19,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="font-heading text-2xl font-bold text-[#111827] mt-10 mb-4" {...props} />
+    <h2 className="font-heading text-2xl font-bold text-[#1D1D1F] mt-10 mb-4" {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="font-heading text-xl font-semibold text-[#111827] mt-7 mb-3" {...props} />
+    <h3 className="font-heading text-xl font-semibold text-[#1D1D1F] mt-7 mb-3" {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-[#374151] leading-relaxed mb-4" {...props} />
+    <p className="text-[#6E6E73] leading-relaxed mb-4" {...props} />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul className="space-y-2 mb-4 ml-4" {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="text-[#374151] leading-relaxed flex gap-2 before:content-['▸'] before:text-[#2563eb] before:shrink-0" {...props} />
+    <li className="text-[#6E6E73] leading-relaxed flex gap-2 before:content-['▸'] before:text-[#0A84FF] before:shrink-0" {...props} />
   ),
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="font-semibold text-[#111827]" {...props} />
+    <strong className="font-semibold text-[#1D1D1F]" {...props} />
   ),
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="overflow-x-auto my-6">
@@ -42,19 +42,19 @@ const mdxComponents = {
     </div>
   ),
   thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead className="bg-[#f0f9ff]" {...props} />
+    <thead className="bg-[#EAF4FF]" {...props} />
   ),
   th: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th className="px-4 py-3 text-left font-semibold text-[#111827] border border-[#bfdbfe]" {...props} />
+    <th className="px-4 py-3 text-left font-semibold text-[#1D1D1F] border border-[#CFE7FF]" {...props} />
   ),
   td: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td className="px-4 py-3 text-[#374151] border border-[#bfdbfe]" {...props} />
+    <td className="px-4 py-3 text-[#6E6E73] border border-[#CFE7FF]" {...props} />
   ),
   tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className="even:bg-[#f8faff]" {...props} />
+    <tr className="even:bg-[#F2F8FF]" {...props} />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLElement>) => (
-    <blockquote className="border-l-4 border-[#2563eb] pl-4 my-4 text-[#6b7280] italic" {...props} />
+    <blockquote className="border-l-4 border-[#0A84FF] pl-4 my-4 text-[#AEAEB2] italic" {...props} />
   ),
 };
 
@@ -71,7 +71,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {/* Back link */}
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#6b7280] hover:text-[#2563eb] transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#AEAEB2] hover:text-[#0A84FF] transition-colors mb-8"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -87,18 +87,18 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             >
               {project.industry}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#bfdbfe] text-[#6b7280]">
+            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#AEAEB2]">
               {project.duration}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#bfdbfe] text-[#6b7280]">
+            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#AEAEB2]">
               {project.role}
             </span>
           </div>
 
-          <h1 className="font-heading text-3xl md:text-5xl font-bold text-[#111827] mb-4 leading-tight">
+          <h1 className="font-heading text-3xl md:text-5xl font-bold text-[#1D1D1F] mb-4 leading-tight">
             {project.title}
           </h1>
-          <p className="text-lg text-[#374151] max-w-2xl leading-relaxed mb-8">
+          <p className="text-lg text-[#6E6E73] max-w-2xl leading-relaxed mb-8">
             {project.summary}
           </p>
 
@@ -121,35 +121,35 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {/* Sidebar */}
           <aside className="lg:col-span-1 order-2 lg:order-1">
             <div className="sticky top-24 space-y-6">
-              <div className="p-5 rounded-2xl border border-[#bfdbfe] bg-[#f0f9ff]">
-                <h4 className="font-heading font-semibold text-[#111827] text-sm mb-4">Project Details</h4>
+              <div className="p-5 rounded-2xl border border-[#CFE7FF] bg-[#EAF4FF]">
+                <h4 className="font-heading font-semibold text-[#1D1D1F] text-sm mb-4">Project Details</h4>
                 <dl className="space-y-3 text-sm">
                   <div>
-                    <dt className="text-[#6b7280] text-xs uppercase tracking-wide">Client</dt>
-                    <dd className="font-medium text-[#111827] mt-0.5">{project.client}</dd>
+                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Client</dt>
+                    <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.client}</dd>
                   </div>
                   <div>
-                    <dt className="text-[#6b7280] text-xs uppercase tracking-wide">Industry</dt>
-                    <dd className="font-medium text-[#111827] mt-0.5">{project.industry}</dd>
+                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Industry</dt>
+                    <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.industry}</dd>
                   </div>
                   <div>
-                    <dt className="text-[#6b7280] text-xs uppercase tracking-wide">Duration</dt>
-                    <dd className="font-medium text-[#111827] mt-0.5">{project.duration}</dd>
+                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Duration</dt>
+                    <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.duration}</dd>
                   </div>
                   <div>
-                    <dt className="text-[#6b7280] text-xs uppercase tracking-wide">Role</dt>
-                    <dd className="font-medium text-[#111827] mt-0.5">{project.role}</dd>
+                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Role</dt>
+                    <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.role}</dd>
                   </div>
                 </dl>
               </div>
 
-              <div className="p-5 rounded-2xl border border-[#bfdbfe] bg-[#f0f9ff]">
-                <h4 className="font-heading font-semibold text-[#111827] text-sm mb-3">Tech Stack</h4>
+              <div className="p-5 rounded-2xl border border-[#CFE7FF] bg-[#EAF4FF]">
+                <h4 className="font-heading font-semibold text-[#1D1D1F] text-sm mb-3">Tech Stack</h4>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2.5 py-1 rounded-md bg-white border border-[#bfdbfe] text-[#2563eb] font-medium"
+                      className="text-xs px-2.5 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#0A84FF] font-medium"
                     >
                       {tag}
                     </span>
@@ -173,10 +173,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         </div>
 
         {/* Bottom nav */}
-        <div className="mt-16 pt-8 border-t border-[#bfdbfe] flex items-center justify-between">
+        <div className="mt-16 pt-8 border-t border-[#CFE7FF] flex items-center justify-between">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-sm font-medium text-[#6b7280] hover:text-[#2563eb] transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[#AEAEB2] hover:text-[#0A84FF] transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
