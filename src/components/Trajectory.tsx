@@ -2,6 +2,8 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { GraduationCap, Trophy } from "lucide-react";
+import GlassSurface from "./GlassSurface";
 
 const roles = [
   {
@@ -9,8 +11,8 @@ const roles = [
     title: "Technical Project Manager — Data & AI",
     org: "phData · Snowflake Elite Partner · Kolkata",
     current: true,
-    color: "#1D4ED8",
-    accent: "#60A5FA",
+    color: "var(--color-accent)",
+    accent: "var(--color-teal)",
     bullets: [
       "Run delivery on 4–5 concurrent data and AI programs at a time for phData's Snowflake Elite Partner practice — picking each one up at kickoff, carrying it through a steady weekly cadence, and handing it off clean at closure, often switching between very different clients and timezones in the same afternoon.",
       "The engineers and architects own the build; I own making sure nothing falls through the cracks between them — reading what's actually going on behind a green status, deciding what gets escalated and when, and having the harder conversation before it becomes the client's problem.",
@@ -28,8 +30,8 @@ const roles = [
     title: "Change Management Specialist",
     org: "British Telecom (BT) · Kolkata",
     current: false,
-    color: "#059669",
-    accent: "#34D399",
+    color: "var(--color-green)",
+    accent: "var(--color-green)",
     bullets: [
       "CAB governance, risk assessment, rollback planning, and post-implementation validation across 50+ changes a year — ITIL-compliant throughout, against a 99.9% uptime SLA on telecom infrastructure.",
       "Change authorisation on firewall, SSL, inter-switch link, and ACL requests — corporate and public sector accounts. Standard, Normal, Expedited, and Emergency change categories all owned.",
@@ -83,10 +85,7 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="trajectory" className="py-16 sm:py-24 relative overflow-hidden" style={{ background: "var(--color-ink)" }}>
-      {/* Instrument-panel grid texture */}
-      <div className="absolute inset-0 console-grid pointer-events-none" />
-
+    <section id="trajectory" className="py-16 sm:py-24 relative overflow-hidden section-alt">
       <div className="max-w-6xl mx-auto px-6 relative z-10">
 
         {/* Header */}
@@ -97,7 +96,7 @@ export default function Trajectory() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "#60A5FA" }}>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent)" }}>
             02 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
@@ -105,14 +104,14 @@ export default function Trajectory() {
               initial={{ y: "105%" }}
               animate={inView ? { y: "0%" } : {}}
               transition={{ type: "spring", stiffness: 65, damping: 16, delay: 0.1 }}
-              className="font-display font-bold tracking-tight leading-[0.97] mb-5"
-              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "var(--color-ink-text)" }}
+              className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
+              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "var(--color-text)" }}
             >
               Where I&apos;ve{" "}
               <span
                 className="font-normal"
                 style={{
-                  background: "linear-gradient(135deg, #93C5FD 0%, #60A5FA 50%, #34D399 100%)",
+                  background: "linear-gradient(135deg, var(--color-accent) 0%, var(--color-teal) 50%, var(--color-green) 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -128,7 +127,7 @@ export default function Trajectory() {
             animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-[16px] max-w-xl leading-relaxed"
-            style={{ color: "var(--color-ink-text-2)" }}
+            style={{ color: "var(--color-text-secondary)" }}
           >
             Two roles, one throughline: the work that keeps a program on track is rarely the work that&apos;s written down. Process governance at BT, full program ownership at phData — different domains, same instinct for spotting what&apos;s about to go wrong before it does.
           </motion.p>
@@ -141,7 +140,7 @@ export default function Trajectory() {
               <motion.div
                 className="absolute left-0 top-2 bottom-2 w-px"
                 style={{
-                  background: "linear-gradient(180deg, #60A5FA, rgba(96,165,250,0.1))",
+                  background: "linear-gradient(180deg, var(--color-accent), rgba(10,132,255,0.08))",
                   transformOrigin: "top",
                   scaleY: 0,
                 }}
@@ -162,25 +161,25 @@ export default function Trajectory() {
                       animate={inView ? { scale: 1 } : { scale: 0 }}
                       transition={{ type: "spring", stiffness: 200, damping: 18, delay: 0.55 + i * 0.2 }}
                       className="absolute left-0 top-1.5 w-3 h-3 rounded-full -translate-x-1/2"
-                      style={{ backgroundColor: role.accent, border: "2px solid var(--color-ink)" }}
+                      style={{ backgroundColor: role.accent, border: "2px solid var(--color-bg-secondary)" }}
                     />
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--color-ink-text-2)" }}>{role.period}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--color-text-secondary)" }}>{role.period}</p>
                       {role.current && (
                         <span
-                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wide"
-                          style={{ background: "rgba(52,211,153,0.1)", color: "#34D399", border: "1px solid rgba(52,211,153,0.3)" }}
+                          className="glass inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide"
+                          style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green)" }}
                         >
-                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#34D399", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
                           CURRENT
                         </span>
                       )}
                     </div>
-                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight mb-1" style={{ color: "var(--color-ink-text)" }}>{role.title}</h3>
-                    <p className="font-mono text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.accent }}>{role.org}</p>
+                    <h3 className="font-heading text-[22px] font-bold leading-tight tracking-tight mb-1" style={{ color: "var(--color-text)" }}>{role.title}</h3>
+                    <p className="text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.accent }}>{role.org}</p>
                     <ul className="space-y-3 mb-5">
                       {role.bullets.map((b, bi) => (
-                        <li key={bi} className="flex gap-3 text-[13.5px] leading-relaxed" style={{ color: "var(--color-ink-text-2)" }}>
+                        <li key={bi} className="flex gap-3 text-[13.5px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
                           <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.accent }} />
                           {b}
                         </li>
@@ -199,19 +198,19 @@ export default function Trajectory() {
                             variants={tagItemVariants}
                             whileHover={{ scale: 1.06, y: -2, boxShadow: `0 8px 20px ${role.color}45` }}
                             transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                            className="font-mono text-[11.5px] px-3.5 py-2 rounded-md font-bold uppercase tracking-[0.04em] cursor-default"
+                            className="text-[11.5px] px-3.5 py-2 rounded-full font-bold uppercase tracking-[0.04em] cursor-default"
                             style={{ backgroundColor: role.color, color: "#FFFFFF" }}
                           >
-                            // {tag}
+                            {tag}
                           </motion.span>
                         ) : (
                           <motion.span
                             key={tag}
                             variants={tagItemVariants}
-                            whileHover={{ scale: 1.06, y: -2, backgroundColor: `${role.accent}1F`, borderColor: role.accent, boxShadow: `0 6px 16px ${role.accent}26` }}
+                            whileHover={{ scale: 1.06, y: -2, boxShadow: `0 6px 16px ${role.accent}26` }}
                             transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                            className="inline-flex items-center gap-2 font-mono text-[11.5px] px-3.5 py-2 rounded-md font-semibold cursor-default"
-                            style={{ border: `1px solid ${role.accent}35`, backgroundColor: `${role.accent}0D`, color: role.accent }}
+                            className="glass inline-flex items-center gap-2 text-[11.5px] px-3.5 py-2 rounded-full font-semibold cursor-default"
+                            style={{ color: role.accent }}
                           >
                             <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.accent }} />
                             {tag}
@@ -232,74 +231,63 @@ export default function Trajectory() {
             animate={inView ? "visible" : "hidden"}
             className="space-y-5"
           >
-            <motion.div
-              variants={sidebarItem}
-              whileHover={{ y: -3, borderColor: "rgba(96,165,250,0.35)" }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="p-5 rounded-2xl flex items-start gap-3"
-              style={{ border: "1px solid var(--color-ink-border)", background: "var(--color-ink-2)" }}
-            >
-              <span
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-base shrink-0"
-                style={{ background: "rgba(96,165,250,0.1)", border: "1px solid rgba(96,165,250,0.25)" }}
-              >
-                🎓
-              </span>
-              <div className="min-w-0">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5" style={{ color: "#60A5FA" }}>// EDUCATION</p>
-                <p className="font-display font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-ink-text)" }}>{education.degree}</p>
-                <p className="font-mono text-[11px] font-medium" style={{ color: "var(--color-ink-text-2)" }}>{education.institution}</p>
-                <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--color-ink-text-2)" }}>{education.year} · {education.grade}</p>
-              </div>
+            <motion.div variants={sidebarItem}>
+              <GlassSurface interactive radius="lg" className="p-5 flex items-start gap-3">
+                <span
+                  className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                  style={{ background: "rgba(10,132,255,0.1)" }}
+                >
+                  <GraduationCap size={18} strokeWidth={2} style={{ color: "var(--color-accent)" }} />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5" style={{ color: "var(--color-accent)" }}>Education</p>
+                  <p className="font-heading font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-text)" }}>{education.degree}</p>
+                  <p className="text-[11px] font-medium" style={{ color: "var(--color-text-secondary)" }}>{education.institution}</p>
+                  <p className="text-[11px] mt-0.5" style={{ color: "var(--color-text-secondary)" }}>{education.year} · {education.grade}</p>
+                </div>
+              </GlassSurface>
             </motion.div>
 
-            <motion.div
-              variants={sidebarItem}
-              className="p-5 rounded-2xl"
-              style={{ border: "1px solid var(--color-ink-border)", background: "var(--color-ink-2)" }}
-            >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "#22D3EE" }}>// CERTIFICATIONS</p>
-              <div className="space-y-2">
-                {certifications.map((c) => {
-                  const accent = c.type === "cert" ? "#1D4ED8" : "#22D3EE";
-                  return (
-                    <motion.div
-                      key={c.name}
-                      whileHover={{ x: 3, borderColor: `${accent}55`, backgroundColor: `${accent}0D` }}
-                      transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                      className="flex items-start gap-2.5 p-2.5 rounded-lg"
-                      style={{ border: "1px solid var(--color-ink-border)" }}
-                    >
-                      <span
-                        className="mt-0.5 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0 uppercase tracking-wider"
-                        style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: `${accent}1F`, color: accent, border: `1px solid ${accent}40` }}
+            <motion.div variants={sidebarItem}>
+              <GlassSurface radius="lg" className="p-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "var(--color-teal)" }}>Certifications</p>
+                <div className="space-y-2">
+                  {certifications.map((c) => {
+                    const accent = c.type === "cert" ? "var(--color-accent)" : "var(--color-teal)";
+                    return (
+                      <motion.div
+                        key={c.name}
+                        whileHover={{ x: 3 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                        className="flex items-start gap-2.5 p-2.5 rounded-2xl"
+                        style={{ border: "1px solid var(--glass-border)" }}
                       >
-                        {c.type === "cert" ? "CERT" : "COURSE"}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="font-heading text-[12px] font-semibold leading-tight" style={{ color: "var(--color-ink-text)" }}>{c.name}</p>
-                        <p className="font-mono text-[10px]" style={{ color: "var(--color-ink-text-2)" }}>{c.issuer}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                        <span
+                          className="mt-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full shrink-0 uppercase tracking-wider"
+                          style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: `${accent}1F`, color: accent }}
+                        >
+                          {c.type === "cert" ? "CERT" : "COURSE"}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="font-heading text-[12px] font-semibold leading-tight" style={{ color: "var(--color-text)" }}>{c.name}</p>
+                          <p className="text-[10px]" style={{ color: "var(--color-text-secondary)" }}>{c.issuer}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </GlassSurface>
             </motion.div>
 
-            <motion.div
-              variants={sidebarItem}
-              whileHover={{ y: -3, borderColor: "rgba(251,191,36,0.5)" }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="p-5 rounded-2xl relative overflow-hidden"
-              style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.06)" }}
-            >
-              <div
-                className="absolute pointer-events-none rounded-full"
-                style={{ width: 140, height: 140, background: "#FBBF24", opacity: 0.1, filter: "blur(50px)", top: -50, right: -50 }}
-              />
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2 relative z-10" style={{ color: "#FBBF24" }}>// AWARD</p>
-              <p className="font-display font-bold text-[14px] mb-2 relative z-10" style={{ color: "var(--color-ink-text)" }}>🏆 {award.title}</p>
-              <p className="text-[12.5px] leading-relaxed relative z-10" style={{ color: "var(--color-ink-text-2)" }}>{award.desc}</p>
+            <motion.div variants={sidebarItem}>
+              <GlassSurface accent="var(--color-orange)" interactive specular radius="lg" className="p-5">
+                <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--color-orange)" }}>
+                  <Trophy size={13} strokeWidth={2.5} />
+                  Award
+                </p>
+                <p className="font-heading font-bold text-[14px] mb-2" style={{ color: "var(--color-text)" }}>{award.title}</p>
+                <p className="text-[12.5px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{award.desc}</p>
+              </GlassSurface>
             </motion.div>
           </motion.div>
         </div>
