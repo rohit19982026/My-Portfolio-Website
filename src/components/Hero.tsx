@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useMagnetic } from "@/hooks/useMagnetic";
+import AgentConsole from "./AgentConsole";
 
 const socials = [
   {
@@ -52,14 +53,20 @@ export default function Hero() {
   const magneticCV = useMagnetic(0.25);
 
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden bg-white">
+    <section
+      className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden"
+      style={{ background: "var(--color-ink)" }}
+    >
+      {/* Instrument-panel grid texture */}
+      <div className="absolute inset-0 console-grid pointer-events-none" />
+
       <div
         className="absolute pointer-events-none"
         style={{
           width: 700,
           height: 700,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(29,78,216,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(29,78,216,0.12) 0%, transparent 70%)",
           top: "50%",
           right: "-160px",
           transform: "translateY(-50%)",
@@ -74,16 +81,36 @@ export default function Hero() {
           width: 400,
           height: 400,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(8,145,178,0.04) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(8,145,178,0.08) 0%, transparent 70%)",
           top: "20%",
           left: "-80px",
         }}
       />
 
-      <div className="flex-1 flex items-center">
+      <div className="flex-1 flex items-center relative z-10">
         <div className="max-w-6xl mx-auto px-6 w-full">
-          <div>
+          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+            {/* Left column — identity */}
             <div>
+              {/* Status pill */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md mb-6 font-mono text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{
+                  background: "rgba(52,211,153,0.06)",
+                  border: "1px solid var(--color-ink-border)",
+                  color: "#34D399",
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ background: "#34D399", animation: "pulse-dot 2s ease-in-out infinite" }}
+                />
+                Open for new programs
+              </motion.div>
+
               {/* Name */}
               <div style={{ overflow: "hidden", marginBottom: "16px" }}>
                 <motion.h2
@@ -91,7 +118,7 @@ export default function Hero() {
                   animate={{ y: "0%" }}
                   transition={{ ...SPRING, delay: 0.12 }}
                   className="text-[22px] font-semibold"
-                  style={{ color: "#0F172A" }}
+                  style={{ color: "var(--color-ink-text)" }}
                 >
                   Rohit Kumar Singh
                 </motion.h2>
@@ -106,7 +133,7 @@ export default function Hero() {
                   className="font-display font-bold leading-[1.0] tracking-[-0.02em]"
                   style={{
                     fontSize: "clamp(38px, 5.5vw, 68px)",
-                    background: "linear-gradient(135deg, #60A5FA 0%, #1D4ED8 60%, #0891B2 100%)",
+                    background: "linear-gradient(135deg, #93C5FD 0%, #60A5FA 40%, #34D399 100%)",
                     backgroundSize: "200% auto",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -126,7 +153,7 @@ export default function Hero() {
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[15px] leading-[1.7] max-w-[520px] mb-7"
-                style={{ color: "#475569" }}
+                style={{ color: "var(--color-ink-text-2)" }}
               >
                 The best week on a program is the one nobody remembers — nothing
                 escalated, nothing surprised the client, the platform shipped on
@@ -134,9 +161,9 @@ export default function Hero() {
                 about to go wrong before it does, and having the conversation that
                 fixes it while it&apos;s still small. I run four or five data and AI
                 programs like that at a time, working alongside the engineers and
-                architects who build the platforms themselves. The agents on this
-                site are ones I built to buy myself more time for that part of the
-                job.
+                architects who build the platforms themselves. The console on the
+                right is the kind of thing I build to buy myself more time for that
+                part of the job — live, right now, in your browser.
               </motion.p>
 
               {/* Social icons */}
@@ -157,8 +184,8 @@ export default function Hero() {
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                     className="w-10 h-10 rounded-full flex items-center justify-center"
                     style={{
-                      background: "rgba(29,78,216,0.08)",
-                      border: "1px solid rgba(29,78,216,0.2)",
+                      background: "rgba(96,165,250,0.08)",
+                      border: "1px solid rgba(96,165,250,0.2)",
                       color: "#60A5FA",
                     }}
                   >
@@ -174,48 +201,78 @@ export default function Hero() {
                 variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.65 } } }}
                 className="flex flex-wrap gap-3"
               >
-                <motion.a
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.85, y: 10 },
-                    visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
-                  }}
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  href="#work"
-                  className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
-                  style={{
-                    background: "linear-gradient(135deg, #1D4ED8, #1E40AF)",
-                    color: "#FFFFFF",
-                    boxShadow: "0 4px 20px rgba(30,64,175,0.35)",
-                  }}
+                <motion.div
+                  ref={magneticWork.ref as React.RefObject<HTMLDivElement>}
+                  onMouseMove={magneticWork.onMouseMove}
+                  onMouseLeave={magneticWork.onMouseLeave}
+                  style={magneticWork.style}
                 >
-                  See My Work
-                </motion.a>
-                <motion.a
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.85, y: 10 },
-                    visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
-                  }}
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
-                  style={{
-                    background: "transparent",
-                    border: "1px solid rgba(29,78,216,0.35)",
-                    color: "#60A5FA",
-                  }}
+                  <motion.a
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.85, y: 10 },
+                      visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
+                    }}
+                    whileHover={{ scale: 1.04, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    href="#work"
+                    className="block px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
+                    style={{
+                      background: "linear-gradient(135deg, #1D4ED8, #0891B2)",
+                      color: "#FFFFFF",
+                      boxShadow: "0 4px 24px rgba(8,145,178,0.35)",
+                    }}
+                  >
+                    See My Work
+                  </motion.a>
+                </motion.div>
+                <motion.div
+                  ref={magneticCV.ref as React.RefObject<HTMLDivElement>}
+                  onMouseMove={magneticCV.onMouseMove}
+                  onMouseLeave={magneticCV.onMouseLeave}
+                  style={magneticCV.style}
                 >
-                  Download CV
-                </motion.a>
+                  <motion.a
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.85, y: 10 },
+                      visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
+                    }}
+                    whileHover={{ scale: 1.04, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-7 py-3.5 rounded-lg text-[13px] font-semibold tracking-wide"
+                    style={{
+                      background: "transparent",
+                      border: "1px solid var(--color-ink-border)",
+                      color: "var(--color-ink-text)",
+                    }}
+                  >
+                    Download CV
+                  </motion.a>
+                </motion.div>
               </motion.div>
             </div>
 
+            {/* Right column — live agent console */}
+            <div>
+              <div
+                className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] mb-3"
+                style={{ color: "var(--color-ink-text-2)" }}
+              >
+                // live — pmo agent fleet
+              </div>
+              <AgentConsole />
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Fade into the light section below */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent, #FFFFFF)" }}
+      />
     </section>
   );
 }

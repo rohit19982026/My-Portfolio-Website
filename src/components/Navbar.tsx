@@ -48,7 +48,10 @@ export default function Navbar() {
               }}
             />
           </div>
-          <span className="font-mono text-sm font-semibold tracking-wide" style={{ color: "#0F172A" }}>
+          <span
+            className="font-mono text-sm font-semibold tracking-wide"
+            style={{ color: scrolled ? "#0F172A" : "var(--color-ink-text)" }}
+          >
             rohit.singh
           </span>
         </a>
@@ -59,8 +62,12 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#0F172A] hover:bg-[rgba(29,78,216,0.05)]"
-              style={{ color: "#475569" }}
+              className={
+                scrolled
+                  ? "px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#0F172A] hover:bg-[rgba(29,78,216,0.05)]"
+                  : "px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[var(--color-ink-text)] hover:bg-[rgba(96,165,250,0.08)]"
+              }
+              style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
             >
               {link.label}
             </a>
@@ -79,7 +86,8 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2 text-[#475569] hover:text-[#1D4ED8] transition-colors"
+          className="md:hidden p-2 hover:text-[#1D4ED8] transition-colors"
+          style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
