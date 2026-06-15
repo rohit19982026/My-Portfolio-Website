@@ -267,12 +267,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Fade into the light section below */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, #FFFFFF)" }}
-      />
     </section>
   );
 }

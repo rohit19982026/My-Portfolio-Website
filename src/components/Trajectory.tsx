@@ -10,6 +10,7 @@ const roles = [
     org: "phData · Snowflake Elite Partner · Kolkata",
     current: true,
     color: "#1D4ED8",
+    accent: "#60A5FA",
     bullets: [
       "Run delivery on 4–5 concurrent data and AI programs at a time for phData's Snowflake Elite Partner practice — picking each one up at kickoff, carrying it through a steady weekly cadence, and handing it off clean at closure, often switching between very different clients and timezones in the same afternoon.",
       "The engineers and architects own the build; I own making sure nothing falls through the cracks between them — reading what's actually going on behind a green status, deciding what gets escalated and when, and having the harder conversation before it becomes the client's problem.",
@@ -28,6 +29,7 @@ const roles = [
     org: "British Telecom (BT) · Kolkata",
     current: false,
     color: "#059669",
+    accent: "#34D399",
     bullets: [
       "CAB governance, risk assessment, rollback planning, and post-implementation validation across 50+ changes a year — ITIL-compliant throughout, against a 99.9% uptime SLA on telecom infrastructure.",
       "Change authorisation on firewall, SSL, inter-switch link, and ACL requests — corporate and public sector accounts. Standard, Normal, Expedited, and Emergency change categories all owned.",
@@ -81,8 +83,11 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="trajectory" className="py-16 sm:py-24 bg-[#FFFFFF]">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="trajectory" className="py-16 sm:py-24 relative overflow-hidden" style={{ background: "var(--color-ink)" }}>
+      {/* Instrument-panel grid texture */}
+      <div className="absolute inset-0 console-grid pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
 
         {/* Header */}
         <motion.div
@@ -92,7 +97,7 @@ export default function Trajectory() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#1D4ED8] block mb-5">
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "#60A5FA" }}>
             02 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
@@ -101,16 +106,29 @@ export default function Trajectory() {
               animate={inView ? { y: "0%" } : {}}
               transition={{ type: "spring", stiffness: 65, damping: 16, delay: 0.1 }}
               className="font-display font-bold tracking-tight leading-[0.97] mb-5"
-              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "#0F172A" }}
+              style={{ fontSize: "clamp(40px, 5.5vw, 68px)", color: "var(--color-ink-text)" }}
             >
-              Where I&apos;ve{" "}<span className="gradient-text font-normal">worked</span>.
+              Where I&apos;ve{" "}
+              <span
+                className="font-normal"
+                style={{
+                  background: "linear-gradient(135deg, #93C5FD 0%, #60A5FA 50%, #34D399 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                worked
+              </span>
+              .
             </motion.h2>
           </div>
           <motion.p
             initial={{ opacity: 0, filter: "blur(8px)" }}
             animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="text-[16px] text-[#475569] max-w-xl leading-relaxed"
+            className="text-[16px] max-w-xl leading-relaxed"
+            style={{ color: "var(--color-ink-text-2)" }}
           >
             Two roles, one throughline: the work that keeps a program on track is rarely the work that&apos;s written down. Process governance at BT, full program ownership at phData — different domains, same instinct for spotting what&apos;s about to go wrong before it does.
           </motion.p>
@@ -123,7 +141,7 @@ export default function Trajectory() {
               <motion.div
                 className="absolute left-0 top-2 bottom-2 w-px"
                 style={{
-                  background: "linear-gradient(180deg, #1D4ED8, rgba(29,78,216,0.1))",
+                  background: "linear-gradient(180deg, #60A5FA, rgba(96,165,250,0.1))",
                   transformOrigin: "top",
                   scaleY: 0,
                 }}
@@ -143,21 +161,27 @@ export default function Trajectory() {
                       initial={{ scale: 0 }}
                       animate={inView ? { scale: 1 } : { scale: 0 }}
                       transition={{ type: "spring", stiffness: 200, damping: 18, delay: 0.55 + i * 0.2 }}
-                      className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-[#FFFFFF] -translate-x-1/2"
-                      style={{ backgroundColor: role.color }}
+                      className="absolute left-0 top-1.5 w-3 h-3 rounded-full -translate-x-1/2"
+                      style={{ backgroundColor: role.accent, border: "2px solid var(--color-ink)" }}
                     />
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#94A3B8]">{role.period}</p>
+                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--color-ink-text-2)" }}>{role.period}</p>
                       {role.current && (
-                        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wide" style={{ background: "rgba(110,231,183,0.1)", color: "#6EE7B7", border: "1px solid rgba(110,231,183,0.25)" }}>CURRENT</span>
+                        <span
+                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wide"
+                          style={{ background: "rgba(52,211,153,0.1)", color: "#34D399", border: "1px solid rgba(52,211,153,0.3)" }}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#34D399", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                          CURRENT
+                        </span>
                       )}
                     </div>
-                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-[#0F172A] mb-1">{role.title}</h3>
-                    <p className="font-mono text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.color }}>{role.org}</p>
+                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight mb-1" style={{ color: "var(--color-ink-text)" }}>{role.title}</h3>
+                    <p className="font-mono text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.accent }}>{role.org}</p>
                     <ul className="space-y-3 mb-5">
                       {role.bullets.map((b, bi) => (
-                        <li key={bi} className="flex gap-3 text-[13.5px] text-[#475569] leading-relaxed">
-                          <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.color }} />
+                        <li key={bi} className="flex gap-3 text-[13.5px] leading-relaxed" style={{ color: "var(--color-ink-text-2)" }}>
+                          <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.accent }} />
                           {b}
                         </li>
                       ))}
@@ -184,12 +208,12 @@ export default function Trajectory() {
                           <motion.span
                             key={tag}
                             variants={tagItemVariants}
-                            whileHover={{ scale: 1.06, y: -2, backgroundColor: `${role.color}1F`, borderColor: role.color, boxShadow: `0 6px 16px ${role.color}26` }}
+                            whileHover={{ scale: 1.06, y: -2, backgroundColor: `${role.accent}1F`, borderColor: role.accent, boxShadow: `0 6px 16px ${role.accent}26` }}
                             transition={{ type: "spring", stiffness: 400, damping: 18 }}
                             className="inline-flex items-center gap-2 font-mono text-[11.5px] px-3.5 py-2 rounded-md font-semibold cursor-default"
-                            style={{ border: `1px solid ${role.color}35`, backgroundColor: `${role.color}0D`, color: role.color }}
+                            style={{ border: `1px solid ${role.accent}35`, backgroundColor: `${role.accent}0D`, color: role.accent }}
                           >
-                            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.color }} />
+                            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.accent }} />
                             {tag}
                           </motion.span>
                         )
@@ -211,27 +235,32 @@ export default function Trajectory() {
             <motion.div
               variants={sidebarItem}
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid #E2E8F0", background: "#F8FAFC" }}
+              style={{ border: "1px solid var(--color-ink-border)", background: "var(--color-ink-2)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#1D4ED8] mb-3">// EDUCATION</p>
-              <p className="font-display font-bold text-[#0F172A] text-[15px] leading-snug mb-1">{education.degree}</p>
-              <p className="font-mono text-[11px] text-[#475569] font-medium">{education.institution}</p>
-              <p className="font-mono text-[11px] text-[#94A3B8] mt-0.5">{education.year} · {education.grade}</p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "#60A5FA" }}>// EDUCATION</p>
+              <p className="font-display font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-ink-text)" }}>{education.degree}</p>
+              <p className="font-mono text-[11px] font-medium" style={{ color: "var(--color-ink-text-2)" }}>{education.institution}</p>
+              <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--color-ink-text-2)" }}>{education.year} · {education.grade}</p>
             </motion.div>
 
             <motion.div
               variants={sidebarItem}
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid #E2E8F0", background: "#F8FAFC" }}
+              style={{ border: "1px solid var(--color-ink-border)", background: "var(--color-ink-2)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#0891B2] mb-3">// CERTIFICATIONS</p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "#22D3EE" }}>// CERTIFICATIONS</p>
               <ul className="space-y-2.5">
                 {certifications.map((c) => (
                   <li key={c.name} className="flex items-start gap-2">
-                    <span className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0" style={c.type === "cert" ? { background: "#1D4ED8", color: "#FFFFFF" } : { background: "rgba(29,78,216,0.06)", color: "#94A3B8" }}>{c.type === "cert" ? "CERT" : "COURSE"}</span>
+                    <span
+                      className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0"
+                      style={c.type === "cert" ? { background: "#1D4ED8", color: "#FFFFFF" } : { background: "rgba(96,165,250,0.12)", color: "var(--color-ink-text-2)" }}
+                    >
+                      {c.type === "cert" ? "CERT" : "COURSE"}
+                    </span>
                     <div>
-                      <p className="font-heading text-[12px] font-semibold text-[#0F172A] leading-tight">{c.name}</p>
-                      <p className="font-mono text-[10px] text-[#94A3B8]">{c.issuer}</p>
+                      <p className="font-heading text-[12px] font-semibold leading-tight" style={{ color: "var(--color-ink-text)" }}>{c.name}</p>
+                      <p className="font-mono text-[10px]" style={{ color: "var(--color-ink-text-2)" }}>{c.issuer}</p>
                     </div>
                   </li>
                 ))}
@@ -241,11 +270,11 @@ export default function Trajectory() {
             <motion.div
               variants={sidebarItem}
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(217,119,6,0.3)", background: "rgba(217,119,6,0.05)" }}
+              style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.06)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#D97706" }}>// AWARD</p>
-              <p className="font-display font-bold text-[#0F172A] text-[14px] mb-2">🏆 {award.title}</p>
-              <p className="text-[12.5px] text-[#475569] leading-relaxed">{award.desc}</p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#FBBF24" }}>// AWARD</p>
+              <p className="font-display font-bold text-[14px] mb-2" style={{ color: "var(--color-ink-text)" }}>🏆 {award.title}</p>
+              <p className="text-[12.5px] leading-relaxed" style={{ color: "var(--color-ink-text-2)" }}>{award.desc}</p>
             </motion.div>
           </motion.div>
         </div>
