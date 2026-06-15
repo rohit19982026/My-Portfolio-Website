@@ -234,13 +234,23 @@ export default function Trajectory() {
           >
             <motion.div
               variants={sidebarItem}
-              className="p-5 rounded-2xl"
+              whileHover={{ y: -3, borderColor: "rgba(96,165,250,0.35)" }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="p-5 rounded-2xl flex items-start gap-3"
               style={{ border: "1px solid var(--color-ink-border)", background: "var(--color-ink-2)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "#60A5FA" }}>// EDUCATION</p>
-              <p className="font-display font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-ink-text)" }}>{education.degree}</p>
-              <p className="font-mono text-[11px] font-medium" style={{ color: "var(--color-ink-text-2)" }}>{education.institution}</p>
-              <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--color-ink-text-2)" }}>{education.year} · {education.grade}</p>
+              <span
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-base shrink-0"
+                style={{ background: "rgba(96,165,250,0.1)", border: "1px solid rgba(96,165,250,0.25)" }}
+              >
+                🎓
+              </span>
+              <div className="min-w-0">
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5" style={{ color: "#60A5FA" }}>// EDUCATION</p>
+                <p className="font-display font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-ink-text)" }}>{education.degree}</p>
+                <p className="font-mono text-[11px] font-medium" style={{ color: "var(--color-ink-text-2)" }}>{education.institution}</p>
+                <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--color-ink-text-2)" }}>{education.year} · {education.grade}</p>
+              </div>
             </motion.div>
 
             <motion.div
@@ -249,32 +259,47 @@ export default function Trajectory() {
               style={{ border: "1px solid var(--color-ink-border)", background: "var(--color-ink-2)" }}
             >
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "#22D3EE" }}>// CERTIFICATIONS</p>
-              <ul className="space-y-2.5">
-                {certifications.map((c) => (
-                  <li key={c.name} className="flex items-start gap-2">
-                    <span
-                      className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0"
-                      style={c.type === "cert" ? { background: "#1D4ED8", color: "#FFFFFF" } : { background: "rgba(96,165,250,0.12)", color: "var(--color-ink-text-2)" }}
+              <div className="space-y-2">
+                {certifications.map((c) => {
+                  const accent = c.type === "cert" ? "#1D4ED8" : "#22D3EE";
+                  return (
+                    <motion.div
+                      key={c.name}
+                      whileHover={{ x: 3, borderColor: `${accent}55`, backgroundColor: `${accent}0D` }}
+                      transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                      className="flex items-start gap-2.5 p-2.5 rounded-lg"
+                      style={{ border: "1px solid var(--color-ink-border)" }}
                     >
-                      {c.type === "cert" ? "CERT" : "COURSE"}
-                    </span>
-                    <div>
-                      <p className="font-heading text-[12px] font-semibold leading-tight" style={{ color: "var(--color-ink-text)" }}>{c.name}</p>
-                      <p className="font-mono text-[10px]" style={{ color: "var(--color-ink-text-2)" }}>{c.issuer}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                      <span
+                        className="mt-0.5 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0 uppercase tracking-wider"
+                        style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: `${accent}1F`, color: accent, border: `1px solid ${accent}40` }}
+                      >
+                        {c.type === "cert" ? "CERT" : "COURSE"}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-heading text-[12px] font-semibold leading-tight" style={{ color: "var(--color-ink-text)" }}>{c.name}</p>
+                        <p className="font-mono text-[10px]" style={{ color: "var(--color-ink-text-2)" }}>{c.issuer}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </motion.div>
 
             <motion.div
               variants={sidebarItem}
-              className="p-5 rounded-2xl"
+              whileHover={{ y: -3, borderColor: "rgba(251,191,36,0.5)" }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="p-5 rounded-2xl relative overflow-hidden"
               style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.06)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#FBBF24" }}>// AWARD</p>
-              <p className="font-display font-bold text-[14px] mb-2" style={{ color: "var(--color-ink-text)" }}>🏆 {award.title}</p>
-              <p className="text-[12.5px] leading-relaxed" style={{ color: "var(--color-ink-text-2)" }}>{award.desc}</p>
+              <div
+                className="absolute pointer-events-none rounded-full"
+                style={{ width: 140, height: 140, background: "#FBBF24", opacity: 0.1, filter: "blur(50px)", top: -50, right: -50 }}
+              />
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2 relative z-10" style={{ color: "#FBBF24" }}>// AWARD</p>
+              <p className="font-display font-bold text-[14px] mb-2 relative z-10" style={{ color: "var(--color-ink-text)" }}>🏆 {award.title}</p>
+              <p className="text-[12.5px] leading-relaxed relative z-10" style={{ color: "var(--color-ink-text-2)" }}>{award.desc}</p>
             </motion.div>
           </motion.div>
         </div>
