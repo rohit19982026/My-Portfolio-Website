@@ -47,7 +47,7 @@ export default function AgentConsole() {
               transition={{ duration: 0.5, delay: 0.4 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-start gap-3 px-3 py-3 rounded-2xl"
             >
-              <IconBadge icon={Icon} color={STATUS_COLOR[agent.status]} size={32} className="mt-0.5" />
+              <IconBadge icon={Icon} color={STATUS_COLOR[agent.status]} size={32} className="mt-0.5" pulse={agent.status === "ok"} />
               <div>
                 <p className="text-[13px] font-semibold mb-0.5" style={{ color: "var(--color-text)" }}>
                   {agent.name}
