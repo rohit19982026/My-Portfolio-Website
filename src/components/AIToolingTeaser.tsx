@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import HudFrame from "./HudFrame";
 
 const pov = [
   {
@@ -170,39 +171,44 @@ export default function AIToolingTeaser() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.07 }}
               whileHover={{ y: -4, transition: { type: "spring", stiffness: 350, damping: 25 } }}
-              className="rounded-2xl p-6"
-              style={{
-                background: "var(--color-ink-2)",
-                border: `1px solid ${tool.accent}30`,
-              }}
+              style={{ perspective: 800 }}
             >
-              <div className="flex items-center gap-2 mb-4">
-                <span
-                  className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
-                  style={{ color: tool.accent, background: `${tool.accent}14`, border: `1px solid ${tool.accent}30` }}
-                >
-                  {tool.category}
-                </span>
-                {tool.award && (
+              <HudFrame
+                accent={tool.accent}
+                className="rounded-lg p-6 h-full"
+                style={{
+                  background: "var(--color-ink-2)",
+                  border: `1px solid ${tool.accent}30`,
+                }}
+              >
+                <div className="flex items-center gap-2 mb-4">
                   <span
                     className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
-                    style={{ color: "#FBBF24", background: "rgba(251,191,36,0.1)", border: "1px solid rgba(251,191,36,0.3)" }}
+                    style={{ color: tool.accent, background: `${tool.accent}14`, border: `1px solid ${tool.accent}30` }}
                   >
-                    🏆 Innovation Award
+                    {tool.category}
                   </span>
-                )}
-                <span
-                  className="ml-auto w-2 h-2 rounded-full shrink-0"
-                  style={{ background: STATUS_COLOR[tool.status], animation: "pulse-dot 2s ease-in-out infinite" }}
-                  aria-hidden
-                />
-              </div>
-              <h3 className="font-heading font-bold text-[16px] leading-snug mb-3" style={{ color: "var(--color-ink-text)" }}>
-                {tool.title}
-              </h3>
-              <p className="font-mono text-[11px] leading-relaxed" style={{ color: tool.accent }}>
-                └─ {tool.proof}
-              </p>
+                  {tool.award && (
+                    <span
+                      className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
+                      style={{ color: "#FBBF24", background: "rgba(251,191,36,0.1)", border: "1px solid rgba(251,191,36,0.3)" }}
+                    >
+                      🏆 Innovation Award
+                    </span>
+                  )}
+                  <span
+                    className="ml-auto w-2 h-2 rounded-full shrink-0"
+                    style={{ background: STATUS_COLOR[tool.status], animation: "pulse-dot 2s ease-in-out infinite" }}
+                    aria-hidden
+                  />
+                </div>
+                <h3 className="font-heading font-bold text-[16px] leading-snug mb-3" style={{ color: "var(--color-ink-text)" }}>
+                  {tool.title}
+                </h3>
+                <p className="font-mono text-[11px] leading-relaxed" style={{ color: tool.accent }}>
+                  └─ {tool.proof}
+                </p>
+              </HudFrame>
             </motion.div>
           ))}
         </div>
