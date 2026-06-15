@@ -16,10 +16,10 @@ const WARN = "#B07D12";
 const VIOLET = "#BF5AF2";
 const T1 = "#1D1D1F";
 const T2 = "#6E6E73";
-const T3 = "#AEAEB2";
+const T3 = "#757579";
 const BG = "#FBFBFD";
-const SURFACE = "#F5F5F7";
-const BORDER = "#E5E5EA";
+const SURFACE = "#EDEDF0";
+const BORDER = "#D2D2D7";
 const BORDER_STRONG = "#D1D1D6";
 
 const GLOBAL_CSS = `

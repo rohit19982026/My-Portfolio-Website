@@ -3,9 +3,9 @@
 @theme {
   /* Surfaces */
   --color-bg:            #FFFFFF;
-  --color-bg-secondary:  #F5F5F7;
+  --color-bg-secondary:  #EDEDF0;
   --color-bg-tertiary:   #FBFBFD;
-  --color-border:        #E2E8F0;
+  --color-border:        #D2D2D7;
 
   /* Overlay-only dark token (Command Palette backdrop dimming) */
   --color-overlay-dim:   rgba(0,0,0,0.35);
@@ -13,7 +13,7 @@
   /* Text */
   --color-text:           #1D1D1F;
   --color-text-secondary: #6E6E73;
-  --color-faint:          #AEAEB2;
+  --color-faint:          #757579;
 
   /* Accents (Apple system colors) */
   --color-accent:    #0A84FF;

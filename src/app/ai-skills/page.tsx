@@ -11,7 +11,7 @@ const BL = "#BF5AF2";   // purple accent
 const GR = "#30D158";   // green accent
 const T1 = "#1D1D1F";   // dark text
 const T2 = "#6E6E73";   // mid text
-const T3 = "#AEAEB2";   // light text
+const T3 = "#757579";   // light text
 
 /* ─── sidebar nav items ──────────────────────────────────────────── */
 const NAV = [

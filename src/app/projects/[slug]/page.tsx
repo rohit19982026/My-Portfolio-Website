@@ -54,7 +54,7 @@ const mdxComponents = {
     <tr className="even:bg-[#F2F8FF]" {...props} />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLElement>) => (
-    <blockquote className="border-l-4 border-[#0A84FF] pl-4 my-4 text-[#AEAEB2] italic" {...props} />
+    <blockquote className="border-l-4 border-[#0A84FF] pl-4 my-4 text-[#757579] italic" {...props} />
   ),
 };
 
@@ -71,7 +71,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {/* Back link */}
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#AEAEB2] hover:text-[#0A84FF] transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#757579] hover:text-[#0A84FF] transition-colors mb-8"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -87,10 +87,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             >
               {project.industry}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#AEAEB2]">
+            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#757579]">
               {project.duration}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#AEAEB2]">
+            <span className="text-xs font-medium px-3 py-1 rounded-md bg-white border border-[#CFE7FF] text-[#757579]">
               {project.role}
             </span>
           </div>
@@ -125,19 +125,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 <h4 className="font-heading font-semibold text-[#1D1D1F] text-sm mb-4">Project Details</h4>
                 <dl className="space-y-3 text-sm">
                   <div>
-                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Client</dt>
+                    <dt className="text-[#757579] text-xs uppercase tracking-wide">Client</dt>
                     <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.client}</dd>
                   </div>
                   <div>
-                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Industry</dt>
+                    <dt className="text-[#757579] text-xs uppercase tracking-wide">Industry</dt>
                     <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.industry}</dd>
                   </div>
                   <div>
-                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Duration</dt>
+                    <dt className="text-[#757579] text-xs uppercase tracking-wide">Duration</dt>
                     <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.duration}</dd>
                   </div>
                   <div>
-                    <dt className="text-[#AEAEB2] text-xs uppercase tracking-wide">Role</dt>
+                    <dt className="text-[#757579] text-xs uppercase tracking-wide">Role</dt>
                     <dd className="font-medium text-[#1D1D1F] mt-0.5">{project.role}</dd>
                   </div>
                 </dl>
@@ -176,7 +176,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <div className="mt-16 pt-8 border-t border-[#CFE7FF] flex items-center justify-between">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-sm font-medium text-[#AEAEB2] hover:text-[#0A84FF] transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[#757579] hover:text-[#0A84FF] transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
