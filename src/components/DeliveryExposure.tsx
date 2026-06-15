@@ -75,45 +75,70 @@ export default function DeliveryExposure() {
           </p>
         </motion.div>
 
-        {/* Stack cards */}
-        <div className="grid sm:grid-cols-2 gap-5 mb-10">
-          {stacks.map((stack, si) => (
-            <motion.div
-              key={stack.label}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.08 + si * 0.1 }}
-              className="p-6 rounded-2xl bg-white"
-              style={{ border: "1px solid #E2E8F0" }}
-            >
-              <p
-                className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4 pb-3"
-                style={{ color: stack.color, borderBottom: "1px solid #E2E8F0" }}
+        {/* Stack pipeline */}
+        <div className="relative mb-10">
+          {/* connector spine */}
+          <div
+            className="absolute left-[19px] top-8 bottom-8 w-px hidden sm:block"
+            style={{ background: "linear-gradient(to bottom, #1D4ED8, #059669, #0891B2, #D97706)" }}
+          />
+
+          <div className="space-y-4">
+            {stacks.map((stack, si) => (
+              <motion.div
+                key={stack.label}
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.08 + si * 0.1 }}
+                className="relative sm:pl-14"
               >
-                {stack.label}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {stack.items.map((item) => (
-                  <span
-                    key={item}
-                    className="font-mono text-[12px] font-semibold px-3 py-1.5 rounded-md transition-colors"
-                    style={{
-                      backgroundColor: stack.pillBg,
-                      border: `1px solid ${stack.pillBorder}`,
-                      color: stack.color,
-                    }}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-              {"note" in stack && stack.note && (
-                <p className="font-mono text-[10px] mt-3 pt-3" style={{ color: "#94A3B8", borderTop: "1px solid #E2E8F0" }}>
-                  → {stack.note}
-                </p>
-              )}
-            </motion.div>
-          ))}
+                {/* node */}
+                <div
+                  className="absolute left-0 top-6 hidden sm:flex w-10 h-10 rounded-full items-center justify-center font-mono text-[11px] font-bold"
+                  style={{ background: stack.pillBg, border: `2px solid ${stack.color}`, color: stack.color }}
+                >
+                  {String(si + 1).padStart(2, "0")}
+                </div>
+
+                <div className="p-6 rounded-2xl bg-white" style={{ border: "1px solid #E2E8F0" }}>
+                  <div className="flex items-center justify-between gap-3 mb-4 pb-3" style={{ borderBottom: "1px solid #E2E8F0" }}>
+                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: stack.color }}>
+                      {stack.label}
+                    </p>
+                    {si === stacks.length - 1 && (
+                      <span
+                        className="inline-flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shrink-0"
+                        style={{ color: "#34D399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.25)" }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#34D399", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                        Live in production
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {stack.items.map((item) => (
+                      <span
+                        key={item}
+                        className="font-mono text-[12px] font-semibold px-3 py-1.5 rounded-md transition-colors"
+                        style={{
+                          backgroundColor: stack.pillBg,
+                          border: `1px solid ${stack.pillBorder}`,
+                          color: stack.color,
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  {"note" in stack && stack.note && (
+                    <p className="font-mono text-[10px] mt-3 pt-3" style={{ color: "#94A3B8", borderTop: "1px solid #E2E8F0" }}>
+                      → {stack.note}
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Disclaimer */}
