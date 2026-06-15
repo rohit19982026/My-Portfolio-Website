@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Database, Wrench, LayoutDashboard, Bot } from "lucide-react";
 import GlassSurface from "./GlassSurface";
+import IconBadge from "./IconBadge";
 
 const stacks = [
   {
@@ -90,11 +91,8 @@ export default function DeliveryExposure() {
                   className="relative sm:pl-14"
                 >
                   {/* node */}
-                  <div
-                    className="absolute left-0 top-6 hidden sm:flex w-10 h-10 rounded-full items-center justify-center glass"
-                    style={{ color: stack.color }}
-                  >
-                    <Icon size={16} strokeWidth={2} />
+                  <div className="absolute left-0 top-6 hidden sm:block">
+                    <IconBadge icon={Icon} color={stack.color} size={40} iconSize={16} />
                   </div>
 
                   <GlassSurface accent={stack.color} radius="lg" className="p-6">

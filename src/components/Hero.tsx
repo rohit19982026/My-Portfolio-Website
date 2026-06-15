@@ -5,28 +5,21 @@ import { Mail, Phone, ArrowUpRight, Download } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import AgentConsole from "./AgentConsole";
 import GlassButton from "./GlassButton";
+import IconBadge from "./IconBadge";
+
+function LinkedInIcon({ size = 18, color = "currentColor" }: { size?: number; strokeWidth?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
 
 const socials = [
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
-    ),
-  },
-  {
-    label: "Email",
-    href: "mailto:singhrohit.25119@gmail.com",
-    icon: <Mail size={18} strokeWidth={2} />,
-  },
-  {
-    label: "Phone",
-    href: "tel:+918967725119",
-    icon: <Phone size={18} strokeWidth={2} />,
-  },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/", icon: LinkedInIcon, color: "var(--color-accent)" },
+  { label: "Email", href: "mailto:singhrohit.25119@gmail.com", icon: Mail, color: "var(--color-purple)" },
+  { label: "Phone", href: "tel:+918967725119", icon: Phone, color: "var(--color-green)" },
 ];
 
 const SPRING = { type: "spring" as const, stiffness: 80, damping: 18 };
@@ -136,10 +129,9 @@ export default function Hero() {
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.92 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    className="glass w-10 h-10 rounded-full flex items-center justify-center"
-                    style={{ color: "var(--color-accent)" }}
+                    className="block"
                   >
-                    {s.icon}
+                    <IconBadge icon={s.icon} color={s.color} size={40} iconSize={18} />
                   </motion.a>
                 ))}
               </motion.div>

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Bot } from "lucide-react";
 import GlassSurface from "./GlassSurface";
+import IconBadge from "./IconBadge";
 
 const exploreLinks: [string, string][] = [
   ["Work", "#work"],
@@ -88,9 +89,7 @@ export default function Footer() {
           className="mb-10"
         >
           <GlassSurface radius="lg" className="flex items-center gap-4 px-5 py-4">
-            <span className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(48,209,88,0.1)" }}>
-              <Bot size={18} strokeWidth={2} style={{ color: "var(--color-green)" }} />
-            </span>
+            <IconBadge icon={Bot} color="var(--color-green)" size={40} iconSize={18} />
             <div className="flex-1">
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-green)" }}>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />

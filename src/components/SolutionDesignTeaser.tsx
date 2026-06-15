@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Database, FileText, Mail, Workflow } from "lucide-react";
 import GlassSurface from "./GlassSurface";
+import IconBadge from "./IconBadge";
 
 export default function SolutionDesignTeaser() {
   return (
@@ -125,9 +126,7 @@ export default function SolutionDesignTeaser() {
                           key={s.label}
                           className="glass flex items-center gap-3 px-3 py-2 rounded-2xl"
                         >
-                          <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: `${s.color}1A`, color: s.color }}>
-                            <Icon size={13} strokeWidth={2} />
-                          </span>
+                          <IconBadge icon={Icon} color={s.color} size={28} iconSize={13} />
                           <div className="min-w-0">
                             <p className="text-[12px] font-semibold leading-none" style={{ color: "var(--color-text)" }}>{s.label}</p>
                             <p className="text-[9px] mt-1" style={{ color: "var(--color-faint)" }}>{s.sub}</p>
@@ -171,9 +170,7 @@ export default function SolutionDesignTeaser() {
                     className="glass px-3 py-2 rounded-2xl flex items-center justify-between gap-3 relative z-10"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(10,132,255,0.1)", color: "var(--color-accent)" }}>
-                        <Workflow size={13} strokeWidth={2} />
-                      </span>
+                      <IconBadge icon={Workflow} color="var(--color-accent)" size={28} iconSize={13} />
                       <div className="min-w-0">
                         <p className="text-[12px] font-semibold leading-none" style={{ color: "var(--color-text)" }}>Agent Workflow</p>
                         <p className="text-[9px] mt-1" style={{ color: "var(--color-faint)" }}>8 steps · Slack/chat</p>

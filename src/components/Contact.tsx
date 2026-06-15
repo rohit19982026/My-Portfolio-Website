@@ -2,36 +2,42 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, Phone, Building2, Bot, Repeat, ArrowRight } from "lucide-react";
+import { Mail, Phone, Building2, Bot, Repeat, ArrowRight, type LucideIcon } from "lucide-react";
 import GlassSurface from "./GlassSurface";
 import GlassButton from "./GlassButton";
+import IconBadge from "./IconBadge";
 
-const LinkedInIcon = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
+function LinkedInIcon({ size = 16, color = "currentColor" }: { size?: number; strokeWidth?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
 
-const links = [
-  { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com", icon: <Mail size={15} strokeWidth={2} /> },
-  { label: "LINKEDIN", value: "rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/", icon: LinkedInIcon },
-  { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119", icon: <Phone size={15} strokeWidth={2} /> },
+const links: { label: string; value: string; href: string; icon: LucideIcon | typeof LinkedInIcon; color: string }[] = [
+  { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com", icon: Mail, color: "var(--color-accent)" },
+  { label: "LINKEDIN", value: "rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/", icon: LinkedInIcon, color: "var(--color-purple)" },
+  { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119", icon: Phone, color: "var(--color-green)" },
 ];
 
 const engagementTypes = [
   {
     icon: Building2,
+    color: "var(--color-accent)",
     title: "Platform Build or Migration",
     desc: "Snowflake, Databricks, AWS. PM end-to-end on the engagement — kickoff, sprint cadence, RAID, weekly status, financials, closure.",
   },
   {
     icon: Bot,
+    color: "var(--color-purple)",
     title: "GenAI Program Delivery",
     desc: "LLM integrations and AI agent builds. Same three-phase cadence and the same governance the rest of delivery gets — no special treatment because it's AI.",
   },
   {
     icon: Repeat,
+    color: "var(--color-orange)",
     title: "Mid-Stream Pickup",
     desc: "Inherited engagements where the previous PM is rolling off. Standard PM transition — scope, team, cadence, financials, RAID, access — then back to the regular weekly rhythm.",
   },
@@ -116,9 +122,7 @@ export default function Contact() {
                   target={link.label === "LINKEDIN" ? "_blank" : undefined}
                   rel={link.label === "LINKEDIN" ? "noopener noreferrer" : undefined}
                 >
-                  <span className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(10,132,255,0.1)", color: "var(--color-accent)" }}>
-                    {link.icon}
-                  </span>
+                  <IconBadge icon={link.icon} color={link.color} size={36} iconSize={15} />
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--color-faint)" }}>{link.label}</p>
                     <p className="text-[14px] font-semibold" style={{ color: "var(--color-text)" }}>{link.value}</p>
@@ -155,9 +159,7 @@ export default function Contact() {
               return (
                 <motion.div key={e.title} variants={cardItem}>
                   <GlassSurface interactive radius="lg" className="flex gap-4 p-5">
-                    <span className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(10,132,255,0.1)", color: "var(--color-accent)" }}>
-                      <Icon size={18} strokeWidth={2} />
-                    </span>
+                    <IconBadge icon={Icon} color={e.color} size={40} iconSize={18} />
                     <div>
                       <p className="font-semibold text-[14px] mb-1" style={{ color: "var(--color-text)" }}>{e.title}</p>
                       <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{e.desc}</p>

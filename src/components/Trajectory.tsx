@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { GraduationCap, Trophy } from "lucide-react";
 import GlassSurface from "./GlassSurface";
+import IconBadge from "./IconBadge";
 
 const roles = [
   {
@@ -233,12 +234,7 @@ export default function Trajectory() {
           >
             <motion.div variants={sidebarItem}>
               <GlassSurface interactive radius="lg" className="p-5 flex items-start gap-3">
-                <span
-                  className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-                  style={{ background: "rgba(10,132,255,0.1)" }}
-                >
-                  <GraduationCap size={18} strokeWidth={2} style={{ color: "var(--color-accent)" }} />
-                </span>
+                <IconBadge icon={GraduationCap} color="var(--color-accent)" size={36} iconSize={18} />
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5" style={{ color: "var(--color-accent)" }}>Education</p>
                   <p className="font-heading font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-text)" }}>{education.degree}</p>
@@ -264,7 +260,7 @@ export default function Trajectory() {
                       >
                         <span
                           className="mt-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full shrink-0 uppercase tracking-wider"
-                          style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: `${accent}1F`, color: accent }}
+                          style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: "rgba(100,210,255,0.15)", color: accent }}
                         >
                           {c.type === "cert" ? "CERT" : "COURSE"}
                         </span>
@@ -280,7 +276,7 @@ export default function Trajectory() {
             </motion.div>
 
             <motion.div variants={sidebarItem}>
-              <GlassSurface accent="var(--color-orange)" interactive specular radius="lg" className="p-5">
+              <GlassSurface accent="#FF9F0A" interactive specular radius="lg" className="p-5">
                 <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--color-orange)" }}>
                   <Trophy size={13} strokeWidth={2.5} />
                   Award
