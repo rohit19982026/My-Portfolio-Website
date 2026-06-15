@@ -72,6 +72,26 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <button
+            onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            className={
+              scrolled
+                ? "ml-2 flex items-center gap-2 px-3 py-2 text-[11px] font-mono rounded-full border transition-all duration-200 hover:text-[#0F172A]"
+                : "ml-2 flex items-center gap-2 px-3 py-2 text-[11px] font-mono rounded-full border transition-all duration-200 hover:text-[var(--color-ink-text)]"
+            }
+            style={{
+              color: scrolled ? "#475569" : "var(--color-ink-text-2)",
+              borderColor: scrolled ? "#E2E8F0" : "var(--color-ink-border)",
+              background: scrolled ? "transparent" : "rgba(96,165,250,0.04)",
+            }}
+            aria-label="Open command palette"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <kbd className="font-semibold tracking-wide">⌘K</kbd>
+          </button>
           <a
             href="#contact"
             className="ml-3 px-4 py-2 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full text-white transition-all duration-200 hover:opacity-90"
@@ -84,21 +104,34 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden p-2 hover:text-[#1D4ED8] transition-colors"
-          style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {menuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+        {/* Mobile toggles */}
+        <div className="md:hidden flex items-center gap-1">
+          <button
+            className="p-2 transition-colors"
+            style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
+            onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            aria-label="Open command palette"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </button>
+          <button
+            className="p-2 hover:text-[#1D4ED8] transition-colors"
+            style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {menuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

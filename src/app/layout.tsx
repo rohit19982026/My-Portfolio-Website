@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
 import AmbientBackground from "@/components/AmbientBackground";
+import CommandPalette from "@/components/CommandPalette";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -73,6 +74,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <ScrollToTop />
+        <CommandPalette />
       </body>
     </html>
   );
