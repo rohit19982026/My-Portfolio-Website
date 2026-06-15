@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import HudFrame from "./HudFrame";
+import { Trophy, ArrowUpRight } from "lucide-react";
+import GlassSurface from "./GlassSurface";
+import GlassButton from "./GlassButton";
 
 const pov = [
   {
@@ -23,9 +25,9 @@ const pov = [
 ];
 
 const proofStrip = [
-  { value: "3-4 hrs → ~60 min", label: "Per PM, per program, at month-end", accent: "#34D399" },
-  { value: ">95%", label: "Accuracy on the billing discrepancy check", accent: "#60A5FA" },
-  { value: "100%", label: "PMO adoption within ~1 month of shipping", accent: "#FBBF24" },
+  { value: "3-4 hrs → ~60 min", label: "Per PM, per program, at month-end", accent: "var(--color-green)" },
+  { value: ">95%", label: "Accuracy on the billing discrepancy check", accent: "var(--color-accent)" },
+  { value: "100%", label: "PMO adoption within ~1 month of shipping", accent: "var(--color-orange)" },
 ];
 
 const tools = [
@@ -35,58 +37,36 @@ const tools = [
     category: "EOM Automation",
     title: "Billing Compliance Agent",
     proof: "60% time saved · >95% accuracy · PMO-wide deployment in 1 month",
-    accent: "#34D399",
+    accent: "#30D158",
   },
   {
     status: "warn" as const,
     category: "Sprint Intelligence",
     title: "Velocity & Blocker Tracker",
     proof: "CSV → ranked scorecard + PM action items in under 2 min",
-    accent: "#FBBF24",
+    accent: "#FF9F0A",
   },
   {
     status: "ok" as const,
     category: "Program Health",
     title: "Project Health Scanner",
     proof: "Replaces a 2-hour manual checklist across 4+ active programs",
-    accent: "#22D3EE",
+    accent: "#64D2FF",
   },
   {
     status: "ok" as const,
     category: "Stakeholder Comms",
     title: "Steerco Comms Engine",
     proof: "Steerco deck drafted in under 20 min · CFO vs VP Engineering tone",
-    accent: "#60A5FA",
+    accent: "#0A84FF",
   },
 ];
 
-const STATUS_COLOR = { ok: "#34D399", warn: "#FBBF24" };
+const STATUS_COLOR = { ok: "#30D158", warn: "#FF9F0A" };
 
 export default function AIToolingTeaser() {
   return (
-    <section id="tools" className="py-16 sm:py-24 relative overflow-hidden" style={{ background: "var(--color-ink)" }}>
-      {/* Instrument-panel grid texture */}
-      <div className="absolute inset-0 console-grid pointer-events-none" />
-
-      {/* Fade in from the light section above */}
-      <div
-        className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, #FFFFFF, transparent)" }}
-      />
-      {/* Fade out into the light section below */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{ background: "linear-gradient(to top, #F8FAFC, transparent)" }}
-      />
-
-      <div
-        className="absolute top-0 left-0 w-[600px] h-[400px] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse, rgba(29,78,216,0.08) 0%, transparent 65%)",
-          filter: "blur(1px)",
-        }}
-      />
-
+    <section id="tools" className="py-16 sm:py-24 relative overflow-hidden section-alt">
       <div className="max-w-5xl mx-auto px-6 relative z-10">
 
         {/* Header */}
@@ -97,17 +77,17 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12"
         >
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "#60A5FA" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent)" }}>
             05 / AI TOOLING I&apos;VE SHIPPED
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--color-ink-text)" }}
+            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--color-text)" }}
           >
             I automated{" "}
             <span
               style={{
-                background: "linear-gradient(130deg, #93C5FD 0%, #60A5FA 55%, #22D3EE 100%)",
+                background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-teal) 55%, var(--color-purple) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -116,7 +96,7 @@ export default function AIToolingTeaser() {
             </span>{" "}
             first.
           </h2>
-          <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-ink-text-2)" }}>
+          <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
             It started with one agent that did my own end-of-month billing reconciliation
             — the most boring, most error-prone hour of my month. Once that one held up,
             the rest of the PMO wanted their hours back too. Six agents now run on Glean,
@@ -130,19 +110,24 @@ export default function AIToolingTeaser() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="grid sm:grid-cols-3 gap-px rounded-2xl overflow-hidden mb-10"
-          style={{ border: "1px solid var(--color-ink-border)" }}
+          className="mb-10"
         >
-          {proofStrip.map((p) => (
-            <div key={p.label} className="p-5" style={{ background: "var(--color-ink-2)" }}>
-              <div className="font-mono font-black tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.accent }}>
-                {p.value}
+          <GlassSurface radius="lg" className="grid sm:grid-cols-3">
+            {proofStrip.map((p, i) => (
+              <div
+                key={p.label}
+                className="p-5"
+                style={{ borderLeft: i > 0 ? "1px solid var(--glass-border)" : undefined }}
+              >
+                <div className="font-bold tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.accent }}>
+                  {p.value}
+                </div>
+                <div className="text-[12px] leading-snug" style={{ color: "var(--color-text-secondary)" }}>
+                  {p.label}
+                </div>
               </div>
-              <div className="text-[12px] leading-snug" style={{ color: "var(--color-ink-text-2)" }}>
-                {p.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </GlassSurface>
         </motion.div>
 
         {/* Agent registry label */}
@@ -151,14 +136,14 @@ export default function AIToolingTeaser() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] mb-4"
-          style={{ color: "var(--color-ink-text-2)" }}
+          className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] mb-4"
+          style={{ color: "var(--color-text-secondary)" }}
         >
           <span
             className="w-1.5 h-1.5 rounded-full"
-            style={{ background: "#34D399", animation: "pulse-dot 2s ease-in-out infinite" }}
+            style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }}
           />
-          // agent registry — 4 of 6 deployed agents
+          Agent registry — 4 of 6 deployed agents
         </motion.div>
 
         {/* Tool cards */}
@@ -170,30 +155,22 @@ export default function AIToolingTeaser() {
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.07 }}
-              whileHover={{ y: -4, transition: { type: "spring", stiffness: 350, damping: 25 } }}
-              style={{ perspective: 800 }}
             >
-              <HudFrame
-                accent={tool.accent}
-                className="rounded-lg p-6 h-full"
-                style={{
-                  background: "var(--color-ink-2)",
-                  border: `1px solid ${tool.accent}30`,
-                }}
-              >
+              <GlassSurface accent={tool.accent} interactive specular radius="lg" className="p-6 h-full">
                 <div className="flex items-center gap-2 mb-4">
                   <span
-                    className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
+                    className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
                     style={{ color: tool.accent, background: `${tool.accent}14`, border: `1px solid ${tool.accent}30` }}
                   >
                     {tool.category}
                   </span>
                   {tool.award && (
                     <span
-                      className="font-mono text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-widest"
-                      style={{ color: "#FBBF24", background: "rgba(251,191,36,0.1)", border: "1px solid rgba(251,191,36,0.3)" }}
+                      className="flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
+                      style={{ color: "#FF9F0A", background: "rgba(255,159,10,0.1)", border: "1px solid rgba(255,159,10,0.3)" }}
                     >
-                      🏆 Innovation Award
+                      <Trophy size={11} strokeWidth={2.5} />
+                      Innovation Award
                     </span>
                   )}
                   <span
@@ -202,13 +179,13 @@ export default function AIToolingTeaser() {
                     aria-hidden
                   />
                 </div>
-                <h3 className="font-heading font-bold text-[16px] leading-snug mb-3" style={{ color: "var(--color-ink-text)" }}>
+                <h3 className="font-heading font-bold text-[16px] leading-snug mb-3" style={{ color: "var(--color-text)" }}>
                   {tool.title}
                 </h3>
-                <p className="font-mono text-[11px] leading-relaxed" style={{ color: tool.accent }}>
-                  └─ {tool.proof}
+                <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                  {tool.proof}
                 </p>
-              </HudFrame>
+              </GlassSurface>
             </motion.div>
           ))}
         </div>
@@ -221,8 +198,8 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10"
         >
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#22D3EE" }}>
-            // THE STORY BEHIND IT
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "var(--color-purple)" }}>
+            The story behind it
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             {pov.map((p, i) => (
@@ -232,15 +209,15 @@ export default function AIToolingTeaser() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
-                className="p-5 rounded-2xl"
-                style={{ background: "var(--color-ink-2)", border: "1px solid var(--color-ink-border)" }}
               >
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "#60A5FA" }}>
-                  {p.label}
-                </p>
-                <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-ink-text-2)" }}>
-                  {p.body}
-                </p>
+                <GlassSurface radius="lg" className="p-5 h-full">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "var(--color-accent)" }}>
+                    {p.label}
+                  </p>
+                  <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                    {p.body}
+                  </p>
+                </GlassSurface>
               </motion.div>
             ))}
           </div>
@@ -254,18 +231,10 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6"
         >
-          <a
-            href="/ai-skills"
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:opacity-90 self-start"
-            style={{
-              background: "linear-gradient(135deg, #1D4ED8, #0891B2)",
-              boxShadow: "0 4px 20px rgba(8,145,178,0.35)",
-            }}
-          >
+          <GlassButton href="/ai-skills" variant="primary" icon={<ArrowUpRight size={15} strokeWidth={2.5} />}>
             See full capability diagrams
-            <span style={{ fontSize: 14 }}>→</span>
-          </a>
-          <p className="font-mono text-[10px] uppercase tracking-wider" style={{ color: "var(--color-ink-text-2)" }}>
+          </GlassButton>
+          <p className="text-[12px]" style={{ color: "var(--color-text-secondary)" }}>
             Animated flow diagrams · Architecture · Tech stack
           </p>
         </motion.div>

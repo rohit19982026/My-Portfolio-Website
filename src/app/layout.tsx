@@ -1,23 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import TabBar from "@/components/TabBar";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
 import AmbientBackground from "@/components/AmbientBackground";
 import CommandPalette from "@/components/CommandPalette";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 
 export const viewport: Viewport = {
@@ -64,16 +52,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} h-full`}
-    >
-      <body className="min-h-full flex flex-col bg-white text-[#0F172A] antialiased">
+    <html lang="en" className="h-full">
+      <body className="min-h-full flex flex-col bg-white text-[#1D1D1F] antialiased">
         <AmbientBackground />
         <ScrollProgress />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-24 md:pb-0">{children}</main>
         <ScrollToTop />
+        <TabBar />
         <CommandPalette />
       </body>
     </html>

@@ -3,30 +3,46 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import {
+  Search,
+  House,
+  History,
+  TrendingUp,
+  Briefcase,
+  Bot,
+  Layers,
+  Workflow,
+  Mail,
+  Sparkles,
+  PlayCircle,
+  FileText,
+  Phone,
+  Link2,
+} from "lucide-react";
 
 type Item = {
   id: string;
   label: string;
   group: "Navigate" | "Pages" | "Connect";
   href: string;
-  accent: string;
+  icon: typeof House;
 };
 
 const ITEMS: Item[] = [
-  { id: "hero", label: "Top — Hero / Agent Console", group: "Navigate", href: "#top", accent: "#60A5FA" },
-  { id: "trajectory", label: "Trajectory — Where I've worked", group: "Navigate", href: "#trajectory", accent: "#60A5FA" },
-  { id: "impact", label: "Impact — What actually moved", group: "Navigate", href: "#impact", accent: "#60A5FA" },
-  { id: "work", label: "Work — Case studies", group: "Navigate", href: "#work", accent: "#60A5FA" },
-  { id: "tools", label: "AI Tooling — Agents I've shipped", group: "Navigate", href: "#tools", accent: "#60A5FA" },
-  { id: "exposure", label: "Delivery Exposure — Stacks & scope", group: "Navigate", href: "#exposure", accent: "#60A5FA" },
-  { id: "solution-design", label: "Solution Design — Deal Desk Agent", group: "Navigate", href: "#solution-design", accent: "#60A5FA" },
-  { id: "contact", label: "Contact — Get in touch", group: "Navigate", href: "#contact", accent: "#60A5FA" },
-  { id: "ai-skills", label: "AI Skills — Capability diagrams", group: "Pages", href: "/ai-skills", accent: "#22D3EE" },
-  { id: "deal-desk", label: "Deal Desk Agent — Live demo", group: "Pages", href: "/agents/deal-desk", accent: "#22D3EE" },
-  { id: "cv", label: "Download CV (PDF)", group: "Connect", href: "/resume.pdf", accent: "#34D399" },
-  { id: "email", label: "Email — singhrohit.25119@gmail.com", group: "Connect", href: "mailto:singhrohit.25119@gmail.com", accent: "#34D399" },
-  { id: "phone", label: "Call — +91 89677 25119", group: "Connect", href: "tel:+918967725119", accent: "#34D399" },
-  { id: "linkedin", label: "LinkedIn profile", group: "Connect", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/", accent: "#34D399" },
+  { id: "hero", label: "Top — Hero / Agent Console", group: "Navigate", href: "#top", icon: House },
+  { id: "trajectory", label: "Trajectory — Where I've worked", group: "Navigate", href: "#trajectory", icon: History },
+  { id: "impact", label: "Impact — What actually moved", group: "Navigate", href: "#impact", icon: TrendingUp },
+  { id: "work", label: "Work — Case studies", group: "Navigate", href: "#work", icon: Briefcase },
+  { id: "tools", label: "AI Tooling — Agents I've shipped", group: "Navigate", href: "#tools", icon: Bot },
+  { id: "exposure", label: "Delivery Exposure — Stacks & scope", group: "Navigate", href: "#exposure", icon: Layers },
+  { id: "solution-design", label: "Solution Design — Deal Desk Agent", group: "Navigate", href: "#solution-design", icon: Workflow },
+  { id: "contact", label: "Contact — Get in touch", group: "Navigate", href: "#contact", icon: Mail },
+  { id: "ai-skills", label: "AI Skills — Capability diagrams", group: "Pages", href: "/ai-skills", icon: Sparkles },
+  { id: "deal-desk", label: "Deal Desk Agent — Live demo", group: "Pages", href: "/agents/deal-desk", icon: PlayCircle },
+  { id: "cv", label: "Download CV (PDF)", group: "Connect", href: "/resume.pdf", icon: FileText },
+  { id: "email", label: "Email — singhrohit.25119@gmail.com", group: "Connect", href: "mailto:singhrohit.25119@gmail.com", icon: Mail },
+  { id: "phone", label: "Call — +91 89677 25119", group: "Connect", href: "tel:+918967725119", icon: Phone },
+  { id: "linkedin", label: "LinkedIn profile", group: "Connect", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/", icon: Link2 },
 ];
 
 const GROUP_ORDER: Item["group"][] = ["Navigate", "Pages", "Connect"];
@@ -121,7 +137,7 @@ export default function CommandPalette() {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[12vh]"
+          className="fixed inset-0 z-[100] flex items-end sm:items-start justify-center sm:px-4 sm:pt-[12vh]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -130,69 +146,52 @@ export default function CommandPalette() {
           {/* Backdrop */}
           <div
             className="absolute inset-0"
-            style={{ background: "rgba(10,14,20,0.7)", backdropFilter: "blur(4px)" }}
+            style={{ background: "var(--color-overlay-dim)", backdropFilter: "blur(4px)" }}
             onClick={() => setOpen(false)}
           />
 
           {/* Panel */}
           <motion.div
-            initial={{ opacity: 0, y: reduced ? 0 : -16, scale: reduced ? 1 : 0.98 }}
+            initial={{ opacity: 0, y: reduced ? 0 : 40, scale: reduced ? 1 : 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: reduced ? 0 : -16, scale: reduced ? 1 : 0.98 }}
-            transition={{ duration: reduced ? 0 : 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-xl rounded-2xl overflow-hidden"
-            style={{
-              background: "var(--color-ink-2)",
-              border: "1px solid var(--color-ink-border)",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.02)",
-            }}
+            exit={{ opacity: 0, y: reduced ? 0 : 40, scale: reduced ? 1 : 0.98 }}
+            transition={{ duration: reduced ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full sm:max-w-xl overflow-hidden glass-heavy rounded-t-[var(--radius-lg)] sm:rounded-[var(--radius-lg)]"
+            style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.18)" }}
           >
-            {/* Title bar */}
-            <div
-              className="flex items-center justify-between px-4 py-3"
-              style={{ borderBottom: "1px solid var(--color-ink-border)" }}
-            >
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#F87171" }} />
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FBBF24" }} />
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#34D399" }} />
-                <span className="ml-3 font-mono text-[11px]" style={{ color: "var(--color-ink-text-2)" }}>
-                  command-palette — zsh
-                </span>
-              </div>
-              <span className="font-mono text-[10px] uppercase tracking-wider" style={{ color: "var(--color-ink-text-2)" }}>
-                esc to close
-              </span>
+            {/* Mobile grabber handle */}
+            <div className="sm:hidden flex justify-center pt-3 pb-1">
+              <span className="w-9 h-1.5 rounded-full" style={{ background: "var(--color-border)" }} />
             </div>
 
             {/* Input */}
-            <div className="px-5 py-4 flex items-center gap-2 font-mono text-[14px]" style={{ borderBottom: "1px solid var(--color-ink-border)" }}>
-              <span className="shrink-0" style={{ color: "#34D399" }}>
-                <span className="hidden sm:inline">rohit@pmo-agents:~$</span>
-                <span className="sm:hidden">~$</span>
-              </span>
+            <div className="px-5 py-4 flex items-center gap-3" style={{ borderBottom: "1px solid var(--glass-border)" }}>
+              <Search size={18} strokeWidth={2} style={{ color: "var(--color-text-secondary)" }} />
               <input
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={onInputKeyDown}
-                placeholder="search sections, pages, contact..."
-                className="flex-1 bg-transparent outline-none"
-                style={{ color: "var(--color-ink-text)" }}
+                placeholder="Search sections, pages, contact..."
+                className="flex-1 bg-transparent outline-none text-[15px]"
+                style={{ color: "var(--color-text)" }}
                 spellCheck={false}
                 autoComplete="off"
               />
+              <span className="hidden sm:inline font-mono text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-secondary)" }}>
+                esc
+              </span>
             </div>
 
             {/* Results */}
-            <div className="max-h-[50vh] overflow-y-auto px-2 py-2 font-mono text-[12.5px]">
+            <div className="max-h-[55vh] sm:max-h-[50vh] overflow-y-auto px-2 py-2">
               {filtered.length === 0 && (
                 <div className="px-3 py-6 text-center">
-                  <p style={{ color: "var(--color-ink-text)" }}>
-                    command not found: <span style={{ color: "#F87171" }}>{query}</span>
+                  <p className="text-[14px]" style={{ color: "var(--color-text)" }}>
+                    No results for <span style={{ color: "var(--color-pink)" }}>&ldquo;{query}&rdquo;</span>
                   </p>
-                  <p className="text-[11px] mt-1.5" style={{ color: "var(--color-ink-text-2)" }}>
-                    try a section, a page, or esc to give up gracefully.
+                  <p className="text-[12px] mt-1.5" style={{ color: "var(--color-text-secondary)" }}>
+                    Try a section, a page, or press esc.
                   </p>
                 </div>
               )}
@@ -201,26 +200,27 @@ export default function CommandPalette() {
                 if (groupItems.length === 0) return null;
                 return (
                   <div key={group} className="mb-1">
-                    <p className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "var(--color-ink-text-2)" }}>
+                    <p className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]" style={{ color: "var(--color-text-secondary)" }}>
                       {group}
                     </p>
                     {groupItems.map((item) => {
                       flatIndex += 1;
                       const isActive = flatIndex === activeIndex;
+                      const Icon = item.icon;
                       return (
                         <button
                           key={item.id}
                           onMouseEnter={() => setActiveIndex(flatIndex)}
                           onClick={() => activate(item)}
-                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors"
+                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-left text-[14px] transition-colors"
                           style={{
-                            background: isActive ? "rgba(96,165,250,0.1)" : "transparent",
-                            color: isActive ? "var(--color-ink-text)" : "var(--color-ink-text-2)",
+                            background: isActive ? "rgba(10,132,255,0.1)" : "transparent",
+                            color: isActive ? "var(--color-text)" : "var(--color-text-secondary)",
                           }}
                         >
-                          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: item.accent }} />
+                          <Icon size={16} strokeWidth={2} style={{ color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)" }} />
                           {item.label}
-                          {isActive && <span className="ml-auto text-[11px]" style={{ color: item.accent }}>↵</span>}
+                          {isActive && <span className="ml-auto text-[11px]" style={{ color: "var(--color-accent)" }}>↵</span>}
                         </button>
                       );
                     })}
@@ -231,12 +231,12 @@ export default function CommandPalette() {
 
             {/* Footer hint */}
             <div
-              className="px-5 py-2.5 flex items-center gap-4 font-mono text-[10px] uppercase tracking-wider"
-              style={{ borderTop: "1px solid var(--color-ink-border)", color: "var(--color-ink-text-2)" }}
+              className="px-5 py-2.5 flex items-center gap-4 text-[10px] uppercase tracking-wider"
+              style={{ borderTop: "1px solid var(--glass-border)", color: "var(--color-text-secondary)" }}
             >
               <span>↑↓ navigate</span>
               <span>↵ select</span>
-              <span>esc close</span>
+              <span className="hidden sm:inline">esc close</span>
             </div>
           </motion.div>
         </motion.div>

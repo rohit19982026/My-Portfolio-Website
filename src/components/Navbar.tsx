@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Search, ArrowUpRight } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import GlassButton from "./GlassButton";
 
 const links = [
   { label: "Work",       href: "#work" },
@@ -11,54 +14,44 @@ const links = [
 ];
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const [scrolledRaw, setScrolledRaw] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+  const reduced = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setScrolledRaw(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Only the homepage opens on the dark "Mission Control" hero — every other
-  // route starts on a light background, so the nav must use light-chrome
-  // styling from the start, not just after scrolling.
-  const scrolled = scrolledRaw || pathname !== "/";
+  const goHome = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (pathname !== "/") router.push("/");
+    else window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  };
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled ? "1px solid #E2E8F0" : "none",
-      }}
-    >
-      <div className="max-w-6xl mx-auto px-6 h-[64px] flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 transition-all duration-300">
+      <div
+        className="max-w-4xl mx-auto h-14 flex items-center justify-between gap-4 px-4 sm:px-5 glass transition-shadow duration-300"
+        style={{
+          borderRadius: "var(--radius-pill)",
+          boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.08)" : "0 2px 12px rgba(0,0,0,0.04)",
+        }}
+      >
         {/* Brand */}
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" onClick={goHome} className="flex items-center gap-2.5 shrink-0">
           <div
-            className="w-9 h-9 rounded-[10px] flex items-center justify-center font-mono font-black text-sm text-white relative overflow-hidden"
+            className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm text-white relative overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, #60A5FA, #1E40AF)",
-              boxShadow: "0 0 18px rgba(30,64,175,0.35)",
+              background: "linear-gradient(135deg, var(--color-accent), var(--color-purple))",
+              boxShadow: "0 0 16px rgba(10,132,255,0.35)",
             }}
           >
             R
-            <span
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: "linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)",
-                transform: "translateX(-100%)",
-                animation: "shine 4s 1s ease-in-out infinite",
-              }}
-            />
           </div>
-          <span
-            className="font-mono text-sm font-semibold tracking-wide"
-            style={{ color: scrolled ? "#0F172A" : "var(--color-ink-text)" }}
-          >
+          <span className="font-semibold text-[14px] tracking-tight hidden sm:inline" style={{ color: "var(--color-text)" }}>
             rohit.singh
           </span>
         </a>
@@ -69,108 +62,38 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className={
-                scrolled
-                  ? "px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[#0F172A] hover:bg-[rgba(29,78,216,0.05)]"
-                  : "px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full transition-all duration-200 hover:text-[var(--color-ink-text)] hover:bg-[rgba(96,165,250,0.08)]"
-              }
-              style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
+              className="px-3.5 py-2 text-[13px] font-medium rounded-full transition-colors duration-200"
+              style={{ color: "var(--color-text-secondary)" }}
             >
               {link.label}
             </a>
           ))}
-          <button
-            onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
-            className={
-              scrolled
-                ? "ml-2 flex items-center gap-2 px-3 py-2 text-[11px] font-mono rounded-full border transition-all duration-200 hover:text-[#0F172A]"
-                : "ml-2 flex items-center gap-2 px-3 py-2 text-[11px] font-mono rounded-full border transition-all duration-200 hover:text-[var(--color-ink-text)]"
-            }
-            style={{
-              color: scrolled ? "#475569" : "var(--color-ink-text-2)",
-              borderColor: scrolled ? "#E2E8F0" : "var(--color-ink-border)",
-              background: scrolled ? "transparent" : "rgba(96,165,250,0.04)",
-            }}
-            aria-label="Open command palette"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <kbd className="font-semibold tracking-wide">⌘K</kbd>
-          </button>
-          <a
-            href="#contact"
-            className="ml-3 px-4 py-2 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full text-white transition-all duration-200 hover:opacity-90"
-            style={{
-              background: "linear-gradient(135deg, #1D4ED8, #1E40AF)",
-              boxShadow: "0 2px 14px rgba(30,64,175,0.35)",
-            }}
-          >
-            Hire Me ↗
-          </a>
         </nav>
 
-        {/* Mobile toggles */}
-        <div className="md:hidden flex items-center gap-1">
+        {/* Right side */}
+        <div className="flex items-center gap-2">
           <button
-            className="p-2 transition-colors"
-            style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
             onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-full text-[12px] font-medium transition-colors duration-200"
+            style={{ color: "var(--color-text-secondary)" }}
             aria-label="Open command palette"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
+            <Search size={15} strokeWidth={2} />
+            <kbd className="font-semibold tracking-wide">⌘K</kbd>
           </button>
           <button
-            className="p-2 hover:text-[#1D4ED8] transition-colors"
-            style={{ color: scrolled ? "#475569" : "var(--color-ink-text-2)" }}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
+            onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-full"
+            style={{ color: "var(--color-text-secondary)" }}
+            aria-label="Open command palette"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            <Search size={18} strokeWidth={2} />
           </button>
+          <GlassButton href="#contact" variant="primary" className="hidden md:inline-flex !px-5 !py-2 !text-[13px]" icon={<ArrowUpRight size={14} strokeWidth={2.5} />}>
+            Hire Me
+          </GlassButton>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div
-          className="md:hidden px-6 pb-5"
-          style={{
-            background: "#FFFFFF",
-            borderBottom: "1px solid #E2E8F0",
-          }}
-        >
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="block py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#475569] hover:text-[#1D4ED8] transition-colors"
-              style={{ borderBottom: "1px solid #F1F5F9" }}
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-block px-5 py-2.5 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full text-white"
-            style={{ background: "linear-gradient(135deg, #1D4ED8, #1E40AF)" }}
-          >
-            Hire Me ↗
-          </a>
-        </div>
-      )}
     </header>
   );
 }

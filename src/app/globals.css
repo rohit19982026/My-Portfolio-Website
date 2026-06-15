@@ -1,63 +1,69 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg:          #ffffff;
-  --color-surface:     #F8FAFC;
-  --color-surface-2:   #EFF6FF;
-  --color-border:      #E2E8F0;
-  --color-border-blue: #BFDBFE;
-  --color-text:        #0F172A;
-  --color-text-2:      #334155;
-  --color-muted:       #64748B;
-  --color-faint:       #94A3B8;
-  --color-primary:     #2563EB;
-  --color-primary-dk:  #1D4ED8;
-  --color-cyan:        #06B6D4;
-  --color-green:       #10B981;
-  --color-amber:       #F59E0B;
+  /* Surfaces */
+  --color-bg:            #FFFFFF;
+  --color-bg-secondary:  #F5F5F7;
+  --color-bg-tertiary:   #FBFBFD;
+  --color-border:        #E2E8F0;
 
-  /* Mission Control console surfaces */
-  --color-ink:         #0A0E14;
-  --color-ink-2:       #11161F;
-  --color-ink-border:  #232B38;
-  --color-ink-text:    #E2E8F0;
-  --color-ink-text-2:  #7B8794;
+  /* Overlay-only dark token (Command Palette backdrop dimming) */
+  --color-overlay-dim:   rgba(0,0,0,0.35);
 
-  --font-heading: var(--font-jakarta);
-  --font-body:    var(--font-inter);
-  --font-mono:    ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
-}
+  /* Text */
+  --color-text:           #1D1D1F;
+  --color-text-secondary: #6E6E73;
+  --color-faint:          #AEAEB2;
 
-/* Mission Control console surfaces — declared outside @theme so Tailwind
-   doesn't tree-shake them (they're consumed via var() in inline styles,
-   not as generated color utilities). */
-:root {
-  --color-ink:         #0A0E14;
-  --color-ink-2:       #11161F;
-  --color-ink-border:  #232B38;
-  --color-ink-text:    #E2E8F0;
-  --color-ink-text-2:  #7B8794;
+  /* Accents (Apple system colors) */
+  --color-accent:    #0A84FF;
+  --color-accent-dk: #0066CC;
+  --color-green:     #30D158;
+  --color-orange:    #FF9F0A;
+  --color-purple:    #BF5AF2;
+  --color-teal:      #64D2FF;
+  --color-pink:      #FF375F;
+
+  /* Glass material (light only — used on every section) */
+  --glass-bg:       rgba(255,255,255,0.55);
+  --glass-border:   rgba(255,255,255,0.6);
+  --glass-blur:       20px;
+  --glass-blur-heavy: 36px;
+  --glass-specular: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 45%);
+
+  /* Continuous-corner radii (concentric: outer = inner + padding) */
+  --radius-sm:   14px;
+  --radius-md:   22px;
+  --radius-lg:   30px;
+  --radius-pill: 999px;
+
+  /* Fonts — Apple's documented web guidance is the system font stack,
+     which renders as SF Pro on Apple devices (SF Pro itself isn't
+     licensed for general web font embedding). */
+  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
-  background-color: #ffffff;
-  color: #0F172A;
-  font-family: var(--font-inter), system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-family: var(--font-heading);
 }
 
 /* Scroll progress bar */
 .scroll-progress {
   position: fixed; top: 0; left: 0;
   height: 2px; width: 0%;
-  background: linear-gradient(90deg, #1D4ED8, #0891B2, #1E40AF);
+  background: linear-gradient(90deg, var(--color-accent), var(--color-teal), var(--color-purple));
   z-index: 200;
   transition: width 0.1s linear;
   pointer-events: none;
@@ -65,46 +71,54 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Gradient utilities */
 .gradient-text {
-  background: linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-teal) 100%);
 }
 
 /* Sections */
-.section-alt { background-color: #F8FAFC; }
+.section-alt { background-color: var(--color-bg-secondary); }
 
-/* Hero dot grid */
-.hero-grid {
-  background-image: radial-gradient(circle at 1px 1px, #BFDBFE 1px, transparent 0);
-  background-size: 32px 32px;
+/* Liquid Glass material — frosted, translucent panel with a specular
+   highlight sheen overlay (the overlay is rendered as a separate
+   absolutely-positioned element by GlassSurface). */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
 }
 
-/* Mission Control console grid */
-.console-grid {
-  background-image:
-    linear-gradient(rgba(226,232,240,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(226,232,240,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
+.glass-heavy {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
 }
 
-/* Terminal blinking cursor */
-@keyframes caret-blink {
-  0%, 50% { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+/* Soft pastel blurred-blob backdrop used behind glass panels (Hero, etc.) */
+.gradient-mesh {
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(10,132,255,0.16), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 15%, rgba(191,90,242,0.14), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 50% 90%, rgba(100,210,255,0.16), transparent 60%),
+    var(--color-bg);
 }
-.caret {
-  display: inline-block;
-  width: 0.55em;
-  height: 1.05em;
-  margin-left: 2px;
-  vertical-align: -2px;
-  background: currentColor;
-  animation: caret-blink 1s step-end infinite;
+
+/* Specular sheen sweep — slow diagonal highlight pass across glass panels */
+@keyframes specular-sweep {
+  0%   { transform: translateX(-60%) translateY(-60%) rotate(20deg); opacity: 0; }
+  15%  { opacity: 0.9; }
+  50%  { opacity: 0.4; }
+  100% { transform: translateX(60%) translateY(60%) rotate(20deg); opacity: 0; }
+}
+.specular-sheen {
+  animation: specular-sweep 7s ease-in-out infinite;
 }
 
 /* Card hover */
@@ -113,8 +127,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(30,64,175,0.1);
-  border-color: #BFDBFE;
+  box-shadow: 0 8px 30px rgba(10,132,255,0.12);
+  border-color: rgba(10,132,255,0.25);
 }
 
 /* Keyframes */
@@ -125,13 +139,13 @@ h1, h2, h3, h4, h5, h6 {
 .animate-marquee { animation: marquee 36s linear infinite; white-space: nowrap; }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  50%       { opacity: 0.8; box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.35); }
+  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(48, 209, 88, 0); }
 }
 
 /* Hover utilities for server components (no JS event handlers) */
 .hover-white:hover  { color: #ffffff !important; }
-.hover-blue:hover   { color: #60A5FA !important; }
+.hover-blue:hover   { color: var(--color-accent) !important; }
 
 /* CSS reveal animations — used by server components instead of Framer Motion */
 @keyframes fade-up {
@@ -147,12 +161,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #F8FAFC; }
-::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
+::-webkit-scrollbar-thumb { background: #D2D2D7; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #AEAEB2; }
 
-::selection { background: rgba(37, 99, 235, 0.15); color: #0F172A; }
-:focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }
+::selection { background: rgba(10,132,255,0.18); color: var(--color-text); }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
