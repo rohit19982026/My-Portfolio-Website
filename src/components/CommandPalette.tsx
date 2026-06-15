@@ -187,9 +187,14 @@ export default function CommandPalette() {
             {/* Results */}
             <div className="max-h-[50vh] overflow-y-auto px-2 py-2 font-mono text-[12.5px]">
               {filtered.length === 0 && (
-                <p className="px-3 py-6 text-center" style={{ color: "var(--color-ink-text-2)" }}>
-                  No matches.
-                </p>
+                <div className="px-3 py-6 text-center">
+                  <p style={{ color: "var(--color-ink-text)" }}>
+                    command not found: <span style={{ color: "#F87171" }}>{query}</span>
+                  </p>
+                  <p className="text-[11px] mt-1.5" style={{ color: "var(--color-ink-text-2)" }}>
+                    try a section, a page, or esc to give up gracefully.
+                  </p>
+                </div>
               )}
               {GROUP_ORDER.map((group) => {
                 const groupItems = filtered.filter((i) => i.group === group);

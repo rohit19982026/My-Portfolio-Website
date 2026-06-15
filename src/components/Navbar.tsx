@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const links = [
   { label: "Work",       href: "#work" },
@@ -10,14 +11,20 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const [scrolledRaw, setScrolledRaw] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolledRaw(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Only the homepage opens on the dark "Mission Control" hero — every other
+  // route starts on a light background, so the nav must use light-chrome
+  // styling from the start, not just after scrolling.
+  const scrolled = scrolledRaw || pathname !== "/";
 
   return (
     <header
