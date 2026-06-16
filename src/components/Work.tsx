@@ -487,7 +487,7 @@ export default function Work() {
             </span>.
           </h2>
           <p className="text-[16px] max-w-2xl leading-relaxed mb-5" style={{ color: "var(--color-text-secondary)" }}>
-            Client names anonymized, contract figures left out — those are AE territory.
+            Client names anonymized, commercial terms left out.
             What&apos;s here is the part that was mine: the calls I made when something was
             about to go sideways, alongside the everyday work of keeping four very
             different programs on track. The architecture is the engineering team&apos;s
@@ -499,7 +499,7 @@ export default function Work() {
               style={{ color: "var(--color-accent-dk)", borderRadius: "var(--radius-pill)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-accent)" }} />
-              3 Client Engagements
+              3 Programs
             </span>
             <span
               className="glass inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5"
