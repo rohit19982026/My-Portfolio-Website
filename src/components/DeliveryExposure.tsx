@@ -10,24 +10,28 @@ const stacks = [
   {
     label: "Data platforms delivered on",
     color: "#0A84FF",
+    textColor: "#0066CC",
     icon: Database,
     items: ["Snowflake", "Databricks", "Amazon Redshift", "SQL Server", "Hadoop / HDFS", "SigmaBI"],
   },
   {
     label: "Engineering tooling in-program",
     color: "#30D158",
+    textColor: "#248A3D",
     icon: Wrench,
     items: ["dbt", "Airflow / MWAA", "ETL / ELT Pipelines", "Qlik Replicate", "Spark SQL", "LandingAI / Computer Vision", "AWS", "Azure"],
   },
   {
     label: "PMO & delivery stack I operate daily",
     color: "#64D2FF",
+    textColor: "#0A7EA6",
     icon: LayoutDashboard,
     items: ["Jira", "Confluence", "PSA / Time Tracking", "Delivery Reporting Dashboard", "Azure DevOps", "Performance & Feedback Tools", "Salesforce", "Slack / Google Drive"],
   },
   {
     label: "AI & automation layer I've built",
     color: "#FF9F0A",
+    textColor: "#B25C00",
     icon: Bot,
     items: ["Glean Agent Builder", "Claude (Anthropic)", "n8n (workflow automation)", "Google Apps Script", "Salesforce MCP", "Slack MCP", "Google Drive MCP"],
     note: "This stack powers the 6 AI agents currently running in production across the phData PMO.",
@@ -49,7 +53,7 @@ export default function DeliveryExposure() {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent)" }}>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent-dk)" }}>
             06 / DELIVERY EXPOSURE
           </span>
           <h2
@@ -97,13 +101,13 @@ export default function DeliveryExposure() {
 
                   <GlassSurface accent={stack.color} radius="lg" className="p-6">
                     <div className="flex items-center justify-between gap-3 mb-4 pb-3" style={{ borderBottom: "1px solid var(--glass-border)" }}>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: stack.color }}>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: stack.textColor }}>
                         {stack.label}
                       </p>
                       {si === stacks.length - 1 && (
                         <span
                           className="glass inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 shrink-0"
-                          style={{ color: "var(--color-green)", borderRadius: "var(--radius-pill)" }}
+                          style={{ color: "var(--color-green-text)", borderRadius: "var(--radius-pill)" }}
                         >
                           <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
                           Live in production
@@ -118,7 +122,7 @@ export default function DeliveryExposure() {
                           style={{
                             backgroundColor: `${stack.color}14`,
                             border: `1px solid ${stack.color}33`,
-                            color: stack.color,
+                            color: stack.textColor,
                           }}
                         >
                           {item}

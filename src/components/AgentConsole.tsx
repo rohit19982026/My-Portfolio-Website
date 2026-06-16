@@ -26,7 +26,7 @@ export default function AgentConsole() {
             PMO Agent Fleet
           </span>
         </div>
-        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-green)" }}>
+        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-green-text)" }}>
           <span
             className="w-2 h-2 rounded-full"
             style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }}

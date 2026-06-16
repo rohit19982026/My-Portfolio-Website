@@ -14,6 +14,7 @@ const roles = [
     current: true,
     color: "var(--color-accent)",
     accent: "var(--color-teal)",
+    textAccent: "var(--color-teal-text)",
     bullets: [
       "Run delivery on 4–5 concurrent data and AI programs at a time for phData's Snowflake Elite Partner practice — picking each one up at kickoff, carrying it through a steady weekly cadence, and handing it off clean at closure, often switching between very different clients and timezones in the same afternoon.",
       "The engineers and architects own the build; I own making sure nothing falls through the cracks between them — reading what's actually going on behind a green status, deciding what gets escalated and when, and having the harder conversation before it becomes the client's problem.",
@@ -33,6 +34,7 @@ const roles = [
     current: false,
     color: "var(--color-green)",
     accent: "var(--color-green)",
+    textAccent: "var(--color-green-text)",
     bullets: [
       "CAB governance, risk assessment, rollback planning, and post-implementation validation across 50+ changes a year — ITIL-compliant throughout, against a 99.9% uptime SLA on telecom infrastructure.",
       "Change authorisation on firewall, SSL, inter-switch link, and ACL requests — corporate and public sector accounts. Standard, Normal, Expedited, and Emergency change categories all owned.",
@@ -97,7 +99,7 @@ export default function Trajectory() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent)" }}>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent-dk)" }}>
             02 / TRAJECTORY
           </span>
           <div style={{ overflow: "hidden" }}>
@@ -169,7 +171,7 @@ export default function Trajectory() {
                       {role.current && (
                         <span
                           className="glass inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide"
-                          style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green)" }}
+                          style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green-text)" }}
                         >
                           <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
                           CURRENT
@@ -177,7 +179,7 @@ export default function Trajectory() {
                       )}
                     </div>
                     <h3 className="font-heading text-[22px] font-bold leading-tight tracking-tight mb-1" style={{ color: "var(--color-text)" }}>{role.title}</h3>
-                    <p className="text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.accent }}>{role.org}</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wider mb-5" style={{ color: role.textAccent }}>{role.org}</p>
                     <ul className="space-y-3 mb-5">
                       {role.bullets.map((b, bi) => (
                         <li key={bi} className="flex gap-3 text-[13.5px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
@@ -211,7 +213,7 @@ export default function Trajectory() {
                             whileHover={{ scale: 1.06, y: -2, boxShadow: `0 6px 16px ${role.accent}26` }}
                             transition={{ type: "spring", stiffness: 400, damping: 18 }}
                             className="glass inline-flex items-center gap-2 text-[11.5px] px-3.5 py-2 rounded-full font-semibold cursor-default"
-                            style={{ color: role.accent }}
+                            style={{ color: role.textAccent }}
                           >
                             <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.accent }} />
                             {tag}
@@ -236,7 +238,7 @@ export default function Trajectory() {
               <GlassSurface interactive radius="lg" className="p-5 flex items-start gap-3">
                 <IconBadge icon={GraduationCap} color="var(--color-accent)" size={36} iconSize={18} />
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5" style={{ color: "var(--color-accent)" }}>Education</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5" style={{ color: "var(--color-accent-dk)" }}>Education</p>
                   <p className="font-heading font-bold text-[15px] leading-snug mb-1" style={{ color: "var(--color-text)" }}>{education.degree}</p>
                   <p className="text-[11px] font-medium" style={{ color: "var(--color-text-secondary)" }}>{education.institution}</p>
                   <p className="text-[11px] mt-0.5" style={{ color: "var(--color-text-secondary)" }}>{education.year} · {education.grade}</p>
@@ -246,10 +248,11 @@ export default function Trajectory() {
 
             <motion.div variants={sidebarItem}>
               <GlassSurface radius="lg" className="p-5">
-                <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "var(--color-teal)" }}>Certifications</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "var(--color-teal-text)" }}>Certifications</p>
                 <div className="space-y-2">
                   {certifications.map((c) => {
                     const accent = c.type === "cert" ? "var(--color-accent)" : "var(--color-teal)";
+                    const accentText = c.type === "cert" ? "var(--color-accent-dk)" : "var(--color-teal-text)";
                     return (
                       <motion.div
                         key={c.name}
@@ -260,7 +263,7 @@ export default function Trajectory() {
                       >
                         <span
                           className="mt-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full shrink-0 uppercase tracking-wider"
-                          style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: "rgba(100,210,255,0.15)", color: accent }}
+                          style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: "rgba(100,210,255,0.15)", color: accentText }}
                         >
                           {c.type === "cert" ? "CERT" : "COURSE"}
                         </span>
@@ -277,7 +280,7 @@ export default function Trajectory() {
 
             <motion.div variants={sidebarItem}>
               <GlassSurface accent="#FF9F0A" interactive specular radius="lg" className="p-5">
-                <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--color-orange)" }}>
+                <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--color-orange-text)" }}>
                   <Trophy size={13} strokeWidth={2.5} />
                   Award
                 </p>

@@ -25,9 +25,9 @@ const pov = [
 ];
 
 const proofStrip = [
-  { value: "3-4 hrs → ~60 min", label: "Per PM, per program, at month-end", accent: "var(--color-green)" },
-  { value: ">95%", label: "Accuracy on the billing discrepancy check", accent: "var(--color-accent)" },
-  { value: "100%", label: "PMO adoption within ~1 month of shipping", accent: "var(--color-orange)" },
+  { value: "3-4 hrs → ~60 min", label: "Per PM, per program, at month-end", accent: "var(--color-green)", textAccent: "var(--color-green-text)" },
+  { value: ">95%", label: "Accuracy on the billing discrepancy check", accent: "var(--color-accent)", textAccent: "var(--color-accent-dk)" },
+  { value: "100%", label: "PMO adoption within ~1 month of shipping", accent: "var(--color-orange)", textAccent: "var(--color-orange-text)" },
 ];
 
 const tools = [
@@ -38,6 +38,7 @@ const tools = [
     title: "Billing Compliance Agent",
     proof: "60% time saved · >95% accuracy · PMO-wide deployment in 1 month",
     accent: "#30D158",
+    textAccent: "#248A3D",
   },
   {
     status: "warn" as const,
@@ -45,6 +46,7 @@ const tools = [
     title: "Velocity & Blocker Tracker",
     proof: "CSV → ranked scorecard + PM action items in under 2 min",
     accent: "#FF9F0A",
+    textAccent: "#B25C00",
   },
   {
     status: "ok" as const,
@@ -52,6 +54,7 @@ const tools = [
     title: "Project Health Scanner",
     proof: "Replaces a 2-hour manual checklist across 4+ active programs",
     accent: "#64D2FF",
+    textAccent: "#0A7EA6",
   },
   {
     status: "ok" as const,
@@ -59,6 +62,7 @@ const tools = [
     title: "Steerco Comms Engine",
     proof: "Steerco deck drafted in under 20 min · CFO vs VP Engineering tone",
     accent: "#0A84FF",
+    textAccent: "#0066CC",
   },
 ];
 
@@ -77,7 +81,7 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12"
         >
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>
             05 / AI TOOLING I&apos;VE SHIPPED
           </p>
           <h2
@@ -119,7 +123,7 @@ export default function AIToolingTeaser() {
                 className="p-5"
                 style={{ borderLeft: i > 0 ? "1px solid var(--glass-border)" : undefined }}
               >
-                <div className="font-bold tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.accent }}>
+                <div className="font-bold tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.textAccent }}>
                   {p.value}
                 </div>
                 <div className="text-[12px] leading-snug" style={{ color: "var(--color-text-secondary)" }}>
@@ -160,14 +164,14 @@ export default function AIToolingTeaser() {
                 <div className="flex items-center gap-2 mb-4">
                   <span
                     className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
-                    style={{ color: tool.accent, background: `${tool.accent}14`, border: `1px solid ${tool.accent}30` }}
+                    style={{ color: tool.textAccent, background: `${tool.accent}14`, border: `1px solid ${tool.accent}30` }}
                   >
                     {tool.category}
                   </span>
                   {tool.award && (
                     <span
                       className="flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
-                      style={{ color: "#FF9F0A", background: "rgba(255,159,10,0.1)", border: "1px solid rgba(255,159,10,0.3)" }}
+                      style={{ color: "#B25C00", background: "rgba(255,159,10,0.1)", border: "1px solid rgba(255,159,10,0.3)" }}
                     >
                       <Trophy size={11} strokeWidth={2.5} />
                       Innovation Award
@@ -198,7 +202,7 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10"
         >
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "var(--color-purple)" }}>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "var(--color-purple-text)" }}>
             The story behind it
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
@@ -211,7 +215,7 @@ export default function AIToolingTeaser() {
                 transition={{ duration: 0.5, delay: i * 0.07 }}
               >
                 <GlassSurface radius="lg" className="p-5 h-full">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "var(--color-accent)" }}>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "var(--color-accent-dk)" }}>
                     {p.label}
                   </p>
                   <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>

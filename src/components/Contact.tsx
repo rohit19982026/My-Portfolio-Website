@@ -76,7 +76,7 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14"
         >
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent)" }}>08 / LET&apos;S TALK</span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent-dk)" }}>08 / LET&apos;S TALK</span>
           <div style={{ overflow: "hidden" }}>
             <motion.h2
               initial={{ y: "105%" }}
@@ -140,7 +140,7 @@ export default function Contact() {
                   style={{ background: "var(--color-green)" }}
                 />
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-green)" }}>OPEN FOR PROGRAMS</p>
+                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-green-text)" }}>OPEN FOR PROGRAMS</p>
                   <p className="text-[10px] mt-0.5" style={{ color: "var(--color-faint)" }}>Kolkata, India · IST · Available globally</p>
                 </div>
               </GlassSurface>

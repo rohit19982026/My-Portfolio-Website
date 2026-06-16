@@ -15,6 +15,16 @@ const ACCENT: Record<string, string> = {
   "INTERNAL":    "#FF9F0A",
 };
 
+// Darker, text-safe counterparts of ACCENT — used wherever the accent
+// renders as readable text/icons on light surfaces (the vibrant ACCENT
+// values fail contrast at small sizes).
+const ACCENT_TEXT: Record<string, string> = {
+  "T&M":         "#0066CC",
+  "FIXED-PRICE": "#248A3D",
+  "MANAGED":     "#0A7EA6",
+  "INTERNAL":    "#B25C00",
+};
+
 const MODE_LABEL: Record<string, string> = {
   kickoff:   "DAY-ONE ASSIGNMENT",
   assigned:  "MID-PROGRAM RESCUE",
@@ -42,6 +52,7 @@ function CaseStudyCard({
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const accent = ACCENT[study.model];
+  const accentText = ACCENT_TEXT[study.model];
   const active = open || hovered;
   const [hi1, hi2] = study.headlineMetrics ?? [0, 1];
   const headlineMetrics = [study.metrics[hi1], study.metrics[hi2]];
@@ -117,7 +128,7 @@ function CaseStudyCard({
               <div className="flex items-center gap-2 flex-wrap">
                 <span
                   className="text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
-                  style={{ color: accent, background: `${accent}15`, border: `1px solid ${accent}28` }}
+                  style={{ color: accentText, background: `${accent}15`, border: `1px solid ${accent}28` }}
                 >
                   {study.type}
                 </span>
@@ -141,7 +152,7 @@ function CaseStudyCard({
                 className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300"
                 style={{
                   border: `1.5px solid ${accent}40`,
-                  color: accent,
+                  color: accentText,
                   background: open ? `${accent}18` : hovered ? `${accent}0C` : "transparent",
                 }}
               >
@@ -155,7 +166,7 @@ function CaseStudyCard({
                   className="font-heading font-bold leading-snug mb-2 transition-colors duration-300"
                   style={{
                     fontSize: "clamp(16px, 2vw, 21px)",
-                    color: open ? accent : "var(--color-text)",
+                    color: open ? accentText : "var(--color-text)",
                   }}
                 >
                   {study.title}
@@ -168,7 +179,7 @@ function CaseStudyCard({
                   <div key={m.label} className="text-right">
                     <div
                       className="font-heading font-black tabular-nums leading-none transition-colors duration-300"
-                      style={{ fontSize: "clamp(22px, 2.5vw, 30px)", color: active ? accent : "var(--color-faint)" }}
+                      style={{ fontSize: "clamp(22px, 2.5vw, 30px)", color: active ? accentText : "var(--color-faint)" }}
                     >
                       {m.value}
                     </div>
@@ -202,7 +213,7 @@ function CaseStudyCard({
               <div className="flex lg:hidden gap-5 shrink-0">
                 {headlineMetrics.map((m) => (
                   <div key={m.label} className="text-right">
-                    <div className="font-heading font-black tabular-nums text-[16px] leading-none" style={{ color: accent }}>
+                    <div className="font-heading font-black tabular-nums text-[16px] leading-none" style={{ color: accentText }}>
                       {m.value}
                     </div>
                     <div className="text-[8px] uppercase tracking-wider mt-1" style={{ color: "var(--color-faint)" }}>{m.label}</div>
@@ -250,7 +261,7 @@ function CaseStudyCard({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.05 }}
                 >
-                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-2.5" style={{ color: "#0A84FF" }}>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-2.5" style={{ color: "#0066CC" }}>
                     01 · Context
                   </p>
                   <p className="text-[13px] leading-[1.8] max-w-3xl" style={{ color: "var(--color-text-secondary)" }}>{study.context}</p>
@@ -262,7 +273,7 @@ function CaseStudyCard({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
-                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-2.5" style={{ color: "#30D158" }}>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-2.5" style={{ color: "#248A3D" }}>
                     02 · Your Role
                   </p>
                   <p className="text-[13px] leading-[1.75] max-w-3xl" style={{ color: "var(--color-text-secondary)" }}>{study.role}</p>
@@ -276,7 +287,7 @@ function CaseStudyCard({
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.15 }}
                     >
-                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#FF375F" }}>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#C7174A" }}>
                         03 · The Call I Had to Make
                       </p>
                       <ul className="space-y-2.5 max-w-3xl">
@@ -301,7 +312,7 @@ function CaseStudyCard({
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.2 }}
                     >
-                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#0A84FF" }}>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#0066CC" }}>
                         04 · Key Actions
                       </p>
                       <ul className="space-y-3 max-w-3xl">
@@ -314,7 +325,7 @@ function CaseStudyCard({
                             className="flex gap-3 text-[13px] leading-[1.75]"
                             style={{ color: "var(--color-text-secondary)" }}
                           >
-                            <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#0A84FF" }}>›</span>
+                            <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#0066CC" }}>›</span>
                             {a}
                           </motion.li>
                         ))}
@@ -328,11 +339,11 @@ function CaseStudyCard({
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.15 }}
                     >
-                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#0A84FF" }}>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#0066CC" }}>
                         03 · {study.spotlight === "timeline" && study.timeline ? "How It Unfolded" : "Key Actions"}
                       </p>
                       {study.spotlight === "timeline" && study.timeline ? (
-                        <TimelineStrip milestones={study.timeline} accent={accent} />
+                        <TimelineStrip milestones={study.timeline} accent={accent} textAccent={accentText} />
                       ) : (
                         <ul className="space-y-3 max-w-3xl">
                           {study.actions.map((a, i) => (
@@ -344,7 +355,7 @@ function CaseStudyCard({
                               className="flex gap-3 text-[13px] leading-[1.75]"
                               style={{ color: "var(--color-text-secondary)" }}
                             >
-                              <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#0A84FF" }}>›</span>
+                              <span className="shrink-0 font-bold mt-0.5 text-sm" style={{ color: "#0066CC" }}>›</span>
                               {a}
                             </motion.li>
                           ))}
@@ -357,7 +368,7 @@ function CaseStudyCard({
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.2 }}
                     >
-                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#FF375F" }}>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#C7174A" }}>
                         04 · {study.spotlight === "stakeholder" ? "Stakeholder Realignment" : "Challenges & Decisions"}
                       </p>
                       <ul className="space-y-2.5 max-w-3xl">
@@ -385,12 +396,12 @@ function CaseStudyCard({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.28 }}
                 >
-                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#FF9F0A" }}>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#B25C00" }}>
                     05 · Outcome
                   </p>
                   <div
                     className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider px-4 py-2.5 rounded-full mb-4"
-                    style={{ background: `${accent}0E`, border: `1px solid ${accent}28`, color: accent }}
+                    style={{ background: `${accent}0E`, border: `1px solid ${accent}28`, color: accentText }}
                   >
                     {study.result}
                   </div>
@@ -404,7 +415,7 @@ function CaseStudyCard({
                         className="px-5 py-4 rounded-2xl text-center"
                         style={{ background: `linear-gradient(145deg, ${accent}0A, ${accent}05)`, border: `1px solid ${accent}20`, minWidth: "80px" }}
                       >
-                        <div className="font-heading font-black text-[16px] tabular-nums leading-none" style={{ color: accent }}>
+                        <div className="font-heading font-black text-[16px] tabular-nums leading-none" style={{ color: accentText }}>
                           {m.value}
                         </div>
                         <div className="text-[8px] font-bold uppercase tracking-wider mt-2" style={{ color: "var(--color-faint)" }}>{m.label}</div>
@@ -419,12 +430,12 @@ function CaseStudyCard({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.34 }}
                 >
-                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#64D2FF" }}>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#0A7EA6" }}>
                     06 · Looking Back
                   </p>
                   <div className="grid gap-3 sm:grid-cols-2 max-w-3xl">
                     <div className="rounded-2xl p-4" style={{ background: "rgba(100,210,255,0.06)", border: "1px solid rgba(100,210,255,0.25)" }}>
-                      <p className="text-[9px] font-bold uppercase tracking-wider mb-2" style={{ color: "#64D2FF" }}>
+                      <p className="text-[9px] font-bold uppercase tracking-wider mb-2" style={{ color: "#0A7EA6" }}>
                         What Worked
                       </p>
                       <p className="text-[13px] leading-[1.7]" style={{ color: "var(--color-text-secondary)" }}>{study.learnings.worked}</p>
@@ -467,7 +478,7 @@ export default function Work() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mb-14"
         >
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent)" }}>04 / WORK</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>04 / WORK</p>
           <h2 className="font-heading font-bold tracking-tight leading-[0.95] mb-5" style={{ fontSize: "clamp(32px, 5.5vw, 68px)", color: "var(--color-text)" }}>
             Four programs.{" "}
             <span className="font-normal" style={{ background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-teal) 55%, var(--color-purple) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
@@ -484,14 +495,14 @@ export default function Work() {
           <div className="flex flex-wrap items-center gap-3">
             <span
               className="glass inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5"
-              style={{ color: "var(--color-accent)", borderRadius: "var(--radius-pill)" }}
+              style={{ color: "var(--color-accent-dk)", borderRadius: "var(--radius-pill)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-accent)" }} />
               3 Client Engagements
             </span>
             <span
               className="glass inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5"
-              style={{ color: "var(--color-orange)", borderRadius: "var(--radius-pill)" }}
+              style={{ color: "var(--color-orange-text)", borderRadius: "var(--radius-pill)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-orange)" }} />
               1 Self-Initiated Build

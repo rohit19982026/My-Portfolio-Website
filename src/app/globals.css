@@ -15,7 +15,7 @@
   --color-text-secondary: #6E6E73;
   --color-faint:          #757579;
 
-  /* Accents (Apple system colors) */
+  /* Accents (Apple system colors) — for icons, badges, glows, tints */
   --color-accent:    #0A84FF;
   --color-accent-dk: #0066CC;
   --color-green:     #30D158;
@@ -23,6 +23,14 @@
   --color-purple:    #BF5AF2;
   --color-teal:      #64D2FF;
   --color-pink:      #FF375F;
+
+  /* Text-safe accent variants — darker, for labels/captions on light
+     surfaces where the vibrant accents above fail contrast (~2-3.6:1).
+     --color-accent-dk doubles as the text-safe blue (~5.6:1). */
+  --color-green-text:  #248A3D;  /* ~4.5:1 */
+  --color-teal-text:   #0A7EA6;  /* ~4.6:1 */
+  --color-orange-text: #B25C00;  /* ~5.1:1 */
+  --color-purple-text: #9A3FD1;  /* ~5.2:1 */
 
   /* Glass material (light only — used on every section) */
   --glass-bg:       rgba(255,255,255,0.55);

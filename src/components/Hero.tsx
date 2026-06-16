@@ -51,7 +51,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.05 }}
                 className="glass inline-flex items-center gap-2 px-3.5 py-1.5 mb-6 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green)" }}
+                style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green-text)" }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full"
@@ -178,7 +178,7 @@ export default function Hero() {
             <div>
               <div
                 className="text-[11px] font-bold uppercase tracking-[0.18em] mb-3"
-                style={{ color: "var(--color-accent)" }}
+                style={{ color: "var(--color-accent-dk)" }}
               >
                 Live — PMO Agent Fleet
               </div>

@@ -17,6 +17,14 @@ const STAT_ACCENTS = [
   "var(--color-accent)",
 ];
 
+const STAT_ACCENT_TEXTS = [
+  "var(--color-accent-dk)",
+  "var(--color-teal-text)",
+  "var(--color-orange-text)",
+  "var(--color-green-text)",
+  "var(--color-accent-dk)",
+];
+
 export default function ImpactSummary() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -33,7 +41,7 @@ export default function ImpactSummary() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mb-14"
         >
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent)" }}>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent-dk)" }}>
             03 / IMPACT
           </span>
           <h2
@@ -66,6 +74,7 @@ export default function ImpactSummary() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {impactStats.map((stat, i) => {
             const accent = STAT_ACCENTS[i % STAT_ACCENTS.length];
+            const accentText = STAT_ACCENT_TEXTS[i % STAT_ACCENT_TEXTS.length];
             return (
               <motion.div
                 key={stat.label}
@@ -76,13 +85,13 @@ export default function ImpactSummary() {
                 <GlassSurface accent={accent} interactive radius="lg" className="flex flex-col h-full" style={{ minHeight: 200 }}>
                   <div className="h-[3px]" style={{ background: accent }} />
                   <div className="flex flex-col flex-1 p-5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-3" style={{ color: accent }}>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-3" style={{ color: accentText }}>
                       {String(i + 1).padStart(2, "0")}
                     </p>
                     <AnimatedCounter
                       value={stat.value}
                       className="font-heading tracking-tight mb-3 tabular-nums"
-                      style={{ fontSize: "clamp(28px, 3.2vw, 38px)", fontWeight: 700, lineHeight: 1, color: accent }}
+                      style={{ fontSize: "clamp(28px, 3.2vw, 38px)", fontWeight: 700, lineHeight: 1, color: accentText }}
                     />
                     <p className="text-[12px] font-semibold mb-3" style={{ color: "var(--color-text)" }}>
                       {stat.label}
@@ -106,7 +115,7 @@ export default function ImpactSummary() {
           <GlassSurface radius="lg">
             <div className="px-6 py-4 flex items-center gap-2.5" style={{ borderBottom: "1px solid var(--glass-border)" }}>
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-teal)", animation: "pulse-dot 2s ease-in-out infinite" }} />
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "var(--color-teal)" }}>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "var(--color-teal-text)" }}>
                 {transformation.label}
               </p>
             </div>
@@ -120,7 +129,7 @@ export default function ImpactSummary() {
                 </p>
               </div>
               <div className="p-6 pt-10 md:pt-6" style={{ background: "linear-gradient(145deg, rgba(10,132,255,0.08), rgba(100,210,255,0.08))" }}>
-                <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-2.5" style={{ color: "var(--color-accent)" }}>
+                <p className="text-[10px] font-bold uppercase tracking-[0.15em] mb-2.5" style={{ color: "var(--color-accent-dk)" }}>
                   {transformation.after.heading}
                 </p>
                 <p className="text-[13.5px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>

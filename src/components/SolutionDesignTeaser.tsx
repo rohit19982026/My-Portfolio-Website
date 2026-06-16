@@ -18,7 +18,7 @@ export default function SolutionDesignTeaser() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12"
         >
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>
             07 / SOLUTION DESIGN
           </p>
           <h2
@@ -59,7 +59,7 @@ export default function SolutionDesignTeaser() {
                   <div className="flex items-center gap-2 mb-5 flex-wrap">
                     <span
                       className="text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
-                      style={{ color: "var(--color-accent)", background: "rgba(10,132,255,0.1)", border: "1px solid rgba(10,132,255,0.25)" }}
+                      style={{ color: "var(--color-accent-dk)", background: "rgba(10,132,255,0.1)", border: "1px solid rgba(10,132,255,0.25)" }}
                     >
                       Glean Agent
                     </span>
@@ -86,20 +86,20 @@ export default function SolutionDesignTeaser() {
                   {/* mini-stats */}
                   <div className="grid grid-cols-3 gap-4 mb-6">
                     <div>
-                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent)" }}>3</p>
+                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent-dk)" }}>3</p>
                       <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Data sources</p>
                     </div>
                     <div>
-                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent)" }}>8</p>
+                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent-dk)" }}>8</p>
                       <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Workflow steps</p>
                     </div>
                     <div>
-                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent)" }}>4</p>
+                      <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent-dk)" }}>4</p>
                       <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>LLMs assigned</p>
                     </div>
                   </div>
 
-                  <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "var(--color-accent)" }}>
+                  <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "var(--color-accent-dk)" }}>
                     Read the design walkthrough
                     <ArrowRight size={14} strokeWidth={2.5} className="transition-transform group-hover:translate-x-1" />
                   </div>
@@ -110,7 +110,7 @@ export default function SolutionDesignTeaser() {
                   className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
                   style={{ background: "linear-gradient(135deg, rgba(10,132,255,0.05), rgba(100,210,255,0.04))", borderLeft: "1px solid var(--glass-border)" }}
                 >
-                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] mb-4 relative z-10" style={{ color: "var(--color-accent)" }}>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] mb-4 relative z-10" style={{ color: "var(--color-accent-dk)" }}>
                     Architecture
                   </p>
 
@@ -178,7 +178,7 @@ export default function SolutionDesignTeaser() {
                     </div>
                     <span
                       className="inline-flex items-center gap-1.5 text-[8px] font-bold uppercase tracking-wider px-2 py-1 rounded-full shrink-0"
-                      style={{ color: "var(--color-orange)", background: "rgba(255,159,10,0.1)", border: "1px solid rgba(255,159,10,0.3)" }}
+                      style={{ color: "var(--color-orange-text)", background: "rgba(255,159,10,0.1)", border: "1px solid rgba(255,159,10,0.3)" }}
                     >
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-orange)", animation: "pulse-dot 2s ease-in-out infinite" }} />
                       In design

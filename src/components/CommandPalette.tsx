@@ -220,7 +220,7 @@ export default function CommandPalette() {
                         >
                           <Icon size={16} strokeWidth={2} style={{ color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)" }} />
                           {item.label}
-                          {isActive && <span className="ml-auto text-[11px]" style={{ color: "var(--color-accent)" }}>↵</span>}
+                          {isActive && <span className="ml-auto text-[11px]" style={{ color: "var(--color-accent-dk)" }}>↵</span>}
                         </button>
                       );
                     })}

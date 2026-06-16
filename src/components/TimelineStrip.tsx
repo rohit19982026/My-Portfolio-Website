@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 export default function TimelineStrip({
   milestones,
   accent,
+  textAccent,
 }: {
   milestones: { label: string; detail: string }[];
   accent: string;
+  textAccent?: string;
 }) {
   return (
     <div className="grid gap-4 sm:grid-cols-3 max-w-3xl">
@@ -24,7 +26,7 @@ export default function TimelineStrip({
             className="absolute -left-[5px] top-1 w-2 h-2 rounded-full"
             style={{ background: accent }}
           />
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-1.5" style={{ color: accent }}>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-1.5" style={{ color: textAccent ?? accent }}>
             {m.label}
           </p>
           <p className="text-[12px] leading-[1.6]" style={{ color: "var(--color-text-secondary)" }}>{m.detail}</p>

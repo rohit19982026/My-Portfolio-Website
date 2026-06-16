@@ -34,7 +34,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <p className="font-bold uppercase tracking-widest mb-3 text-[10px]" style={{ color: "var(--color-accent)" }}>
+            <p className="font-bold uppercase tracking-widest mb-3 text-[10px]" style={{ color: "var(--color-accent-dk)" }}>
               Explore
             </p>
             <ul className="space-y-2">
@@ -52,7 +52,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-bold uppercase tracking-widest mb-3 text-[10px]" style={{ color: "var(--color-teal)" }}>
+            <p className="font-bold uppercase tracking-widest mb-3 text-[10px]" style={{ color: "var(--color-teal-text)" }}>
               Connect
             </p>
             <ul className="space-y-2">
@@ -72,7 +72,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-bold uppercase tracking-widest mb-3 text-[10px]" style={{ color: "var(--color-orange)" }}>
+            <p className="font-bold uppercase tracking-widest mb-3 text-[10px]" style={{ color: "var(--color-orange-text)" }}>
               Location
             </p>
             <p className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Kolkata, India · IST</p>
@@ -91,7 +91,7 @@ export default function Footer() {
           <GlassSurface radius="lg" className="flex items-center gap-4 px-5 py-4">
             <IconBadge icon={Bot} color="var(--color-green)" size={40} iconSize={18} />
             <div className="flex-1">
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-green)" }}>
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-green-text)" }}>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
                 Open for programs
               </div>
@@ -102,7 +102,7 @@ export default function Footer() {
             <a
               href="#contact"
               className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider hover-blue"
-              style={{ color: "var(--color-accent)" }}
+              style={{ color: "var(--color-accent-dk)" }}
             >
               Say hello <ArrowUpRight size={13} strokeWidth={2.5} />
             </a>
