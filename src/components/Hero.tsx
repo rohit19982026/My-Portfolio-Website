@@ -102,16 +102,17 @@ export default function Hero() {
                 className="text-[15px] leading-[1.7] max-w-[520px] mb-7"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                I built six AI agents on Claude, Glean, and n8n — billing
-                reconciliation, delivery tracking, exec briefing. The billing
-                agent cut month-end time by 60% with &gt;95% accuracy and went
-                PMO-wide inside a month. The other side: multi-year Databricks,
-                Snowflake, and Redshift programs across US, India, and China
-                teams — fixed-price cutover commitments, multi-region pods,
-                stakeholder situations where the technical problem and the
-                political problem aren&apos;t the same thing. Building the tooling
-                changes how I run those programs — you see the data differently
-                when you&apos;ve also written the code that processes it.
+                Most PMs run programs. I also build the tools the team uses to run them.
+                <br /><br />
+                Programs: on strategic accounts I owned the full engagement — scope, budget,
+                risk, and value decisions across projects. Built senior client relationships,
+                managed the stakeholders most likely to challenge success, and turned
+                delivered work into the next contract.
+                <br /><br />
+                Tooling: I build AI agents that do the manual PM work — billing, tracking,
+                budgeting, forecasting, planning, status briefings — so the team can spend
+                that time on the work that actually matters: growing the engagement, building
+                client relationships, and making the program successful.
               </motion.p>
 
               {/* Social icons */}
