@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Trophy, ArrowUpRight } from "lucide-react";
 import GlassSurface from "./GlassSurface";
 import GlassButton from "./GlassButton";
+import MobileCarousel from "./MobileCarousel";
 
 const pov = [
   {
@@ -151,8 +152,8 @@ export default function AIToolingTeaser() {
         </motion.div>
 
         {/* Tool cards */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-10">
-          {tools.map((tool, i) => (
+        {(() => {
+          const cards = tools.map((tool, i) => (
             <motion.div
               key={tool.title}
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
@@ -191,8 +192,20 @@ export default function AIToolingTeaser() {
                 </p>
               </GlassSurface>
             </motion.div>
-          ))}
-        </div>
+          ));
+          return (
+            <>
+              {/* Mobile: swipeable carousel */}
+              <div className="md:hidden mb-10">
+                <MobileCarousel>{cards}</MobileCarousel>
+              </div>
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 gap-4 mb-10">
+                {cards}
+              </div>
+            </>
+          );
+        })()}
 
         {/* AI point of view */}
         <motion.div

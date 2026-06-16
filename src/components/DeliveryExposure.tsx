@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Database, Wrench, LayoutDashboard, Bot } from "lucide-react";
 import GlassSurface from "./GlassSurface";
 import IconBadge from "./IconBadge";
+import MobileCarousel from "./MobileCarousel";
 
 const stacks = [
   {
@@ -76,70 +77,127 @@ export default function DeliveryExposure() {
         </motion.div>
 
         {/* Stack pipeline */}
-        <div className="relative mb-10">
-          {/* connector spine */}
-          <div
-            className="absolute left-[19px] top-8 bottom-8 w-px hidden sm:block"
-            style={{ background: "linear-gradient(to bottom, #0A84FF, #30D158, #64D2FF, #FF9F0A)" }}
-          />
-
-          <div className="space-y-4">
-            {stacks.map((stack, si) => {
-              const Icon = stack.icon;
-              return (
-                <motion.div
-                  key={stack.label}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.08 + si * 0.1 }}
-                  className="relative sm:pl-14"
-                >
-                  {/* node */}
-                  <div className="absolute left-0 top-6 hidden sm:block">
-                    <IconBadge icon={Icon} color={stack.color} size={40} iconSize={16} />
-                  </div>
-
-                  <GlassSurface accent={stack.color} radius="lg" className="p-6">
-                    <div className="flex items-center justify-between gap-3 mb-4 pb-3" style={{ borderBottom: "1px solid var(--glass-border)" }}>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: stack.textColor }}>
-                        {stack.label}
-                      </p>
-                      {si === stacks.length - 1 && (
-                        <span
-                          className="glass inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 shrink-0"
-                          style={{ color: "var(--color-green-text)", borderRadius: "var(--radius-pill)" }}
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
-                          Live in production
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {stack.items.map((item) => (
-                        <span
-                          key={item}
-                          className="text-[12px] font-semibold px-3 py-1.5 rounded-full transition-colors"
-                          style={{
-                            backgroundColor: `${stack.color}14`,
-                            border: `1px solid ${stack.color}33`,
-                            color: stack.textColor,
-                          }}
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                    {"note" in stack && stack.note && (
-                      <p className="text-[10px] mt-3 pt-3" style={{ color: "var(--color-faint)", borderTop: "1px solid var(--glass-border)" }}>
-                        {stack.note}
-                      </p>
+        {(() => {
+          const stackCard = (stack: typeof stacks[number], si: number) => {
+            const Icon = stack.icon;
+            return (
+              <motion.div
+                key={stack.label}
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.08 + si * 0.1 }}
+              >
+                <GlassSurface accent={stack.color} radius="lg" className="p-6 h-full">
+                  <div className="flex items-center gap-3 mb-4 pb-3" style={{ borderBottom: "1px solid var(--glass-border)" }}>
+                    <IconBadge icon={Icon} color={stack.color} size={36} iconSize={15} />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] flex-1 min-w-0" style={{ color: stack.textColor }}>
+                      {stack.label}
+                    </p>
+                    {si === stacks.length - 1 && (
+                      <span
+                        className="glass inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 shrink-0"
+                        style={{ color: "var(--color-green-text)", borderRadius: "var(--radius-pill)" }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                        Live
+                      </span>
                     )}
-                  </GlassSurface>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {stack.items.map((item) => (
+                      <span
+                        key={item}
+                        className="text-[12px] font-semibold px-3 py-1.5 rounded-full"
+                        style={{
+                          backgroundColor: `${stack.color}14`,
+                          border: `1px solid ${stack.color}33`,
+                          color: stack.textColor,
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  {"note" in stack && stack.note && (
+                    <p className="text-[10px] mt-3 pt-3" style={{ color: "var(--color-faint)", borderTop: "1px solid var(--glass-border)" }}>
+                      {stack.note}
+                    </p>
+                  )}
+                </GlassSurface>
+              </motion.div>
+            );
+          };
+          const cards = stacks.map(stackCard);
+          return (
+            <>
+              {/* Mobile: swipeable carousel */}
+              <div className="md:hidden mb-10">
+                <MobileCarousel>{cards}</MobileCarousel>
+              </div>
+              {/* Desktop: connector spine + vertical stack */}
+              <div className="hidden md:block relative mb-10">
+                <div
+                  className="absolute left-[19px] top-8 bottom-8 w-px"
+                  style={{ background: "linear-gradient(to bottom, #0A84FF, #30D158, #64D2FF, #FF9F0A)" }}
+                />
+                <div className="space-y-4">
+                  {stacks.map((stack, si) => {
+                    const Icon = stack.icon;
+                    return (
+                      <motion.div
+                        key={stack.label}
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={inView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.5, delay: 0.08 + si * 0.1 }}
+                        className="relative pl-14"
+                      >
+                        <div className="absolute left-0 top-6">
+                          <IconBadge icon={Icon} color={stack.color} size={40} iconSize={16} />
+                        </div>
+                        <GlassSurface accent={stack.color} radius="lg" className="p-6">
+                          <div className="flex items-center justify-between gap-3 mb-4 pb-3" style={{ borderBottom: "1px solid var(--glass-border)" }}>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: stack.textColor }}>
+                              {stack.label}
+                            </p>
+                            {si === stacks.length - 1 && (
+                              <span
+                                className="glass inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 shrink-0"
+                                style={{ color: "var(--color-green-text)", borderRadius: "var(--radius-pill)" }}
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                                Live in production
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {stack.items.map((item) => (
+                              <span
+                                key={item}
+                                className="text-[12px] font-semibold px-3 py-1.5 rounded-full transition-colors"
+                                style={{
+                                  backgroundColor: `${stack.color}14`,
+                                  border: `1px solid ${stack.color}33`,
+                                  color: stack.textColor,
+                                }}
+                              >
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                          {"note" in stack && stack.note && (
+                            <p className="text-[10px] mt-3 pt-3" style={{ color: "var(--color-faint)", borderTop: "1px solid var(--glass-border)" }}>
+                              {stack.note}
+                            </p>
+                          )}
+                        </GlassSurface>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          );
+        })()}
 
         {/* Disclaimer */}
         <motion.div

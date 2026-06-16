@@ -6,6 +6,7 @@ import { ArrowRight, ArrowDown } from "lucide-react";
 import { impactStats, transformation } from "@/lib/impactSummary";
 import AnimatedCounter from "./AnimatedCounter";
 import GlassSurface from "./GlassSurface";
+import MobileCarousel from "./MobileCarousel";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -71,8 +72,8 @@ export default function ImpactSummary() {
         </motion.div>
 
         {/* Block A — stat grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          {impactStats.map((stat, i) => {
+        {(() => {
+          const cards = impactStats.map((stat, i) => {
             const accent = STAT_ACCENTS[i % STAT_ACCENTS.length];
             const accentText = STAT_ACCENT_TEXTS[i % STAT_ACCENT_TEXTS.length];
             return (
@@ -103,8 +104,20 @@ export default function ImpactSummary() {
                 </GlassSurface>
               </motion.div>
             );
-          })}
-        </div>
+          });
+          return (
+            <>
+              {/* Mobile: swipeable carousel */}
+              <div className="md:hidden mb-10">
+                <MobileCarousel>{cards}</MobileCarousel>
+              </div>
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                {cards}
+              </div>
+            </>
+          );
+        })()}
 
         {/* Block B — before/after transformation */}
         <motion.div

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { caseStudies } from "@/lib/caseStudies";
 import TimelineStrip from "./TimelineStrip";
+import MobileCarousel from "./MobileCarousel";
 import GlassSurface from "./GlassSurface";
 import { useTilt } from "@/hooks/useTilt";
 
@@ -510,7 +511,16 @@ export default function Work() {
           </div>
         </motion.div>
 
-        <div className="space-y-4">
+        {/* Mobile: swipeable carousel — each card expands in-place */}
+        <div className="md:hidden">
+          <MobileCarousel>
+            {caseStudies.map((study, i) => (
+              <CaseStudyCard key={study.id} study={study} index={i} />
+            ))}
+          </MobileCarousel>
+        </div>
+        {/* Desktop: vertical stack */}
+        <div className="hidden md:block space-y-4">
           {caseStudies.map((study, i) => (
             <CaseStudyCard key={study.id} study={study} index={i} />
           ))}

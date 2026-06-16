@@ -6,6 +6,7 @@ import { Mail, Phone, Building2, Bot, Repeat, ArrowRight, type LucideIcon } from
 import GlassSurface from "./GlassSurface";
 import GlassButton from "./GlassButton";
 import IconBadge from "./IconBadge";
+import MobileCarousel from "./MobileCarousel";
 
 function LinkedInIcon({ size = 16, color = "currentColor" }: { size?: number; strokeWidth?: number; color?: string }) {
   return (
@@ -148,33 +149,53 @@ export default function Contact() {
           </motion.div>
 
           {/* Right — engagement cards */}
-          <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="space-y-4"
-          >
-            {engagementTypes.map((e) => {
-              const Icon = e.icon;
-              return (
-                <motion.div key={e.title} variants={cardItem}>
-                  <GlassSurface interactive radius="lg" className="flex gap-4 p-5">
-                    <IconBadge icon={Icon} color={e.color} size={40} iconSize={18} />
-                    <div>
-                      <p className="font-semibold text-[14px] mb-1" style={{ color: "var(--color-text)" }}>{e.title}</p>
-                      <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{e.desc}</p>
-                    </div>
-                  </GlassSurface>
-                </motion.div>
-              );
-            })}
+          <div>
+            {/* Mobile: swipeable carousel */}
+            <div className="md:hidden mb-4">
+              <MobileCarousel>
+                {engagementTypes.map((e) => {
+                  const Icon = e.icon;
+                  return (
+                    <GlassSurface key={e.title} interactive radius="lg" className="flex gap-4 p-5 h-full">
+                      <IconBadge icon={Icon} color={e.color} size={40} iconSize={18} />
+                      <div>
+                        <p className="font-semibold text-[14px] mb-1" style={{ color: "var(--color-text)" }}>{e.title}</p>
+                        <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{e.desc}</p>
+                      </div>
+                    </GlassSurface>
+                  );
+                })}
+              </MobileCarousel>
+            </div>
+            {/* Desktop: stacked list */}
+            <motion.div
+              variants={cardVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              className="hidden md:block space-y-4"
+            >
+              {engagementTypes.map((e) => {
+                const Icon = e.icon;
+                return (
+                  <motion.div key={e.title} variants={cardItem}>
+                    <GlassSurface interactive radius="lg" className="flex gap-4 p-5">
+                      <IconBadge icon={Icon} color={e.color} size={40} iconSize={18} />
+                      <div>
+                        <p className="font-semibold text-[14px] mb-1" style={{ color: "var(--color-text)" }}>{e.title}</p>
+                        <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{e.desc}</p>
+                      </div>
+                    </GlassSurface>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
 
-            <motion.div variants={cardItem} className="pt-2">
+            <div className="mt-4">
               <GlassButton href="mailto:singhrohit.25119@gmail.com" variant="primary" className="w-full justify-center" icon={<ArrowRight size={15} strokeWidth={2.5} />}>
                 Email Me Directly
               </GlassButton>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
