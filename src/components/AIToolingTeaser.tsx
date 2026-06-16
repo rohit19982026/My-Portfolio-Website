@@ -83,13 +83,13 @@ export default function AIToolingTeaser() {
           className="mb-12"
         >
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>
-            05 / AI TOOLING I&apos;VE SHIPPED
+            05 / AI ENGINEERING
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--color-text)" }}
           >
-            I automated{" "}
+            Six production{" "}
             <span
               style={{
                 background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-teal) 55%, var(--color-purple) 100%)",
@@ -97,15 +97,19 @@ export default function AIToolingTeaser() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              my own job
-            </span>{" "}
-            first.
+              AI agents
+            </span>
+            , built from scratch.
           </h2>
           <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-            It started with one agent that did my own end-of-month billing reconciliation
-            — the most boring, most error-prone hour of my month. Once that one held up,
-            the rest of the PMO wanted their hours back too. Six agents now run on Glean,
-            Claude, and n8n across the whole PMO; four are highlighted below.
+            Month-end billing reconciliation was 3–4 hours of copy-paste per PM, per program —
+            no judgment required, just a machine that hadn&apos;t been written yet.
+            Built on Claude, Glean, and n8n with schema-bounded outputs, human-review
+            fallbacks, and per-run accuracy logs against a held-out test set before it
+            touched a live client invoice.
+            Cut EOM billing time 60%, &gt;95% accuracy, PMO-wide inside a month — then five
+            more agents followed, recovering ~8 hours per week across the delivery org.
+            Running programs while building the tooling gives you a feedback loop most PMs don&apos;t have.
           </p>
         </motion.div>
 
