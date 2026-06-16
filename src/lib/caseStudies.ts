@@ -189,7 +189,7 @@ export const caseStudies: CaseStudy[] = [
     spotlight: "metrics",
     headlineMetrics: [0, 1],
     context:
-      "A PMO AI agent platform for the phData delivery org. The first agent was an EOM billing reconciliation tool I built for myself. It got noticed. Five more followed — sprint health scoring, project health scanning, steerco deck drafting, and two narrower utilities. By the end, the platform was PMO-wide and being onboarded into the standard rituals of every active program.",
+      "A PMO AI agent platform for the phData delivery org. The first agent was an EOM billing reconciliation tool I built for myself. It got noticed. Five more followed — sprint health scoring, project health scanning, steerco deck drafting, and two narrower utilities. By the end, the platform was PMO-wide and running on every active program.",
     role:
       "Sole designer and builder. The technical part was the easy part. The harder part was earning the trust of a PMO that — reasonably — does not want an LLM anywhere near a client invoice without a paper trail behind every number.",
     actions: [

@@ -6,33 +6,35 @@ industry: "Professional Services"
 duration: "3 months"
 role: "PM & Skill Builder"
 tags: ["AI", "Claude", "Glean", "PMO", "Automation"]
-summary: "End-of-month billing reconciliation was eating 3–4 hours per PM per program. The data was structured and the process was repeatable — strong candidate to take off the plate."
-outcome: "~60% of EOM billing time recovered with >95% accuracy on the discrepancy check"
+summary: "End-of-month billing reconciliation was eating 3–4 hours per PM per program, every month. I'd done it by hand for nearly two years. One Saturday I stopped doing that."
+outcome: "~60% of EOM billing time recovered, >95% accuracy on the discrepancy check, 6 agents in production PMO-wide"
 accentColor: "#10b981"
 order: 3
 ---
 
-## The problem
+## The thing I was tired of doing
 
-At end of month, the PMO ritual is the same on every program: pull time entries from the PSA, cross-reference against SOW milestones, flag discrepancies, write a finance-ready summary. It's 3–4 hours of work per PM, per program, every month. Error-prone (manual copy-paste), inconsistent across people, and uses PM time that should go into the parts of the job that need actual judgment.
+End-of-month billing reconciliation is the same ritual on every program: pull time entries from the PSA, cross-reference against SOW milestones, flag discrepancies, write a finance-ready summary, send it upstream. Repeat per program. Every month.
 
-The data was structured and the process was repeatable. Strong candidate for automation.
+I'd been doing it by hand for nearly two years. Three to four hours, per program, every month. Manual copy-paste between the time-tracking export and the SOW budget. Error-prone in ways I could never fully catch until I'd already sent something. And the whole thing required exactly zero judgment — just pattern-matching I knew a computer could do.
+
+I built the first agent on a Saturday, not because someone asked me to. Because I was done doing that by hand.
 
 ## How I built it
 
-**Watched my own week first.** Before writing a line of prompt, I worked through a couple of months of my own EOM by hand and listed what the agent would need to do: pull time data, compare against SOW budget, flag overages and underages, produce a plain-English summary for finance, surface anything weird for human review.
+**Watched my own week first.** Before writing a prompt, I worked through two months of my own EOM by hand again, with a notepad. Not to re-learn the process — I knew it — but to list exactly what the agent would need to do: pull time data, compare against SOW budget, flag overages and underages, produce a plain-English summary for finance, and surface anything weird for human review instead of generating a number that looked clean.
 
-**Built on Glean rather than direct API.** Glean was already the PMO's knowledge and search layer. Building the agent there meant it could draw on live program data without me building separate integrations — less impressive on paper, much faster to ship and far easier for the rest of the PMO to adopt.
+That last part mattered more than the rest. The PMO was correctly skeptical about an LLM anywhere near a client invoice. The first question I'd get wasn't "does it work?" It was "how do we know when it's wrong?"
 
-**Three chained prompts, schema-bounded outputs:**
+**Built on Glean, not a direct API.** Glean was already the PMO's knowledge and search layer. Building there meant the agent could draw on live program data, Salesforce, and Drive without me building separate integrations first. Less impressive architecturally. Far faster to ship. Far easier for a non-technical PM to trust — which was the actual constraint.
 
-- **Discrepancy detector** — compares billed hours vs SOW budget per program, flags severity.
-- **Narrative generator** — produces the finance-ready summary in plain English.
-- **Exception explainer** — for each flagged discrepancy, generates a probable cause and recommended action from program context.
+**Three chained prompts, schema-bounded outputs.** A discrepancy detector comparing billed hours vs. SOW budget per program. A narrative generator producing the finance-ready summary. An exception explainer giving probable cause and recommended action for each flag, drawn from program context.
 
-**Guardrails.** Schema validation on every LLM output. If the model produced something that didn't parse, the skill surfaced the raw numbers for human review rather than silently producing a malformed summary.
+Schema validation on every output. If something didn't parse, the agent surfaced the raw numbers for human review rather than generating a malformed summary anyone could mistake for clean. I traded elegance for a trustworthy failure mode.
 
-## Outcomes
+**Shipped the billing agent first.** Not because it was easiest — it wasn't — but because it was the highest-pain, most-measurable use case. If it didn't hold up under scrutiny, nothing after it would get a fair hearing. Once it was running PMO-wide inside a month, the next five agents had an easier path in.
+
+## What it turned into
 
 | Metric | Before | After |
 |--------|--------|-------|
@@ -40,6 +42,12 @@ The data was structured and the process was repeatable. Strong candidate for aut
 | Discrepancy detection accuracy | n/a (manual) | >95% on the test set |
 | PMO adoption | — | 100% within ~1 month |
 
+The >95% number is backed by a held-out test set of past EOM reconciliations I logged per-run from the start. It slowed the first version down by a couple of weeks. But it meant I had something to stand behind in a status meeting — not a claim, a number with a denominator.
+
+Five more agents followed: sprint health scoring, project health scanning, steerco deck drafting, and two narrower utilities. Across all six, the PMO recovered roughly 8 hours per week. phData gave me the Innovation Award for the platform.
+
 ## What I'd do differently
 
-I built this and the Sprint Velocity agent against separate data pulls before I'd noticed they ingest almost the same program and sprint data. A shared data layer built once would have sped both up. That's the kind of detour you only notice once you've shipped the first agent — but next time I'd build the data layer second instead of in parallel.
+The Velocity & Blocker Tracker and the Project Health Scanner both got built in parallel against separate data pulls — before I noticed they ingest almost the same sprint and program data. A shared data layer built once would have sped both and made the third agent on top of them trivial.
+
+That's the kind of redundancy you only catch once you've shipped one. Next time I'd build the data layer second, not in parallel with the second agent.

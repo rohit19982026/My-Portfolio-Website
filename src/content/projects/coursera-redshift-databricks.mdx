@@ -6,34 +6,52 @@ industry: "EdTech"
 duration: "9 months"
 role: "Technical Project Manager"
 tags: ["Databricks", "Redshift", "Unity Catalog", "Migration", "Fixed-Price"]
-summary: "PM engagement on a fixed-price migration of Coursera's data platform from Amazon Redshift to Databricks Unity Catalog — ~2,300 production objects, a US–India engineering pod, and a cutover date already set at SOW signature."
-outcome: "~2,300 objects migrated, cutover delivered, closure checklist run, KT'd to the client team"
+summary: "Fixed-price migration of Coursera's analytics estate from Redshift to Databricks Unity Catalog — ~2,300 production objects, a US–India pod, and a senior client-side data lead who'd built the original platform and wasn't sold on moving it."
+outcome: "~2,300 objects migrated, cutover delivered, data lead signed off UAT, closure checklist run"
 accentColor: "#2563eb"
 order: 1
 ---
 
-## The engagement
+## What I walked into
 
-Coursera had run their analytics on Amazon Redshift for years. They wanted to move to Databricks Delta Lake on Unity Catalog. The architecture and platform choices were made by their team and our architect by the time I came in.
+The architecture call was already made. The team was assembled. I came in at SOW signature on a fixed-price engagement with the cutover date already in the deck.
 
-What I owned was the PM side of getting it across the line: kickoff, sprint cadence, weekly status to the account team and client sponsor, the RAID log, financial tracking, the cutover comms, and the closeout on the way out.
+What nobody had written down was this: the senior data engineer on the client side had built the Redshift estate over six years. She knew every object in it. She hadn't been the decision-maker when the migration was approved. And she wasn't fully convinced it was a good idea.
 
-## What I actually did
+She was also going to be the gatekeeper on every access grant, every legacy-table question, and every UAT sign-off.
 
-**Kickoff and setup.** Picked the engagement up in the sales channel at SOW signature. Read the SOW and scoping doc. Set up the project's tracking — start/end dates, rates, roles, budget, PO and invoice coding, resources scheduled — and got a second PM's review on the plan before anything went external. Stood up the shared drive folder using the standard structure and the project's Slack channel. Ran the 45-minute internal kickoff with the account team and delivery lead. Drafted and rehearsed the external kickoff deck (from the current template, not someone else's customer's). Ran the 1-hour client kickoff with their product owner and sponsor. Welcome email went out the same day with the system access asks — on data work that's always the first thing to block delivery.
+That's the project I actually picked up.
 
-**Weekly cadence.** Standups, backlog grooming with the team and the client product owner, sprint planning, review/retro. Status report to the account team, delivery lead, and the client sponsor on the same day each week. 30-minute internal leadership prep before the client-facing leadership meeting (timeline, accomplishments, blockers, risks, collaboration topics). Kept the color status honest — flipped to yellow on access delays the client side owned, even when it was easier to leave it green.
+## The technical PM work
 
-**Blockers and escalation.** Access requests to the source systems were the recurring story. The team can't migrate what they can't see, so most of the early-engagement RAID log was access escalations through the client product owner. Two stalled long enough that I escalated to the client sponsor and our AE in the same conversation rather than wait — both unblocked the next week.
+Setup in week one was clean — budget and roles checked against the SOW, a second PM's eyes on the plan before anything went external, access requests out the same day as kickoff. On a migration, access is always the first thing to block the team.
 
-**Cutover.** Worked the cutover plan with the architect and the client engineering team — comms timeline, rollback window, who was paged, downstream owner sign-offs.
+Weekly cadence ran the same way every week: standups, sprint planning, review/retro, status report to the account team and client sponsor on the same day. RAID log kept current. Color status held honest — I flipped to yellow twice on access delays the client side owned, and escalated one stall to the client sponsor and our account lead when it crossed three weeks open.
 
-**Closure.** Ran the standard close-out: final invoicing reconciled, final status report out, NPS link sent, knowledge transfer to the client team taking the platform forward, access removed across the team.
+The cutover worked with the architect and the client engineering team: comms timeline, rollback window, downstream sign-offs. Closure ran the standard way out — final invoicing reconciled, NPS sent, KT to the team taking the platform forward, access removed.
 
-## What was real about it
+That's the PM work. It's not the interesting part of this engagement.
 
-A two-region engineering pod (US + India) on a fixed-price engagement with a date in the SOW. Engineering owned the technical migration. I owned the project landing — and on fixed-price, that meant being very honest very early about anything that could put the date at risk.
+## The actual work
+
+Week two, I asked the architect for an hour to understand which Redshift objects the client's data lead had personally built. The answer: most of the ones the marketing team still ran their weekly reporting off.
+
+I moved that tranche from sprint 2 to sprint 6. The architect pushed back — it made the dependency graph harder. I held the line. If we migrated those objects early and something was wrong, the person who'd flag it loudest was the same person I needed signing off UAT. Easier to let her validate them herself, with her own hands, close to the cutover.
+
+In week three, I restructured the weekly client meeting so the data lead spoke first, not the sponsor. Small thing. Cost the sponsor maybe 90 seconds of airtime. By week four, she was saying "we" instead of "you."
+
+In week nine, a senior stakeholder at the client asked in a hallway chat whether we could add a dashboard that wasn't in the SOW. I got the architect's estimate in writing, brought it to the AE, and routed it through change-order. Lost a small amount of goodwill that week. Protected the margin for the rest of the engagement.
+
+## What the engagement actually required
+
+On the surface: PM a two-region engineering pod across a fixed-price engagement. Ship the migration on time.
+
+Under that: earn the trust of someone who'd spent six years building the thing we were replacing. The technical work was the engineering team's. My job was making sure the one person who could quietly veto the UAT instead decided to co-own the outcome.
+
+She signed off UAT. The migration shipped. That's what I'm most satisfied with from this one.
 
 ## What I'd do differently
 
-I underestimated how much PM bandwidth a two-region pod would take in the first three weeks. The standup and grooming cadence I'd planned for one pod had to be doubled, and the other program I was covering felt the squeeze. Next time I'd either run thinner ceremony in the second region during the ramp window, or arrange coverage on the other program while a new pod is setting up.
+I assumed the client sponsor's sign-off meant the data lead was aligned. That took me three weeks to disprove.
+
+Week five ended up being a harder conversation than it needed to be — one that week one could have absorbed easily. I've stopped assuming a manager's alignment transfers to the senior ICs who've been in a role long enough to have opinions that weren't asked for.
