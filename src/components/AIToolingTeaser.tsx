@@ -104,12 +104,10 @@ export default function AIToolingTeaser() {
           <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
             Month-end billing reconciliation was 3–4 hours of copy-paste per PM, per program —
             no judgment required, just a machine that hadn&apos;t been written yet.
-            Built on Claude, Glean, and n8n with schema-bounded outputs, human-review
-            fallbacks, and per-run accuracy logs against a held-out test set before it
-            touched a live client invoice.
-            Cut EOM billing time 60%, &gt;95% accuracy, PMO-wide inside a month — then five
-            more agents followed, recovering ~8 hours per week across the delivery org.
-            Running programs while building the tooling gives you a feedback loop most PMs don&apos;t have.
+            Built with accuracy checks and human-review fallbacks before it touched a live
+            client invoice. Cut billing time by 60%, accurate above 95%, adopted team-wide
+            inside a month. Five more agents followed. Running programs while building the
+            tooling gives you a feedback loop most PMs don&apos;t have.
           </p>
         </motion.div>
 

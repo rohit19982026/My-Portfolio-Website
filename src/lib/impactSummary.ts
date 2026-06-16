@@ -17,24 +17,24 @@ export const impactStats: ImpactStat[] = [
   },
   {
     value: "100%",
-    label: "PMO Adoption of My AI Agents",
-    detail: "Within about a month of the first one going live — built to get my own hours back, kept because the rest of the PMO wanted theirs back too.",
+    label: "Team Adoption of My AI Agents",
+    detail: "Built to solve my own problem first. Every PM on the team was using it within a month — because it solved theirs too.",
   },
   {
     value: "3",
-    label: "Engagement Models, 3 Different Definitions of 'On Track'",
-    detail: "Fixed-price, multi-year T&M, and internal builds — each one needs a different conversation about risk, and a different read on what 'green' actually means.",
+    label: "Programs, 3 Different Definitions of 'On Track'",
+    detail: "Fixed-price delivery, long-term retainer, and an internal build — each needs a different conversation about risk, budget, and what 'green' actually means.",
   },
 ];
 
 export const transformation = {
-  label: "PMO-WIDE AI AUTOMATION",
+  label: "TEAM-WIDE AI AUTOMATION",
   before: {
     heading: "Before",
-    body: "About 8 hours per week of PM time across active programs went into the repeatable parts of the job — month-end billing reconciliation, sprint health scoring, project health scans, steerco deck drafting — done manually, program by program.",
+    body: "About 8 hours per week of PM time across active programs went into the repeatable parts of the job — month-end billing reconciliation, sprint health scoring, project health scans, leadership deck drafting — done manually, program by program.",
   },
   after: {
     heading: "After",
-    body: "6 agents I designed and built run PMO-wide on Glean, Claude, and n8n — recovering that ~8 hours/week, with the billing agent at a >95% accuracy check on its discrepancy detection. Built because I wanted those hours back, kept because the rest of the PMO wanted them back too.",
+    body: "6 agents I designed and built now run across the delivery team on Glean, Claude, and n8n — recovering ~8 hours per week, with the billing agent accurate above 95% on its discrepancy check. Built because I wanted those hours back. Adopted because the rest of the team wanted theirs back too.",
   },
 };
