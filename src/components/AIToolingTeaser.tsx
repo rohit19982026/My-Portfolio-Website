@@ -9,15 +9,15 @@ import MobileCarousel from "./MobileCarousel";
 const pov = [
   {
     label: "Why I built it",
-    body: "End-of-month billing reconciliation was 3-4 hours of copy-paste between the time-tracking tool and the SOW budget, every program, every month. I'd done it by hand for two years. The data was structured and the process was identical every time — that's not PM work, that's a script that hasn't been written yet.",
+    body: "End-of-month billing reconciliation was 3-4 hours of copy-paste between the time-tracking tool and the project budget, every program, every month. I'd done it by hand for two years. The data was structured and the process was identical every time — that's not PM work, that's a script that hasn't been written yet.",
   },
   {
     label: "Build vs. buy",
-    body: "Built on Glean, not a custom API integration — it was already the PMO's knowledge and permissions layer, so an agent there could see live program data, Salesforce, and Drive without a separate integration build. Less impressive on paper, far faster to ship and far easier for the rest of the PMO to pick up.",
+    body: "Built on Glean, not a custom API integration — it was already the team's knowledge and permissions layer, so an agent there could see live program data, Salesforce, and Drive without a separate integration build. Less impressive on paper, far faster to ship and far easier for the rest of the team to pick up.",
   },
   {
     label: "Adoption sequencing",
-    body: "Shipped the billing agent first because it was the highest-pain, most-measurable win — if it didn't hold up, nothing after it would get adopted either. Once it was running PMO-wide inside a month, the next five had an easier path in.",
+    body: "Shipped the billing agent first because it was the highest-pain, most-measurable win — if it didn't hold up, nothing after it would get adopted either. Once it was running team-wide inside a month, the next five had an easier path in.",
   },
   {
     label: "Why the accuracy number is real",

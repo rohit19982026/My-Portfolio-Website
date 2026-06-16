@@ -16,16 +16,16 @@ const roles = [
     accent: "var(--color-teal)",
     textAccent: "var(--color-teal-text)",
     bullets: [
-      "Run delivery on 4–5 concurrent data and AI programs at a time for phData's Snowflake Elite Partner practice — picking each one up at kickoff, carrying it through a steady weekly cadence, and handing it off clean at closure, often switching between very different clients and timezones in the same afternoon.",
+      "Own end-to-end delivery on strategic data and AI programs at phData — typically 4–5 running at once, each at a different stage. Scope, budget, risk, and the client relationship are all mine. The engineering team owns the build; I own whether the engagement succeeds.",
       "The engineers and architects own the build; I own making sure nothing falls through the cracks between them — reading what's actually going on behind a green status, deciding what gets escalated and when, and having the harder conversation before it becomes the client's problem.",
       "Run the weekly rhythm that keeps the account team and the client sponsor reading from the same page — status, financials, and a live risk register, but the real work is the judgment call about what gets said out loud and when.",
-      "Built and shipped 6 AI agents (Glean, Claude, n8n) that took the most repeatable parts of the PM job — billing reconciliation, sprint health, steerco prep, program health scans — off the desks of the whole PMO, not just my own. Recognised with phData's Innovation Award.",
+      "Built and shipped 6 AI agents (Glean, Claude, n8n) that took the most repeatable parts of the PM job — billing reconciliation, sprint health, leadership deck drafting, program health scans — off the desks of the whole delivery team, not just my own. Recognised with phData's Innovation Award.",
       "Lead cross-functional teams of 15–30 across engineering, architecture, and client-side stakeholders — keep standups, grooming, and sprint ceremonies honest enough that the board can be trusted without me micromanaging it.",
       "Worked across a 10.5-hour timezone spread on one program — a US delivery lead to a China factory site — and redesigned the cadence around the gap instead of forcing live meetings that were never going to happen.",
-      "Spot scope creep and access blockers early enough to route them through the right conversation — a change order, an escalation, a heads-up to the AE — rather than absorb them quietly and hope they don't compound.",
+      "Spot scope creep and access blockers early enough to route them through the right conversation — a change request, an escalation, a heads-up to the account lead — rather than absorb them quietly and hope they don't compound.",
       "Onboard new team members mid-program without disrupting the active sprint, and build out-of-office coverage into every PTO so nothing on an active program depends on me being online.",
     ],
-    tags: ["Multi-Program Delivery (4–5 Concurrent)", "Cross-Timezone Delivery", "Stakeholder & Executive Comms", "AI Agent Builder", "Risk & Escalation Management", "Agile Delivery (PSM1)", "Team Leadership (15–30)", "PMO Process Design"],
+    tags: ["Multi-Program Delivery (4–5 Concurrent)", "Cross-Timezone Delivery", "Stakeholder & Executive Comms", "AI Agent Builder", "Risk & Escalation Management", "Agile Delivery (PSM1)", "Team Leadership (15–30)", "Delivery Process Design"],
   },
   {
     period: "AUG 2020 — DEC 2022",
@@ -62,7 +62,7 @@ const certifications = [
 
 const award = {
   title: "phData Innovation Award",
-  desc: "Recognised for the PMO AI agent platform — Glean + Claude + n8n agents handling EOM billing reconciliation, sprint health scoring, project health scans, and steerco deck drafting. Recovers about 8 hours a week across the delivery org.",
+  desc: "Recognised for building the delivery team's AI agent platform — Glean + Claude + n8n agents handling month-end billing reconciliation, sprint health scoring, project health scans, and leadership deck drafting. Recovers about 8 hours a week across the team.",
 };
 
 const sidebarVariants = {
