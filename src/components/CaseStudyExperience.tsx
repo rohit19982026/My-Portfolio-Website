@@ -552,9 +552,18 @@ function AgentControlCenter({ study, accent, accentText }: { study: CaseStudy; a
             <p className="font-heading font-bold text-[13px] leading-tight mb-2" style={{ color: "var(--color-text)" }}>
               {a.name}
             </p>
-            <p className="text-[10.5px] leading-[1.5] mb-2.5" style={{ color: "var(--color-text-secondary)" }}>
+            <p className="text-[10.5px] leading-[1.5] mb-2" style={{ color: "var(--color-text-secondary)" }}>
               {a.intent}
             </p>
+            <div className="rounded-md px-2 py-1.5 mb-2.5"
+              style={{ background: "rgba(191,90,242,0.06)", border: "1px dashed rgba(191,90,242,0.25)" }}>
+              <p className="text-[8px] font-bold uppercase tracking-widest mb-0.5" style={{ color: "#9333EA" }}>
+                Reasoning
+              </p>
+              <p className="text-[10px] leading-[1.45]" style={{ color: "var(--color-text-secondary)" }}>
+                {a.reasoning}
+              </p>
+            </div>
             <div className="flex flex-wrap gap-1 mb-2">
               {a.tools.map(t => (
                 <span key={t} className="text-[8px] font-medium px-1.5 py-0.5 rounded font-mono"
