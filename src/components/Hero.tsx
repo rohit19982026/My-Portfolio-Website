@@ -57,7 +57,7 @@ export default function Hero() {
                   className="w-1.5 h-1.5 rounded-full"
                   style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }}
                 />
-                Open for new programs
+                Open to new roles
               </motion.div>
 
               {/* Name */}
@@ -88,9 +88,9 @@ export default function Hero() {
                     backgroundClip: "text",
                   }}
                 >
-                  Technical Project
+                  Technical PM
                   <br />
-                  Manager
+                  · AI Builder
                 </motion.h1>
               </div>
 
@@ -102,15 +102,16 @@ export default function Hero() {
                 className="text-[15px] leading-[1.7] max-w-[520px] mb-7"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                The best week on a program is the one nobody remembers — nothing
-                escalated, nothing surprised the client, the platform shipped on
-                schedule. Getting there is mostly about noticing the thing that&apos;s
-                about to go wrong before it does, and having the conversation that
-                fixes it while it&apos;s still small. I run four or five data and AI
-                programs like that at a time, working alongside the engineers and
-                architects who build the platforms themselves. The console on the
-                right is the kind of thing I build to buy myself more time for that
-                part of the job — live, right now, in your browser.
+                I built six AI agents on Claude, Glean, and n8n — billing
+                reconciliation, delivery tracking, exec briefing. The billing
+                agent cut month-end time by 60% with &gt;95% accuracy and went
+                PMO-wide inside a month. The other side: multi-year Databricks,
+                Snowflake, and Redshift programs across US, India, and China
+                teams — fixed-price cutover commitments, multi-region pods,
+                stakeholder situations where the technical problem and the
+                political problem aren&apos;t the same thing. Building the tooling
+                changes how I run those programs — you see the data differently
+                when you&apos;ve also written the code that processes it.
               </motion.p>
 
               {/* Social icons */}
