@@ -17,7 +17,7 @@ const T3 = "#757579";   // light text
 const NAV = [
   { id: "hero",      num: "00", label: "Overview" },
   { id: "sprint",    num: "01", label: "Sprint Intelligence" },
-  { id: "billing",   num: "02", label: "Billing Compliance" },
+  { id: "billing",   num: "02", label: "EOM Billing" },
   { id: "agent",     num: "03", label: "Agent Orchestration" },
   { id: "optimizer", num: "04", label: "Token Optimizer" },
   { id: "stack",     num: "05", label: "Tech Stack" },
@@ -653,7 +653,7 @@ export default function AISkillsPage() {
                   A suite of four custom agent skills encoding PM domain knowledge — sprint velocity, billing compliance, agent orchestration, and token optimization. Real flows. Real outputs.
                 </p>
                 <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
-                  {["→ Sprint Intelligence","→ Billing Compliance","→ Agent Orchestration","→ Token Optimizer"].map(l => (
+                  {["→ Sprint Intelligence","→ EOM Billing Reconciler","→ Agent Orchestration","→ Token Optimizer"].map(l => (
                     <span key={l} style={{ fontFamily:"monospace", fontSize:11, padding:"6px 12px", background:"#fff", border:`1px solid rgba(10,132,255,0.18)`, borderRadius:100, color:T2, boxShadow:"0 1px 4px rgba(10,132,255,0.06)" }}>{l}</span>
                   ))}
                 </div>
@@ -691,7 +691,7 @@ export default function AISkillsPage() {
             <section id="billing" ref={el => { sectionRefs.current.billing = el; }} style={{ padding:"52px 0", borderBottom:`1px solid rgba(10,132,255,0.08)`, scrollMarginTop:80, background:"rgba(248,247,255,0.5)" }}>
               <div style={{ maxWidth:820, margin:"0 auto", padding:"0 56px" }}>
                 <div ref={registerReveal} className="aisk-reveal">
-                  <SectionHead num="02 — Billing Compliance" title="End-of-Month" accent="Financial Audit" lede="Multi-phase audit that queries live PSA/CRM data, validates rate card alignment, surfaces timecard approval gaps, checks purchase order compliance, and produces an action-first compliance dashboard." />
+                  <SectionHead num="02 — EOM Billing Reconciler" title="End-of-Month" accent="Billing Audit" lede="Multi-phase audit that queries live PSA/CRM data, validates rate card alignment, surfaces timecard approval gaps, checks purchase order alignment, and produces an action-first reconciliation dashboard." />
                 </div>
 
                 <div ref={registerReveal} className="aisk-reveal d1"><BillingDiagram /></div>

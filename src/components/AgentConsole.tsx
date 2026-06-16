@@ -8,10 +8,10 @@ import IconBadge from "./IconBadge";
 type Status = "ok" | "warn";
 
 const AGENTS: { name: string; detail: string; status: Status }[] = [
-  { name: "Billing Compliance Agent", detail: "94.2% auto-matched · 3 flags routed to PM review", status: "ok" },
-  { name: "Sprint Velocity Tracker", detail: "4 on-track · 1 at-risk (China rollout — access delay, 3d)", status: "warn" },
-  { name: "Program Health Scanner", detail: "0 unowned risks · 2 due for escalation", status: "ok" },
-  { name: "Steerco Comms Engine", detail: "CFO tone ready · VP Eng tone ready", status: "ok" },
+  { name: "Month-End Billing Reconciler", detail: "94.2% auto-matched · 3 flags routed to PM review", status: "ok" },
+  { name: "Delivery Progress Monitor", detail: "4 on-track · 1 at-risk (China rollout — access delay, 3d)", status: "warn" },
+  { name: "Risk & Escalation Scanner", detail: "0 unowned risks · 2 due for escalation", status: "ok" },
+  { name: "Executive Briefing Writer", detail: "CFO tone ready · VP Eng tone ready", status: "ok" },
 ];
 
 const STATUS_COLOR: Record<Status, string> = { ok: "var(--color-green)", warn: "var(--color-orange)" };
