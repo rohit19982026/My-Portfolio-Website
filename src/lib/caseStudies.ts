@@ -1,6 +1,6 @@
-// TPM ship records — what I delivered, what I decided, who I aligned, how I ran it.
-// Every field is first-person ownership: scope, sequence, escalation, stakeholder
-// strategy, renewal positioning. Not an engineering recap.
+// Case studies in real TPM voice. Conversational, specific, no consulting jargon,
+// no AI-bot parallelism. How Rohit would actually describe these programs
+// to a senior VP in an interview, not how a marketing page would.
 
 export type SourceType = "ERP" | "CRM" | "OPS" | "API" | "MES" | "MARKETING" | "TELEMETRY" | "LAKE" | "WAREHOUSE";
 export type ConsumerType = "EXEC" | "OPS" | "PRODUCT" | "ANALYTICS" | "FINANCE" | "MARKETING";
@@ -8,8 +8,8 @@ export type OrchestrationType = "client" | "internal" | "vendor" | "exec";
 
 export interface AgentSpec {
   name: string;
-  replaces: string;   // The manual workflow it eliminated — the delivery win
-  adopters: string;   // Who uses it — the rollout reality
+  replaces: string;
+  adopters: string;
   tools: string[];
   output: string;
   status: "live" | "beta";
@@ -49,29 +49,29 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
 
-  // =========================================================================
-  // 001 — Redshift → Databricks · PM end-to-end, fixed-price commercial
-  // =========================================================================
+  // ===========================================================================
+  // 001
+  // ===========================================================================
   {
     id: "redshift-databricks",
     number: "001",
     variant: "data-platform",
-    type: "DATA PLATFORM MODERNIZATION",
+    type: "REDSHIFT → DATABRICKS",
     model: "FIXED-PRICE",
     year: "2025–26",
     industry: "EdTech",
-    domain: "Program · Fixed-Price · US + India Pod",
+    domain: "Fixed-price · US + India pod",
 
-    headline: "Delivered a Six-Year Redshift Estate to a Governed Databricks Lakehouse — Fixed-Price, Two Regions, Zero Downstream Outages, Skeptical Gatekeeper Signed Off UAT",
-    capability: "Owned scope, budget, risk, and stakeholder strategy on a fixed-price migration where phData carried the delivery risk — and closed it with the toughest client stakeholder as a co-owner",
+    headline: "Fixed-price Redshift to Databricks migration. The hard part wasn't the data. It was the client's data lead, who'd built the old estate over six years and wasn't sold on replacing it.",
+    capability: "PM end-to-end. phData was on the hook for delivery, not the client. About 2,300 objects. The inventory was straightforward. Reading the client side took longer.",
 
     scale: [
-      { value: "2,300+", label: "Objects migrated under my plan" },
-      { value: "Fixed-price", label: "phData delivery risk · I owned the burn" },
-      { value: "US + India", label: "Two-pod cadence I ran" },
-      { value: "12+", label: "Sign-off conversations led" },
-      { value: "4 BI teams", label: "Per-tool parity I negotiated" },
-      { value: "Zero", label: "Outages at cutover · I owned the runbook" },
+      { value: "~2,300", label: "Objects in the estate" },
+      { value: "Fixed-price", label: "phData on the hook" },
+      { value: "US + India", label: "Two delivery pods" },
+      { value: "12+", label: "Sources feeding in" },
+      { value: "4 BI tools", label: "Each wanted parity proof" },
+      { value: "Zero", label: "Outages at cutover" },
     ],
 
     ecosystem: {
@@ -83,7 +83,7 @@ export const caseStudies: CaseStudy[] = [
         { name: "Salesforce", type: "CRM" },
         { name: "Finance systems", type: "ERP" },
       ],
-      pipeline: ["Inventory + ownership map", "Stakeholder-led sequencing", "Per-tool parity contracts", "Cutover runbook + rollback"],
+      pipeline: ["Inventory the estate", "Sequence around the people", "Per-tool parity contracts", "Cutover runbook + rollback"],
       platform: "Databricks Unity Catalog Lakehouse",
       consumers: [
         { name: "Product analytics", type: "PRODUCT" },
@@ -95,113 +95,129 @@ export const caseStudies: CaseStudy[] = [
     },
 
     challenges: [
-      { label: "Fixed-price commercial — every week of stall came out of phData's margin, not the client's", severity: "high" },
-      { label: "Senior client data lead — gatekeeper, not sponsor — quietly skeptical of the migration", severity: "high" },
-      { label: "Six years of Redshift SQL with one effective owner and no lineage — nobody could tell me what dependencies existed", severity: "high" },
-      { label: "Four BI teams expecting per-tool parity sign-off — each with their own definition of the same metric", severity: "med" },
-      { label: "US + India two-pod cadence across a 10.5-hour gap requiring async coordination", severity: "med" },
-      { label: "Hallway-request scope creep from a friendly sponsor — easy to absorb, expensive to absorb", severity: "med" },
+      { label: "Fixed-price. Every week of stall comes out of our margin, not theirs.", severity: "high" },
+      { label: "Senior data lead on the client side wasn't sold on the migration.", severity: "high" },
+      { label: "Six years of Redshift SQL with one owner and no docs.", severity: "high" },
+      { label: "Four BI teams. Four different definitions of the same metric.", severity: "med" },
+      { label: "US and India teams, ten and a half hours apart.", severity: "med" },
+      { label: "Sponsor kept asking for adjacent things in hallway conversations.", severity: "med" },
     ],
 
     journey: [
-      { stage: "SCOPE", title: "Owned the inventory, mapped the stakeholders before the sprint plan", detail: "Led the 2,300-object inventory in week 1 — not delegated. Identified who actually owned what, who personally cared about which dashboards, and where the political risk sat. Built the stakeholder map before the dependency graph because that's what was going to drive sequencing." },
-      { stage: "SEQUENCE", title: "Sequenced sprints around stakeholder validation, not the dependency graph", detail: "Moved the gatekeeper's marketing objects to sprint 6 so he could validate them with his own hands before cutover. Architect pushed back — said it made the dependency graph harder. I held the line, made the call, owned the consequence. Right call by week 4." },
-      { stage: "RUN", title: "Ran weekly cadence with the gatekeeper speaking first, status color honest", detail: "Restructured the client meeting so the data lead spoke before the sponsor — 90 seconds of sponsor airtime, bought a stakeholder. Went yellow twice on client-side access stalls when sponsors wanted green; escalated one to sponsor and account lead at three weeks open." },
-      { stage: "CLOSE", title: "Cut over on per-consumer parity contracts; closed clean", detail: "Negotiated parity sign-off with each BI team individually. Owned the cutover runbook, rollback window, and closeout sequence. Routed a hallway-request dashboard through formal change control — captured as a paid change, not absorbed into a fixed-price contract." },
+      {
+        stage: "SCOPE",
+        title: "Inventory in week one. Then the people.",
+        detail: "Walked through all 2,300 objects in the first two weeks. Who built what, who used what. The dependency graph mattered. The ownership map mattered more, and nobody had drawn it.",
+      },
+      {
+        stage: "SEQUENCE",
+        title: "Sprint order followed the people, not the graph.",
+        detail: "Put the data lead's marketing objects in sprint 6 instead of sprint 2. Meant he got to validate them himself before cutover. The architect pushed back. Dependencies got messier. I took the call. By week four the data lead was using 'we' in the weekly instead of 'you'.",
+      },
+      {
+        stage: "RUN",
+        title: "Changed who spoke first in the weekly.",
+        detail: "Sponsor used to open the client meeting. Switched it to the data lead. Cost the sponsor about ninety seconds of airtime. Status went yellow twice when client access stalled. Sponsor would've preferred green. Escalated one of those when it crossed three weeks open.",
+      },
+      {
+        stage: "CLOSE",
+        title: "Cutover was four sign-offs, not one.",
+        detail: "Each BI team signed off on parity for their own tool. Probably saved us a production fire. The sponsor's hallway dashboard request went through formal change control. Got captured as paid work instead of absorbed into a fixed-price contract.",
+      },
     ],
 
     orchestration: [
-      { team: "Client Sponsor", role: "Executive owner · I ran the weekly", type: "exec" },
-      { team: "Client Data Lead", role: "Gatekeeper → co-owner · I rebuilt the relationship", type: "client" },
-      { team: "BI Consumer Teams", role: "Per-tool parity sign-off · I sequenced over 8 weeks", type: "client" },
-      { team: "phData Architect", role: "Pushed back on my sequencing · I held the line", type: "internal" },
-      { team: "US Delivery Lead", role: "Migration engineering · daily standups I chaired", type: "internal" },
-      { team: "India Pod", role: "Execution at scale · cross-region cadence I designed", type: "internal" },
-      { team: "Account Lead", role: "Escalation channel · I called when stalls crossed 3 wks", type: "internal" },
+      { team: "Client Sponsor", role: "On the contract. Weekly was mine to run.", type: "exec" },
+      { team: "Client Data Lead", role: "The actual job. Skeptic in week one, co-owner by week four.", type: "client" },
+      { team: "BI Consumer Teams", role: "Four of them. Per-tool parity, in sequence.", type: "client" },
+      { team: "phData Architect", role: "Disagreed with my sprint order. Got overruled.", type: "internal" },
+      { team: "US Delivery Lead", role: "Lead on the US side. Daily standups.", type: "internal" },
+      { team: "India Pod", role: "Doing the work, ten hours offset.", type: "internal" },
+      { team: "Account Lead", role: "Backup for the hard escalations.", type: "internal" },
     ],
 
     decisions: [
       {
-        decision: "I sequenced the gatekeeper's objects last — over the architect's objection",
-        tradeoff: "A messier dependency graph vs. an UAT block that would have killed cutover",
-        risk: "Architect pushback became sustained, then a credibility cost with the engineering team",
-        outcome: "Gatekeeper signed off UAT as co-owner; was saying 'we' by week 4",
+        decision: "Held the data lead's objects back to sprint 6 against the architect's call.",
+        tradeoff: "Worse dependency graph for the engineering team.",
+        risk: "If I was wrong about the politics, I'd burned the team for nothing.",
+        outcome: "Data lead validated those objects himself. Signed off UAT without a fight.",
       },
       {
-        decision: "I went yellow on client-side access stalls when the sponsor wanted green",
-        tradeoff: "Sponsor friction now vs. invisible burn on a fixed-price contract later",
-        risk: "Yellow status read as PM weakness; could have damaged sponsor confidence",
-        outcome: "Three-week access stall escalated and cleared inside a week",
+        decision: "Went yellow on status when the sponsor would've preferred green.",
+        tradeoff: "Made the sponsor uncomfortable in the weekly.",
+        risk: "Reads as PM weakness if you can't justify the call.",
+        outcome: "Three-week access stall got escalated and cleared inside seven days.",
       },
       {
-        decision: "I routed the hallway-request dashboard through formal change control",
-        tradeoff: "Short-term sponsor goodwill vs. fixed-price contract integrity",
-        risk: "Lost some sponsor goodwill in week 9 that took weeks to rebuild",
-        outcome: "Captured as a paid change; fixed-price margin held intact for the year",
+        decision: "Pushed the sponsor's hallway dashboard request through formal change control.",
+        tradeoff: "Cost some goodwill in the week the change request landed.",
+        risk: "Sponsor relationship cooling on a year-long engagement.",
+        outcome: "Captured as paid work. On fixed-price, that matters.",
       },
       {
-        decision: "I ran cutover on per-BI-tool parity contracts, not blanket sign-off",
-        tradeoff: "More cutover orchestration overhead vs. trusting blanket sign-off",
-        risk: "Could have closed on time at the cost of one BI team finding parity gaps in production",
-        outcome: "Zero downstream consumer outages at cutover",
+        decision: "Got every BI team to sign off parity for their own tool, separately.",
+        tradeoff: "Cutover took longer to organize.",
+        risk: "Could've closed on time and found a parity gap in production a week later.",
+        outcome: "No production fires. Closed on time anyway.",
       },
       {
-        decision: "I restructured the weekly so the data lead spoke first, not the sponsor",
-        tradeoff: "Awkward week-1 reaction from a sponsor used to going first vs. building a co-owner",
-        risk: "Sponsor reading it as a snub; tone-correct conversation needed",
-        outcome: "By week 4 the data lead was saying 'we' instead of 'you'",
+        decision: "Switched who spoke first in the weekly client meeting.",
+        tradeoff: "Awkward first week. Sponsor wasn't expecting it.",
+        risk: "Sponsor reads it as a snub. Took a 1:1 to walk him through it.",
+        outcome: "Data lead started saying 'we' by week four. That's the thing that closed the program.",
       },
     ],
 
     impact: [
-      { value: "On time", label: "Fixed-price program · closed clean", tone: "primary" },
-      { value: "On budget", label: "Margin held intact through year", tone: "ok" },
-      { value: "Zero", label: "Downstream outages at cutover", tone: "ok" },
-      { value: "100%", label: "UAT sign-off including gatekeeper", tone: "ok" },
-      { value: "CR raised", label: "Hallway-request scope captured as paid" },
+      { value: "On time", label: "Closed in the window", tone: "primary" },
+      { value: "On budget", label: "Margin held through the year", tone: "ok" },
+      { value: "Zero", label: "Production outages at cutover", tone: "ok" },
+      { value: "100%", label: "UAT sign-off, gatekeeper included", tone: "ok" },
+      { value: "Paid CR", label: "Hallway request didn't get absorbed" },
     ],
 
     beforeAfter: {
       before: [
-        "Fixed-price program with delivery risk on phData, sponsor + skeptical gatekeeper, no lineage",
-        "Architect-favored dependency-graph sequencing that would have hit a UAT block",
-        "Hallway-request scope creep absorbing silently against a fixed-price contract",
-        "Four BI teams with conflicting parity expectations and no contract for cutover",
+        "Fixed-price job. Delivery risk on phData.",
+        "Six-year Redshift estate. One owner. No docs.",
+        "Skeptical data lead on the client side.",
+        "Four BI teams expecting parity sign-off, no contracts in place.",
       ],
       after: [
-        "Program closed on time, on budget, zero outages, gatekeeper signed off as co-owner",
-        "Stakeholder-led sequencing that turned political risk into political alignment",
-        "Formal change-request hygiene; hallway scope captured as paid change",
-        "Per-tool parity contracts at cutover; every consumer team signed off individually",
+        "Closed on time, on budget, no outages.",
+        "Data lead signed off UAT clean. Was using 'we' by week four.",
+        "Per-tool parity, sign-off team by team.",
+        "Hallway scope captured as a paid CR, not absorbed.",
       ],
     },
 
     stack: ["Databricks", "Unity Catalog", "Amazon Redshift", "Azure DevOps", "Jira"],
   },
 
-  // =========================================================================
-  // 002 — Marketing Platform · Multi-year retainer · Two renewals earned
-  // =========================================================================
+  // ===========================================================================
+  // 002
+  // ===========================================================================
   {
     id: "marketing-data-platform",
     number: "002",
     variant: "data-platform",
-    type: "MULTI-YEAR RETAINER · 2 RENEWALS",
+    type: "MULTI-YEAR RETAINER",
     model: "T&M",
     year: "2024–26",
     industry: "Enterprise SaaS",
-    domain: "Program · Long Retainer · Renewal-Earned",
+    domain: "Long retainer · Two renewals",
 
-    headline: "Owned a Multi-Year Marketing Platform Retainer Across Two Renewal Cycles — Through a Sponsor Changeover, a Structural Skeptic, and 100+ Weeks of Cadence Discipline",
-    capability: "Carried program-level ownership of a long-retainer engagement: stakeholder strategy, change-request hygiene, sponsor re-onboarding, renewal positioning — and turned solid delivery into two earned renewals",
+    headline: "Multi-year marketing data platform on Snowflake, dbt, MWAA. Two renewals. The thing I got wrong was spending year one trying to convince an embedded engineer I was on his side.",
+    capability: "PM on a long retainer. Status notes, change requests, stakeholder management, renewal positioning. Year one was learning who was actually worth winning over.",
 
     scale: [
-      { value: "2+ yrs", label: "Continuous program I owned" },
-      { value: "×2", label: "Contract renewals I positioned" },
-      { value: "100+ wks", label: "Friday status notes I shipped" },
-      { value: "1", label: "VP sponsor changeover I absorbed" },
-      { value: "Multiple", label: "Paid change requests I captured" },
-      { value: "Self-serve", label: "Adoption I drove with marketing ops" },
+      { value: "2+ years", label: "Continuous engagement" },
+      { value: "Two", label: "Renewals earned" },
+      { value: "100+", label: "Weekly status notes" },
+      { value: "1", label: "VP sponsor turnover absorbed" },
+      { value: "Multiple", label: "Paid change requests" },
+      { value: "Stack", label: "MWAA + dbt + Snowflake" },
     ],
 
     ecosystem: {
@@ -213,8 +229,8 @@ export const caseStudies: CaseStudy[] = [
         { name: "Product telemetry", type: "TELEMETRY" },
         { name: "Finance feeds", type: "ERP" },
       ],
-      pipeline: ["Cadence I held weekly", "Stakeholder map I maintained", "Change-request hygiene I owned", "Renewal evidence I documented"],
-      platform: "Snowflake · the platform I delivered against",
+      pipeline: ["Friday status note, same hour", "Stakeholder map, kept current", "Change requests, not absorption", "Renewal evidence, built weekly"],
+      platform: "Snowflake",
       consumers: [
         { name: "Marketing ops", type: "MARKETING" },
         { name: "RevOps", type: "OPS" },
@@ -224,113 +240,129 @@ export const caseStudies: CaseStudy[] = [
     },
 
     challenges: [
-      { label: "Long retainer trust erodes invisibly — by renewal it's terminal, and I had to spot it weekly", severity: "high" },
-      { label: "Senior embedded client IC who had decided in week 3 they didn't trust consultants — and stayed that way", severity: "high" },
-      { label: "Scope-growth signals embedded in casual conversation; easy to absorb silently against the retainer hours", severity: "high" },
-      { label: "VP sponsor changed once over the program — re-onboarding risk right before renewal", severity: "high" },
-      { label: "Marketing ops adoption depends on documentation, not just data — that's a PM-led training arc", severity: "med" },
-      { label: "Renewal conversations need an audit trail · built one weekly before I needed it", severity: "med" },
+      { label: "Long retainers fail at renewal if trust erodes weekly. You can't see it until it's too late.", severity: "high" },
+      { label: "Senior client engineer decided in week three he didn't trust consultants. Stayed that way for two years.", severity: "high" },
+      { label: "Scope creep on a retainer is easy to absorb. Easy to lose margin too.", severity: "high" },
+      { label: "VP sponsor changed once. Renewal was three months later.", severity: "high" },
+      { label: "Marketing ops adoption needed docs they could actually read, not data eng docs.", severity: "med" },
+      { label: "Renewal conversations need evidence. You build it weekly or you don't have it.", severity: "med" },
     ],
 
     journey: [
-      { stage: "STAND UP", title: "Set the cadence in week 1 — and held it for 100 weeks", detail: "I made the call early that the Friday status note was the program — not a deliverable on it. Same hour, same shape, every week. Boring on purpose. When the renewal conversations came around, the audit trail had already done the persuading." },
-      { stage: "RUN", title: "Held weekly cadence, raised every scope-adjacent signal", detail: "Mapped stakeholders the slow way: sponsor needs three lines and a number, PO needs the blocker list, the skeptical IC needed to see I'd read their previous comments. Surfaced two adjacent problem areas the client mentioned in passing as scope-growth signals to the account lead — became formal CRs, not free work." },
-      { stage: "TRIAGE", title: "Year 2 — made the hard stakeholder triage call", detail: "Spent two months in year 1 trying to win over the embedded IC. They weren't winnable — structural role conflict, not relationship problem. I should have routed around earlier; I did in year 2 and the engagement got measurably easier. Owned the call and the cost." },
-      { stage: "RENEW", title: "Re-onboarded the new VP through the audit trail, closed renewal #2", detail: "When the VP sponsor changed, I re-onboarded the new one through the documented story — not the elevator pitch. Renewal #2 closed without renegotiation because the audit trail handed it to them." },
+      {
+        stage: "STAND UP",
+        title: "Set the cadence in week one and held it.",
+        detail: "Friday status note, same hour, every week. Boring on purpose. When renewals came around, the note had done the persuading. Took me a while to figure out that was the program — not a deliverable on it.",
+      },
+      {
+        stage: "RUN",
+        title: "Read every passing scope mention as a change request.",
+        detail: "Sponsor would mention adjacent things in hallway conversations. Easy to absorb on a retainer. Surfaced two of those as scope-growth signals to the account lead. Became formal CRs instead of free work.",
+      },
+      {
+        stage: "TRIAGE",
+        title: "Year two. Stopped trying to win over the senior engineer.",
+        detail: "Spent year one writing extra context and taking 1:1s with him. He wasn't going to come around. Structural thing — his role didn't allow it. Routed around him in year two and the engagement got measurably easier.",
+      },
+      {
+        stage: "RENEW",
+        title: "Re-onboarded the new VP through the audit trail.",
+        detail: "Sponsor changed three months before renewal #2. Walked the new one through two years of status notes, not a pitch deck. Renewal closed without renegotiation.",
+      },
     ],
 
     orchestration: [
-      { team: "Client VP Sponsor", role: "Exec owner · changed once · I re-onboarded the new one", type: "exec" },
-      { team: "Marketing Ops PO", role: "Weekly working session · I owned the relationship", type: "client" },
-      { team: "RevOps Lead", role: "Adoption driver · monthly check-in I held", type: "client" },
-      { team: "Embedded Client IC", role: "Skeptical · I rerouted around in year 2", type: "client" },
-      { team: "phData Architect", role: "Platform calls I sequenced", type: "internal" },
-      { team: "Data Eng Pod", role: "Team I shielded · velocity I protected", type: "internal" },
-      { team: "Account Lead", role: "Renewal partner · CR raising I drove", type: "internal" },
+      { team: "Client VP Sponsor", role: "Executive owner. Changed once over the program.", type: "exec" },
+      { team: "Marketing Ops PO", role: "Day-to-day. Weekly working session was mine.", type: "client" },
+      { team: "RevOps Lead", role: "Analytics consumer. Drove adoption with me.", type: "client" },
+      { team: "Embedded Client IC", role: "Skeptic. Year one I tried to win him over. Year two I stopped.", type: "client" },
+      { team: "phData Architect", role: "Platform calls.", type: "internal" },
+      { team: "Data Eng Pod", role: "The team I was shielding.", type: "internal" },
+      { team: "Account Lead", role: "Raised the change requests with me.", type: "internal" },
     ],
 
     decisions: [
       {
-        decision: "I held the same status note, same hour, every Friday — for 100+ weeks",
-        tradeoff: "Predictability over polish; consistency over novelty",
-        risk: "Note becomes invisible furniture; trust erodes anyway",
-        outcome: "Two renewals earned on documented confidence; audit trail did the persuading",
+        decision: "Same status note, same hour, every Friday. For 100+ weeks.",
+        tradeoff: "Boring. Nobody compliments you for consistency.",
+        risk: "Note becomes invisible furniture and trust erodes anyway.",
+        outcome: "Two renewals. The audit trail did the persuading.",
       },
       {
-        decision: "Year 2 — I stopped investing in the unwinnable embedded IC",
-        tradeoff: "My personal investment vs. team velocity and my credibility with the data eng pod",
-        risk: "Engineers seeing me burn energy on the wrong thing eroded my standing with the team",
-        outcome: "Velocity recovered inside a quarter; engagement got measurably easier in year 2",
+        decision: "Year two — stopped investing in the embedded engineer.",
+        tradeoff: "Wrote off the relationship I'd been working on for a year.",
+        risk: "He could've escalated to the sponsor that I'd disengaged.",
+        outcome: "Engagement got measurably easier. Team velocity recovered inside a quarter.",
       },
       {
-        decision: "I treated every scope-adjacent casual mention as a change-request signal",
-        tradeoff: "Short-term sponsor goodwill vs. retainer margin and renewal economics",
-        risk: "Reading as a difficult PM; goodwill loss compounding over a 2-year program",
-        outcome: "Multiple paid expansions captured; renewal numbers were clean every cycle",
+        decision: "Routed every scope-adjacent hallway comment through the account lead as a CR signal.",
+        tradeoff: "Slower on the friendly response. Felt unhelpful in the moment.",
+        risk: "Sponsor reading us as rigid. Goodwill erosion over two years.",
+        outcome: "Multiple paid expansions. Renewal numbers stayed clean.",
       },
       {
-        decision: "I re-onboarded the new VP sponsor with the audit trail, not the elevator pitch",
-        tradeoff: "Time investment vs. faster relationship build",
-        risk: "Renewal-cycle sponsor turnover ends most retainers; one shot to get this right",
-        outcome: "Renewal #2 closed without renegotiation; new sponsor inherited the story",
+        decision: "Re-onboarded the new VP through two years of status notes, not a deck.",
+        tradeoff: "Took more of his time. Decks are easier to consume.",
+        risk: "New VP doesn't want the history lesson. Wants the pitch.",
+        outcome: "Renewal #2 closed without renegotiation.",
       },
       {
-        decision: "I drove marketing ops adoption as a training arc, not a rollout",
-        tradeoff: "Slower self-serve curve vs. data eng staying in the loop forever",
-        risk: "Marketing ops abandoning the semantic layer if it felt too engineered",
-        outcome: "Marketing ops + RevOps self-serve; data eng freed for net-new modeling",
+        decision: "Pushed marketing ops adoption through docs they could actually read.",
+        tradeoff: "Heavier documentation lift. Data eng wanted to write it their way.",
+        risk: "Marketing ops abandons the model layer if it feels engineered.",
+        outcome: "Marketing ops and RevOps self-serve. Data eng moved to net-new work.",
       },
     ],
 
     impact: [
-      { value: "×2", label: "Contract renewals I positioned", tone: "primary" },
-      { value: "100+", label: "Weekly status notes I shipped", tone: "ok" },
-      { value: "Clean", label: "Renewal #2 without renegotiation", tone: "ok" },
-      { value: "Multiple", label: "Paid CRs I raised over the program" },
-      { value: "Self-serve", label: "Adoption I drove with marketing ops" },
+      { value: "Two", label: "Renewals earned", tone: "primary" },
+      { value: "100+", label: "Friday status notes shipped", tone: "ok" },
+      { value: "Clean", label: "Renewal #2, no renegotiation", tone: "ok" },
+      { value: "Paid", label: "Multiple CRs captured" },
+      { value: "Self-serve", label: "Marketing ops + RevOps" },
     ],
 
     beforeAfter: {
       before: [
-        "Multi-year retainer with sponsor turnover risk, structural-skeptic IC, scope drift exposure",
-        "Status notes ad-hoc; renewal conversations starting from zero each cycle",
-        "Year 1 — I was investing in a stakeholder relationship that wasn't winnable",
-        "Scope-adjacent requests defaulted to free work absorbed into retainer hours",
+        "Long retainer. Skeptical embedded engineer. Sponsor turnover risk.",
+        "Status notes ad-hoc, renewal conversations starting from zero.",
+        "Spent year one trying to win over the wrong stakeholder.",
+        "Scope-adjacent requests defaulting to free work.",
       ],
       after: [
-        "Two renewals earned · sponsor changeover absorbed · audit trail did the persuading",
-        "100+ weeks of cadence discipline · renewal conversations had the evidence pre-built",
-        "Year 2 — rerouted around the skeptic; recovered velocity inside a quarter",
-        "Every scope-adjacent signal raised as CR; multiple paid expansions captured",
+        "Two renewals. Sponsor changeover absorbed clean.",
+        "100+ weeks of status discipline. Renewal evidence pre-built.",
+        "Year two, routed around the skeptic. Velocity came back.",
+        "Every scope signal raised as a CR. Multiple paid expansions.",
       ],
     },
 
     stack: ["Snowflake", "dbt", "MWAA (Airflow)", "Fivetran", "AWS", "Jira"],
   },
 
-  // =========================================================================
-  // 003 — China Snowflake · 6 weeks · 3 timezones · LNY mid-program
-  // =========================================================================
+  // ===========================================================================
+  // 003
+  // ===========================================================================
   {
     id: "snowflake-china",
     number: "003",
     variant: "data-platform",
-    type: "FIXED-WINDOW · CROSS-REGION PROGRAM",
+    type: "6-WEEK BUILD · 3 TIMEZONES",
     model: "T&M",
     year: "2024",
     industry: "Industrial Manufacturing",
-    domain: "Program · 6 Weeks · Through Lunar New Year",
+    domain: "6 weeks · US, India, China · LNY mid-program",
 
-    headline: "Ran a 6-Week Snowflake Program for China Plant Operations — Across Three Timezones, Through Lunar New Year — and Closed Clean After Owning a Stakeholder Mistake in Week 2",
-    capability: "Owned a fixed-window program across US, India, and China — designed the async cadence, made one expensive stakeholder mistake, corrected it the next week, and closed on time with an on-site stakeholder who still trusted me",
+    headline: "Six-week Snowflake build for a manufacturer's China factory. Three timezones, ten and a half hour gap, Lunar New Year three weeks in. The thing I got wrong was a fifteen-minute conversation I didn't have.",
+    capability: "Fixed-window program across three regions. Designed the async cadence. Made one expensive stakeholder mistake in week two and corrected it in week three. Closed on time.",
 
     scale: [
-      { value: "6 weeks", label: "Fixed window I owned" },
-      { value: "3 timezones", label: "US · India · China · cadence I designed" },
-      { value: "10.5 hr", label: "Working-window gap I bridged" },
-      { value: "LNY", label: "Mid-program holiday I sequenced around" },
-      { value: "1 mistake", label: "Wk-2 stakeholder call I owned" },
-      { value: "1 recovery", label: "Wk-3 correction I made" },
+      { value: "6 weeks", label: "Fixed window" },
+      { value: "3 TZ", label: "US, India, China" },
+      { value: "10.5 hr", label: "US to China gap" },
+      { value: "LNY", label: "Three weeks in" },
+      { value: "Wk 2", label: "I made the call wrong" },
+      { value: "Wk 3", label: "Did the same call right" },
     ],
 
     ecosystem: {
@@ -341,8 +373,8 @@ export const caseStudies: CaseStudy[] = [
         { name: "WMS", type: "OPS" },
         { name: "Supplier feeds", type: "API" },
       ],
-      pipeline: ["Cross-region cadence I designed", "Pre-conversation discipline I enforced", "LNY contingency I sequenced", "Day-1 KT design I led"],
-      platform: "Snowflake · what I delivered against",
+      pipeline: ["Async-first cadence", "1:1 before group on big calls", "LNY contingency in week 3", "Day-1 KT design"],
+      platform: "Snowflake",
       consumers: [
         { name: "China factory ops", type: "OPS" },
         { name: "HQ supply chain", type: "OPS" },
@@ -352,107 +384,123 @@ export const caseStudies: CaseStudy[] = [
     },
 
     challenges: [
-      { label: "Fixed 6-week window with Lunar New Year three weeks in — non-negotiable, can't slip past", severity: "high" },
-      { label: "10.5-hr gap between US delivery lead and China site — 24-hour decision-lag default I had to design out", severity: "high" },
-      { label: "China-site PO defers in groups and disagrees in private — wrong cadence design would destroy trust", severity: "high" },
-      { label: "Three-language stakeholder spread · no shared collaboration baseline", severity: "med" },
-      { label: "HQ supply chain depending on factory visibility for in-flight decisions · failure had downstream cost", severity: "high" },
-      { label: "Ongoing-support team inheriting the program at cutover · KT debt risk", severity: "med" },
+      { label: "Six weeks, Lunar New Year three in. Couldn't push the cutover past it.", severity: "high" },
+      { label: "Ten and a half hour gap between US and China. Live cadence meant 24-hour decision lag.", severity: "high" },
+      { label: "China-site PO defers in groups and disagrees in private. Wrong cadence design kills trust.", severity: "high" },
+      { label: "Three-language stakeholder spread, no shared collaboration baseline.", severity: "med" },
+      { label: "HQ supply chain needed the visibility for decisions already in flight.", severity: "high" },
+      { label: "Ongoing-support team inheriting at cutover. Couldn't hand them a black box.", severity: "med" },
     ],
 
     journey: [
-      { stage: "SCOPE", title: "Mapped the human dependency graph alongside the technical one", detail: "Week 1: walked the source landscape across SAP and Oracle, but the more important map was the human one — who needed to be heard before what, who defers in groups, who needs a pre-conversation. Read the China-site PO's pattern correctly in scope, didn't use the read in week 2." },
-      { stage: "DESIGN", title: "Designed async-first cadence as a delivery decision, not a logistics choice", detail: "Written status at fixed points in each region's day. Shared decision register. Live leadership cadence moved from weekly to fortnightly. The cadence was the architecture across a 10.5-hour gap." },
-      { stage: "OWN", title: "Owned a stakeholder mistake in week 2 — corrected it in week 3", detail: "Announced the cadence flip in the live client leadership meeting with the China-site PO hearing it first in front of their leadership. Said the right things, weren't the right things. Did the opposite on the LNY re-baseline in week 3 — 1:1 with the China PO first, then sponsor, then group. Same magnitude of change, fundamentally different reception." },
-      { stage: "CLOSE", title: "Sequenced around LNY, closed clean, KT clean from day 1", detail: "Front-loaded vendor work, back-loaded client validation, sequenced the holiday in the schedule from week 3. Designed the data layer for ongoing-support handover from week 1, not at cutover. Closed inside the six-week window with the China-site PO still in the conversation." },
+      {
+        stage: "SCOPE",
+        title: "Walked the source landscape and the people landscape.",
+        detail: "SAP, Oracle, MES, WMS — that took a week. Reading the China-site PO took longer. He defers in groups, disagrees in private. I read it correctly in week one. Didn't use the read in week two. That's on me.",
+      },
+      {
+        stage: "DESIGN",
+        title: "Async-first cadence was the architecture, not a logistics choice.",
+        detail: "Written status at fixed points in each region's day. Shared decision register. Live leadership moved from weekly to fortnightly. Across a 10.5-hour gap, the cadence design was the program.",
+      },
+      {
+        stage: "OWN",
+        title: "Made the cadence call right. Made it the wrong way.",
+        detail: "Announced the cadence flip in the live client leadership meeting. China-site PO heard it for the first time in front of his own leadership. He said the right things. His face said something else. Spent three weeks rebuilding that trust.",
+      },
+      {
+        stage: "CLOSE",
+        title: "LNY re-baseline was the same call. I made it the right way.",
+        detail: "Walked the China PO through it 1:1 before the leadership meeting. Then the sponsor. Then the group. Same magnitude of change, completely different reception. Closed inside the window, ongoing support clean from day 1.",
+      },
     ],
 
     orchestration: [
-      { team: "Client Sponsor", role: "HQ exec · I held the relationship", type: "exec" },
-      { team: "China Site PO", role: "Trust-rebuild stakeholder · the work", type: "client" },
-      { team: "China Factory Ops", role: "Primary consumer · I aligned via the site PO", type: "client" },
-      { team: "HQ Supply Chain", role: "Strategic consumer · weekly check-in I held", type: "client" },
-      { team: "US Delivery Lead", role: "Engineering anchor · cadence I designed with", type: "internal" },
-      { team: "India Pod", role: "Execution · async cadence I ran", type: "internal" },
-      { team: "Account Lead", role: "Regional cover · escalation channel", type: "internal" },
+      { team: "Client Sponsor", role: "HQ executive. Relationship I held.", type: "exec" },
+      { team: "China Site PO", role: "The trust-rebuild work. The actual job.", type: "client" },
+      { team: "China Factory Ops", role: "Primary consumer. Reached them through the site PO.", type: "client" },
+      { team: "HQ Supply Chain", role: "Strategic consumer. Weekly check-in.", type: "client" },
+      { team: "US Delivery Lead", role: "Engineering anchor. Designed the cadence with me.", type: "internal" },
+      { team: "India Pod", role: "Execution. Async cadence I ran.", type: "internal" },
+      { team: "Account Lead", role: "Regional cover.", type: "internal" },
     ],
 
     decisions: [
       {
-        decision: "I flipped live weekly cadence to async-first written cadence in week 2",
-        tradeoff: "Engagement intimacy vs. timezone economics on a 10.5-hour gap",
-        risk: "Lost decision rhythm; I made the right call the wrong way and burned trust",
-        outcome: "Stopped the 24-hour decision-lag pattern · spent three weeks rebuilding trust I shouldn't have burned",
+        decision: "Flipped live weekly cadence to async-first written in week two.",
+        tradeoff: "Lost the engagement rhythm leadership liked.",
+        risk: "Across three timezones, the alternative was 24-hour decision lag.",
+        outcome: "Got the cadence call right. Did it the wrong way. Spent three weeks rebuilding trust I'd burned.",
       },
       {
-        decision: "I made the LNY re-baseline a 1:1 conversation with the China PO before any group meeting",
-        tradeoff: "Calendar overhead vs. learning from week 2 instead of repeating it",
-        risk: "Repeating the week-2 group-announcement mistake on a higher-stakes decision",
-        outcome: "Re-baseline became a co-decision, not a fait accompli; trust held through cutover",
+        decision: "LNY re-baseline went to the China PO 1:1 before the group meeting.",
+        tradeoff: "Added calendar overhead on top of a tight schedule.",
+        risk: "Repeating the week-two mistake on a higher-stakes call.",
+        outcome: "Re-baseline became a co-decision. Trust held through cutover.",
       },
       {
-        decision: "I sequenced vendor work first, client validation second, around the holiday",
-        tradeoff: "Schedule complexity vs. holiday risk on a fixed window",
-        risk: "Cutover slipping past Lunar New Year would push outside the 6-week window",
-        outcome: "Clean closure inside the window with vendor and client work both complete",
+        decision: "Front-loaded vendor work, back-loaded client validation around LNY.",
+        tradeoff: "Added schedule complexity in an already tight window.",
+        risk: "Cutover slipping past Lunar New Year, outside the six weeks.",
+        outcome: "Closed inside the window. Vendor and client work both complete.",
       },
       {
-        decision: "I designed for ongoing-support handover from week 1, not at cutover",
-        tradeoff: "Slightly heavier weekly build vs. a clean KT story at closure",
-        risk: "Support team inheriting a black box that replays our build to operate",
-        outcome: "Ongoing support operational from day 1 post-cutover · zero inheritance debt",
+        decision: "Designed for ongoing-support handover from week one, not at cutover.",
+        tradeoff: "Heavier weekly build.",
+        risk: "Support team inherits a black box, replays our work to operate it.",
+        outcome: "Ongoing support operational from day 1 post-cutover. No inheritance debt.",
       },
     ],
 
     impact: [
-      { value: "6 wks", label: "Closed on time", tone: "primary" },
-      { value: "3 TZ", label: "Async cadence I designed held" },
-      { value: "Trust", label: "Rebuilt with China site PO", tone: "ok" },
+      { value: "On time", label: "Closed inside six weeks", tone: "primary" },
+      { value: "3 TZ", label: "Async cadence held" },
+      { value: "Rebuilt", label: "Trust with China-site PO", tone: "ok" },
       { value: "LNY", label: "Sequenced without slippage", tone: "ok" },
-      { value: "Clean KT", label: "Support team I handed off to" },
+      { value: "Clean KT", label: "Support team day 1" },
     ],
 
     beforeAfter: {
       before: [
-        "Fixed 6-week window across 3 timezones with LNY three weeks in",
-        "Default 24-hour decision-lag pattern from live weekly across a 10.5-hour gap",
-        "Week-2 mistake: cadence flip announced in the group, not pre-conversed",
-        "Risk of ongoing-support team inheriting a black box at cutover",
+        "Six-week window. Three timezones. LNY three weeks in.",
+        "Live weekly cadence meant 24-hour decision lag across the gap.",
+        "Week 2 — made the right call the wrong way. Burned trust.",
+        "Risk of support team inheriting a black box at cutover.",
       ],
       after: [
-        "Closed on time, in the window, with the China-site PO still trusting me",
-        "Async-first written cadence as a delivery pattern; decision-lag eliminated",
-        "Week-3 correction: same magnitude of change, fundamentally different reception",
-        "Day-1 KT design; ongoing support operational from cutover with no debt",
+        "Closed on time. China PO still in the conversation.",
+        "Async-first written cadence. Decision lag gone.",
+        "Week 3 — same kind of call, completely different reception.",
+        "Support team operational from day 1 of cutover.",
       ],
     },
 
     stack: ["Snowflake", "SAP ECC", "Oracle R12", "Azure DevOps", "Jira"],
   },
 
-  // =========================================================================
-  // 004 — Internal AI Agent Platform · AI PM end-to-end ownership
-  // =========================================================================
+  // ===========================================================================
+  // 004
+  // ===========================================================================
   {
     id: "pmo-ai-agent-platform",
     number: "004",
     variant: "ai-agents",
-    type: "INTERNAL AI PROGRAM · SELF-INITIATED",
+    type: "INTERNAL AI · SELF-INITIATED",
     model: "INTERNAL",
     year: "2024–25",
     industry: "Professional Services · Data & AI Consulting",
-    domain: "Program · Internal AI Product Line",
+    domain: "Self-initiated · Built, sold, rolled out",
 
-    headline: "Stood Up an Internal AI Program From Scratch — Identified the Problem, Got Leadership, Security, and Finance Aligned, Shipped Six Agents the Delivery Team Trusts, and Earned phData's Innovation Award",
-    capability: "Ran an internal AI program end-to-end: product strategy, governance alignment, adoption strategy, rollout sequencing, and trust-building with finance, security, and the delivery team — six agents in production, recovering senior PM time for account work",
+    headline: "Built six AI agents for the phData delivery team. Nobody asked me to. The hard part wasn't building them. It was getting finance, IT, and the PM team to trust an LLM anywhere near a live invoice.",
+    capability: "Self-initiated. No mandate, no budget, no sponsor until I'd earned them. AI PM on what turned into a six-agent product line that other consultants now copy.",
 
     scale: [
-      { value: "6 agents", label: "I shipped to production" },
-      { value: "1 month", label: "Team-wide adoption I drove" },
-      { value: "~8 hrs/wk", label: "PM time I freed for strategic work" },
-      { value: "100%", label: "Stakeholder sign-offs before build" },
-      { value: "Innovation Award", label: "Leadership recognition I earned" },
-      { value: "Self-initiated", label: "Program I sponsored myself" },
+      { value: "6 agents", label: "In production" },
+      { value: "1 month", label: "First-agent team adoption" },
+      { value: "~8 hrs/wk", label: "PM time freed" },
+      { value: "100%", label: "Sign-offs before build" },
+      { value: "Innovation Award", label: "Leadership recognition" },
+      { value: "Self-initiated", label: "Mine to run" },
     ],
 
     ecosystem: {
@@ -463,8 +511,8 @@ export const caseStudies: CaseStudy[] = [
         { name: "Slack", type: "API" },
         { name: "Time-tracking", type: "API" },
       ],
-      pipeline: ["Problem discovery I led", "Governance alignment I drove", "Adoption strategy I designed", "Accuracy reporting I owned"],
-      platform: "Internal agent fleet · what I delivered to the team",
+      pipeline: ["Problem discovery (no code)", "Governance alignment first", "Billing-first rollout", "Accuracy logs in public"],
+      platform: "Internal agent fleet for delivery PMs",
       consumers: [
         { name: "Delivery PMs", type: "OPS" },
         { name: "Finance", type: "FINANCE" },
@@ -474,90 +522,106 @@ export const caseStudies: CaseStudy[] = [
     },
 
     challenges: [
-      { label: "No mandate, no budget, no sponsor — self-initiated · had to earn buy-in before building", severity: "high" },
-      { label: "Live client invoices required finance team trust — they were the gatekeeper, not a customer", severity: "high" },
-      { label: "Delivery team won't adopt internal tooling without a defensible accuracy number", severity: "high" },
-      { label: "IT + Security needed to sign off on data access before any rollout — sequence matters", severity: "high" },
-      { label: "No internal AI delivery pattern at phData — first one would set the standard for everyone", severity: "med" },
-      { label: "Cross-team adoption requires a rollout strategy, not a product launch", severity: "med" },
+      { label: "No mandate, no budget, no sponsor until I'd earned them.", severity: "high" },
+      { label: "Finance had to trust the output before any agent touched a live invoice.", severity: "high" },
+      { label: "PM team won't adopt internal tools without a real accuracy number.", severity: "high" },
+      { label: "IT and Security had to sign off on data access. Sequence matters.", severity: "high" },
+      { label: "First internal AI build at phData. The pattern I set would be the one everyone copied.", severity: "med" },
+      { label: "Cross-team adoption is a rollout problem, not a product launch.", severity: "med" },
     ],
 
     journey: [
-      { stage: "DISCOVER", title: "Identified the problem before I touched a tool", detail: "Two weeks watching my own month-end by hand with a notepad — not building anything. Separated the work AI could actually do from the work that's judgment. The product roadmap came out of that observation, not a feature list. Without that, I'd have built six things nobody trusted." },
-      { stage: "ALIGN", title: "Got leadership, security, finance bought in before the build", detail: "Took the proposal to CTO office for architecture sign-off, IT/Security for data-access review, finance for accuracy threshold negotiation, leadership for innovation budget. Sequencing: governance before build, not after. Without it, the first wrong number would have killed the program." },
-      { stage: "SHIP TRUST", title: "Shipped billing first because it was the most measurable, not the most demo-able", detail: "Picked the highest-pain, hardest-to-fake workflow first. Built an accuracy gate before the agent — kept per-run logs from day 1. Surfaced accuracy logs in delivery-team dashboards, not just mine. Made the failure mode visible, not hidden. Adoption followed measurable trust." },
-      { stage: "SCALE", title: "Sequenced rollout from billing → five more agents on a documented pattern", detail: "Billing agent team-wide in 1 month. Used that adoption to clear the path for the next five — sprint health, risk scanning, briefings, forecasting, status. Each one had an easier conversation with security and finance than the one before. Codified the pattern other consultants now follow." },
+      {
+        stage: "DISCOVER",
+        title: "Watched my own work for two weeks before touching a tool.",
+        detail: "Month-end was three to four hours of copy-paste for me, every program. Watched it by hand with a notepad. Separated what AI could actually do from what was judgment. The roadmap came out of that observation. Without it I would've built six things nobody trusted.",
+      },
+      {
+        stage: "ALIGN",
+        title: "Got leadership, security, finance bought in before writing a prompt.",
+        detail: "Took the proposal to the CTO office for architecture. To IT and Security for data access. To finance for the accuracy threshold. To leadership for the budget. Governance first, build second. If the first wrong invoice surfaces, the program is over.",
+      },
+      {
+        stage: "SHIP TRUST",
+        title: "Billing first. Most measurable, not most demo-able.",
+        detail: "Picked the highest-pain, hardest-to-fake workflow. Built an accuracy gate before the agent. Logged every run from day one. Put the accuracy log in the delivery team's dashboard, not just mine. Made the failure mode visible.",
+      },
+      {
+        stage: "SCALE",
+        title: "Billing went team-wide. Five more agents followed on the same pattern.",
+        detail: "Once billing was running team-wide, the next five had an easier conversation with security and finance. Each one was shorter than the one before. Wrote the build pattern up as a phData internal standard so other consultants could use it.",
+      },
     ],
 
     orchestration: [
-      { team: "phData Leadership", role: "Innovation budget · sponsor I earned", type: "exec" },
-      { team: "phData CTO Office", role: "Architecture review · sign-off I got before build", type: "internal" },
-      { team: "IT / Security", role: "Data access review · sequenced before rollout", type: "internal" },
-      { team: "Finance Team", role: "Accuracy gatekeeper · co-designed the threshold", type: "internal" },
-      { team: "Delivery PMs", role: "Primary adopter cohort · usage feedback I ran", type: "internal" },
-      { team: "Sales Engineering", role: "Later adopter cohort · second-wave rollout I led", type: "internal" },
-      { team: "Me · Sole AI PM", role: "Program owner · build, rollout, evangelism", type: "internal" },
+      { team: "phData Leadership", role: "Sponsor I earned. Innovation budget.", type: "exec" },
+      { team: "phData CTO Office", role: "Architecture sign-off before build.", type: "internal" },
+      { team: "IT / Security", role: "Data access review. Sequenced before rollout.", type: "internal" },
+      { team: "Finance Team", role: "Accuracy gatekeeper. Co-designed the threshold.", type: "internal" },
+      { team: "Delivery PMs", role: "Primary adopters. Usage feedback I ran weekly.", type: "internal" },
+      { team: "Sales Engineering", role: "Second-wave adopter cohort.", type: "internal" },
+      { team: "Me · Sole AI PM", role: "Built, sold, rolled out.", type: "internal" },
     ],
 
     decisions: [
       {
-        decision: "I aligned CTO office, IT/Security, and finance before the first prompt — not after the first demo",
-        tradeoff: "Two weeks of stakeholder work vs. shipping faster and hoping for forgiveness",
-        risk: "Building first → first wrong number kills the program before adoption starts",
-        outcome: "Day-one compliance posture; security review took weeks, not quarters; finance was a partner",
+        decision: "Walked through CTO, IT/Security, and finance before writing the first prompt.",
+        tradeoff: "Two weeks of meetings before any code.",
+        risk: "Building first means the first wrong number kills the program.",
+        outcome: "Day-one compliance. Security review took weeks instead of quarters. Finance was a partner, not a blocker.",
       },
       {
-        decision: "I shipped billing first — most-measurable workflow, not the most demo-able",
-        tradeoff: "Glamour and demo-ability vs. defensible trust",
-        risk: "Billing fails → program never gets a second look",
-        outcome: "Billing team-wide in 1 month · cleared the path for the next five",
+        decision: "Built billing first because it was measurable, not because it was demo-able.",
+        tradeoff: "No flashy demo. Billing isn't a showcase agent.",
+        risk: "If billing fails, nothing else gets a second look.",
+        outcome: "Billing went team-wide in a month. Cleared the path for everything after it.",
       },
       {
-        decision: "I surfaced accuracy logs in delivery-team dashboards, not just mine",
-        tradeoff: "Public vulnerability of every miss vs. trust I'd earn from being open",
-        risk: "Visible failures cap adoption at curiosity instead of production use",
-        outcome: "Delivery team treats the fleet as production tooling, not experimental",
+        decision: "Put the accuracy logs in the delivery team's dashboard, not just mine.",
+        tradeoff: "Every miss became visible to the whole team.",
+        risk: "Visible failures cap adoption at curiosity.",
+        outcome: "Team treats the fleet as production tooling instead of an experiment.",
       },
       {
-        decision: "I sequenced rollout cohort by cohort, not big bang — billing PMs first, then full delivery, then sales eng",
-        tradeoff: "Slower visible adoption curve vs. each cohort going well",
-        risk: "Big-bang rollout fails at one cohort and stalls everywhere",
-        outcome: "Each cohort had an easier conversation than the one before",
+        decision: "Rolled out cohort by cohort. Billing PMs first, then full delivery, then sales eng.",
+        tradeoff: "Slower visible adoption.",
+        risk: "Big-bang rollout fails at one cohort and stalls everywhere.",
+        outcome: "Each cohort had an easier conversation than the one before.",
       },
       {
-        decision: "I documented the build pattern as a phData internal standard — not just my own playbook",
-        tradeoff: "Time I could have spent on the next agent vs. team-wide pattern other consultants could use",
-        risk: "Pattern feels like an artifact, gets ignored",
-        outcome: "Pattern other consultants are now copying for their own builds",
+        decision: "Wrote the build pattern up as a phData internal standard, not just my notes.",
+        tradeoff: "Time I could've spent on the next agent.",
+        risk: "Standard sits on a wiki and nobody reads it.",
+        outcome: "Other consultants are copying the pattern for their own builds now.",
       },
       {
-        decision: "I positioned the program to leadership as freeing PM time for account growth — not as cost savings",
-        tradeoff: "Slower budget approval vs. a story leadership could actually invest in",
-        risk: "Cost-savings framing reads as defensive; growth framing reads as strategic",
-        outcome: "Innovation Award · ongoing executive air cover for fleet expansion",
+        decision: "Pitched the program to leadership as freeing PM time for account growth, not as cost savings.",
+        tradeoff: "Slower budget approval.",
+        risk: "Cost savings is a defensive story. Growth is the one leadership invests in.",
+        outcome: "Innovation Award. Ongoing executive cover for the fleet.",
       },
     ],
 
     impact: [
       { value: "6", label: "Agents in production", tone: "ai" },
-      { value: "1 month", label: "Team-wide adoption I drove", tone: "primary" },
-      { value: "~8 hrs/wk", label: "PM time recovered for accounts", tone: "ok" },
-      { value: "Innovation Award", label: "Leadership recognition", tone: "ai" },
-      { value: "Pattern", label: "Other consultants now copy", tone: "ok" },
+      { value: "1 month", label: "First-agent team adoption", tone: "primary" },
+      { value: "~8 hrs/wk", label: "PM time freed for accounts", tone: "ok" },
+      { value: "Innovation Award", label: "phData internal recognition", tone: "ai" },
+      { value: "Pattern", label: "Other consultants now using", tone: "ok" },
     ],
 
     beforeAfter: {
       before: [
-        "Delivery PMs spending 3-4 hrs/program/month on manual admin",
-        "No internal AI program at phData · no proof anyone here could ship one",
-        "Senior PM capacity locked into admin, not account growth or client work",
-        "Finance, IT/Security, leadership skeptical of LLM outputs touching client work",
+        "PMs spending three to four hours per program, per month, on manual admin.",
+        "No internal AI program at phData. Nobody had shipped one.",
+        "Senior PM time locked into admin, not account growth.",
+        "Finance and Security skeptical of LLM outputs near client work.",
       ],
       after: [
-        "Six production agents · ~8 hrs/wk recovered per PM · Innovation Award",
-        "Internal AI program with a documented pattern other consultants now follow",
-        "Senior PM time freed for the strategic work account growth actually requires",
-        "Finance + IT/Security as partners on the program · not blockers",
+        "Six agents in production. ~8 hours/week recovered per PM.",
+        "Documented internal AI pattern other consultants now copy.",
+        "PM time freed for account growth and stakeholder work.",
+        "Finance and Security as partners on the program, not blockers.",
       ],
     },
 
@@ -566,50 +630,50 @@ export const caseStudies: CaseStudy[] = [
     agents: [
       {
         name: "Month-End Billing Reconciler",
-        replaces: "3–4 hrs/program/month of manual time-tracking-vs-budget copy-paste",
-        adopters: "Every delivery PM, every month-end · finance review queue",
+        replaces: "Three to four hours of time-tracking-vs-budget copy-paste every month, every program.",
+        adopters: "Every delivery PM at month-end. Finance reviews the output.",
         tools: ["Glean", "Salesforce MCP", "Sheets"],
-        output: "Finance-ready discrepancy summary with audit trail",
+        output: "Finance-ready discrepancy summary with audit trail.",
         status: "live",
       },
       {
         name: "Sprint Health Scorer",
-        replaces: "Weekly cross-program sprint review I used to run by hand",
-        adopters: "Delivery PMs across active programs · weekly",
+        replaces: "Cross-program sprint review I used to do by hand each week.",
+        adopters: "Delivery PMs across active programs. Weekly.",
         tools: ["Jira MCP", "Slack MCP", "Glean"],
-        output: "Ranked sprint scorecard + PM action queue",
+        output: "Ranked sprint scorecard with PM action queue.",
         status: "live",
       },
       {
         name: "Project Risk Scanner",
-        replaces: "2-hour Friday risk-scan checklist across 4+ active programs",
-        adopters: "Delivery PMs + account leads · weekly escalation queue",
+        replaces: "Two-hour Friday risk checklist across four-plus active programs.",
+        adopters: "Delivery PMs and account leads. Weekly escalation queue.",
         tools: ["Glean", "Jira MCP", "Salesforce MCP"],
-        output: "Risk heatmap + escalation queue with owner and timing",
+        output: "Risk heatmap with owner and timing.",
         status: "live",
       },
       {
         name: "Leadership Deck Drafter",
-        replaces: "Half-day of exec briefing prep before each leadership review",
-        adopters: "Delivery PMs · sales eng · pre-leadership-meeting prep",
+        replaces: "Half a day of exec briefing prep before each leadership review.",
+        adopters: "Delivery PMs and sales eng. Pre-meeting prep.",
         tools: ["Glean", "Google Apps Script"],
-        output: "Audience-tuned deck draft with cited data sources",
+        output: "Audience-tuned deck draft with cited sources.",
         status: "live",
       },
       {
         name: "Budget Forecaster",
-        replaces: "Manual monthly hours-burn projection against contract budget",
-        adopters: "Delivery PMs piloting · finance team review",
+        replaces: "Manual monthly burn projection against contract budget.",
+        adopters: "PMs piloting. Finance reviews.",
         tools: ["Glean", "Salesforce MCP"],
-        output: "Monthly forecast + variance flags with owner",
+        output: "Monthly forecast with variance flags.",
         status: "beta",
       },
       {
         name: "Status Note Composer",
-        replaces: "Friday status-note drafting from scratch by every PM",
-        adopters: "Delivery PMs piloting · Friday cadence",
+        replaces: "Friday status notes drafted from scratch by every PM.",
+        adopters: "PMs piloting on Friday cadence.",
         tools: ["Glean", "Jira MCP", "Salesforce MCP"],
-        output: "Stakeholder-tuned weekly status with evidence links",
+        output: "Stakeholder-tuned status with evidence links.",
         status: "beta",
       },
     ],
