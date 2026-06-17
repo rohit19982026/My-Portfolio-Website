@@ -92,7 +92,7 @@ function MobileRoleCard({ role, inView, index }: { role: typeof roles[0]; inView
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 + index * 0.15 }}
-      className="rounded-2xl overflow-hidden"
+      className="rounded-2xl"
       style={{ border: `1px solid var(--glass-border)`, background: "var(--color-bg-secondary)" }}
     >
       {/* Header — always visible, tap to expand */}
@@ -131,12 +131,14 @@ function MobileRoleCard({ role, inView, index }: { role: typeof roles[0]; inView
         </motion.div>
       </button>
 
-      {/* Expandable body */}
-      <motion.div
-        initial={false}
-        animate={{ height: expanded ? "auto" : 0, opacity: expanded ? 1 : 0 }}
-        transition={{ type: "spring", stiffness: 90, damping: 22 }}
-        style={{ overflow: "hidden" }}
+      {/* Expandable body — CSS max-height transition (reliable on mobile) */}
+      <div
+        style={{
+          maxHeight: expanded ? "1800px" : "0",
+          overflow: "hidden",
+          transition: "max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease",
+          opacity: expanded ? 1 : 0,
+        }}
       >
         <div className="px-4 pb-4">
           <div style={{ height: "1px", background: "var(--glass-border)", marginBottom: "14px" }} />
@@ -148,10 +150,10 @@ function MobileRoleCard({ role, inView, index }: { role: typeof roles[0]; inView
               </li>
             ))}
           </ul>
-          {/* Tags: horizontal scroll */}
+          {/* Tags: horizontal scroll — no overflow-hidden parent so scroll works */}
           <div
-            className="flex gap-2 overflow-x-auto pb-1"
-            style={{ scrollbarWidth: "none" }}
+            className="flex gap-2 pb-1"
+            style={{ overflowX: "auto", scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
           >
             {role.tags.map((tag, ti) => (
               ti === 0 ? (
@@ -175,7 +177,7 @@ function MobileRoleCard({ role, inView, index }: { role: typeof roles[0]; inView
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

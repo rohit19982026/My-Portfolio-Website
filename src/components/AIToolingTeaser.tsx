@@ -136,23 +136,27 @@ export default function AIToolingTeaser() {
               </div>
             ))}
           </div>
-          {/* Desktop: inline grid */}
-          <GlassSurface radius="lg" className="hidden sm:grid sm:grid-cols-3">
-            {proofStrip.map((p, i) => (
-              <div
-                key={p.label}
-                className="p-5"
-                style={{ borderLeft: i > 0 ? "1px solid var(--glass-border)" : undefined }}
-              >
-                <div className="font-bold tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.textAccent }}>
-                  {p.value}
-                </div>
-                <div className="text-[12px] leading-snug" style={{ color: "var(--color-text-secondary)" }}>
-                  {p.label}
-                </div>
+          {/* Desktop: 3-column glass panel */}
+          <div className="hidden sm:block">
+            <GlassSurface radius="lg">
+              <div className="grid sm:grid-cols-3">
+                {proofStrip.map((p, i) => (
+                  <div
+                    key={p.label}
+                    className="p-5"
+                    style={{ borderLeft: i > 0 ? "1px solid var(--glass-border)" : undefined }}
+                  >
+                    <div className="font-bold tabular-nums mb-1.5" style={{ fontSize: "clamp(20px, 2.4vw, 28px)", color: p.textAccent }}>
+                      {p.value}
+                    </div>
+                    <div className="text-[12px] leading-snug" style={{ color: "var(--color-text-secondary)" }}>
+                      {p.label}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </GlassSurface>
+            </GlassSurface>
+          </div>
         </motion.div>
 
         {/* Agent registry label */}
