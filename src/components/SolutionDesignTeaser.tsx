@@ -55,7 +55,7 @@ export default function SolutionDesignTeaser() {
 
               <div className="grid md:grid-cols-5 gap-0">
                 {/* LEFT — content */}
-                <div className="md:col-span-3 p-8 md:p-10">
+                <div className="md:col-span-3 p-5 md:p-10">
                   <div className="flex items-center gap-2 mb-5 flex-wrap">
                     <span
                       className="text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
@@ -84,18 +84,18 @@ export default function SolutionDesignTeaser() {
                   </p>
 
                   {/* mini-stats */}
-                  <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="grid grid-cols-3 gap-3 mb-6">
                     <div>
                       <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent-dk)" }}>3</p>
-                      <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Data sources</p>
+                      <p className="text-[10px] md:text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Data sources</p>
                     </div>
                     <div>
                       <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent-dk)" }}>8</p>
-                      <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Workflow steps</p>
+                      <p className="text-[10px] md:text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>Workflow steps</p>
                     </div>
                     <div>
                       <p className="font-heading font-black tabular-nums text-[20px] leading-none" style={{ color: "var(--color-accent-dk)" }}>4</p>
-                      <p className="text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>LLMs assigned</p>
+                      <p className="text-[10px] md:text-[9px] uppercase tracking-wider mt-1.5" style={{ color: "var(--color-faint)" }}>LLMs assigned</p>
                     </div>
                   </div>
 
@@ -107,9 +107,12 @@ export default function SolutionDesignTeaser() {
 
                 {/* RIGHT — architecture preview */}
                 <div
-                  className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
-                  style={{ background: "linear-gradient(135deg, rgba(10,132,255,0.05), rgba(100,210,255,0.04))", borderLeft: "1px solid var(--glass-border)" }}
+                  className="md:col-span-2 p-5 md:p-10 flex flex-col justify-center relative overflow-hidden"
+                  style={{ background: "linear-gradient(135deg, rgba(10,132,255,0.05), rgba(100,210,255,0.04))" }}
                 >
+                  {/* Separator: horizontal on mobile (stacked), vertical on desktop (side-by-side) */}
+                  <div className="md:hidden h-px -mx-5 mb-5" style={{ background: "var(--glass-border)" }} />
+                  <div className="hidden md:block absolute inset-y-0 left-0 w-px" style={{ background: "var(--glass-border)" }} />
                   <p className="text-[9px] font-bold uppercase tracking-[0.18em] mb-4 relative z-10" style={{ color: "var(--color-accent-dk)" }}>
                     Architecture
                   </p>

@@ -87,7 +87,7 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
               CASE {study.number}
             </span>
             <span className="text-[9px]" style={{ color: "var(--color-faint)" }}>·</span>
-            <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--color-faint)" }}>
+            <span className="font-mono text-[9px] uppercase tracking-widest hidden sm:inline" style={{ color: "var(--color-faint)" }}>
               {study.variant === "ai-agents" ? "AGENTIC SYSTEM" : "DATA PLATFORM"}
             </span>
           </div>
@@ -150,7 +150,7 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
                   <div className="font-heading font-black tabular-nums leading-none text-[14px] mb-1" style={{ color: accentText }}>
                     {s.value}
                   </div>
-                  <div className="text-[8.5px] font-medium uppercase tracking-wider leading-tight"
+                  <div className="text-[10px] md:text-[8.5px] font-medium uppercase tracking-wider leading-tight"
                     style={{ color: "var(--color-text-secondary)" }}>
                     {s.label}
                   </div>
