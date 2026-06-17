@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { GraduationCap, Trophy } from "lucide-react";
+import { useRef, useState } from "react";
+import { GraduationCap, Trophy, ChevronDown } from "lucide-react";
 import GlassSurface from "./GlassSurface";
 import IconBadge from "./IconBadge";
 
@@ -83,6 +83,103 @@ const tagItemVariants = {
   visible: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 320, damping: 22 } },
 };
 
+// Mobile-only: collapsible role card
+function MobileRoleCard({ role, inView, index }: { role: typeof roles[0]; inView: boolean; index: number }) {
+  const [expanded, setExpanded] = useState(index === 0);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 + index * 0.15 }}
+      className="rounded-2xl overflow-hidden"
+      style={{ border: `1px solid var(--glass-border)`, background: "var(--color-bg-secondary)" }}
+    >
+      {/* Header — always visible, tap to expand */}
+      <button
+        onClick={() => setExpanded((v) => !v)}
+        className="w-full text-left px-4 py-4 flex items-start justify-between gap-3"
+        style={{ background: "none", border: "none" }}
+      >
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 mb-1">
+            <span className="text-[9.5px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-text-secondary)" }}>
+              {role.period}
+            </span>
+            {role.current && (
+              <span
+                className="glass inline-flex items-center gap-1.5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide"
+                style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green-text)" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                CURRENT
+              </span>
+            )}
+          </div>
+          <h3 className="font-heading text-[16px] font-bold leading-snug tracking-tight mb-0.5" style={{ color: "var(--color-text)" }}>
+            {role.title}
+          </h3>
+          <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: role.textAccent }}>{role.org}</p>
+        </div>
+        <motion.div
+          animate={{ rotate: expanded ? 180 : 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 22 }}
+          className="shrink-0 mt-1"
+          style={{ color: "var(--color-faint)" }}
+        >
+          <ChevronDown size={16} strokeWidth={2} />
+        </motion.div>
+      </button>
+
+      {/* Expandable body */}
+      <motion.div
+        initial={false}
+        animate={{ height: expanded ? "auto" : 0, opacity: expanded ? 1 : 0 }}
+        transition={{ type: "spring", stiffness: 90, damping: 22 }}
+        style={{ overflow: "hidden" }}
+      >
+        <div className="px-4 pb-4">
+          <div style={{ height: "1px", background: "var(--glass-border)", marginBottom: "14px" }} />
+          <ul className="space-y-2.5 mb-4">
+            {role.bullets.map((b, bi) => (
+              <li key={bi} className="flex gap-2.5 text-[12.5px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.accent }} />
+                {b}
+              </li>
+            ))}
+          </ul>
+          {/* Tags: horizontal scroll */}
+          <div
+            className="flex gap-2 overflow-x-auto pb-1"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {role.tags.map((tag, ti) => (
+              ti === 0 ? (
+                <span
+                  key={tag}
+                  className="shrink-0 text-[10.5px] px-3 py-1.5 rounded-full font-bold uppercase tracking-[0.04em]"
+                  style={{ backgroundColor: role.color, color: "#FFFFFF" }}
+                >
+                  {tag}
+                </span>
+              ) : (
+                <span
+                  key={tag}
+                  className="glass shrink-0 inline-flex items-center gap-1.5 text-[10.5px] px-3 py-1.5 rounded-full font-semibold"
+                  style={{ color: role.textAccent }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.accent }} />
+                  {tag}
+                </span>
+              )
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Trajectory() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -97,7 +194,7 @@ export default function Trajectory() {
           initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
           animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-14"
+          className="mb-10 sm:mb-14"
         >
           <span className="text-[11px] font-bold uppercase tracking-[0.2em] block mb-5" style={{ color: "var(--color-accent-dk)" }}>
             02 / TRAJECTORY
@@ -129,14 +226,99 @@ export default function Trajectory() {
             initial={{ opacity: 0, filter: "blur(8px)" }}
             animate={inView ? { opacity: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="text-[16px] max-w-xl leading-relaxed"
+            className="text-[15px] max-w-xl leading-relaxed"
             style={{ color: "var(--color-text-secondary)" }}
           >
             Two roles, one throughline: the work that keeps a program on track is rarely the work that&apos;s written down. Process governance at BT, full program ownership at phData — different domains, same instinct for spotting what&apos;s about to go wrong before it does.
           </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
+        {/* ── MOBILE layout ───────────────────────────────────────── */}
+        <div className="lg:hidden space-y-4 mb-8">
+          {roles.map((role, i) => (
+            <MobileRoleCard key={role.title} role={role} inView={inView} index={i} />
+          ))}
+
+          {/* Mobile sidebar — horizontal scroll strip */}
+          <div
+            className="flex gap-3 overflow-x-auto pb-1 pt-2"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {/* Education card */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.55, duration: 0.5 }}
+              className="shrink-0 w-[260px]"
+            >
+              <GlassSurface radius="lg" className="p-4 flex items-start gap-3 h-full">
+                <IconBadge icon={GraduationCap} color="var(--color-accent)" size={32} iconSize={15} />
+                <div className="min-w-0">
+                  <p className="text-[9.5px] font-bold uppercase tracking-[0.14em] mb-1" style={{ color: "var(--color-accent-dk)" }}>Education</p>
+                  <p className="font-heading font-bold text-[13px] leading-snug mb-0.5" style={{ color: "var(--color-text)" }}>{education.degree}</p>
+                  <p className="text-[10px] font-medium" style={{ color: "var(--color-text-secondary)" }}>{education.institution}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: "var(--color-text-secondary)" }}>{education.year} · {education.grade}</p>
+                </div>
+              </GlassSurface>
+            </motion.div>
+
+            {/* Award card */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.65, duration: 0.5 }}
+              className="shrink-0 w-[240px]"
+            >
+              <GlassSurface accent="#FF9F0A" specular radius="lg" className="p-4 h-full">
+                <p className="flex items-center gap-1.5 text-[9.5px] font-bold uppercase tracking-[0.14em] mb-1.5" style={{ color: "var(--color-orange-text)" }}>
+                  <Trophy size={11} strokeWidth={2.5} />
+                  Award
+                </p>
+                <p className="font-heading font-bold text-[13px] mb-1.5" style={{ color: "var(--color-text)" }}>{award.title}</p>
+                <p className="text-[11px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{award.desc}</p>
+              </GlassSurface>
+            </motion.div>
+
+            {/* Certs card — abbreviated on mobile */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.72, duration: 0.5 }}
+              className="shrink-0 w-[260px]"
+            >
+              <GlassSurface radius="lg" className="p-4 h-full">
+                <p className="text-[9.5px] font-bold uppercase tracking-[0.14em] mb-2.5" style={{ color: "var(--color-teal-text)" }}>Certifications</p>
+                <div className="space-y-2">
+                  {certifications.slice(0, 4).map((c) => {
+                    const accent = c.type === "cert" ? "var(--color-accent)" : "var(--color-teal)";
+                    const accentText = c.type === "cert" ? "var(--color-accent-dk)" : "var(--color-teal-text)";
+                    return (
+                      <div
+                        key={c.name}
+                        className="flex items-start gap-2 p-2 rounded-xl"
+                        style={{ border: "1px solid var(--glass-border)" }}
+                      >
+                        <span
+                          className="mt-0.5 text-[8.5px] font-bold px-1.5 py-0.5 rounded-full shrink-0 uppercase tracking-wider"
+                          style={c.type === "cert" ? { background: accent, color: "#FFFFFF" } : { background: "rgba(100,210,255,0.15)", color: accentText }}
+                        >
+                          {c.type === "cert" ? "CERT" : "COURSE"}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="font-heading text-[11px] font-semibold leading-tight" style={{ color: "var(--color-text)" }}>{c.name}</p>
+                          <p className="text-[9.5px]" style={{ color: "var(--color-text-secondary)" }}>{c.issuer}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </GlassSurface>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ── DESKTOP layout (lg+) ────────────────────────────────── */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-12">
           {/* Timeline */}
           <div className="lg:col-span-2">
             <div className="relative">
@@ -227,7 +409,7 @@ export default function Trajectory() {
             </div>
           </div>
 
-          {/* Sidebar */}
+          {/* Desktop Sidebar */}
           <motion.div
             variants={sidebarVariants}
             initial="hidden"
@@ -290,6 +472,7 @@ export default function Trajectory() {
             </motion.div>
           </motion.div>
         </div>
+
       </div>
     </section>
   );

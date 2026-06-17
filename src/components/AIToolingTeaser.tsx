@@ -119,7 +119,25 @@ export default function AIToolingTeaser() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10"
         >
-          <GlassSurface radius="lg" className="grid sm:grid-cols-3">
+          {/* Mobile: stacked cards */}
+          <div className="sm:hidden flex flex-col gap-2">
+            {proofStrip.map((p) => (
+              <div
+                key={p.label}
+                className="flex items-center justify-between px-4 py-3.5 rounded-2xl"
+                style={{ background: `${p.accent}08`, border: `1px solid ${p.accent}25` }}
+              >
+                <div className="font-bold tabular-nums text-[22px] leading-none" style={{ color: p.textAccent }}>
+                  {p.value}
+                </div>
+                <div className="text-[11.5px] leading-snug text-right max-w-[55%]" style={{ color: "var(--color-text-secondary)" }}>
+                  {p.label}
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Desktop: inline grid */}
+          <GlassSurface radius="lg" className="hidden sm:grid sm:grid-cols-3">
             {proofStrip.map((p, i) => (
               <div
                 key={p.label}
@@ -220,7 +238,23 @@ export default function AIToolingTeaser() {
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "var(--color-purple-text)" }}>
             The story behind it
           </p>
-          <div className="grid sm:grid-cols-2 gap-4">
+          {/* Mobile: swipeable carousel */}
+          <div className="sm:hidden">
+            <MobileCarousel>
+              {pov.map((p) => (
+                <GlassSurface key={p.label} radius="lg" className="p-5 h-full">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-2.5" style={{ color: "var(--color-accent-dk)" }}>
+                    {p.label}
+                  </p>
+                  <p className="text-[13px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                    {p.body}
+                  </p>
+                </GlassSurface>
+              ))}
+            </MobileCarousel>
+          </div>
+          {/* Desktop: 2-column grid */}
+          <div className="hidden sm:grid sm:grid-cols-2 gap-4">
             {pov.map((p, i) => (
               <motion.div
                 key={p.label}

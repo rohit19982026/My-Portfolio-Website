@@ -7,6 +7,7 @@ import { caseStudies } from "@/lib/caseStudies";
 import MobileCarousel from "./MobileCarousel";
 import GlassSurface from "./GlassSurface";
 import CaseStudyExperience from "./CaseStudyExperience";
+import CaseStudyMobileStory from "./CaseStudyMobileStory";
 import { useTilt } from "@/hooks/useTilt";
 
 const ACCENT: Record<string, string> = {
@@ -180,8 +181,15 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
               className="overflow-hidden"
             >
               <div className="mx-5 md:mx-7" style={{ height: "1px", background: `linear-gradient(90deg, transparent, ${accent}30, transparent)` }} />
-              <div className="px-5 md:px-7 pt-7 pb-8">
-                <CaseStudyExperience study={study} accent={accent} accentText={accentText} />
+              <div className="px-4 md:px-7 pt-5 md:pt-7 pb-6 md:pb-8">
+                {/* Mobile: swipeable story slides */}
+                <div className="md:hidden">
+                  <CaseStudyMobileStory study={study} accent={accent} accentText={accentText} />
+                </div>
+                {/* Desktop: full 8-screen cockpit */}
+                <div className="hidden md:block">
+                  <CaseStudyExperience study={study} accent={accent} accentText={accentText} />
+                </div>
               </div>
             </motion.div>
           )}

@@ -94,26 +94,36 @@ export default function Hero() {
                 </motion.h1>
               </div>
 
-              {/* Description */}
-              <motion.p
+              {/* Description — shorter on mobile, full on desktop */}
+              <motion.div
                 initial={{ opacity: 0, filter: "blur(12px)", y: 8 }}
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[15px] leading-[1.7] max-w-[520px] mb-7"
-                style={{ color: "var(--color-text-secondary)" }}
+                className="mb-7"
               >
-                Most PMs run programs. I also build the tools the team uses to run them.
-                <br /><br />
-                Programs: on strategic accounts I owned the full engagement — scope, budget,
-                risk, and value decisions across projects. Built senior client relationships,
-                managed the stakeholders most likely to challenge success, and turned
-                delivered work into the next contract.
-                <br /><br />
-                Tooling: I build AI agents that do the manual PM work — billing, tracking,
-                budgeting, forecasting, planning, status briefings — so the team can spend
-                that time on the work that actually matters: growing the engagement, building
-                client relationships, and making the program successful.
-              </motion.p>
+                {/* Mobile — punchy 3-liner */}
+                <p className="lg:hidden text-[15px] leading-[1.65] max-w-[520px]" style={{ color: "var(--color-text-secondary)" }}>
+                  Most PMs run programs. I also build the tools the team uses to run them.
+                  <br /><br />
+                  At phData I own the full engagement — scope, budget, risk, and the client
+                  relationship. Six AI agents handle the admin so the team spends its time
+                  on the work that actually grows the account.
+                </p>
+                {/* Desktop — full 3-paragraph version */}
+                <p className="hidden lg:block text-[15px] leading-[1.7] max-w-[520px]" style={{ color: "var(--color-text-secondary)" }}>
+                  Most PMs run programs. I also build the tools the team uses to run them.
+                  <br /><br />
+                  Programs: on strategic accounts I owned the full engagement — scope, budget,
+                  risk, and value decisions across projects. Built senior client relationships,
+                  managed the stakeholders most likely to challenge success, and turned
+                  delivered work into the next contract.
+                  <br /><br />
+                  Tooling: I build AI agents that do the manual PM work — billing, tracking,
+                  budgeting, forecasting, planning, status briefings — so the team can spend
+                  that time on the work that actually matters: growing the engagement, building
+                  client relationships, and making the program successful.
+                </p>
+              </motion.div>
 
               {/* Social icons */}
               <motion.div
@@ -178,6 +188,11 @@ export default function Hero() {
 
             {/* Right column — live agent console */}
             <div>
+              {/* Divider on mobile before the console */}
+              <div
+                className="lg:hidden mb-6"
+                style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--glass-border), transparent)" }}
+              />
               <div
                 className="text-[11px] font-bold uppercase tracking-[0.18em] mb-3"
                 style={{ color: "var(--color-accent-dk)" }}
