@@ -498,15 +498,24 @@ function BeforeAfter({ ba, accent, accentText }: { ba: CaseStudy["beforeAfter"];
 
 function AgentControlCenter({ study, accent, accentText }: { study: CaseStudy; accent: string; accentText: string }) {
   const agents = study.agents ?? [];
+  const liveCount = agents.filter(a => a.status === "live").length;
   return (
     <div>
-      <ScreenLabel num="02" title="AI Control Center · Live Agent Fleet" accent={accentText} />
+      <ScreenLabel num="02" title="The Agent Fleet I Shipped" accent={accentText} />
 
-      {/* Reasoning flow strip */}
+      {/* Rollout strip — TPM lens: identify → align → ship → adopt → scale */}
       <div className="rounded-2xl p-4 mb-4"
         style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--glass-border)" }}>
+        <div className="flex items-center justify-between mb-3 text-[9px] font-bold uppercase tracking-[0.22em]"
+          style={{ color: "var(--color-text-secondary)" }}>
+          <span>Rollout sequence I owned</span>
+          <span className="flex items-center gap-1.5" style={{ color: "#248A3D" }}>
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#30D158" }} />
+            {liveCount} live · {agents.length - liveCount} beta
+          </span>
+        </div>
         <div className="flex flex-wrap items-center gap-2 justify-between">
-          {["User Intent", "Glean Grounding", "Claude Reasoning", "Tool Selection", "Schema Validation", "Human Review", "Output"].map((step, i) => (
+          {["Identified the problem", "Aligned stakeholders", "Shipped billing first", "Drove adoption", "Sequenced fleet", "Documented pattern"].map((step, i) => (
             <motion.div key={step}
               initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08, duration: 0.4 }}
@@ -518,7 +527,7 @@ function AgentControlCenter({ study, accent, accentText }: { study: CaseStudy; a
                 style={{ background: `${accent}14`, color: accentText, border: `1px solid ${accent}30` }}>
                 {step}
               </motion.div>
-              {i < 6 && <ArrowRight size={12} style={{ color: "var(--color-faint)" }} />}
+              {i < 5 && <ArrowRight size={12} style={{ color: "var(--color-faint)" }} />}
             </motion.div>
           ))}
         </div>
@@ -549,19 +558,25 @@ function AgentControlCenter({ study, accent, accentText }: { study: CaseStudy; a
               </div>
               <Wand2 size={11} style={{ color: accentText, opacity: 0.6 }} />
             </div>
-            <p className="font-heading font-bold text-[13px] leading-tight mb-2" style={{ color: "var(--color-text)" }}>
+            <p className="font-heading font-bold text-[13px] leading-tight mb-2.5" style={{ color: "var(--color-text)" }}>
               {a.name}
             </p>
-            <p className="text-[10.5px] leading-[1.5] mb-2" style={{ color: "var(--color-text-secondary)" }}>
-              {a.intent}
-            </p>
-            <div className="rounded-md px-2 py-1.5 mb-2.5"
-              style={{ background: "rgba(191,90,242,0.06)", border: "1px dashed rgba(191,90,242,0.25)" }}>
-              <p className="text-[8px] font-bold uppercase tracking-widest mb-0.5" style={{ color: "#9333EA" }}>
-                Reasoning
+            <div className="rounded-md px-2 py-1.5 mb-2"
+              style={{ background: "rgba(255,55,95,0.05)", border: "1px dashed rgba(255,55,95,0.25)" }}>
+              <p className="text-[8px] font-bold uppercase tracking-widest mb-0.5" style={{ color: "#C7174A" }}>
+                Replaces
               </p>
               <p className="text-[10px] leading-[1.45]" style={{ color: "var(--color-text-secondary)" }}>
-                {a.reasoning}
+                {a.replaces}
+              </p>
+            </div>
+            <div className="rounded-md px-2 py-1.5 mb-2.5"
+              style={{ background: "rgba(48,209,88,0.05)", border: "1px dashed rgba(48,209,88,0.25)" }}>
+              <p className="text-[8px] font-bold uppercase tracking-widest mb-0.5" style={{ color: "#248A3D" }}>
+                Adopters
+              </p>
+              <p className="text-[10px] leading-[1.45]" style={{ color: "var(--color-text-secondary)" }}>
+                {a.adopters}
               </p>
             </div>
             <div className="flex flex-wrap gap-1 mb-2">
