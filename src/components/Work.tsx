@@ -4,7 +4,6 @@ import { useState, type Ref } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, ArrowUpRight } from "lucide-react";
 import { caseStudies } from "@/lib/caseStudies";
-import MobileCarousel from "./MobileCarousel";
 import GlassSurface from "./GlassSurface";
 import CaseStudyExperience from "./CaseStudyExperience";
 import CaseStudyMobileStory from "./CaseStudyMobileStory";
@@ -78,7 +77,7 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
         }}
       >
         {/* Live status strip — mission-control bar */}
-        <div className="flex items-center justify-between px-5 md:px-7 pt-4 pb-2.5"
+        <div className="flex items-center justify-between px-4 md:px-7 pt-3.5 pb-2.5"
           style={{ borderBottom: `1px solid var(--glass-border)` }}>
           <div className="flex items-center gap-2">
             <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background: "#30D158" }}
@@ -86,7 +85,7 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
             <span className="font-mono text-[9px] font-bold tracking-widest" style={{ color: "var(--color-text-secondary)" }}>
               CASE {study.number}
             </span>
-            <span className="text-[9px]" style={{ color: "var(--color-faint)" }}>·</span>
+            <span className="text-[9px] hidden sm:inline" style={{ color: "var(--color-faint)" }}>·</span>
             <span className="font-mono text-[9px] uppercase tracking-widest hidden sm:inline" style={{ color: "var(--color-faint)" }}>
               {study.variant === "ai-agents" ? "AGENTIC SYSTEM" : "DATA PLATFORM"}
             </span>
@@ -98,56 +97,56 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
 
         {/* Card face — strategic snapshot */}
         <button onClick={() => setOpen(!open)} className="w-full text-left">
-          <div className="px-5 pt-5 pb-5 md:px-7">
-            <div className="flex items-start justify-between gap-4 mb-4">
+          <div className="px-4 pt-4 pb-4 md:px-7 md:pt-5 md:pb-5">
+            <div className="flex items-start justify-between gap-3 mb-3">
               <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
+                <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+                  <span className="text-[10px] md:text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
                     style={{ color: accentText, background: `${accent}15`, border: `1px solid ${accent}30` }}>
                     {study.type}
                   </span>
-                  <span className="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
+                  <span className="text-[10px] md:text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
                     style={{ color: "var(--color-text-secondary)", background: "var(--color-bg-secondary)", border: "1px solid var(--glass-border)" }}>
                     {study.industry}
                   </span>
                 </div>
-                <p className="text-[10.5px] font-semibold mb-2 uppercase tracking-[0.15em]" style={{ color: accentText }}>
+                <p className="text-[11px] md:text-[10.5px] font-semibold mb-1.5 uppercase tracking-[0.15em]" style={{ color: accentText }}>
                   {study.domain}
                 </p>
-                <h3 className="font-heading font-bold leading-[1.2] mb-3 transition-colors duration-300"
+                <h3 className="font-heading font-bold leading-[1.2] mb-2.5 transition-colors duration-300"
                   style={{
-                    fontSize: "clamp(16px, 2vw, 22px)",
+                    fontSize: "clamp(17px, 2vw, 22px)",
                     color: open ? accentText : "var(--color-text)",
                   }}>
                   {study.headline}
                 </h3>
-                <p className="text-[12.5px] leading-[1.55] max-w-2xl" style={{ color: "var(--color-text-secondary)" }}>
+                <p className="text-[13px] leading-[1.5] max-w-2xl" style={{ color: "var(--color-text-secondary)" }}>
                   {study.capability}
                 </p>
               </div>
               <motion.div
                 animate={{ rotate: open ? 45 : 0 }}
                 transition={{ type: "spring", stiffness: 200, damping: 22 }}
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center shrink-0"
                 style={{
                   border: `1.5px solid ${accent}40`,
                   color: accentText,
                   background: open ? `${accent}18` : hovered ? `${accent}0C` : "transparent",
                 }}>
-                <Plus size={16} strokeWidth={2.5} />
+                <Plus size={15} strokeWidth={2.5} />
               </motion.div>
             </div>
 
             {/* Scale tiles — mission control snapshot */}
-            <div className="grid grid-cols-3 gap-2 mt-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-3">
               {topScale.map((s, i) => (
                 <motion.div key={s.label}
                   initial={false}
                   animate={{ background: active ? `${accent}10` : "var(--color-bg-secondary)" }}
                   transition={{ duration: 0.3 }}
-                  className="px-3 py-2.5 rounded-lg"
+                  className={`px-3 py-2.5 rounded-lg${i === 2 ? " hidden md:block" : ""}`}
                   style={{ border: `1px solid ${active ? `${accent}28` : "var(--glass-border)"}` }}>
-                  <div className="font-heading font-black tabular-nums leading-none text-[14px] mb-1" style={{ color: accentText }}>
+                  <div className="font-heading font-black tabular-nums leading-none text-[15px] md:text-[14px] mb-1" style={{ color: accentText }}>
                     {s.value}
                   </div>
                   <div className="text-[10px] md:text-[8.5px] font-medium uppercase tracking-wider leading-tight"
@@ -159,11 +158,11 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
             </div>
 
             {/* Open cockpit affordance */}
-            <div className="flex items-center gap-1.5 mt-4 text-[10px] font-bold uppercase tracking-widest"
+            <div className="flex items-center gap-1.5 mt-3 text-[11px] md:text-[10px] font-bold uppercase tracking-widest"
               style={{ color: accentText }}>
-              {open ? "Close cockpit" : "Open cockpit view"}
+              {open ? "Close" : "Open case study"}
               <ArrowUpRight size={12} strokeWidth={2.5} />
-              <span className="text-[9px] font-normal" style={{ color: "var(--color-faint)" }}>
+              <span className="text-[9px] font-normal hidden sm:inline" style={{ color: "var(--color-faint)" }}>
                 · 8 screens · the insight · what was actually hard · the calls I made
               </span>
             </div>
@@ -240,13 +239,11 @@ export default function Work() {
           </div>
         </motion.div>
 
-        {/* Mobile: swipeable carousel */}
-        <div className="md:hidden">
-          <MobileCarousel>
-            {caseStudies.map((study, i) => (
-              <CaseStudyCard key={study.id} study={study} index={i} />
-            ))}
-          </MobileCarousel>
+        {/* Mobile: full-width vertical stack (not carousel — accordion expansion + carousel don't mix) */}
+        <div className="md:hidden space-y-4">
+          {caseStudies.map((study, i) => (
+            <CaseStudyCard key={study.id} study={study} index={i} />
+          ))}
         </div>
         {/* Desktop: vertical stack */}
         <div className="hidden md:block space-y-4">
