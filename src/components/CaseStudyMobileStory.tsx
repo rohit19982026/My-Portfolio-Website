@@ -25,43 +25,43 @@ type SlideId = "overview" | "hard" | "journey" | "agents" | "calls" | "impact" |
 
 function OverviewSlide({ study, accent, accentText }: { study: CaseStudy; accent: string; accentText: string }) {
   return (
-    <div className="flex flex-col gap-4 p-5 h-full">
+    <div className="flex flex-col gap-3 p-5">
       <div>
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-1.5 mb-2.5">
           <span
-            className="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
+            className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
             style={{ color: accentText, background: `${accent}15`, border: `1px solid ${accent}30` }}
           >
             {study.type}
           </span>
           <span
-            className="text-[9px] font-semibold px-2.5 py-1 rounded-full"
+            className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
             style={{ color: "var(--color-text-secondary)", background: "var(--color-bg-secondary)", border: "1px solid var(--glass-border)" }}
           >
             {study.year}
           </span>
         </div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: accentText }}>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] mb-1.5" style={{ color: accentText }}>
           {study.domain}
         </p>
-        <h3 className="font-heading font-bold text-[16px] leading-[1.25] mb-2.5" style={{ color: "var(--color-text)" }}>
+        <h3 className="font-heading font-bold text-[17px] leading-[1.25] mb-2" style={{ color: "var(--color-text)" }}>
           {study.headline}
         </h3>
-        <p className="text-[12.5px] leading-[1.6]" style={{ color: "var(--color-text-secondary)" }}>
+        <p className="text-[12.5px] leading-[1.55]" style={{ color: "var(--color-text-secondary)" }}>
           {study.capability}
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-2 mt-auto">
+      <div className="grid grid-cols-2 gap-2">
         {study.scale.slice(0, 4).map((s) => (
           <div
             key={s.label}
-            className="px-3 py-3 rounded-xl"
+            className="px-3 py-2.5 rounded-xl"
             style={{ background: `linear-gradient(150deg, ${accent}10, ${accent}04)`, border: `1px solid ${accent}1E` }}
           >
             <div className="font-heading font-black tabular-nums text-[15px] leading-none mb-1" style={{ color: accentText }}>
               {s.value}
             </div>
-            <div className="text-[8.5px] font-medium uppercase tracking-wider leading-tight" style={{ color: "var(--color-text-secondary)" }}>
+            <div className="text-[10px] font-medium uppercase tracking-wider leading-tight" style={{ color: "var(--color-text-secondary)" }}>
               {s.label}
             </div>
           </div>
@@ -124,8 +124,8 @@ function JourneySlide({ study, accent, accentText }: { study: CaseStudy; accent:
             </div>
             <div className="flex-1 pt-0.5">
               <p className="text-[8px] font-bold uppercase tracking-[0.2em] mb-0.5" style={{ color: accentText }}>{j.stage}</p>
-              <p className="text-[13px] font-semibold leading-snug mb-1" style={{ color: "var(--color-text)" }}>{j.title}</p>
-              <p className="text-[11.5px] leading-[1.5]" style={{ color: "var(--color-text-secondary)" }}>{j.detail}</p>
+              <p className="text-[12.5px] font-semibold leading-snug mb-1" style={{ color: "var(--color-text)" }}>{j.title}</p>
+              <p className="text-[11px] leading-[1.45] line-clamp-2" style={{ color: "var(--color-text-secondary)" }}>{j.detail}</p>
             </div>
           </motion.div>
         ))}
@@ -263,8 +263,8 @@ function BeforeAfterSlide({ study, accent, accentText }: { study: CaseStudy; acc
       <div className="rounded-2xl p-3.5" style={{ background: "rgba(255,55,95,0.04)", border: "1px solid rgba(255,55,95,0.2)" }}>
         <p className="text-[8.5px] font-bold uppercase tracking-[0.18em] mb-2" style={{ color: "#C7174A" }}>▣ Before</p>
         <ul className="space-y-1.5">
-          {study.beforeAfter.before.map((b, i) => (
-            <li key={i} className="flex gap-2 text-[11.5px] leading-[1.45]" style={{ color: "var(--color-text-secondary)" }}>
+          {study.beforeAfter.before.slice(0, 3).map((b, i) => (
+            <li key={i} className="flex gap-2 text-[11.5px] leading-[1.4]" style={{ color: "var(--color-text-secondary)" }}>
               <span className="shrink-0 mt-1.5 w-1 h-1 rounded-full" style={{ background: "#FF375F", opacity: 0.5 }} />
               {b}
             </li>
@@ -282,8 +282,8 @@ function BeforeAfterSlide({ study, accent, accentText }: { study: CaseStudy; acc
       <div className="rounded-2xl p-3.5" style={{ background: `${accent}08`, border: `1px solid ${accent}30` }}>
         <p className="text-[8.5px] font-bold uppercase tracking-[0.18em] mb-2" style={{ color: accentText }}>▣ After</p>
         <ul className="space-y-1.5">
-          {study.beforeAfter.after.map((a, i) => (
-            <li key={i} className="flex gap-2 text-[11.5px] leading-[1.45]" style={{ color: "var(--color-text)" }}>
+          {study.beforeAfter.after.slice(0, 3).map((a, i) => (
+            <li key={i} className="flex gap-2 text-[11.5px] leading-[1.4]" style={{ color: "var(--color-text)" }}>
               <span className="shrink-0 mt-1.5 w-1 h-1 rounded-full" style={{ background: accent }} />
               {a}
             </li>
@@ -373,7 +373,7 @@ export default function CaseStudyMobileStory({
           scrollSnapType: "x mandatory",
           scrollbarWidth: "none",
           WebkitOverflowScrolling: "touch",
-          minHeight: 360,
+          alignItems: "flex-start",
         }}
       >
         {slides.map((s) => (
