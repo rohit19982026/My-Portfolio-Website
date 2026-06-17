@@ -163,7 +163,7 @@ function CaseStudyCard({ study, index }: { study: (typeof caseStudies)[0]; index
               {open ? "Close cockpit" : "Open cockpit view"}
               <ArrowUpRight size={12} strokeWidth={2.5} />
               <span className="text-[9px] font-normal" style={{ color: "var(--color-faint)" }}>
-                · 8 screens · ecosystem · orchestration · decisions · impact
+                · 8 screens · the insight · what was actually hard · the calls I made
               </span>
             </div>
           </div>
@@ -206,19 +206,17 @@ export default function Work() {
           <h2
             className="font-heading font-bold tracking-tight leading-[0.95] mb-5"
             style={{ fontSize: "clamp(32px, 5.5vw, 68px)", color: "var(--color-text)" }}>
-            Four data &amp; AI transformations.{" "}
+            The work.{" "}
             <span className="font-normal" style={{
               background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-teal) 55%, var(--color-purple) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}>
-              Led end-to-end
-            </span>.
+              What it actually taught me.
+            </span>
           </h2>
           <p className="text-[16px] max-w-2xl leading-relaxed mb-5" style={{ color: "var(--color-text-secondary)" }}>
-            Each card is a strategic snapshot. Open the cockpit to see the ecosystem map,
-            orchestration model, decision engine, and impact command center for that
-            transformation — how the platform was designed, who was aligned, and what was unlocked.
+            Four programs. Each card is the real story — the non-obvious thing that made each one hard, and what I did about it.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <span className="glass inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5"

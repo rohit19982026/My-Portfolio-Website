@@ -21,6 +21,7 @@ const CONSUMER_ICON: Record<ConsumerType, LucideIcon> = {
 };
 const ORCH_COLOR: Record<OrchestrationType, string> = {
   exec: "#BF5AF2", client: "#0A84FF", internal: "#30D158", vendor: "#FF9F0A",
+  ic: "#64D2FF", arch: "#FF6B2B", pm: "#FFD60A",
 };
 
 // Section label — consistent header for each screen
@@ -44,7 +45,7 @@ function ScreenLabel({ num, title, accent }: { num: string; title: string; accen
 function MissionControl({ study, accent, accentText }: { study: CaseStudy; accent: string; accentText: string }) {
   return (
     <div>
-      <ScreenLabel num="01" title="Mission Control" accent={accentText} />
+      <ScreenLabel num="01" title="THE PROGRAM" accent={accentText} />
       <div className="mb-5">
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <span className="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest"
@@ -100,7 +101,7 @@ function EcosystemMap({ study, accent, accentText }: { study: CaseStudy; accent:
 
   return (
     <div>
-      <ScreenLabel num="02" title="The Data Ecosystem" accent={accentText} />
+      <ScreenLabel num="02" title="WHAT GOT BUILT" accent={accentText} />
       <div className="rounded-2xl p-3 sm:p-4 overflow-hidden"
         style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--glass-border)" }}>
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ maxHeight: 380 }}>
@@ -203,7 +204,7 @@ function EcosystemMap({ study, accent, accentText }: { study: CaseStudy; accent:
 function ChallengeLandscape({ challenges, accent, accentText }: { challenges: CaseStudy["challenges"]; accent: string; accentText: string }) {
   return (
     <div>
-      <ScreenLabel num="03" title="Challenge Landscape" accent={accentText} />
+      <ScreenLabel num="03" title="THE REAL PROBLEM" accent={accentText} />
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {challenges.map((c, i) => (
           <motion.div key={c.label}
@@ -240,7 +241,7 @@ function ChallengeLandscape({ challenges, accent, accentText }: { challenges: Ca
 function TransformationJourney({ journey, accent, accentText }: { journey: CaseStudy["journey"]; accent: string; accentText: string }) {
   return (
     <div>
-      <ScreenLabel num="04" title="Transformation Journey" accent={accentText} />
+      <ScreenLabel num="04" title="HOW IT MOVED" accent={accentText} />
       <div className="relative">
         {/* Vertical connector */}
         <div className="absolute left-[18px] top-2 bottom-2 w-px hidden sm:block"
@@ -288,7 +289,7 @@ function OrchestrationView({ orchestration, accent, accentText }: { orchestratio
   const n = orchestration.length;
   return (
     <div>
-      <ScreenLabel num="05" title="TPM Orchestration View" accent={accentText} />
+      <ScreenLabel num="05" title="WHO I HAD TO ALIGN" accent={accentText} />
       <div className="grid lg:grid-cols-[360px_1fr] gap-5 items-start">
         <div className="rounded-2xl p-2 mx-auto lg:mx-0"
           style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--glass-border)", width: 360, maxWidth: "100%" }}>
@@ -361,7 +362,7 @@ function OrchestrationView({ orchestration, accent, accentText }: { orchestratio
 function DecisionEngine({ decisions, accent, accentText }: { decisions: CaseStudy["decisions"]; accent: string; accentText: string }) {
   return (
     <div>
-      <ScreenLabel num="06" title="Decision Engine" accent={accentText} />
+      <ScreenLabel num="06" title="THE CALLS I MADE" accent={accentText} />
       <div className="grid lg:grid-cols-2 gap-3">
         {decisions.map((d, i) => (
           <motion.div key={i}
@@ -409,7 +410,7 @@ const TONE_COLOR = { primary: "var(--color-accent)", ok: "#30D158", ai: "#BF5AF2
 function ImpactCommandCenter({ impact, accent, accentText }: { impact: CaseStudy["impact"]; accent: string; accentText: string }) {
   return (
     <div>
-      <ScreenLabel num="07" title="Impact Command Center" accent={accentText} />
+      <ScreenLabel num="07" title="WHAT CHANGED" accent={accentText} />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
         {impact.map((m, i) => {
           const c = m.tone ? TONE_COLOR[m.tone] : accentText;
@@ -447,7 +448,7 @@ function ImpactCommandCenter({ impact, accent, accentText }: { impact: CaseStudy
 function BeforeAfter({ ba, accent, accentText }: { ba: CaseStudy["beforeAfter"]; accent: string; accentText: string }) {
   return (
     <div>
-      <ScreenLabel num="08" title="Before → After" accent={accentText} />
+      <ScreenLabel num="08" title="BEFORE AND AFTER" accent={accentText} />
       <div className="grid md:grid-cols-[1fr_auto_1fr] gap-3 items-stretch">
         <motion.div
           initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
@@ -501,7 +502,7 @@ function AgentControlCenter({ study, accent, accentText }: { study: CaseStudy; a
   const liveCount = agents.filter(a => a.status === "live").length;
   return (
     <div>
-      <ScreenLabel num="02" title="The Agent Fleet I Shipped" accent={accentText} />
+      <ScreenLabel num="02" title="THE AGENT FLEET" accent={accentText} />
 
       {/* Rollout strip — TPM lens: identify → align → ship → adopt → scale */}
       <div className="rounded-2xl p-4 mb-4"
