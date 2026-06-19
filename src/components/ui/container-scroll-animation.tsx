@@ -84,10 +84,16 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
-        boxShadow:
-          "0 0 0 1px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.07), 0 32px 56px rgba(0,0,0,0.05), 0 80px 80px rgba(0,0,0,0.03)",
+        boxShadow: [
+          "0 0 0 1px rgba(10,132,255,0.22)",
+          "0 0 18px 3px rgba(10,132,255,0.13)",
+          "0 0 50px 8px rgba(191,90,242,0.09)",
+          "0 0 90px 14px rgba(100,210,255,0.06)",
+          "0 20px 50px rgba(0,0,0,0.09)",
+          "0 70px 100px rgba(0,0,0,0.06)",
+        ].join(", "),
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border border-black/[0.06] p-1.5 md:p-3 bg-white rounded-[30px]"
+      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border border-white/60 p-1.5 md:p-3 bg-white rounded-[30px]"
     >
       <div className="h-full w-full overflow-hidden rounded-[22px] bg-[#f5f5f7] md:rounded-[22px]">
         {children}
