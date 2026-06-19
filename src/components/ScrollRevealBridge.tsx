@@ -2,36 +2,36 @@
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import {
-  AlertCircle,
-  SlidersHorizontal,
-  BarChart2,
-  Globe,
-  TrendingUp,
-  Bot,
-  ShieldCheck,
-  Link2,
   Users,
-  BookOpen,
+  Zap,
+  ArrowLeftRight,
+  Eye,
+  Compass,
+  Bot,
+  CalendarClock,
+  Link2,
+  TrendingUp,
+  GraduationCap,
   ChevronRight,
   ChevronLeft,
   Wifi,
   BatteryFull,
 } from "lucide-react";
 
-const tpmSkills = [
-  { icon: AlertCircle,       label: "RAID Log Ownership",          detail: "Risks, assumptions, issues, deps tracked across all program tracks",      color: "#FF3B30" },
-  { icon: TrendingUp,        label: "Velocity Forecasting",         detail: "Sprint velocity → date math; slippage surfaced before it's visible",     color: "#FF9500" },
-  { icon: SlidersHorizontal, label: "Change Control Process",       detail: "Scope addition: acknowledge → cost map → documented decision, always",   color: "#5856D6" },
-  { icon: Globe,             label: "Async Cross-TZ Coordination",  detail: "Written handoffs US · India · China — no verbal decisions, ever",        color: "#007AFF" },
-  { icon: ShieldCheck,       label: "Go / No-Go Ownership",         detail: "Cutover, parallel run, and board demo readiness calls are mine to make", color: "#34C759" },
+const pmSkills = [
+  { icon: Users,          label: "Cross-Functional Leadership", detail: "Engineering, finance, product, client — all moving in the same direction",     color: "#007AFF" },
+  { icon: Zap,            label: "Blocker Removal",             detail: "Find what's slowing teams down and clear it before it shows as a delay",        color: "#FF9500" },
+  { icon: ArrowLeftRight, label: "Cross-Team Communication",    detail: "Translate between teams who don't naturally speak the same language",           color: "#5856D6" },
+  { icon: Eye,            label: "Delivery Awareness",          detail: "Know where every track actually stands — not just what's been reported up",     color: "#32ADE6" },
+  { icon: Compass,        label: "Navigating Chaos",            detail: "When things go sideways: diagnose fast, decide, keep the team moving",         color: "#FF3B30" },
 ];
 
 const aiSkills = [
-  { icon: Bot,       label: "Multi-Agent Orchestration",  detail: "Claude API + n8n pipelines with tool calls, routing, and error handling",        color: "#BF5AF2" },
-  { icon: Link2,     label: "MCP Server Integration",     detail: "Jira · Salesforce · Google Workspace · Glean — auth and rate limits managed",    color: "#32ADE6" },
-  { icon: BarChart2, label: "Prompt Engineering",         detail: "Schema-bounded output, structured reasoning chains for PM-specific workflows",    color: "#FF9500" },
-  { icon: BookOpen,  label: "Governance Framework",       detail: "Human review step + audit log per output + ownership map per agent",             color: "#FF2D55" },
-  { icon: Users,     label: "Adoption Instrumentation",   detail: "Usage tracked per agent per user from week one; non-adopters diagnosed 1:1",     color: "#34C759" },
+  { icon: Bot,            label: "Claude Agent Building",       detail: "Built billing, sprint health, risk, status, and budget agents for PM teams",   color: "#BF5AF2" },
+  { icon: CalendarClock,  label: "Weekly Task Automation",      detail: "Automated 4–6 hrs/week of manual PM work per person via scheduled agents",     color: "#FF9500" },
+  { icon: Link2,          label: "MCP Tool Integration",        detail: "Jira · Salesforce · Glean · Google Workspace connected and running",           color: "#32ADE6" },
+  { icon: TrendingUp,     label: "AI Adoption",                 detail: "0 → 14 PM adopters — cohort rollout, 1:1 onboarding, usage tracked per person", color: "#34C759" },
+  { icon: GraduationCap,  label: "AI Skilling",                 detail: "Taught team to use and build agents; two built independently from my docs",    color: "#FF2D55" },
 ];
 
 function IOSRow({
@@ -105,7 +105,7 @@ export default function ScrollRevealBridge() {
                 color: "var(--color-text)",
               }}
             >
-              Two disciplines.{" "}
+              Run programs.{" "}
               <span
                 style={{
                   background:
@@ -115,15 +115,14 @@ export default function ScrollRevealBridge() {
                   backgroundClip: "text",
                 }}
               >
-                One rare overlap.
+                Build the agents that run them.
               </span>
             </h2>
             <p
               className="text-[13px] md:text-[15px] max-w-lg mx-auto leading-relaxed"
               style={{ color: "var(--color-text-secondary)" }}
             >
-              Most TPMs run programs. Most AI builders don't. I've been doing
-              both for three years.
+              Five years leading cross-functional teams through chaos. Three years building AI agents that automate the work no one should be doing manually.
             </p>
           </div>
         }
@@ -174,35 +173,35 @@ export default function ScrollRevealBridge() {
           {/* Two-column skills layout */}
           <div className="flex-1 flex gap-0 overflow-hidden min-h-0 pt-2 md:pt-3 px-2 md:px-3 pb-0">
 
-            {/* Left: Technical PM */}
+            {/* Left: Program Manager */}
             <div className="flex-1 flex flex-col min-w-0 mr-1.5 md:mr-2">
               <p
                 className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
                 style={{ color: "#8e8e93" }}
               >
-                Technical PM
+                Program Manager
               </p>
               <div className="overflow-hidden rounded-xl" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
-                {tpmSkills.map((skill, i) => (
+                {pmSkills.map((skill, i) => (
                   <IOSRow
                     key={skill.label}
                     icon={skill.icon}
                     label={skill.label}
                     detail={skill.detail}
                     color={skill.color}
-                    isLast={i === tpmSkills.length - 1}
+                    isLast={i === pmSkills.length - 1}
                   />
                 ))}
               </div>
             </div>
 
-            {/* Right: Agentic AI */}
+            {/* Right: Agentic AI Specialist */}
             <div className="flex-1 flex flex-col min-w-0 ml-1.5 md:ml-2">
               <p
                 className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
                 style={{ color: "#8e8e93" }}
               >
-                Agentic AI
+                Agentic AI Specialist
               </p>
               <div className="overflow-hidden rounded-xl" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
                 {aiSkills.map((skill, i) => (
