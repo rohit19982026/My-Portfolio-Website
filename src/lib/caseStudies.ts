@@ -71,7 +71,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "1 person", label: "who knew why every table was named what it was" },
       { value: "18 weeks", label: "to migrate the data and the knowledge" },
       { value: "3 issues", label: "caught in parallel run before the board demo" },
-      { value: "Zero", label: "institutional knowledge lost at cutover" },
+      { value: "Zero", label: "undocumented objects in the platform after cutover" },
       { value: "1 contract", label: "extended because the data lead asked for it" },
     ],
 
@@ -84,7 +84,7 @@ export const caseStudies: CaseStudy[] = [
         { name: "Salesforce", type: "CRM" },
         { name: "Finance systems", type: "ERP" },
       ],
-      pipeline: ["Dependency + knowledge graph", "Sequence by blast radius", "Per-tool parity contracts", "Parallel run before cutover"],
+      pipeline: ["Dependency + knowledge graph", "Sequenced by downstream reach", "Per-tool parity contracts", "Parallel run before cutover"],
       platform: "Databricks Unity Catalog Lakehouse",
       consumers: [
         { name: "Product analytics", type: "PRODUCT" },
@@ -118,12 +118,12 @@ export const caseStudies: CaseStudy[] = [
       {
         stage: "03",
         title: "Ran a 48-hour parallel window the schedule didn't have. Found three issues before the board saw anything.",
-        detail: "Cutover was two days before a board demo. Options: cut over without parallel run and find quality issues during the demo, or push for 48 hours of parallel run. Option A had a catastrophic failure mode. Made the case to the sponsor: the board demo runs on clean data, or we find out it doesn't live. Ran QA and cutover prep simultaneously — QA on the legacy system, cutover on Databricks. Found three data quality issues. Fixed two in the window. Scoped the third out of the demo. Demo ran clean.",
+        detail: "Cutover was two days before a board demo. Cutting over without a parallel run meant any quality issue would surface live, in front of the board — that's not a recoverable failure mode. I made the case to the sponsor: the board demo runs on clean data, or we find out it doesn't live. Ran QA and cutover prep simultaneously — QA on the legacy system, cutover on Databricks. Found three data quality issues. Fixed two in the window. Scoped the third out of the demo. Demo ran clean.",
       },
       {
         stage: "04",
         title: "Exit planning ran as a parallel track from week ten. Three risks, three tracks.",
-        detail: "Week ten of eighteen: identified three exit risks — governance model untrusted, US/India tribal knowledge non-transferable, renewal conversation too late. Ran three tracks in parallel: governance co-design with the data lead and client legal, runbook development with both engineering leads, renewal positioning with the sponsor. Didn't wait until the last three weeks to start documentation. By week eighteen, the data lead asked to extend the contract. The institutional knowledge was in the platform, not just in his head.",
+        detail: "Week ten of eighteen: identified three exit risks — governance model untrusted, US/India tribal knowledge non-transferable, renewal conversation too late. Ran three tracks in parallel: governance co-design with the data lead and client legal, runbook development with both engineering leads, renewal positioning with the sponsor. Didn't wait until the last three weeks to start documentation. By week eighteen, the data lead asked to extend the contract. What he'd built over six years was now documented and transferable — not tied to one person.",
       },
     ],
 
@@ -166,7 +166,7 @@ export const caseStudies: CaseStudy[] = [
         decision: "Started exit documentation at week ten — not at week sixteen.",
         tradeoff: "Engineer time to documentation instead of feature delivery for six weeks.",
         risk: "A surprise exit would have left the client unable to run the platform.",
-        outcome: "Data lead asked to extend the contract. The institutional knowledge was in the platform, not just in his head.",
+        outcome: "Data lead asked to extend the contract. What he'd built over six years was now documented in the platform — not tied to him personally.",
       },
     ],
 
@@ -578,7 +578,7 @@ export const caseStudies: CaseStudy[] = [
         outcome: "Finance asked about controls, not whether to proceed. Approval in the same meeting.",
       },
       {
-        decision: "Sequenced agents by trust-building potential — billing first, then lower-stakes high-frequency, then high-impact.",
+        decision: "Sequenced agents by what Finance and the PM team would approve first — lowest stakes earliest, highest-impact last.",
         tradeoff: "Delayed the agents I most wanted to build — Budget Forecaster came fourth.",
         risk: "Wrong sequencing would have put a high-stakes agent in front of a skeptical audience before trust was established.",
         outcome: "By the fourth agent, the PM team was asking when the next one was coming.",
