@@ -40,7 +40,10 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden gradient-mesh">
 
-      {/* ── Cinematic video background ── */}
+      {/* ── Video masked to right side only.
+           mask-image keeps the left ~38% completely transparent so the
+           gradient-mesh background shows through cleanly under the text.
+           Video fades in from center-left and is fully visible on the right. ── */}
       <motion.video
         key="hero-bg-video"
         initial={{ opacity: 0, scale: 1.06 }}
@@ -60,12 +63,16 @@ export default function Hero() {
           objectFit: "cover",
           objectPosition: "center center",
           zIndex: 0,
+          maskImage:
+            "linear-gradient(to right, transparent 0%, transparent 36%, rgba(0,0,0,0.6) 52%, black 66%, black 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, transparent 36%, rgba(0,0,0,0.6) 52%, black 66%, black 100%)",
         }}
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </motion.video>
 
-      {/* ── Bottom dissolve: video fades into page seamlessly ── */}
+      {/* ── Bottom dissolve into page ── */}
       <div
         aria-hidden="true"
         style={{
@@ -73,33 +80,16 @@ export default function Hero() {
           bottom: 0,
           left: 0,
           right: 0,
-          height: "28%",
-          background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,1) 100%)",
-          zIndex: 2,
+          height: "30%",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.7) 55%, rgba(255,255,255,1) 100%)",
+          zIndex: 1,
         }}
       />
 
-      {/* ── Main content ── */}
-      <div className="flex-1 flex items-center" style={{ position: "relative", zIndex: 3 }}>
+      {/* ── Content — text sits on clean gradient-mesh white, no overlays needed ── */}
+      <div className="flex-1 flex items-center" style={{ position: "relative", zIndex: 2 }}>
         <div className="max-w-6xl mx-auto px-6 w-full py-16">
-
-          {/* Glass card — guarantees text readability over any video content.
-              Left-aligned so the right ~45% of the viewport shows the video clean. */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-[580px]"
-            style={{
-              background: "rgba(255,255,255,0.82)",
-              backdropFilter: "blur(28px)",
-              WebkitBackdropFilter: "blur(28px)",
-              borderRadius: "var(--radius-lg)",
-              border: "1px solid rgba(255,255,255,0.7)",
-              boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.95) inset",
-              padding: "36px 40px 40px",
-            }}
-          >
+          <div className="max-w-[560px]">
 
             {/* Status pill */}
             <motion.div
@@ -157,14 +147,12 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
               className="mb-7"
             >
-              {/* Mobile — punchy two-liner */}
               <p className="lg:hidden text-[14px] leading-[1.65]" style={{ color: "var(--color-text-secondary)" }}>
                 Most PMs run programs. I also build the tools the team uses to run them.
                 <br /><br />
                 Five years running data and AI programs end to end. Six AI agents in
                 production, adopted across the full team in under a month.
               </p>
-              {/* Desktop — full version */}
               <p className="hidden lg:block text-[15px] leading-[1.7]" style={{ color: "var(--color-text-secondary)" }}>
                 Most PMs run programs. I also build the tools the team uses to run them.
                 <br /><br />
@@ -240,7 +228,7 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -250,7 +238,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.6 }}
         className="flex flex-col items-center pb-7 gap-1"
-        style={{ position: "relative", zIndex: 3 }}
+        style={{ position: "relative", zIndex: 2 }}
       >
         <span
           className="text-[10px] font-semibold uppercase tracking-[0.2em]"
