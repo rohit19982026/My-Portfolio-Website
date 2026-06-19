@@ -89,7 +89,7 @@ export default function Navbar() {
           >
             <Search size={18} strokeWidth={2} />
           </button>
-          <GlassButton href="#contact" variant="primary" className="hidden md:inline-flex !px-5 !py-2 !text-[13px]" icon={<ArrowUpRight size={14} strokeWidth={2.5} />}>
+          <GlassButton href="#contact" variant="primary" className="!px-3.5 !py-1.5 !text-[12px] md:!px-5 md:!py-2 md:!text-[13px]" icon={<ArrowUpRight size={13} strokeWidth={2.5} />}>
             Hire Me
           </GlassButton>
         </div>

@@ -238,11 +238,11 @@ export default function ScrollRevealBridge() {
             </div>
           </div>
 
-          {/* Two-column skills layout */}
-          <div className="flex-1 flex gap-0 overflow-hidden min-h-0 pt-1.5 md:pt-2 px-2 md:px-3 pb-0">
+          {/* Two-column skills layout — stacks vertically on small screens */}
+          <div className="flex-1 flex flex-col md:flex-row gap-0 overflow-y-auto md:overflow-hidden min-h-0 pt-1.5 md:pt-2 px-2 md:px-3 pb-0">
 
             {/* Left: Program Manager */}
-            <div className="flex-1 flex flex-col min-w-0 mr-1.5 md:mr-2">
+            <div className="flex-1 flex flex-col min-w-0 md:mr-2 mb-3 md:mb-0">
               <p
                 className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
                 style={{ color: "#8e8e93" }}
@@ -264,7 +264,7 @@ export default function ScrollRevealBridge() {
             </div>
 
             {/* Right: Agentic AI Specialist */}
-            <div className="flex-1 flex flex-col min-w-0 ml-1.5 md:ml-2">
+            <div className="flex-1 flex flex-col min-w-0 md:ml-2">
               <p
                 className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
                 style={{ color: "#8e8e93" }}

@@ -38,7 +38,7 @@ export default function Hero() {
   const magneticCV = useMagnetic(0.25);
 
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden">
+    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden gradient-mesh">
 
       {/* ── Cinematic video background ── */}
       <motion.video
@@ -154,7 +154,15 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
               className="mb-7"
             >
-              <p className="text-[15px] leading-[1.7]" style={{ color: "var(--color-text-secondary)" }}>
+              {/* Mobile — punchy two-liner */}
+              <p className="lg:hidden text-[14px] leading-[1.65]" style={{ color: "var(--color-text-secondary)" }}>
+                Most PMs run programs. I also build the tools the team uses to run them.
+                <br /><br />
+                Five years running data and AI programs end to end. Six AI agents in
+                production, adopted across the full team in under a month.
+              </p>
+              {/* Desktop — full version */}
+              <p className="hidden lg:block text-[15px] leading-[1.7]" style={{ color: "var(--color-text-secondary)" }}>
                 Most PMs run programs. I also build the tools the team uses to run them.
                 <br /><br />
                 At phData I run data and AI programs end to end — not as a coordinator,
