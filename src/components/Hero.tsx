@@ -65,18 +65,6 @@ export default function Hero() {
         <source src="/hero-video.mp4" type="video/mp4" />
       </motion.video>
 
-      {/* ── Left text guard: white → transparent, text stays readable ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          background:
-            "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.98) 25%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0) 100%)",
-        }}
-      />
-
       {/* ── Bottom dissolve: video fades into page seamlessly ── */}
       <div
         aria-hidden="true"
@@ -95,8 +83,23 @@ export default function Hero() {
       <div className="flex-1 flex items-center" style={{ position: "relative", zIndex: 3 }}>
         <div className="max-w-6xl mx-auto px-6 w-full py-16">
 
-          {/* Single column — identity content left-aligned, video fills right */}
-          <div className="max-w-[600px]">
+          {/* Glass card — guarantees text readability over any video content.
+              Left-aligned so the right ~45% of the viewport shows the video clean. */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-[580px]"
+            style={{
+              background: "rgba(255,255,255,0.82)",
+              backdropFilter: "blur(28px)",
+              WebkitBackdropFilter: "blur(28px)",
+              borderRadius: "var(--radius-lg)",
+              border: "1px solid rgba(255,255,255,0.7)",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.95) inset",
+              padding: "36px 40px 40px",
+            }}
+          >
 
             {/* Status pill */}
             <motion.div
@@ -237,7 +240,7 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-          </div>
+          </motion.div>
         </div>
       </div>
 
