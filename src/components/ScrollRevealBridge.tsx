@@ -3,111 +3,85 @@
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import {
   AlertCircle,
-  GitMerge,
+  SlidersHorizontal,
   BarChart2,
   Globe,
-  Repeat2,
+  TrendingUp,
   Bot,
   ShieldCheck,
-  Plug,
+  Link2,
   Users,
   BookOpen,
-  BadgeCheck,
+  ChevronRight,
+  ChevronLeft,
+  Wifi,
+  BatteryFull,
 } from "lucide-react";
 
 const tpmSkills = [
-  {
-    icon: AlertCircle,
-    label: "Risk & Escalation",
-    detail: "RAID discipline — never surprise leadership on a miss",
-  },
-  {
-    icon: GitMerge,
-    label: "Scope & Budget Control",
-    detail: "Change control on fixed-price contracts, every addition in writing",
-  },
-  {
-    icon: BarChart2,
-    label: "Executive Communication",
-    detail: "CFO-ready framing, signal + ask, arm leadership to act",
-  },
-  {
-    icon: Globe,
-    label: "Cross-Regional Delivery",
-    detail: "US · India · China teams, async protocols, 11-hour gap managed",
-  },
-  {
-    icon: Repeat2,
-    label: "Account Growth",
-    detail: "Delivery-to-renewal, QBR ownership, two contracts extended",
-  },
+  { icon: AlertCircle,      label: "Risk Management",          detail: "RAID discipline — never surprise a miss",          color: "#FF3B30" },
+  { icon: SlidersHorizontal, label: "Scope & Budget Control",   detail: "Change control on fixed-price contracts",          color: "#FF9500" },
+  { icon: BarChart2,         label: "Executive Communication",  detail: "CFO-ready framing, signal + ask",                  color: "#5856D6" },
+  { icon: Globe,             label: "Cross-Regional Delivery",  detail: "US · India · China, 11-hour gap managed",          color: "#007AFF" },
+  { icon: TrendingUp,        label: "Account Growth",           detail: "Delivery-to-renewal, two contracts extended",      color: "#34C759" },
 ];
 
 const aiSkills = [
-  {
-    icon: Bot,
-    label: "Agent Architecture",
-    detail: "6 agents in production on Claude, n8n, and Glean",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Governance Design",
-    detail: "Accountability chains and audit trails Finance actually approves",
-  },
-  {
-    icon: Plug,
-    label: "MCP Integration",
-    detail: "Jira · Salesforce · Google Workspace · Glean connectors",
-  },
-  {
-    icon: Users,
-    label: "Cohort Adoption",
-    detail: "Sequenced rollout, usage instrumented from week one, 14 adopters",
-  },
-  {
-    icon: BookOpen,
-    label: "Pattern Documentation",
-    detail: "Two more agents built by others using my design docs",
-  },
+  { icon: Bot,         label: "Agent Architecture",    detail: "6 agents in production on Claude + Glean",            color: "#BF5AF2" },
+  { icon: ShieldCheck, label: "Governance Design",     detail: "Accountability chains Finance actually approves",      color: "#FF2D55" },
+  { icon: Link2,       label: "MCP Integration",       detail: "Jira · Salesforce · Google Workspace · Glean",        color: "#32ADE6" },
+  { icon: Users,       label: "Cohort Adoption",       detail: "Sequenced rollout, usage instrumented from week one",  color: "#FF9500" },
+  { icon: BookOpen,    label: "Pattern Documentation", detail: "Two more agents built by others from my docs",         color: "#34C759" },
 ];
 
-const credentials = [
-  { label: "PSM I", sub: "Scrum.org" },
-  { label: "ITIL 4", sub: "AXELOS" },
-  { label: "5+ yrs", sub: "phData" },
-  { label: "4 programs", sub: "delivered" },
-];
-
-function SkillRow({
-  skill,
-  accentColor,
+function IOSRow({
+  icon: Icon,
+  label,
+  detail,
+  color,
+  isLast,
 }: {
-  skill: (typeof tpmSkills)[0];
-  accentColor: string;
+  icon: typeof Bot;
+  label: string;
+  detail: string;
+  color: string;
+  isLast: boolean;
 }) {
-  const Icon = skill.icon;
   return (
-    <div className="flex items-start gap-2.5 px-3 md:px-4 py-2 md:py-2.5 rounded-xl hover:bg-black/[0.03] transition-colors duration-150">
+    <div
+      className="flex items-center gap-2.5 px-3 md:px-4 bg-white"
+      style={{
+        paddingTop: "7px",
+        paddingBottom: "7px",
+        borderBottom: isLast ? "none" : "1px solid rgba(60,60,67,0.1)",
+      }}
+    >
+      {/* iOS colored icon square */}
       <div
-        className="shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mt-0.5"
-        style={{ background: `${accentColor}14` }}
+        className="shrink-0 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center"
+        style={{ background: color, borderRadius: "8px" }}
       >
-        <Icon size={12} strokeWidth={2} style={{ color: accentColor }} />
+        <Icon size={14} strokeWidth={2} color="#fff" />
       </div>
-      <div className="min-w-0">
+
+      {/* Text */}
+      <div className="flex-1 min-w-0">
         <p
-          className="text-[11.5px] md:text-[12.5px] font-semibold leading-none mb-0.5"
+          className="text-[11px] md:text-[12.5px] font-semibold leading-tight truncate"
           style={{ color: "#1d1d1f" }}
         >
-          {skill.label}
+          {label}
         </p>
         <p
-          className="text-[9.5px] md:text-[10.5px] leading-snug"
-          style={{ color: "#6e6e73" }}
+          className="text-[9px] md:text-[10px] leading-tight truncate"
+          style={{ color: "#8e8e93" }}
         >
-          {skill.detail}
+          {detail}
         </p>
       </div>
+
+      {/* Chevron */}
+      <ChevronRight size={12} strokeWidth={2.5} className="shrink-0" style={{ color: "#c7c7cc" }} />
     </div>
   );
 }
@@ -148,137 +122,152 @@ export default function ScrollRevealBridge() {
               className="text-[13px] md:text-[15px] max-w-lg mx-auto leading-relaxed"
               style={{ color: "var(--color-text-secondary)" }}
             >
-              Most TPMs run programs. Most AI builders don't run programs. I've
-              been doing both for three years.
+              Most TPMs run programs. Most AI builders don't. I've been doing
+              both for three years.
             </p>
           </div>
         }
       >
-        {/* Light Apple-style skills dashboard */}
-        <div className="h-full flex flex-col" style={{ background: "#f5f5f7" }}>
+        {/* iPadOS-style app screen */}
+        <div className="h-full flex flex-col" style={{ background: "#f2f2f7" }}>
 
-          {/* Window header */}
+          {/* iOS status bar */}
           <div
-            className="flex items-center justify-between px-3 md:px-5 py-2 md:py-2.5 shrink-0 bg-white/70"
-            style={{ borderBottom: "1px solid rgba(0,0,0,0.07)", backdropFilter: "blur(8px)" }}
+            className="flex items-center justify-between px-4 md:px-5 shrink-0 bg-[#f2f2f7]"
+            style={{ paddingTop: "8px", paddingBottom: "4px" }}
           >
-            <div className="flex items-center gap-2">
-              <div className="flex gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
-              </div>
-              <span
-                className="font-mono text-[10px] md:text-[11px] font-medium ml-2"
-                style={{ color: "#6e6e73" }}
-              >
-                rohit.singh — skill overview
-              </span>
-            </div>
-            <div
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-              style={{ background: "rgba(52,199,89,0.10)", border: "1px solid rgba(52,199,89,0.25)" }}
+            <span
+              className="font-semibold tabular-nums"
+              style={{ fontSize: "11px", color: "#1d1d1f" }}
             >
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: "#34C759", animation: "pulse-dot 2s ease-in-out infinite" }}
-              />
-              <span className="font-mono text-[8.5px] md:text-[9px] font-bold" style={{ color: "#248A3D" }}>
-                Open to roles
-              </span>
+              9:41
+            </span>
+            <div className="flex items-center gap-1.5">
+              <Wifi size={12} strokeWidth={2} style={{ color: "#1d1d1f" }} />
+              <BatteryFull size={14} strokeWidth={2} style={{ color: "#1d1d1f" }} />
             </div>
           </div>
 
-          {/* Two-column skill panels */}
-          <div className="flex-1 grid grid-cols-2 gap-0 overflow-hidden min-h-0">
+          {/* Navigation bar */}
+          <div
+            className="flex items-center px-3 md:px-4 shrink-0 bg-[#f2f2f7]"
+            style={{
+              paddingTop: "6px",
+              paddingBottom: "6px",
+              borderBottom: "1px solid rgba(60,60,67,0.18)",
+            }}
+          >
+            <button className="flex items-center gap-0.5 mr-auto" style={{ color: "#007AFF" }}>
+              <ChevronLeft size={16} strokeWidth={2.5} />
+              <span className="text-[13px] font-normal" style={{ color: "#007AFF" }}>
+                Profile
+              </span>
+            </button>
+            <span
+              className="absolute left-1/2 -translate-x-1/2 text-[13px] md:text-[14px] font-semibold"
+              style={{ color: "#1d1d1f" }}
+            >
+              Skills Overview
+            </span>
+          </div>
+
+          {/* Two-column skills layout */}
+          <div className="flex-1 flex gap-0 overflow-hidden min-h-0 pt-2 md:pt-3 px-2 md:px-3 pb-0">
 
             {/* Left: Technical PM */}
-            <div
-              className="flex flex-col overflow-hidden"
-              style={{ borderRight: "1px solid rgba(0,0,0,0.07)" }}
-            >
-              <div
-                className="px-3 md:px-4 py-2 md:py-2.5 shrink-0"
-                style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}
+            <div className="flex-1 flex flex-col min-w-0 mr-1.5 md:mr-2">
+              <p
+                className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
+                style={{ color: "#8e8e93" }}
               >
-                <div className="flex items-center gap-1.5">
-                  <div
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: "#0A84FF" }}
+                Technical PM
+              </p>
+              <div className="overflow-hidden rounded-xl" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
+                {tpmSkills.map((skill, i) => (
+                  <IOSRow
+                    key={skill.label}
+                    icon={skill.icon}
+                    label={skill.label}
+                    detail={skill.detail}
+                    color={skill.color}
+                    isLast={i === tpmSkills.length - 1}
                   />
-                  <span
-                    className="font-mono text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
-                    style={{ color: "#0A84FF" }}
-                  >
-                    Technical PM
-                  </span>
-                </div>
-              </div>
-              <div className="flex-1 overflow-hidden py-1 md:py-1.5">
-                {tpmSkills.map((skill) => (
-                  <SkillRow key={skill.label} skill={skill} accentColor="#0A84FF" />
                 ))}
               </div>
             </div>
 
             {/* Right: Agentic AI */}
-            <div className="flex flex-col overflow-hidden">
-              <div
-                className="px-3 md:px-4 py-2 md:py-2.5 shrink-0"
-                style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}
+            <div className="flex-1 flex flex-col min-w-0 ml-1.5 md:ml-2">
+              <p
+                className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
+                style={{ color: "#8e8e93" }}
               >
-                <div className="flex items-center gap-1.5">
-                  <div
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: "#BF5AF2" }}
+                Agentic AI
+              </p>
+              <div className="overflow-hidden rounded-xl" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
+                {aiSkills.map((skill, i) => (
+                  <IOSRow
+                    key={skill.label}
+                    icon={skill.icon}
+                    label={skill.label}
+                    detail={skill.detail}
+                    color={skill.color}
+                    isLast={i === aiSkills.length - 1}
                   />
-                  <span
-                    className="font-mono text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
-                    style={{ color: "#BF5AF2" }}
-                  >
-                    Agentic AI
-                  </span>
-                </div>
-              </div>
-              <div className="flex-1 overflow-hidden py-1 md:py-1.5">
-                {aiSkills.map((skill) => (
-                  <SkillRow key={skill.label} skill={skill} accentColor="#BF5AF2" />
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Credentials footer */}
-          <div
-            className="shrink-0 grid grid-cols-4 bg-white/60"
-            style={{
-              borderTop: "1px solid rgba(0,0,0,0.07)",
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            {credentials.map((cred) => (
-              <div
-                key={cred.label}
-                className="flex flex-col items-center justify-center gap-0.5 py-2 md:py-3"
-                style={{ borderRight: "1px solid rgba(0,0,0,0.06)" }}
-              >
-                <div className="flex items-center gap-1">
-                  <BadgeCheck size={9} strokeWidth={2.5} style={{ color: "#34C759" }} />
-                  <span
-                    className="font-heading font-black text-[12px] md:text-[15px] tabular-nums leading-none"
+          {/* Credentials section */}
+          <div className="shrink-0 px-2 md:px-3 pt-2 md:pt-3">
+            <p
+              className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
+              style={{ color: "#8e8e93" }}
+            >
+              Credentials
+            </p>
+            <div
+              className="rounded-xl flex items-center divide-x overflow-hidden"
+              style={{
+                background: "white",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+              }}
+            >
+              {[
+                { value: "PSM I", sub: "Scrum.org" },
+                { value: "ITIL 4", sub: "Axelos" },
+                { value: "5+ yrs", sub: "phData" },
+                { value: "4", sub: "programs" },
+              ].map((c, i) => (
+                <div
+                  key={c.value}
+                  className="flex-1 text-center py-2 md:py-2.5"
+                  style={{ borderRight: i < 3 ? "1px solid rgba(60,60,67,0.1)" : "none" }}
+                >
+                  <p
+                    className="font-bold tabular-nums text-[11px] md:text-[13px] leading-none"
                     style={{ color: "#1d1d1f" }}
                   >
-                    {cred.label}
-                  </span>
+                    {c.value}
+                  </p>
+                  <p
+                    className="text-[8px] md:text-[9px] mt-0.5 uppercase tracking-wide"
+                    style={{ color: "#8e8e93" }}
+                  >
+                    {c.sub}
+                  </p>
                 </div>
-                <span
-                  className="text-[8px] md:text-[9px] uppercase tracking-wider"
-                  style={{ color: "#8e8e93" }}
-                >
-                  {cred.sub}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Home indicator */}
+          <div className="flex justify-center py-1.5 md:py-2 shrink-0">
+            <div
+              className="rounded-full"
+              style={{ width: "80px", height: "4px", background: "rgba(60,60,67,0.25)" }}
+            />
           </div>
         </div>
       </ContainerScroll>
