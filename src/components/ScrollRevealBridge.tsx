@@ -1,129 +1,113 @@
 "use client";
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import { CheckCircle2, Clock, Zap, Bot, ArrowUpRight } from "lucide-react";
+import {
+  AlertCircle,
+  GitMerge,
+  BarChart2,
+  Globe,
+  Repeat2,
+  Bot,
+  ShieldCheck,
+  Plug,
+  Users,
+  BookOpen,
+  BadgeCheck,
+} from "lucide-react";
 
-const programs = [
+const tpmSkills = [
   {
-    id: "001",
-    name: "EdTech Databricks Migration",
-    domain: "EdTech · US + India · 18 wks",
-    metric: "Zero knowledge lost at cutover",
-    type: "DATA MIGRATION",
-    status: "closed" as const,
-    color: "#30D158",
+    icon: AlertCircle,
+    label: "Risk & Escalation",
+    detail: "RAID discipline — never surprise leadership on a miss",
   },
   {
-    id: "002",
-    name: "Marketing Data Platform",
-    domain: "Enterprise SaaS · 3-year retainer",
-    metric: "2 renewals · 40% scope growth",
-    type: "DATA PLATFORM",
-    status: "closed" as const,
-    color: "#0A84FF",
+    icon: GitMerge,
+    label: "Scope & Budget Control",
+    detail: "Change control on fixed-price contracts, every addition in writing",
   },
   {
-    id: "003",
-    name: "Snowflake Industrial Build",
-    domain: "Manufacturing · US + India + China",
-    metric: "6 weeks · zero days behind",
-    type: "FAST DELIVERY",
-    status: "closed" as const,
-    color: "#64D2FF",
+    icon: BarChart2,
+    label: "Executive Communication",
+    detail: "CFO-ready framing, signal + ask, arm leadership to act",
   },
   {
-    id: "004",
-    name: "PMO AI Agent Platform",
-    domain: "phData Internal · self-initiated",
-    metric: "6 agents live · 14 PM adopters",
-    type: "AGENTIC SYSTEM",
-    status: "live" as const,
-    color: "#FF9F0A",
+    icon: Globe,
+    label: "Cross-Regional Delivery",
+    detail: "US · India · China teams, async protocols, 11-hour gap managed",
+  },
+  {
+    icon: Repeat2,
+    label: "Account Growth",
+    detail: "Delivery-to-renewal, QBR ownership, two contracts extended",
   },
 ];
 
-const agentStats = [
-  { label: "Agents online", value: "6", color: "#30D158" },
-  { label: "Programs delivered", value: "4", color: "#0A84FF" },
-  { label: "Years at phData", value: "5+", color: "#BF5AF2" },
-  { label: "Certs", value: "PSM1 · ITIL", color: "#FF9F0A" },
+const aiSkills = [
+  {
+    icon: Bot,
+    label: "Agent Architecture",
+    detail: "6 agents in production on Claude, n8n, and Glean",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Governance Design",
+    detail: "Accountability chains and audit trails Finance actually approves",
+  },
+  {
+    icon: Plug,
+    label: "MCP Integration",
+    detail: "Jira · Salesforce · Google Workspace · Glean connectors",
+  },
+  {
+    icon: Users,
+    label: "Cohort Adoption",
+    detail: "Sequenced rollout, usage instrumented from week one, 14 adopters",
+  },
+  {
+    icon: BookOpen,
+    label: "Pattern Documentation",
+    detail: "Two more agents built by others using my design docs",
+  },
 ];
 
-function ProgramRow({ program, index }: { program: typeof programs[0]; index: number }) {
-  const isLive = program.status === "live";
-  const StatusIcon = isLive ? Zap : CheckCircle2;
+const credentials = [
+  { label: "PSM I", sub: "Scrum.org" },
+  { label: "ITIL 4", sub: "AXELOS" },
+  { label: "5+ yrs", sub: "phData" },
+  { label: "4 programs", sub: "delivered" },
+];
 
+function SkillRow({
+  skill,
+  accentColor,
+}: {
+  skill: (typeof tpmSkills)[0];
+  accentColor: string;
+}) {
+  const Icon = skill.icon;
   return (
-    <div
-      className="flex items-center gap-3 md:gap-4 px-3 md:px-5 py-2.5 md:py-3 border-b border-white/[0.06] hover:bg-white/[0.03] transition-colors duration-200"
-      style={{ animationDelay: `${index * 80}ms` }}
-    >
-      {/* ID */}
-      <span
-        className="font-mono text-[9px] md:text-[10px] font-bold tracking-widest shrink-0 w-7 md:w-8"
-        style={{ color: "rgba(255,255,255,0.25)" }}
+    <div className="flex items-start gap-2.5 px-3 md:px-4 py-2 md:py-2.5 rounded-xl hover:bg-black/[0.03] transition-colors duration-150">
+      <div
+        className="shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mt-0.5"
+        style={{ background: `${accentColor}14` }}
       >
-        {program.id}
-      </span>
-
-      {/* Status dot */}
-      <div className="shrink-0">
-        <StatusIcon
-          size={13}
-          strokeWidth={2}
-          style={{ color: program.color }}
-        />
+        <Icon size={12} strokeWidth={2} style={{ color: accentColor }} />
       </div>
-
-      {/* Name + domain */}
-      <div className="flex-1 min-w-0">
+      <div className="min-w-0">
         <p
-          className="text-[12px] md:text-[13px] font-semibold leading-none truncate"
-          style={{ color: "rgba(255,255,255,0.88)" }}
+          className="text-[11.5px] md:text-[12.5px] font-semibold leading-none mb-0.5"
+          style={{ color: "#1d1d1f" }}
         >
-          {program.name}
+          {skill.label}
         </p>
         <p
-          className="text-[9px] md:text-[10px] mt-0.5 truncate hidden sm:block"
-          style={{ color: "rgba(255,255,255,0.35)" }}
+          className="text-[9.5px] md:text-[10.5px] leading-snug"
+          style={{ color: "#6e6e73" }}
         >
-          {program.domain}
+          {skill.detail}
         </p>
       </div>
-
-      {/* Type badge */}
-      <span
-        className="shrink-0 text-[7px] md:text-[8px] font-bold uppercase tracking-widest px-2 py-1 rounded-full hidden md:inline-flex"
-        style={{
-          color: program.color,
-          background: `${program.color}18`,
-          border: `1px solid ${program.color}35`,
-        }}
-      >
-        {program.type}
-      </span>
-
-      {/* Metric */}
-      <span
-        className="text-[10px] md:text-[11px] font-medium shrink-0 hidden lg:inline"
-        style={{ color: "rgba(255,255,255,0.45)" }}
-      >
-        {program.metric}
-      </span>
-
-      {/* Live indicator */}
-      {isLive && (
-        <span
-          className="shrink-0 flex items-center gap-1 text-[8px] font-bold uppercase tracking-widest"
-          style={{ color: program.color }}
-        >
-          <span
-            className="w-1.5 h-1.5 rounded-full"
-            style={{ background: program.color, animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-          <span className="hidden sm:inline">Live</span>
-        </span>
-      )}
     </div>
   );
 }
@@ -138,7 +122,7 @@ export default function ScrollRevealBridge() {
               className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.22em] mb-4"
               style={{ color: "var(--color-accent-dk)" }}
             >
-              Program Portfolio
+              Core Competencies
             </p>
             <h2
               className="font-heading font-bold tracking-tight leading-[0.97] mb-4"
@@ -147,7 +131,7 @@ export default function ScrollRevealBridge() {
                 color: "var(--color-text)",
               }}
             >
-              Four programs.{" "}
+              Two disciplines.{" "}
               <span
                 style={{
                   background:
@@ -157,110 +141,144 @@ export default function ScrollRevealBridge() {
                   backgroundClip: "text",
                 }}
               >
-                Every decision tracked.
+                One rare overlap.
               </span>
             </h2>
             <p
               className="text-[13px] md:text-[15px] max-w-lg mx-auto leading-relaxed"
               style={{ color: "var(--color-text-secondary)" }}
             >
-              Scroll to reveal the full case studies below.
+              Most TPMs run programs. Most AI builders don't run programs. I've
+              been doing both for three years.
             </p>
           </div>
         }
       >
-        {/* Dark dashboard inside the 3D card */}
-        <div className="h-full flex flex-col" style={{ background: "#1a1a1a" }}>
+        {/* Light Apple-style skills dashboard */}
+        <div className="h-full flex flex-col" style={{ background: "#f5f5f7" }}>
 
-          {/* Terminal header bar */}
+          {/* Window header */}
           <div
-            className="flex items-center justify-between px-3 md:px-5 py-2.5 md:py-3 shrink-0"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+            className="flex items-center justify-between px-3 md:px-5 py-2 md:py-2.5 shrink-0 bg-white/70"
+            style={{ borderBottom: "1px solid rgba(0,0,0,0.07)", backdropFilter: "blur(8px)" }}
           >
             <div className="flex items-center gap-2">
-              {/* Traffic lights */}
               <div className="flex gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
               </div>
               <span
-                className="font-mono text-[10px] md:text-[11px] font-semibold ml-2"
-                style={{ color: "rgba(255,255,255,0.4)" }}
+                className="font-mono text-[10px] md:text-[11px] font-medium ml-2"
+                style={{ color: "#6e6e73" }}
               >
-                rohit.singh — program-tracker
+                rohit.singh — skill overview
               </span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Bot size={12} strokeWidth={2} style={{ color: "#FF9F0A" }} />
+            <div
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+              style={{ background: "rgba(52,199,89,0.10)", border: "1px solid rgba(52,199,89,0.25)" }}
+            >
               <span
-                className="font-mono text-[9px] md:text-[10px] font-bold"
-                style={{ color: "#FF9F0A" }}
-              >
-                6 agents online
-              </span>
-              <span
-                className="w-1.5 h-1.5 rounded-full ml-1"
-                style={{ background: "#30D158", animation: "pulse-dot 2s ease-in-out infinite" }}
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#34C759", animation: "pulse-dot 2s ease-in-out infinite" }}
               />
+              <span className="font-mono text-[8.5px] md:text-[9px] font-bold" style={{ color: "#248A3D" }}>
+                Open to roles
+              </span>
             </div>
           </div>
 
-          {/* Column headers */}
-          <div
-            className="flex items-center gap-3 md:gap-4 px-3 md:px-5 py-1.5 shrink-0"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-          >
-            <span className="font-mono text-[8px] tracking-widest w-7 md:w-8 shrink-0" style={{ color: "rgba(255,255,255,0.2)" }}>ID</span>
-            <span className="font-mono text-[8px] tracking-widest shrink-0 w-4" style={{ color: "rgba(255,255,255,0.2)" }} />
-            <span className="font-mono text-[8px] tracking-widest flex-1" style={{ color: "rgba(255,255,255,0.2)" }}>PROGRAM</span>
-            <span className="font-mono text-[8px] tracking-widest hidden md:inline" style={{ color: "rgba(255,255,255,0.2)" }}>TYPE</span>
-            <span className="font-mono text-[8px] tracking-widest hidden lg:inline" style={{ color: "rgba(255,255,255,0.2)" }}>KEY RESULT</span>
-            <span className="font-mono text-[8px] tracking-widest w-8 shrink-0" style={{ color: "rgba(255,255,255,0.2)" }}>STATUS</span>
+          {/* Two-column skill panels */}
+          <div className="flex-1 grid grid-cols-2 gap-0 overflow-hidden min-h-0">
+
+            {/* Left: Technical PM */}
+            <div
+              className="flex flex-col overflow-hidden"
+              style={{ borderRight: "1px solid rgba(0,0,0,0.07)" }}
+            >
+              <div
+                className="px-3 md:px-4 py-2 md:py-2.5 shrink-0"
+                style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <div
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: "#0A84FF" }}
+                  />
+                  <span
+                    className="font-mono text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
+                    style={{ color: "#0A84FF" }}
+                  >
+                    Technical PM
+                  </span>
+                </div>
+              </div>
+              <div className="flex-1 overflow-hidden py-1 md:py-1.5">
+                {tpmSkills.map((skill) => (
+                  <SkillRow key={skill.label} skill={skill} accentColor="#0A84FF" />
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Agentic AI */}
+            <div className="flex flex-col overflow-hidden">
+              <div
+                className="px-3 md:px-4 py-2 md:py-2.5 shrink-0"
+                style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <div
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: "#BF5AF2" }}
+                  />
+                  <span
+                    className="font-mono text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
+                    style={{ color: "#BF5AF2" }}
+                  >
+                    Agentic AI
+                  </span>
+                </div>
+              </div>
+              <div className="flex-1 overflow-hidden py-1 md:py-1.5">
+                {aiSkills.map((skill) => (
+                  <SkillRow key={skill.label} skill={skill} accentColor="#BF5AF2" />
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Program rows */}
-          <div className="flex-1 overflow-hidden">
-            {programs.map((program, i) => (
-              <ProgramRow key={program.id} program={program} index={i} />
-            ))}
-          </div>
-
-          {/* Stats footer */}
+          {/* Credentials footer */}
           <div
-            className="shrink-0 grid grid-cols-4 divide-x divide-white/[0.06]"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+            className="shrink-0 grid grid-cols-4 bg-white/60"
+            style={{
+              borderTop: "1px solid rgba(0,0,0,0.07)",
+              backdropFilter: "blur(8px)",
+            }}
           >
-            {agentStats.map((stat) => (
-              <div key={stat.label} className="px-3 md:px-4 py-2.5 md:py-3 text-center">
-                <p
-                  className="font-heading font-black tabular-nums text-[14px] md:text-[18px] leading-none"
-                  style={{ color: stat.color }}
+            {credentials.map((cred) => (
+              <div
+                key={cred.label}
+                className="flex flex-col items-center justify-center gap-0.5 py-2 md:py-3"
+                style={{ borderRight: "1px solid rgba(0,0,0,0.06)" }}
+              >
+                <div className="flex items-center gap-1">
+                  <BadgeCheck size={9} strokeWidth={2.5} style={{ color: "#34C759" }} />
+                  <span
+                    className="font-heading font-black text-[12px] md:text-[15px] tabular-nums leading-none"
+                    style={{ color: "#1d1d1f" }}
+                  >
+                    {cred.label}
+                  </span>
+                </div>
+                <span
+                  className="text-[8px] md:text-[9px] uppercase tracking-wider"
+                  style={{ color: "#8e8e93" }}
                 >
-                  {stat.value}
-                </p>
-                <p
-                  className="text-[8px] md:text-[9px] mt-1 uppercase tracking-wider"
-                  style={{ color: "rgba(255,255,255,0.3)" }}
-                >
-                  {stat.label}
-                </p>
+                  {cred.sub}
+                </span>
               </div>
             ))}
-          </div>
-
-          {/* Bottom CTA strip */}
-          <div
-            className="shrink-0 flex items-center justify-center gap-2 py-2 md:py-2.5"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(10,132,255,0.06)" }}
-          >
-            <ArrowUpRight size={11} strokeWidth={2.5} style={{ color: "rgba(10,132,255,0.7)" }} />
-            <span
-              className="font-mono text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
-              style={{ color: "rgba(10,132,255,0.7)" }}
-            >
-              Scroll to open case studies
-            </span>
           </div>
         </div>
       </ContainerScroll>
