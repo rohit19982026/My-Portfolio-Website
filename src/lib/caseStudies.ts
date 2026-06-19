@@ -63,7 +63,7 @@ export const caseStudies: CaseStudy[] = [
     industry: "EdTech",
     domain: "EdTech · US + India",
 
-    headline: "You don't just migrate the data. You migrate the decisions baked into it over six years.",
+    headline: "Six-year data estate, 340 objects with one author, and a cutover date locked to a board demo. The migration was the easy part.",
     capability: "Ran the EdTech Databricks migration end-to-end. Owned the client relationship, the scope process, the go/no-go, and the cutover.",
 
     scale: [
@@ -96,7 +96,7 @@ export const caseStudies: CaseStudy[] = [
     },
 
     challenges: [
-      { label: "340 objects authored by one person. No documentation. If institutional knowledge doesn't transfer explicitly, the new platform inherits the same structural opacity as the old one — just on a faster engine.", severity: "high" },
+      { label: "340 critical objects built by one engineer over six years, none of them documented. If he didn't actively transfer what he knew, the new platform would carry the same undocumented complexity forward — just on faster infrastructure.", severity: "high" },
       { label: "No agreed definition of done. Data lead's definition: objects work exactly as before. Sponsor's definition: board demo runs clean. Those weren't the same scope — and both had veto power.", severity: "high" },
       { label: "Cutover date set by a board demo, not delivery readiness. The demo couldn't move. Any quality issue found post-cutover would surface in front of the board.", severity: "high" },
       { label: "1,400 schema compatibility warnings from the migration tool. Two weeks of triage to find the 23 that actually mattered — not in the original timeline.", severity: "med" },
@@ -107,13 +107,13 @@ export const caseStudies: CaseStudy[] = [
     journey: [
       {
         stage: "01",
-        title: "Built the dependency graph and the knowledge map. Sequencing followed from both.",
-        detail: "Week one: mapped 2,300 objects to their downstream production consumers. 23 had critical blast radius — executive dashboards, finance reporting, the board demo pipeline. Week two: mapped each object to its knowledge owner. 340 of the critical objects had one author: the data lead. Those two maps together determined the migration sequence. Objects with high blast radius AND single-author knowledge got moved later, with more validation runway. That sequencing decision was risk management, not diplomacy.",
+        title: "First two weeks: a dependency map and a knowledge map. The sequence came from both.",
+        detail: "Week one: mapped 2,300 objects to their downstream production consumers. 23 fed critical systems — executive dashboards, finance reporting, the board demo pipeline. Week two: mapped each object to its knowledge owner. 340 of those had one author: the data lead. Both maps together determined the migration sequence. Objects that fed high-value systems AND had single-author knowledge moved later — more validation runway, more time to transfer the knowledge before cutover. That sequencing decision was risk management, not diplomacy.",
       },
       {
         stage: "02",
         title: "Scope additions required a decision process the contract didn't include — I built one.",
-        detail: "Week three: first informal addition from the sponsor. Three options: absorb it and lose margin silently, refuse it and lose goodwill, or surface it as a formal change requiring pricing and a written decision. On a fixed-price contract where absorbed scope is direct margin erosion, silence wasn't an option. Introduced a scope log that week. Ran the scope process and the delivery tracks in parallel from week three onward. Six additions tracked. Four parked. Two priced and converted to change requests.",
+        detail: "Week three: first informal addition from the sponsor. On a fixed-price contract, absorbing scope informally is direct margin erosion with no paper trail — and there's no good point to surface it later. I introduced a formal scope log that week: every addition required a written decision before it moved anywhere. Ran the scope process and delivery tracks in parallel from week three onward. Six additions tracked. Four parked. Two priced and converted to change requests.",
       },
       {
         stage: "03",
@@ -128,7 +128,7 @@ export const caseStudies: CaseStudy[] = [
     ],
 
     orchestration: [
-      { team: "Client Data Lead", role: "The blast radius problem. Needed to believe the new platform would carry his institutional knowledge forward, not erase it.", type: "client" },
+      { team: "Client Data Lead", role: "Built 340 of the most-used objects over six years, none documented. If he wasn't on board, the migration had no legitimate co-signer — and every technical decision would face friction.", type: "client" },
       { team: "Client Sponsor", role: "Budget authority. Set the board demo date. Needed confidence in the go/no-go call.", type: "exec" },
       { team: "Client Legal", role: "Co-authored the EdTech data classification policy. phData template wouldn't have covered student data requirements.", type: "client" },
       { team: "US India Engineers", role: "Needed a shared definition of done and an async protocol that worked across an 11-hour gap.", type: "ic" },
@@ -139,9 +139,9 @@ export const caseStudies: CaseStudy[] = [
 
     decisions: [
       {
-        decision: "Sequenced migration by blast radius × knowledge ownership — not by technical complexity.",
-        tradeoff: "Worse dependency graph for the engineering team. More coordination overhead.",
-        risk: "If the knowledge map was wrong, I'd burned schedule on a sequencing bet with no payoff.",
+        decision: "Sequenced migration by downstream reach and who built each object — not by technical complexity.",
+        tradeoff: "More coordination overhead for the engineering team — harder dependency graph to work with.",
+        risk: "If the knowledge map was off, I'd spent weeks on a sequencing bet that didn't pay off.",
         outcome: "Data lead co-designed the governance model. Signed off UAT without a fight. Asked for the contract extension.",
       },
       {
@@ -172,7 +172,7 @@ export const caseStudies: CaseStudy[] = [
 
     impact: [
       { value: "1 person", label: "from silent resistance to internal champion", tone: "primary" },
-      { value: "Zero", label: "institutional knowledge lost at cutover", tone: "ok" },
+      { value: "48 hrs", label: "parallel run window that wasn't in the original plan", tone: "ok" },
       { value: "3 issues", label: "caught in parallel run — invisible without it", tone: "ok" },
       { value: "6/6", label: "scope changes decided transparently", tone: "primary" },
       { value: "+1", label: "contract extended — the data lead asked for it", tone: "ok" },
@@ -209,7 +209,7 @@ export const caseStudies: CaseStudy[] = [
     industry: "Enterprise SaaS",
     domain: "Enterprise SaaS · 3 years",
 
-    headline: "The failure mode on a long retainer isn't technical. It's that the platform starts solving last year's problem.",
+    headline: "First QBR, I walked in with a delivery summary. The CFO asked what the platform had saved them in dollars. I didn't have an answer. Almost lost the renewal right there.",
     capability: "Three-year marketing data platform, two renewals. Owned every QBR, every scope renegotiation, and the handoff that had to leave them self-sufficient.",
 
     scale: [
@@ -262,8 +262,8 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         stage: "03",
-        title: "40% scope growth mid-program. Three framing options. One of them closed year three.",
-        detail: "Year two: marketing team expanded, scope grew 40% above the original contract. Three framing options: flag it as unmanaged expansion (triggers audit or renegotiation from a defensive position), absorb it silently (margin problem), or frame it as evidence the platform had been adopted faster than the original scope anticipated. Chose the third — and built the data for it: usage metrics, team growth, features being requested outside scope. Year-three contract included a scope expansion. The renewal pitch was built on the argument that we'd underestimated the platform's value.",
+        title: "40% scope growth mid-program. One framing closed year three. The other two would have killed it.",
+        detail: "Year two: marketing team expanded, scope grew 40% above the original contract. Flagging it as unmanaged expansion would trigger an audit or put us into a renegotiation from a defensive position. Absorbing it silently was a T&M margin problem. I framed it as evidence the platform had outgrown the original scope — and built the data for it: usage metrics, team growth, features being requested outside the contract. Year-three contract included a scope expansion. The renewal pitch was built on the argument that we'd underestimated the platform's value, not that we'd lost control of scope.",
       },
       {
         stage: "04",
@@ -354,7 +354,7 @@ export const caseStudies: CaseStudy[] = [
     industry: "Industrial Manufacturing",
     domain: "Industrial Manufacturing · US + India + China",
 
-    headline: "The hardest thing wasn't coordinating three timezones. It was a business policy disagreement disguised as a data problem.",
+    headline: "Six-week fixed deadline. Day three: US team and China factory team gave different answers to 'what counts as a unit produced.' That wasn't a data problem — it was business policy baked into two different ERPs.",
     capability: "Six-week Snowflake build across US, India, and China. Held three teams together, reconciled the data model disagreement, shipped on schedule.",
 
     scale: [
@@ -397,12 +397,12 @@ export const caseStudies: CaseStudy[] = [
       {
         stage: "01",
         title: "Week one: identified a business policy disagreement inside a technical requirement.",
-        detail: "First stakeholder session: asked both US corporate and China factory teams to define 'production output.' Different answers. Assessed what this meant for the program — Option A: treat it as a data transformation problem, model around the discrepancy, ship. Option B: escalate to the client sponsor as a policy decision that has to be made before we write a single transformation. Option A was faster. Option A was wrong. The discrepancy was business logic, not data noise — modeling around it would have embedded the disagreement into the platform permanently. Escalated in week one. Policy resolved in four days. Data model designed correctly from the start.",
+        detail: "First stakeholder session: asked both US corporate and China factory teams to define 'production output.' Different answers. I could model around it and ship — but the discrepancy wasn't data noise, it was business logic baked into SAP and Oracle at different times by different teams. Treating it as a data engineering problem would have embedded the disagreement into the platform permanently. I stopped the data modeling work and escalated to the sponsor: this was a business policy question that had to be answered before we wrote a single transformation. Resolved in four days. Data model designed correctly from the start.",
       },
       {
         stage: "02",
         title: "SAP ECC schema knowledge wasn't in the allocated contacts. Found it laterally.",
-        detail: "The documented IT contact couldn't explain the SAP ECC schema. Options: wait for escalation through the formal project chain (estimated two weeks), or go lateral. Asked the China factory ops manager — not on the project — who'd originally built the schema. He knew. Four hours with that engineer: everything documented, field by field. Extraction work started the same week. The formal channel would have put me two weeks behind in a six-week program. The lateral relationship cost one conversation and four hours of an unallocated engineer's time.",
+        detail: "The allocated IT contact couldn't explain the SAP ECC schema. Going through the formal escalation chain would take two weeks in a six-week program — not an option. I asked the factory ops manager, who wasn't on the project, who had originally built it. He pointed me to one engineer. Four hours with that engineer: everything documented, field by field. Extraction started the same week. The formal channel would have cost me two weeks. The lateral conversation cost one hour.",
       },
       {
         stage: "03",
@@ -434,10 +434,10 @@ export const caseStudies: CaseStudy[] = [
         outcome: "Business policy resolved in week one. Data model designed correctly from the start.",
       },
       {
-        decision: "Went outside the allocated project stakeholders to find who actually knew the SAP ECC schema.",
-        tradeoff: "Required goodwill from the factory ops manager and four hours of an unallocated engineer's time.",
-        risk: "Staying within the allocated contacts would have made the SAP integration a two-week blocker.",
-        outcome: "SAP schema documented and extraction unblocked in two days.",
+        decision: "Went outside the formal project contacts to find the one engineer who actually knew the SAP ECC schema.",
+        tradeoff: "Required goodwill from the factory ops manager and four hours of an engineer who wasn't on the project.",
+        risk: "Working within the allocated contacts would have made the SAP integration a two-week blocker in a six-week program.",
+        outcome: "Schema documented and extraction unblocked in two days instead of two weeks.",
       },
       {
         decision: "Verified the China team was using the coordination protocol in week two instead of assuming they understood it.",
@@ -544,7 +544,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         stage: "03",
-        title: "Sequenced agents by trust-building trajectory. Billing first, client-facing last.",
+        title: "Sequenced agents by what Finance and the PM team would sign off on quickest. Billing first, client-facing last.",
         detail: "After billing: Sprint Health Summarizer — low stakes, high frequency, visible value. Then Risk Scanner. Then Budget Forecaster — touches EAC and margin data, needed three prior agents to establish institutional trust before Finance would engage with it. Deck Drafter last — touches client-facing output, needs the most PM judgment in review, highest reputational risk if wrong. Ran the governance track and the build track in parallel for each agent: governance conversation opened while the prior agent was in adoption, build started after sign-off. Wrong sequencing — highest-stakes agent first — would have put the most skeptical audience in front of the least-tested output.",
       },
       {
