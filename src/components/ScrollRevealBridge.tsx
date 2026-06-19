@@ -7,11 +7,14 @@ import {
   ArrowLeftRight,
   Eye,
   Compass,
+  AlertTriangle,
+  GitBranch,
   Bot,
   CalendarClock,
   Link2,
   TrendingUp,
   GraduationCap,
+  Server,
   ChevronRight,
   ChevronLeft,
   Wifi,
@@ -19,19 +22,22 @@ import {
 } from "lucide-react";
 
 const pmSkills = [
-  { icon: Users,          label: "Cross-Functional Leadership", detail: "Engineering, finance, product, client — all moving in the same direction",     color: "#007AFF" },
-  { icon: Zap,            label: "Blocker Removal",             detail: "Find what's slowing teams down and clear it before it shows as a delay",        color: "#FF9500" },
-  { icon: ArrowLeftRight, label: "Cross-Team Communication",    detail: "Translate between teams who don't naturally speak the same language",           color: "#5856D6" },
-  { icon: Eye,            label: "Delivery Awareness",          detail: "Know where every track actually stands — not just what's been reported up",     color: "#32ADE6" },
-  { icon: Compass,        label: "Navigating Chaos",            detail: "When things go sideways: diagnose fast, decide, keep the team moving",         color: "#FF3B30" },
+  { icon: Users,          label: "Cross-Functional Leadership", detail: "Engineering, finance, product, client — all moving in the same direction",           color: "#007AFF" },
+  { icon: Zap,            label: "Blocker Removal",             detail: "Find what's slowing teams down and clear it before it shows as a delay",             color: "#FF9500" },
+  { icon: ArrowLeftRight, label: "Cross-Team Communication",    detail: "Translate between teams who don't naturally speak the same language",                color: "#5856D6" },
+  { icon: Eye,            label: "Delivery Awareness",          detail: "Know where every track actually stands — not just what's been reported up",          color: "#32ADE6" },
+  { icon: Compass,        label: "Navigating Chaos",            detail: "When things go sideways: diagnose fast, decide, keep the team moving",              color: "#FF3B30" },
+  { icon: AlertTriangle,  label: "Escalation Path Design",      detail: "Right person called at the right time — severity classified before it gets raised",  color: "#FF9500" },
+  { icon: GitBranch,      label: "Change Impact Assessment",    detail: "Downstream effects across all tracks evaluated before any change gets signed off",   color: "#34C759" },
 ];
 
 const aiSkills = [
-  { icon: Bot,            label: "Claude Agent Building",       detail: "Built billing, sprint health, risk, status, and budget agents for PM teams",   color: "#BF5AF2" },
-  { icon: CalendarClock,  label: "Weekly Task Automation",      detail: "Automated 4–6 hrs/week of manual PM work per person via scheduled agents",     color: "#FF9500" },
-  { icon: Link2,          label: "MCP Tool Integration",        detail: "Jira · Salesforce · Glean · Google Workspace connected and running",           color: "#32ADE6" },
-  { icon: TrendingUp,     label: "AI Adoption",                 detail: "0 → 14 PM adopters — cohort rollout, 1:1 onboarding, usage tracked per person", color: "#34C759" },
-  { icon: GraduationCap,  label: "AI Skilling",                 detail: "Taught team to use and build agents; two built independently from my docs",    color: "#FF2D55" },
+  { icon: Bot,            label: "Claude Agent Building",       detail: "Built billing, sprint health, risk, status, and budget agents for PM teams",        color: "#BF5AF2" },
+  { icon: CalendarClock,  label: "Weekly Task Automation",      detail: "Automated 4–6 hrs/week of manual PM work per person via scheduled agents",          color: "#FF9500" },
+  { icon: Link2,          label: "MCP Tool Integration",        detail: "Jira · Salesforce · Glean · Google Workspace connected and running",                color: "#32ADE6" },
+  { icon: TrendingUp,     label: "AI Adoption",                 detail: "0 → 14 PM adopters — cohort rollout, 1:1 onboarding, usage tracked per person",    color: "#34C759" },
+  { icon: GraduationCap,  label: "AI Skilling",                 detail: "Taught team to use and build agents; two built independently from my docs",         color: "#FF2D55" },
+  { icon: Server,         label: "Agent Service Management",    detail: "Agents run as managed services — ownership, monitoring, and SLA defined per agent", color: "#5856D6" },
 ];
 
 function IOSRow({
