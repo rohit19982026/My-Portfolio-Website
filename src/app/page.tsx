@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import ScrollRevealBridge from "@/components/ScrollRevealBridge";
 import ImpactSummary from "@/components/ImpactSummary";
 import Work from "@/components/Work";
 import AIToolingTeaser from "@/components/AIToolingTeaser";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ScrollRevealBridge />
       <Trajectory />
       <ImpactSummary />
       <Work />
