@@ -19,19 +19,19 @@ import {
 } from "lucide-react";
 
 const tpmSkills = [
-  { icon: AlertCircle,      label: "Risk Management",          detail: "RAID discipline — never surprise a miss",          color: "#FF3B30" },
-  { icon: SlidersHorizontal, label: "Scope & Budget Control",   detail: "Change control on fixed-price contracts",          color: "#FF9500" },
-  { icon: BarChart2,         label: "Executive Communication",  detail: "CFO-ready framing, signal + ask",                  color: "#5856D6" },
-  { icon: Globe,             label: "Cross-Regional Delivery",  detail: "US · India · China, 11-hour gap managed",          color: "#007AFF" },
-  { icon: TrendingUp,        label: "Account Growth",           detail: "Delivery-to-renewal, two contracts extended",      color: "#34C759" },
+  { icon: AlertCircle,       label: "RAID Log Ownership",          detail: "Risks, assumptions, issues, deps tracked across all program tracks",      color: "#FF3B30" },
+  { icon: TrendingUp,        label: "Velocity Forecasting",         detail: "Sprint velocity → date math; slippage surfaced before it's visible",     color: "#FF9500" },
+  { icon: SlidersHorizontal, label: "Change Control Process",       detail: "Scope addition: acknowledge → cost map → documented decision, always",   color: "#5856D6" },
+  { icon: Globe,             label: "Async Cross-TZ Coordination",  detail: "Written handoffs US · India · China — no verbal decisions, ever",        color: "#007AFF" },
+  { icon: ShieldCheck,       label: "Go / No-Go Ownership",         detail: "Cutover, parallel run, and board demo readiness calls are mine to make", color: "#34C759" },
 ];
 
 const aiSkills = [
-  { icon: Bot,         label: "Agent Architecture",    detail: "6 agents in production on Claude + Glean",            color: "#BF5AF2" },
-  { icon: ShieldCheck, label: "Governance Design",     detail: "Accountability chains Finance actually approves",      color: "#FF2D55" },
-  { icon: Link2,       label: "MCP Integration",       detail: "Jira · Salesforce · Google Workspace · Glean",        color: "#32ADE6" },
-  { icon: Users,       label: "Cohort Adoption",       detail: "Sequenced rollout, usage instrumented from week one",  color: "#FF9500" },
-  { icon: BookOpen,    label: "Pattern Documentation", detail: "Two more agents built by others from my docs",         color: "#34C759" },
+  { icon: Bot,       label: "Multi-Agent Orchestration",  detail: "Claude API + n8n pipelines with tool calls, routing, and error handling",        color: "#BF5AF2" },
+  { icon: Link2,     label: "MCP Server Integration",     detail: "Jira · Salesforce · Google Workspace · Glean — auth and rate limits managed",    color: "#32ADE6" },
+  { icon: BarChart2, label: "Prompt Engineering",         detail: "Schema-bounded output, structured reasoning chains for PM-specific workflows",    color: "#FF9500" },
+  { icon: BookOpen,  label: "Governance Framework",       detail: "Human review step + audit log per output + ownership map per agent",             color: "#FF2D55" },
+  { icon: Users,     label: "Adoption Instrumentation",   detail: "Usage tracked per agent per user from week one; non-adopters diagnosed 1:1",     color: "#34C759" },
 ];
 
 function IOSRow({
