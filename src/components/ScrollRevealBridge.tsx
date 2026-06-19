@@ -17,17 +17,17 @@ import {
   Server,
   ChevronRight,
   ChevronLeft,
-  Wifi,
-  BatteryFull,
+  Signal,
+  Battery,
 } from "lucide-react";
 
 const pmSkills = [
   { icon: Users,          label: "Cross-Functional Leadership", detail: "Engineering, finance, product, client — all moving in the same direction",           color: "#007AFF" },
   { icon: Zap,            label: "Blocker Removal",             detail: "Find what's slowing teams down and clear it before it shows as a delay",             color: "#FF9500" },
   { icon: ArrowLeftRight, label: "Cross-Team Communication",    detail: "Translate between teams who don't naturally speak the same language",                color: "#5856D6" },
-  { icon: Eye,            label: "Delivery Awareness",          detail: "Know where every track actually stands — not just what's been reported up",          color: "#32ADE6" },
+  { icon: Eye,            label: "Delivery Awareness",          detail: "Know where every track actually stands, not just what's been reported up",           color: "#32ADE6" },
   { icon: Compass,        label: "Navigating Chaos",            detail: "When things go sideways: diagnose fast, decide, keep the team moving",              color: "#FF3B30" },
-  { icon: AlertTriangle,  label: "Escalation Path Design",      detail: "Right person called at the right time — severity classified before it gets raised",  color: "#FF9500" },
+  { icon: AlertTriangle,  label: "Escalation Path Design",      detail: "Right person called at the right time. Severity classified before it gets raised.", color: "#FF9500" },
   { icon: GitBranch,      label: "Change Impact Assessment",    detail: "Downstream effects across all tracks evaluated before any change gets signed off",   color: "#34C759" },
 ];
 
@@ -35,9 +35,9 @@ const aiSkills = [
   { icon: Bot,            label: "Claude Agent Building",       detail: "Built billing, sprint health, risk, status, and budget agents for PM teams",        color: "#BF5AF2" },
   { icon: CalendarClock,  label: "Weekly Task Automation",      detail: "Automated 4–6 hrs/week of manual PM work per person via scheduled agents",          color: "#FF9500" },
   { icon: Link2,          label: "MCP Tool Integration",        detail: "Jira · Salesforce · Glean · Google Workspace connected and running",                color: "#32ADE6" },
-  { icon: TrendingUp,     label: "AI Adoption",                 detail: "0 → 14 PM adopters — cohort rollout, 1:1 onboarding, usage tracked per person",    color: "#34C759" },
+  { icon: TrendingUp,     label: "AI Adoption",                 detail: "0 to 14 PM adopters. Cohort rollout, 1:1 onboarding, usage tracked per person.",  color: "#34C759" },
   { icon: GraduationCap,  label: "AI Skilling",                 detail: "Taught team to use and build agents; two built independently from my docs",      color: "#FF2D55" },
-  { icon: Server,         label: "Agent Output Review Design",  detail: "Human review checkpoints built in — wrong outputs caught before they reach anyone", color: "#5856D6" },
+  { icon: Server,         label: "Agent Output Review Design",  detail: "Human review checkpoints built in. Wrong outputs caught before they reach anyone.", color: "#5856D6" },
 ];
 
 function IOSRow({
@@ -136,41 +136,62 @@ export default function ScrollRevealBridge() {
         {/* iPadOS-style app screen */}
         <div className="h-full flex flex-col" style={{ background: "#f2f2f7" }}>
 
-          {/* iOS status bar */}
+          {/* iPadOS status bar — time left, indicators right */}
           <div
-            className="flex items-center justify-between px-4 md:px-5 shrink-0 bg-[#f2f2f7]"
-            style={{ paddingTop: "8px", paddingBottom: "4px" }}
+            className="flex items-center justify-between px-4 md:px-6 shrink-0"
+            style={{ paddingTop: "10px", paddingBottom: "3px", background: "#f2f2f7" }}
           >
             <span
               className="font-semibold tabular-nums"
-              style={{ fontSize: "11px", color: "#1d1d1f" }}
+              style={{ fontSize: "12px", color: "#1d1d1f", letterSpacing: "-0.01em" }}
             >
               9:41
             </span>
-            <div className="flex items-center gap-1.5">
-              <Wifi size={12} strokeWidth={2} style={{ color: "#1d1d1f" }} />
-              <BatteryFull size={14} strokeWidth={2} style={{ color: "#1d1d1f" }} />
+            <div className="flex items-center gap-2">
+              {/* Signal bars */}
+              <div className="flex items-end gap-px" style={{ height: "10px" }}>
+                {[4, 6, 8, 10].map((h, i) => (
+                  <div key={i} style={{ width: "2.5px", height: `${h}px`, background: "#1d1d1f", borderRadius: "1px", opacity: i < 4 ? 1 : 0.3 }} />
+                ))}
+              </div>
+              <Signal size={11} strokeWidth={2} style={{ color: "#1d1d1f" }} />
+              {/* Battery */}
+              <div className="flex items-center gap-0.5">
+                <div style={{
+                  width: "22px", height: "11px", borderRadius: "3px",
+                  border: "1.5px solid rgba(0,0,0,0.35)", position: "relative", padding: "1.5px",
+                }}>
+                  <div style={{ width: "75%", height: "100%", background: "#1d1d1f", borderRadius: "1px" }} />
+                  <div style={{
+                    position: "absolute", right: "-4px", top: "50%", transform: "translateY(-50%)",
+                    width: "2.5px", height: "5px", background: "rgba(0,0,0,0.35)", borderRadius: "0 1px 1px 0",
+                  }} />
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Navigation bar */}
+          {/* iPadOS Navigation bar */}
           <div
-            className="flex items-center px-3 md:px-4 shrink-0 bg-[#f2f2f7]"
+            className="relative flex items-center px-3 md:px-5 shrink-0"
             style={{
-              paddingTop: "6px",
-              paddingBottom: "6px",
-              borderBottom: "1px solid rgba(60,60,67,0.18)",
+              paddingTop: "5px",
+              paddingBottom: "7px",
+              borderBottom: "0.5px solid rgba(60,60,67,0.22)",
+              background: "rgba(242,242,247,0.92)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
             }}
           >
-            <button className="flex items-center gap-0.5 mr-auto" style={{ color: "#007AFF" }}>
-              <ChevronLeft size={16} strokeWidth={2.5} />
-              <span className="text-[13px] font-normal" style={{ color: "#007AFF" }}>
+            <button className="flex items-center gap-0.5 z-10" style={{ color: "#007AFF" }}>
+              <ChevronLeft size={18} strokeWidth={2.5} />
+              <span className="text-[14px] font-normal" style={{ color: "#007AFF" }}>
                 Profile
               </span>
             </button>
             <span
-              className="absolute left-1/2 -translate-x-1/2 text-[13px] md:text-[14px] font-semibold"
-              style={{ color: "#1d1d1f" }}
+              className="absolute left-1/2 -translate-x-1/2 text-[14px] md:text-[15px] font-semibold"
+              style={{ color: "#1d1d1f", letterSpacing: "-0.01em" }}
             >
               Skills Overview
             </span>
