@@ -84,88 +84,109 @@ export const Card = ({
       style={{ rotateX: rotate, scale }}
       className="max-w-5xl -mt-12 mx-auto w-full"
     >
-      {/* iPad Pro Space Gray chassis */}
+      {/* iPad Pro Silver — brushed aluminum chassis */}
       <div
         style={{
           position: "relative",
-          background: "linear-gradient(160deg, #48484a 0%, #2c2c2e 45%, #1c1c1e 100%)",
+          /*
+           * Aluminum lighting model: bright top-left (light source from above-left),
+           * darkening toward bottom-right. The three-stop gradient gives the subtle
+           * "brushed" look without needing an image.
+           */
+          background: [
+            "linear-gradient(155deg,",
+            "  #f2f2f4 0%,",       /* top-left specular highlight */
+            "  #dcdcde 28%,",      /* mid silver */
+            "  #cacaca 55%,",      /* standard aluminum */
+            "  #b8b8ba 80%,",      /* shadow side */
+            "  #aeaeaf 100%",      /* bottom-right darkest */
+            ")",
+          ].join(""),
           borderRadius: "28px",
-          padding: "13px 22px",
+          padding: "12px 22px",
           boxShadow: [
-            "0 0 0 1px rgba(255,255,255,0.10)",
-            "0 0 0 1.5px rgba(0,0,0,0.7) inset",
-            "0 50px 120px rgba(0,0,0,0.55)",
-            "0 20px 50px rgba(0,0,0,0.4)",
+            /* outer hairline — gives crisp edge definition */
+            "0 0 0 1px rgba(0,0,0,0.13)",
+            /* inner top-left bright rim (simulates light hitting the chamfered edge) */
+            "0 0 0 1.5px rgba(255,255,255,0.88) inset",
+            /* very subtle inner bottom-right darkening */
+            "0 -1px 0 rgba(0,0,0,0.06) inset",
+            /* main depth shadow — slightly warm so it doesn't read as pure black */
+            "0 60px 130px rgba(10,10,20,0.28)",
+            "0 24px 56px rgba(10,10,20,0.18)",
+            /* ambient blue glow matching portfolio accent */
+            "0 0 80px rgba(10,132,255,0.07)",
           ].join(", "),
         }}
       >
-        {/* FaceID sensor bar — left short edge in landscape */}
+        {/* FaceID / TrueDepth camera — left short edge in landscape */}
         <div
           style={{
             position: "absolute",
             left: "8px",
             top: "50%",
             transform: "translateY(-50%)",
-            width: "4px",
-            height: "26px",
-            background: "#080808",
+            width: "3.5px",
+            height: "22px",
+            background: "linear-gradient(180deg, #1a1a1c 0%, #0e0e10 100%)",
             borderRadius: "2px",
-            border: "1px solid rgba(255,255,255,0.05)",
+            boxShadow: "0 0 0 0.5px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.3)",
           }}
         >
+          {/* camera dot */}
           <div style={{
             position: "absolute",
-            top: "50%",
+            top: "30%",
             left: "50%",
             transform: "translate(-50%,-50%)",
-            width: "2.5px",
-            height: "2.5px",
+            width: "2px",
+            height: "2px",
             borderRadius: "50%",
-            background: "#0e0e10",
-            border: "1px solid rgba(255,255,255,0.07)",
+            background: "#050508",
+            boxShadow: "0 0 0 0.5px rgba(255,255,255,0.06)",
           }} />
         </div>
 
-        {/* Volume Up — top edge */}
+        {/* Volume Up — top long edge */}
         <div style={{
           position: "absolute",
-          top: "-3px",
-          left: "34%",
-          width: "34px",
+          top: "-2.5px",
+          left: "33%",
+          width: "36px",
           height: "5px",
-          background: "linear-gradient(90deg, #222224, #383838, #222224)",
+          background: "linear-gradient(180deg, #e8e8ea 0%, #c8c8ca 100%)",
           borderRadius: "2px 2px 0 0",
-          boxShadow: "0 -2px 5px rgba(0,0,0,0.6)",
+          boxShadow: "0 -1px 3px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.1)",
         }} />
 
-        {/* Volume Down — top edge */}
+        {/* Volume Down — top long edge */}
         <div style={{
           position: "absolute",
-          top: "-3px",
-          left: "calc(34% + 42px)",
-          width: "34px",
+          top: "-2.5px",
+          left: "calc(33% + 44px)",
+          width: "36px",
           height: "5px",
-          background: "linear-gradient(90deg, #222224, #383838, #222224)",
+          background: "linear-gradient(180deg, #e8e8ea 0%, #c8c8ca 100%)",
           borderRadius: "2px 2px 0 0",
-          boxShadow: "0 -2px 5px rgba(0,0,0,0.6)",
+          boxShadow: "0 -1px 3px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.1)",
         }} />
 
         {/* Power / Sleep — right short edge */}
         <div style={{
           position: "absolute",
-          right: "-3px",
-          top: "27%",
+          right: "-2.5px",
+          top: "28%",
           width: "5px",
-          height: "46px",
-          background: "linear-gradient(180deg, #222224, #383838, #222224)",
+          height: "42px",
+          background: "linear-gradient(90deg, #c4c4c6 0%, #e0e0e2 100%)",
           borderRadius: "0 2px 2px 0",
-          boxShadow: "3px 0 6px rgba(0,0,0,0.5)",
+          boxShadow: "2px 0 4px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.1)",
         }} />
 
-        {/* Left speaker grills */}
+        {/* Left speaker grills — subtle, matching aluminum tone */}
         <div style={{
           position: "absolute",
-          left: "15px",
+          left: "14px",
           top: "50%",
           transform: "translateY(-50%)",
           display: "flex",
@@ -173,14 +194,20 @@ export const Card = ({
           gap: "4px",
         }}>
           {[...Array(6)].map((_, i) => (
-            <div key={i} style={{ width: "1.5px", height: "9px", background: "rgba(0,0,0,0.6)", borderRadius: "1px" }} />
+            <div key={i} style={{
+              width: "1.5px",
+              height: "9px",
+              background: "rgba(0,0,0,0.22)",
+              borderRadius: "1px",
+              boxShadow: "0 0 0 0.5px rgba(255,255,255,0.3)",
+            }} />
           ))}
         </div>
 
         {/* Right speaker grills */}
         <div style={{
           position: "absolute",
-          right: "15px",
+          right: "14px",
           top: "50%",
           transform: "translateY(-50%)",
           display: "flex",
@@ -188,16 +215,31 @@ export const Card = ({
           gap: "4px",
         }}>
           {[...Array(6)].map((_, i) => (
-            <div key={i} style={{ width: "1.5px", height: "9px", background: "rgba(0,0,0,0.6)", borderRadius: "1px" }} />
+            <div key={i} style={{
+              width: "1.5px",
+              height: "9px",
+              background: "rgba(0,0,0,0.22)",
+              borderRadius: "1px",
+              boxShadow: "0 0 0 0.5px rgba(255,255,255,0.3)",
+            }} />
           ))}
         </div>
 
-        {/* Screen */}
+        {/* Screen — thin dark gap between aluminum and glass, then glass itself */}
         <div
           className="h-[30rem] md:h-[40rem] overflow-hidden"
-          style={{ borderRadius: "16px", background: "#000" }}
+          style={{
+            borderRadius: "15px",
+            border: "1px solid rgba(0,0,0,0.18)",
+            /*
+             * The inset shadow gives the screen a slightly recessed look,
+             * as if the glass sits behind the aluminum bezel.
+             */
+            boxShadow: "0 0 0 0.5px rgba(0,0,0,0.12) inset, 0 2px 6px rgba(0,0,0,0.06) inset",
+            background: "#f2f2f7",
+          }}
         >
-          <div className="h-full w-full overflow-hidden" style={{ borderRadius: "15px", background: "#f2f2f7" }}>
+          <div className="h-full w-full overflow-hidden" style={{ borderRadius: "14px", background: "#f2f2f7" }}>
             {children}
           </div>
         </div>
