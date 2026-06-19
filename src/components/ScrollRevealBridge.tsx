@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import {
   Users,
@@ -19,13 +20,17 @@ import {
   ChevronLeft,
   Signal,
   Search,
-  SquareKanban,
-  Cloud,
-  Hash,
-  FileSpreadsheet,
-  Mail,
-  GitFork,
 } from "lucide-react";
+
+import {
+  SiJira,       SiJiraHex,
+  SiClaude,     SiClaudeHex,
+  SiGooglesheets, SiGooglesheetsHex,
+  SiGmail,      SiGmailHex,
+  SiZoom,       SiZoomHex,
+  SiGithub,     SiGithubHex,
+  SiConfluence, SiConfluenceHex,
+} from "@icons-pack/react-simple-icons";
 
 const pmSkills = [
   { icon: Users,          label: "Cross-Functional Leadership", detail: "Engineering, finance, product, client — all moving in the same direction",           color: "#007AFF" },
@@ -37,14 +42,14 @@ const pmSkills = [
   { icon: GitBranch,      label: "Change Impact Assessment",    detail: "Downstream effects across all tracks evaluated before any change gets signed off",   color: "#34C759" },
 ];
 
-const dockApps = [
-  { icon: SquareKanban,   label: "Jira",       color: "#0052CC" },
-  { icon: Cloud,          label: "Salesforce", color: "#00A1E0" },
-  { icon: Hash,           label: "Slack",      color: "#4A154B" },
-  { icon: Bot,            label: "Claude",     color: "#D97706" },
-  { icon: FileSpreadsheet,label: "Sheets",     color: "#34A853" },
-  { icon: Mail,           label: "Gmail",      color: "#EA4335" },
-  { icon: GitFork,        label: "GitHub",     color: "#1d1d1f" },
+const dockApps: { Icon: React.ComponentType<{ size?: number; color?: string }>; label: string; bg: string; iconColor: string }[] = [
+  { Icon: SiJira,         label: "Jira",        bg: SiJiraHex,         iconColor: "#fff" },
+  { Icon: SiClaude,       label: "Claude",      bg: SiClaudeHex,       iconColor: "#fff" },
+  { Icon: SiGooglesheets, label: "Sheets",      bg: SiGooglesheetsHex, iconColor: "#fff" },
+  { Icon: SiGmail,        label: "Gmail",       bg: "#ffffff",          iconColor: SiGmailHex },
+  { Icon: SiZoom,         label: "Zoom",        bg: SiZoomHex,         iconColor: "#fff" },
+  { Icon: SiGithub,       label: "GitHub",      bg: SiGithubHex,       iconColor: "#fff" },
+  { Icon: SiConfluence,   label: "Confluence",  bg: SiConfluenceHex,   iconColor: "#fff" },
 ];
 
 const aiSkills = [
@@ -332,7 +337,7 @@ export default function ScrollRevealBridge() {
                   style={{
                     width: "38px",
                     height: "38px",
-                    background: app.color,
+                    background: app.bg,
                     borderRadius: "9px",
                     display: "flex",
                     alignItems: "center",
@@ -341,7 +346,7 @@ export default function ScrollRevealBridge() {
                     flexShrink: 0,
                   }}
                 >
-                  <app.icon size={20} strokeWidth={1.7} color="#fff" />
+                  <app.Icon size={20} color={app.iconColor} />
                 </div>
               ))}
             </div>
