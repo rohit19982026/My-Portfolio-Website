@@ -67,12 +67,12 @@ export const caseStudies: CaseStudy[] = [
     capability: "Ran the EdTech Databricks migration end-to-end. Owned the client relationship, the scope process, the go/no-go, and the cutover.",
 
     scale: [
-      { value: "6 years", label: "of decisions in the old estate" },
-      { value: "1 person", label: "who knew why every table was named what it was" },
-      { value: "18 weeks", label: "to migrate the data and the knowledge" },
-      { value: "3 issues", label: "caught in parallel run before the board demo" },
-      { value: "Zero", label: "undocumented objects in the platform after cutover" },
-      { value: "1 contract", label: "extended because the data lead asked for it" },
+      { value: "340", label: "objects with one author and zero documentation" },
+      { value: "1 person", label: "who held six years of architectural decisions in his head" },
+      { value: "23 of 1,400", label: "schema warnings that actually mattered — two weeks of triage to find them" },
+      { value: "3 issues", label: "caught in the parallel run before the board saw anything" },
+      { value: "Zero", label: "quality incidents at the board demo" },
+      { value: "Extended", label: "contract at program close — client-initiated" },
     ],
 
     ecosystem: {
@@ -134,7 +134,7 @@ export const caseStudies: CaseStudy[] = [
       { team: "US India Engineers", role: "Needed a shared definition of done and an async protocol that worked across an 11-hour gap.", type: "ic" },
       { team: "Solutions Architect", role: "Designed Unity Catalog governance with the data lead's input, not around him.", type: "arch" },
       { team: "Migration QA", role: "Triaged 1,400 schema compatibility warnings to find the 23 that actually mattered.", type: "internal" },
-      { team: "Program Lead Me", role: "Owned the client relationship, scope process, and the cutover go/no-go call.", type: "pm" },
+      { team: "Program Lead", role: "Owned the client relationship, scope process, and the cutover go/no-go call.", type: "pm" },
     ],
 
     decisions: [
@@ -213,12 +213,12 @@ export const caseStudies: CaseStudy[] = [
     capability: "Three-year marketing data platform, two renewals. Owned every QBR, every scope renegotiation, and the handoff that had to leave them self-sufficient.",
 
     scale: [
-      { value: "3 years", label: "sustained relevance" },
-      { value: "2 renewals", label: "earned by solving current problems" },
-      { value: "40%", label: "scope growth: a sign the platform was working" },
-      { value: "12 QBRs", label: "where relevance had to be proved in numbers" },
-      { value: "Zero", label: "unannounced breakages in years 2–3" },
-      { value: "4 wks", label: "for client team to operate independently after handoff" },
+      { value: "48 hrs", label: "to rebuild the year-one QBR around the CFO's actual question" },
+      { value: "2 renewals", label: "because the QBR answered the question Finance was actually asking" },
+      { value: "40%", label: "scope growth renegotiated as a contract expansion, not scope creep" },
+      { value: "Zero", label: "silent model breakages after the 2-week upstream change notice process" },
+      { value: "1 engineer", label: "from blocking every roadmap decision to presenting the platform internally" },
+      { value: "4 wks", label: "for the client team to run independently after handoff" },
     ],
 
     ecosystem: {
@@ -279,7 +279,7 @@ export const caseStudies: CaseStudy[] = [
       { team: "Data Engineers", role: "Snowflake + dbt build across three years and two contract cycles.", type: "ic" },
       { team: "Platform Architect", role: "Platform design and dbt governance model.", type: "arch" },
       { team: "Client Infra", role: "Environment management. Worked around a six-week change freeze with a shadow environment.", type: "client" },
-      { team: "Program Lead Me", role: "QBR ownership, scope renegotiation, renewal conversations.", type: "pm" },
+      { team: "Program Lead", role: "QBR ownership, scope renegotiation, renewal conversations.", type: "pm" },
     ],
 
     decisions: [
@@ -358,12 +358,12 @@ export const caseStudies: CaseStudy[] = [
     capability: "Six-week Snowflake build across US, India, and China. Held three teams together, reconciled the data model disagreement, shipped on schedule.",
 
     scale: [
-      { value: "6 weeks", label: "hard deadline" },
-      { value: "1 policy gap", label: "disguised as a data problem" },
-      { value: "4 days", label: "to resolve a business definition disagreement" },
-      { value: "3 teams", label: "who couldn't coordinate directly" },
+      { value: "Day 3", label: "US and China teams gave different answers to the same question" },
+      { value: "4 days", label: "to get a business policy decision that unblocked the data model" },
+      { value: "10.5 hrs", label: "time zone gap managed with a cadence designed around it, not against it" },
       { value: "Zero", label: "days behind at close" },
-      { value: "1 near-miss", label: "caught in week two" },
+      { value: "Week 2", label: "coordination gap found before five weeks of silent drift" },
+      { value: "2 adds", label: "scope additions handled as a post-delivery addendum, not a slip" },
     ],
 
     ecosystem: {
@@ -423,7 +423,7 @@ export const caseStudies: CaseStudy[] = [
       { team: "US Engineers", role: "dbt + Snowflake build. Needed the data definition resolved before they could model correctly.", type: "ic" },
       { team: "India Engineers", role: "Azure ingestion + SAP extraction. Worked the 11-hour gap with written async handoffs.", type: "ic" },
       { team: "Solutions Architect", role: "Snowflake on Azure design. Adapted the data model once the policy decision was made.", type: "arch" },
-      { team: "Program Lead Me", role: "The only person overlapping all three teams. Every cross-team decision routed through me.", type: "pm" },
+      { team: "Program Lead", role: "The only person overlapping all three teams. Every cross-team decision routed through me.", type: "pm" },
     ],
 
     decisions: [
@@ -561,7 +561,7 @@ export const caseStudies: CaseStudy[] = [
       { team: "phData Leadership", role: "Informal sponsor after the billing proof point. Didn't need to be sold after seeing the before/after numbers.", type: "exec" },
       { team: "Delivery Ops", role: "Adopted the pattern, built two more agents using the documentation I wrote.", type: "ic" },
       { team: "Platform Engineer", role: "MCP integration. Auth complexity across three systems was harder than the agent reasoning logic.", type: "ic" },
-      { team: "Program Lead Me", role: "Designed agents, built the governance case from scratch, ran cohort rollout, documented the pattern.", type: "pm" },
+      { team: "Program Lead", role: "Designed agents, built the governance case from scratch, ran cohort rollout, documented the pattern.", type: "pm" },
     ],
 
     decisions: [
