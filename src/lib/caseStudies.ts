@@ -180,7 +180,7 @@ export const caseStudies: CaseStudy[] = [
 
     beforeAfter: {
       before: [
-        "340 objects authored by one person — institutional memory tied to one individual with no documentation.",
+        "340 objects, all authored by one engineer over six years — nothing documented, no runbook, no handoff plan.",
         "No agreed definition of done — data lead and sponsor using different success criteria.",
         "No parallel run in the plan — cutover risk unmanaged against a fixed board demo date.",
         "Scope additions handled informally — no visibility into cost or margin impact on a fixed-price contract.",
@@ -258,7 +258,7 @@ export const caseStudies: CaseStudy[] = [
       {
         stage: "02",
         title: "Embedded engineer had domain knowledge I needed. Changed who owned the roadmap.",
-        detail: "Year one: I ran the roadmap, he pushed back on most of it. The pushback wasn't obstruction — he knew the data better than anyone on our side. Two options: keep running the roadmap and manage the resistance, or make him a co-author and accept slower decisions. Chose co-author. He moved from friction to advocacy inside two quarters. Roadmap quality went up. Renewal was easier because his internal reputation was attached to the platform's success.",
+        detail: "Year one: I ran the roadmap, he pushed back on most of it. The pushback wasn't obstruction — he knew the data better than anyone on our side. I could keep running the roadmap and manage the friction, or make him a co-author and accept that decisions would take longer. Made him co-author. He moved from friction to advocacy inside two quarters. Roadmap quality went up. Renewal was easier because his internal reputation was attached to the platform's success.",
       },
       {
         stage: "03",
@@ -407,7 +407,7 @@ export const caseStudies: CaseStudy[] = [
       {
         stage: "03",
         title: "Verification check in week two found the China team wasn't using the protocol.",
-        detail: "Scheduled check-in in week two: asked the China team lead to walk me through the last three handoff documents. There weren't any. The team interpreted 'async coordination' as WeChat messages. Five days of decisions were undocumented and untraceable. Two options: address it in the next group meeting or go direct to the team lead one-on-one. Chose the one-on-one — public correction in a group setting would have damaged the trust I needed for the remaining four weeks. Written handoffs enforced from week two. No cross-team blocker lasted more than 24 hours for the rest of the program.",
+        detail: "Scheduled check-in in week two: asked the China team lead to walk me through the last three handoff documents. There weren't any. The team interpreted 'async coordination' as WeChat messages. Five days of decisions were undocumented and untraceable. Raising it in a group meeting would have been a public correction — and I needed the team lead's trust for another four weeks. Went direct to him one-on-one instead. Written handoffs enforced from week two. No cross-team blocker lasted more than 24 hours for the rest of the program.",
       },
       {
         stage: "04",
@@ -471,7 +471,7 @@ export const caseStudies: CaseStudy[] = [
       after: [
         "Business definition reconciled in week one — data model designed correctly from the start.",
         "Written async handoffs enforced in week two — no undocumented decisions for the remaining four weeks.",
-        "SAP schema documented and extraction unblocked in two days via a lateral stakeholder relationship.",
+        "SAP schema documented and extraction unblocked in two days — found the right engineer through the ops manager, not the project org chart.",
         "Scope additions cleanly negotiated to a post-delivery addendum — delivery window closed on original scope.",
       ],
     },
@@ -524,7 +524,7 @@ export const caseStudies: CaseStudy[] = [
 
     challenges: [
       { label: "Finance didn't need the billing agent to be accurate. They needed to know who was accountable when it was wrong. Those are different requirements — I hadn't built for the second one.", severity: "high" },
-      { label: "No corporate AI governance framework. Couldn't point to policy. Had to build the accountability case from first principles: what the agent does, where human review happens, what the audit trail looks like.", severity: "high" },
+      { label: "No corporate AI governance framework. No policy to point to. Had to define the accountability case myself: what the agent does, where human review happens, what the audit trail looks like.", severity: "high" },
       { label: "PM team heard 'AI agent for PM work' as 'replacement for PMs.' Reframing required individual conversations — a Slack announcement would have produced permanent resistance.", severity: "high" },
       { label: "No precedent for the billing consolidation workflow in Glean's agent builder. Architecture designed without a template or prior implementation to reference.", severity: "med" },
       { label: "Non-adopters don't report that they're re-doing work manually. Had to instrument usage to find who wasn't using what and diagnose why.", severity: "med" },
@@ -545,7 +545,7 @@ export const caseStudies: CaseStudy[] = [
       {
         stage: "03",
         title: "Sequenced agents by what Finance and the PM team would sign off on quickest. Billing first, client-facing last.",
-        detail: "After billing: Sprint Health Summarizer — low stakes, high frequency, visible value. Then Risk Scanner. Then Budget Forecaster — touches EAC and margin data, needed three prior agents to establish institutional trust before Finance would engage with it. Deck Drafter last — touches client-facing output, needs the most PM judgment in review, highest reputational risk if wrong. Ran the governance track and the build track in parallel for each agent: governance conversation opened while the prior agent was in adoption, build started after sign-off. Wrong sequencing — highest-stakes agent first — would have put the most skeptical audience in front of the least-tested output.",
+        detail: "After billing: Sprint Health Summarizer — low stakes, high frequency, visible value. Then Risk Scanner. Then Budget Forecaster — touches EAC and margin data, and Finance wouldn't engage with anything that touched margin numbers until three prior agents had been running cleanly. Deck Drafter last — touches client-facing output, needs the most PM judgment in review, highest reputational risk if wrong. Ran the governance track and the build track in parallel for each agent: governance conversation opened while the prior agent was in adoption, build started after sign-off. Wrong sequencing — highest-stakes agent first — would have put the most skeptical audience in front of the least-tested output.",
       },
       {
         stage: "04",
