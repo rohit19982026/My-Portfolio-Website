@@ -36,8 +36,8 @@ const aiSkills = [
   { icon: CalendarClock,  label: "Weekly Task Automation",      detail: "Automated 4–6 hrs/week of manual PM work per person via scheduled agents",          color: "#FF9500" },
   { icon: Link2,          label: "MCP Tool Integration",        detail: "Jira · Salesforce · Glean · Google Workspace connected and running",                color: "#32ADE6" },
   { icon: TrendingUp,     label: "AI Adoption",                 detail: "0 → 14 PM adopters — cohort rollout, 1:1 onboarding, usage tracked per person",    color: "#34C759" },
-  { icon: GraduationCap,  label: "AI Skilling",                 detail: "Taught team to use and build agents; two built independently from my docs",         color: "#FF2D55" },
-  { icon: Server,         label: "Agent Service Management",    detail: "Agents run as managed services — ownership, monitoring, and SLA defined per agent", color: "#5856D6" },
+  { icon: GraduationCap,  label: "AI Skilling",                 detail: "Taught team to use and build agents; two built independently from my docs",      color: "#FF2D55" },
+  { icon: Server,         label: "Agent Output Review Design",  detail: "Human review checkpoints built in — wrong outputs caught before they reach anyone", color: "#5856D6" },
 ];
 
 function IOSRow({
