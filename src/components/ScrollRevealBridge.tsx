@@ -19,6 +19,12 @@ import {
   ChevronLeft,
   Signal,
   Search,
+  SquareKanban,
+  Cloud,
+  Hash,
+  FileSpreadsheet,
+  Mail,
+  GitFork,
 } from "lucide-react";
 
 const pmSkills = [
@@ -29,6 +35,16 @@ const pmSkills = [
   { icon: Compass,        label: "Navigating Chaos",            detail: "When things go sideways: diagnose fast, decide, keep the team moving",              color: "#FF3B30" },
   { icon: AlertTriangle,  label: "Escalation Path Design",      detail: "Right person called at the right time. Severity classified before it gets raised.", color: "#FF9500" },
   { icon: GitBranch,      label: "Change Impact Assessment",    detail: "Downstream effects across all tracks evaluated before any change gets signed off",   color: "#34C759" },
+];
+
+const dockApps = [
+  { icon: SquareKanban,   label: "Jira",       color: "#0052CC" },
+  { icon: Cloud,          label: "Salesforce", color: "#00A1E0" },
+  { icon: Hash,           label: "Slack",      color: "#4A154B" },
+  { icon: Bot,            label: "Claude",     color: "#D97706" },
+  { icon: FileSpreadsheet,label: "Sheets",     color: "#34A853" },
+  { icon: Mail,           label: "Gmail",      color: "#EA4335" },
+  { icon: GitFork,        label: "GitHub",     color: "#1d1d1f" },
 ];
 
 const aiSkills = [
@@ -265,20 +281,11 @@ export default function ScrollRevealBridge() {
             </div>
           </div>
 
-          {/* Credentials section */}
-          <div className="shrink-0 px-2 md:px-3 pt-2 md:pt-3">
-            <p
-              className="px-3 pb-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-widest"
-              style={{ color: "#8e8e93" }}
-            >
-              Credentials
-            </p>
+          {/* Credentials strip */}
+          <div className="shrink-0 px-2 md:px-3 pt-1.5">
             <div
-              className="rounded-xl flex items-center divide-x overflow-hidden"
-              style={{
-                background: "white",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
-              }}
+              className="rounded-xl flex items-center overflow-hidden"
+              style={{ background: "white", boxShadow: "0 1px 3px rgba(0,0,0,0.07)" }}
             >
               {[
                 { value: "PSM I", sub: "Scrum.org" },
@@ -288,19 +295,13 @@ export default function ScrollRevealBridge() {
               ].map((c, i) => (
                 <div
                   key={c.value}
-                  className="flex-1 text-center py-2 md:py-2.5"
-                  style={{ borderRight: i < 3 ? "1px solid rgba(60,60,67,0.1)" : "none" }}
+                  className="flex-1 text-center py-1.5 md:py-2"
+                  style={{ borderRight: i < 3 ? "0.5px solid rgba(60,60,67,0.12)" : "none" }}
                 >
-                  <p
-                    className="font-bold tabular-nums text-[11px] md:text-[13px] leading-none"
-                    style={{ color: "#1d1d1f" }}
-                  >
+                  <p className="font-bold tabular-nums text-[11px] md:text-[12px] leading-none" style={{ color: "#1d1d1f" }}>
                     {c.value}
                   </p>
-                  <p
-                    className="text-[8px] md:text-[9px] mt-0.5 uppercase tracking-wide"
-                    style={{ color: "#8e8e93" }}
-                  >
+                  <p className="text-[8px] mt-0.5 uppercase tracking-wide" style={{ color: "#8e8e93" }}>
                     {c.sub}
                   </p>
                 </div>
@@ -308,12 +309,47 @@ export default function ScrollRevealBridge() {
             </div>
           </div>
 
-          {/* Home indicator */}
-          <div className="flex justify-center py-1.5 md:py-2 shrink-0">
+          {/* iPadOS Dock */}
+          <div className="shrink-0 flex justify-center px-4 pt-2 pb-1">
             <div
-              className="rounded-full"
-              style={{ width: "80px", height: "4px", background: "rgba(60,60,67,0.25)" }}
-            />
+              style={{
+                background: "rgba(255,255,255,0.38)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                borderRadius: "20px",
+                border: "0.5px solid rgba(255,255,255,0.65)",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08)",
+                padding: "7px 10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              {dockApps.map((app) => (
+                <div
+                  key={app.label}
+                  title={app.label}
+                  style={{
+                    width: "38px",
+                    height: "38px",
+                    background: app.color,
+                    borderRadius: "9px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.22), 0 0 0 0.5px rgba(0,0,0,0.1) inset",
+                    flexShrink: 0,
+                  }}
+                >
+                  <app.icon size={20} strokeWidth={1.7} color="#fff" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Home indicator */}
+          <div className="flex justify-center pb-2 shrink-0">
+            <div style={{ width: "88px", height: "4px", background: "rgba(60,60,67,0.22)", borderRadius: "4px" }} />
           </div>
         </div>
       </ContainerScroll>
