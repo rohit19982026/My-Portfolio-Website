@@ -9,7 +9,7 @@ import IconBadge from "./IconBadge";
 const roles = [
   {
     period: "DEC 2022 — PRESENT",
-    title: "Technical Project Manager — Data & AI",
+    title: "Program Manager — Data & AI",
     org: "phData · Snowflake Elite Partner · Kolkata",
     current: true,
     color: "var(--color-accent)",
@@ -17,15 +17,15 @@ const roles = [
     textAccent: "var(--color-teal-text)",
     bullets: [
       "Own end-to-end delivery on strategic data and AI programs at phData — typically 4–5 running at once, each at a different stage. Scope, budget, risk, and the client relationship are all mine. The engineering team owns the build; I own whether the engagement succeeds.",
-      "The engineers and architects own the build; I own making sure nothing falls through the cracks between them — reading what's actually going on behind a green status, deciding what gets escalated and when, and having the harder conversation before it becomes the client's problem.",
+      "Read what's actually going on behind a green status, decide what gets escalated and when, and have the harder conversation before it becomes the client's problem — not after.",
       "Run the weekly rhythm that keeps the account team and the client sponsor reading from the same page — status, financials, and a live risk register, but the real work is the judgment call about what gets said out loud and when.",
       "Built and shipped 6 AI agents (Glean, Claude, n8n) that took the most repeatable parts of the PM job — billing reconciliation, sprint health, leadership deck drafting, program health scans — off the desks of the whole delivery team, not just my own. Recognised with phData's Innovation Award.",
-      "Lead cross-functional teams of 15–30 across engineering, architecture, and client-side stakeholders — keep standups, grooming, and sprint ceremonies honest enough that the board can be trusted without me micromanaging it.",
+      "Lead cross-functional teams of 15–30 across engineering, architecture, and client-side stakeholders — keep every working session structured enough that what the team reports internally matches what I can defend to a client or a sponsor.",
       "Worked across a 10.5-hour timezone spread on one program — a US delivery lead to a China factory site — and redesigned the cadence around the gap instead of forcing live meetings that were never going to happen.",
       "Spot scope creep and access blockers early enough to route them through the right conversation — a change request, an escalation, a heads-up to the account lead — rather than absorb them quietly and hope they don't compound.",
       "Onboard new team members mid-program without disrupting the active sprint, and build out-of-office coverage into every PTO so nothing on an active program depends on me being online.",
     ],
-    tags: ["Multi-Program Delivery (4–5 Concurrent)", "Cross-Timezone Delivery", "Stakeholder & Executive Comms", "AI Agent Builder", "Risk & Escalation Management", "Agile Delivery (PSM1)", "Team Leadership (15–30)", "Delivery Process Design"],
+    tags: ["4–5 Programs Concurrently", "Cross-Timezone Delivery", "Stakeholder & Executive Comms", "AI Agent Builder", "Risk & Escalation Management", "Agile Delivery (PSM1)", "Team Leadership (15–30)", "Delivery Process Design"],
   },
   {
     period: "AUG 2020 — DEC 2022",
