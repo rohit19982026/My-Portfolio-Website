@@ -18,7 +18,7 @@ import {
   ChevronRight,
   ChevronLeft,
   Signal,
-  Battery,
+  Search,
 } from "lucide-react";
 
 const pmSkills = [
@@ -55,39 +55,47 @@ function IOSRow({
 }) {
   return (
     <div
-      className="flex items-center gap-2.5 px-3 md:px-4 bg-white"
-      style={{
-        paddingTop: "7px",
-        paddingBottom: "7px",
-        borderBottom: isLast ? "none" : "1px solid rgba(60,60,67,0.1)",
-      }}
+      className="flex items-center bg-white"
+      style={{ minHeight: "50px", paddingLeft: "14px" }}
     >
-      {/* iOS colored icon square */}
+      {/* iOS icon square — 36px, proper corner radius */}
       <div
-        className="shrink-0 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center"
-        style={{ background: color, borderRadius: "8px" }}
+        className="shrink-0 flex items-center justify-center"
+        style={{
+          width: "34px",
+          height: "34px",
+          background: color,
+          borderRadius: "8px",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.18)",
+        }}
       >
-        <Icon size={14} strokeWidth={2} color="#fff" />
+        <Icon size={17} strokeWidth={1.8} color="#fff" />
       </div>
 
-      {/* Text */}
-      <div className="flex-1 min-w-0">
-        <p
-          className="text-[11px] md:text-[12.5px] font-semibold leading-tight truncate"
-          style={{ color: "#1d1d1f" }}
-        >
-          {label}
-        </p>
-        <p
-          className="text-[9px] md:text-[10px] leading-tight truncate"
-          style={{ color: "#8e8e93" }}
-        >
-          {detail}
-        </p>
+      {/* Text + separator — inset from icon like real iOS */}
+      <div
+        className="flex-1 flex items-center min-w-0 ml-3 pr-3"
+        style={{
+          minHeight: "50px",
+          borderBottom: isLast ? "none" : "0.5px solid rgba(60,60,67,0.16)",
+        }}
+      >
+        <div className="flex-1 min-w-0 py-2">
+          <p
+            className="text-[12px] md:text-[13px] font-medium leading-tight truncate"
+            style={{ color: "#1d1d1f", letterSpacing: "-0.01em" }}
+          >
+            {label}
+          </p>
+          <p
+            className="text-[10px] md:text-[11px] leading-tight truncate mt-0.5"
+            style={{ color: "#8e8e93" }}
+          >
+            {detail}
+          </p>
+        </div>
+        <ChevronRight size={13} strokeWidth={2} className="shrink-0 ml-2" style={{ color: "#c7c7cc" }} />
       </div>
-
-      {/* Chevron */}
-      <ChevronRight size={12} strokeWidth={2.5} className="shrink-0" style={{ color: "#c7c7cc" }} />
     </div>
   );
 }
@@ -148,25 +156,20 @@ export default function ScrollRevealBridge() {
               9:41
             </span>
             <div className="flex items-center gap-2">
-              {/* Signal bars */}
-              <div className="flex items-end gap-px" style={{ height: "10px" }}>
-                {[4, 6, 8, 10].map((h, i) => (
-                  <div key={i} style={{ width: "2.5px", height: `${h}px`, background: "#1d1d1f", borderRadius: "1px", opacity: i < 4 ? 1 : 0.3 }} />
-                ))}
-              </div>
-              <Signal size={11} strokeWidth={2} style={{ color: "#1d1d1f" }} />
-              {/* Battery */}
-              <div className="flex items-center gap-0.5">
+              <Signal size={12} strokeWidth={2} style={{ color: "#1d1d1f" }} />
+              {/* Battery pill */}
+              <div style={{ position: "relative", width: "24px", height: "12px" }}>
                 <div style={{
-                  width: "22px", height: "11px", borderRadius: "3px",
-                  border: "1.5px solid rgba(0,0,0,0.35)", position: "relative", padding: "1.5px",
+                  position: "absolute", inset: 0,
+                  border: "1.5px solid rgba(0,0,0,0.35)", borderRadius: "3px",
+                  padding: "1.5px",
                 }}>
-                  <div style={{ width: "75%", height: "100%", background: "#1d1d1f", borderRadius: "1px" }} />
-                  <div style={{
-                    position: "absolute", right: "-4px", top: "50%", transform: "translateY(-50%)",
-                    width: "2.5px", height: "5px", background: "rgba(0,0,0,0.35)", borderRadius: "0 1px 1px 0",
-                  }} />
+                  <div style={{ width: "78%", height: "100%", background: "#1d1d1f", borderRadius: "1px" }} />
                 </div>
+                <div style={{
+                  position: "absolute", right: "-3.5px", top: "50%", transform: "translateY(-50%)",
+                  width: "2px", height: "6px", background: "rgba(0,0,0,0.3)", borderRadius: "0 1px 1px 0",
+                }} />
               </div>
             </div>
           </div>
@@ -197,8 +200,25 @@ export default function ScrollRevealBridge() {
             </span>
           </div>
 
+          {/* iPadOS Search bar */}
+          <div style={{ padding: "6px 14px 4px", background: "#f2f2f7" }}>
+            <div
+              style={{
+                background: "rgba(118,118,128,0.12)",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "5px 10px",
+              }}
+            >
+              <Search size={12} strokeWidth={2.5} style={{ color: "#8e8e93" }} />
+              <span style={{ fontSize: "12px", color: "#8e8e93", letterSpacing: "-0.01em" }}>Search</span>
+            </div>
+          </div>
+
           {/* Two-column skills layout */}
-          <div className="flex-1 flex gap-0 overflow-hidden min-h-0 pt-2 md:pt-3 px-2 md:px-3 pb-0">
+          <div className="flex-1 flex gap-0 overflow-hidden min-h-0 pt-1.5 md:pt-2 px-2 md:px-3 pb-0">
 
             {/* Left: Program Manager */}
             <div className="flex-1 flex flex-col min-w-0 mr-1.5 md:mr-2">
