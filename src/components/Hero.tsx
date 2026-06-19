@@ -41,11 +41,12 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden">
 
-      {/* ── Cinematic video background ── */}
+      {/* ── Cinematic video background — dimmed so it reads as atmosphere,
+           not as a competing dark canvas behind white UI ── */}
       <motion.video
         key="hero-bg-video"
         initial={{ opacity: 0, scale: 1.06 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={{ opacity: 0.38, scale: 1 }}
         transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
         autoPlay
         muted
@@ -66,21 +67,30 @@ export default function Hero() {
         <source src="/hero-video.mp4" type="video/mp4" />
       </motion.video>
 
-      {/* ── Left column text guard: white → transparent ──
-           Covers the text column fully, fades out toward the right
-           so the video bleeds through where the AgentConsole lives. ── */}
+      {/* ── Uniform white wash: keeps page light, video reads as texture ── */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           zIndex: 1,
-          background:
-            "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.98) 25%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0) 100%)",
+          background: "rgba(255,255,255,0.62)",
         }}
       />
 
-      {/* ── Bottom dissolve: video fades into page seamlessly ── */}
+      {/* ── Left text guard: extra opacity on the text column ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 2,
+          background:
+            "linear-gradient(90deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0) 100%)",
+        }}
+      />
+
+      {/* ── Bottom dissolve into page ── */}
       <div
         aria-hidden="true"
         style={{
@@ -89,13 +99,13 @@ export default function Hero() {
           left: 0,
           right: 0,
           height: "28%",
-          background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,1) 100%)",
-          zIndex: 2,
+          background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 100%)",
+          zIndex: 3,
         }}
       />
 
       {/* ── Main content ── */}
-      <div className="flex-1 flex items-center" style={{ position: "relative", zIndex: 3 }}>
+      <div className="flex-1 flex items-center" style={{ position: "relative", zIndex: 4 }}>
         <div className="max-w-6xl mx-auto px-6 w-full py-16">
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
 
@@ -282,7 +292,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.6 }}
         className="flex flex-col items-center pb-7 gap-1"
-        style={{ position: "relative", zIndex: 3 }}
+        style={{ position: "relative", zIndex: 4 }}
       >
         <span
           className="text-[10px] font-semibold uppercase tracking-[0.2em]"
