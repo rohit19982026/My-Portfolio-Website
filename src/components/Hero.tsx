@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, ArrowUpRight, Download } from "lucide-react";
+import { Mail, Phone, ArrowUpRight, Download, ChevronDown } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import AgentConsole from "./AgentConsole";
 import GlassButton from "./GlassButton";
@@ -39,10 +39,66 @@ export default function Hero() {
   const magneticCV = useMagnetic(0.25);
 
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden gradient-mesh">
-      <div className="flex-1 flex items-center relative z-10">
+    <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden">
+
+      {/* ── Cinematic video background ── */}
+      <motion.video
+        key="hero-bg-video"
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center center",
+          zIndex: 0,
+        }}
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </motion.video>
+
+      {/* ── Left column text guard: white → transparent ──
+           Covers the text column fully, fades out toward the right
+           so the video bleeds through where the AgentConsole lives. ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          background:
+            "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.98) 25%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0) 100%)",
+        }}
+      />
+
+      {/* ── Bottom dissolve: video fades into page seamlessly ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "28%",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,1) 100%)",
+          zIndex: 2,
+        }}
+      />
+
+      {/* ── Main content ── */}
+      <div className="flex-1 flex items-center" style={{ position: "relative", zIndex: 3 }}>
         <div className="max-w-6xl mx-auto px-6 w-full py-16">
           <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+
             {/* Left column — identity */}
             <div>
               {/* Status pill */}
@@ -94,21 +150,19 @@ export default function Hero() {
                 </motion.h1>
               </div>
 
-              {/* Description — shorter on mobile, full on desktop */}
+              {/* Description */}
               <motion.div
                 initial={{ opacity: 0, filter: "blur(12px)", y: 8 }}
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
                 className="mb-7"
               >
-                {/* Mobile — punchy 3-liner */}
                 <p className="lg:hidden text-[15px] leading-[1.65] max-w-[520px]" style={{ color: "var(--color-text-secondary)" }}>
                   Most PMs run programs. I also build the tools the team uses to run them.
                   <br /><br />
                   Five years running data and AI programs end to end. Six AI agents in
                   production, adopted across the full team in under a month.
                 </p>
-                {/* Desktop — full 3-paragraph version */}
                 <p className="hidden lg:block text-[15px] leading-[1.7] max-w-[520px]" style={{ color: "var(--color-text-secondary)" }}>
                   Most PMs run programs. I also build the tools the team uses to run them.
                   <br /><br />
@@ -186,9 +240,13 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* Right column — live agent console */}
-            <div>
-              {/* Divider on mobile before the console */}
+            {/* Right column — agent console floating over video */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* Mobile divider */}
               <div
                 className="lg:hidden mb-6"
                 style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--glass-border), transparent)" }}
@@ -199,11 +257,47 @@ export default function Hero() {
               >
                 Live — PMO Agent Fleet
               </div>
-              <AgentConsole />
-            </div>
+              {/* Stronger glass wrap so console reads clearly over the video */}
+              <div
+                style={{
+                  backdropFilter: "blur(28px)",
+                  WebkitBackdropFilter: "blur(28px)",
+                  background: "rgba(255,255,255,0.78)",
+                  borderRadius: "var(--radius-lg)",
+                  border: "1px solid rgba(255,255,255,0.9)",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.07), 0 1px 0 rgba(255,255,255,1) inset",
+                }}
+              >
+                <AgentConsole />
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </div>
+
+      {/* ── Scroll indicator ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.6 }}
+        className="flex flex-col items-center pb-7 gap-1"
+        style={{ position: "relative", zIndex: 3 }}
+      >
+        <span
+          className="text-[10px] font-semibold uppercase tracking-[0.2em]"
+          style={{ color: "var(--color-faint)" }}
+        >
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown size={13} style={{ color: "var(--color-faint)" }} />
+        </motion.div>
+      </motion.div>
+
     </section>
   );
 }
