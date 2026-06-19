@@ -88,7 +88,7 @@ export default function Hero() {
                     backgroundClip: "text",
                   }}
                 >
-                  Technical PM
+                  Program Manager
                   <br />
                   · AI Builder
                 </motion.h1>
@@ -105,23 +105,23 @@ export default function Hero() {
                 <p className="lg:hidden text-[15px] leading-[1.65] max-w-[520px]" style={{ color: "var(--color-text-secondary)" }}>
                   Most PMs run programs. I also build the tools the team uses to run them.
                   <br /><br />
-                  At phData I own the full engagement — scope, budget, risk, and the client
-                  relationship. Six AI agents handle the admin so the team spends its time
-                  on the work that actually grows the account.
+                  Five years running data and AI programs end to end. Six AI agents in
+                  production, adopted across the full team in under a month.
                 </p>
                 {/* Desktop — full 3-paragraph version */}
                 <p className="hidden lg:block text-[15px] leading-[1.7] max-w-[520px]" style={{ color: "var(--color-text-secondary)" }}>
                   Most PMs run programs. I also build the tools the team uses to run them.
                   <br /><br />
-                  Programs: on strategic accounts I owned the full engagement — scope, budget,
-                  risk, and value decisions across projects. Built senior client relationships,
-                  managed the stakeholders most likely to challenge success, and turned
-                  delivered work into the next contract.
+                  At phData I run data and AI programs end to end — not as a coordinator,
+                  but as the person accountable for scope, budget, risk, and the client
+                  relationship when things go sideways. I&apos;ve managed the stakeholders
+                  most likely to derail an engagement, and turned completed programs into
+                  renewals.
                   <br /><br />
-                  Tooling: I build AI agents that do the manual PM work — billing, tracking,
-                  budgeting, forecasting, planning, status briefings — so the team can spend
-                  that time on the work that actually matters: growing the engagement, building
-                  client relationships, and making the program successful.
+                  I also built six AI agents now running across the delivery team. Billing,
+                  sprint health, risk tracking, executive decks — automated so the team&apos;s
+                  time goes to the work that actually moves programs forward: catching problems
+                  early, keeping clients informed, and growing the account.
                 </p>
               </motion.div>
 

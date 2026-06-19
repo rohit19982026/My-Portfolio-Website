@@ -28,22 +28,22 @@ const pov = [
 const proofStrip = [
   { value: "3-4 hrs → ~60 min", label: "Per PM, per program, at month-end", accent: "var(--color-green)", textAccent: "var(--color-green-text)" },
   { value: ">95%", label: "Accuracy on the billing discrepancy check", accent: "var(--color-accent)", textAccent: "var(--color-accent-dk)" },
-  { value: "100%", label: "PMO adoption within ~1 month of shipping", accent: "var(--color-orange)", textAccent: "var(--color-orange-text)" },
+  { value: "100%", label: "Team-wide adoption within one month of shipping", accent: "var(--color-orange)", textAccent: "var(--color-orange-text)" },
 ];
 
 const tools = [
   {
     award: true,
     status: "ok" as const,
-    category: "EOM Automation",
+    category: "Billing Automation",
     title: "Month-End Billing Reconciler",
-    proof: "60% time saved · >95% accuracy · PMO-wide deployment in 1 month",
+    proof: "60% time saved · >95% accuracy · adopted team-wide in under a month",
     accent: "#30D158",
     textAccent: "#248A3D",
   },
   {
     status: "warn" as const,
-    category: "Sprint Intelligence",
+    category: "Delivery Tracking",
     title: "Delivery Progress Monitor",
     proof: "CSV → ranked scorecard + PM action items in under 2 min",
     accent: "#FF9F0A",
@@ -59,7 +59,7 @@ const tools = [
   },
   {
     status: "ok" as const,
-    category: "Stakeholder Comms",
+    category: "Executive Comms",
     title: "Executive Briefing Writer",
     proof: "Executive deck drafted in under 20 min · CFO vs VP Engineering tone",
     accent: "#0A84FF",
@@ -83,7 +83,7 @@ export default function AIToolingTeaser() {
           className="mb-12"
         >
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>
-            05 / AI ENGINEERING
+            05 / AI AGENTS
           </p>
           <h2
             className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
@@ -107,7 +107,7 @@ export default function AIToolingTeaser() {
             Built with accuracy checks and human-review fallbacks before it touched a live
             client invoice. Cut billing time by 60%, accurate above 95%, adopted team-wide
             inside a month. Five more agents followed. Running programs while building the
-            tooling gives you a feedback loop most PMs don&apos;t have.
+            tooling means every agent gets built for the real problem — not the documented version of it.
           </p>
         </motion.div>
 

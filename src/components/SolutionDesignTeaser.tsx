@@ -33,11 +33,11 @@ export default function SolutionDesignTeaser() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              design from zero
+              design an agent from scratch
             </span>.
           </h2>
           <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-            The PMO agent platform above is shipped and in production. This is the other half of how I work with AI — architecting a new agent from a blank page: trust model, rollout sequencing, and the judgment calls before a single line of automation runs.
+            The six agents above are already running. This shows how I approach a new one — from the business problem to the data model to the rollout sequence — before a single line of automation is written.
           </p>
         </motion.div>
 

@@ -7,22 +7,22 @@ export interface ImpactStat {
 export const impactStats: ImpactStat[] = [
   {
     value: "4–5",
-    label: "Programs Run Concurrently",
+    label: "Programs running at the same time",
     detail: "Each at a different stage — one in kickoff, one mid-cadence, one heading into closure — switching context fast enough that none of them feel like the neglected one.",
   },
   {
     value: "10.5 HRS",
-    label: "Widest Timezone Gap Navigated",
+    label: "Timezone gap, US to China, one program",
     detail: "A US delivery lead to a client's factory site in China, on a single program — redesigned the whole cadence around the gap instead of fighting it.",
   },
   {
     value: "100%",
-    label: "Team Adoption of My AI Agents",
-    detail: "Built to solve my own problem first. Every PM on the team was using it within a month — because it solved theirs too.",
+    label: "Of the PM team using the agents within one month",
+    detail: "Every PM on the team was using it within a month of shipping — because it solved their problem too, not just mine.",
   },
   {
     value: "3",
-    label: "Programs, 3 Different Definitions of 'On Track'",
+    label: "Programs, three different definitions of done",
     detail: "Fixed-price delivery, long-term retainer, and an internal build — each needs a different conversation about risk, budget, and what 'green' actually means.",
   },
 ];

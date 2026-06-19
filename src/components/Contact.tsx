@@ -28,19 +28,19 @@ const engagementTypes = [
     icon: Building2,
     color: "var(--color-accent)",
     title: "Platform Build or Migration",
-    desc: "Snowflake, Databricks, AWS. PM end-to-end on the engagement — kickoff, sprint cadence, RAID, weekly status, financials, closure.",
+    desc: "Snowflake, Databricks, AWS. I own the program end to end — kickoff through closure, covering the weekly delivery rhythm, risk management, stakeholder communication, and financials.",
   },
   {
     icon: Bot,
     color: "var(--color-purple)",
     title: "GenAI Program Delivery",
-    desc: "LLM integrations and AI agent builds. Same three-phase cadence and the same governance the rest of delivery gets — no special treatment because it's AI.",
+    desc: "LLM integrations and AI agent builds. Structured delivery, real governance, and the same stakeholder accountability as any other program — because \"it's AI\" isn't a reason to skip the controls.",
   },
   {
     icon: Repeat,
     color: "var(--color-orange)",
     title: "Mid-Stream Pickup",
-    desc: "Inherited engagements where the previous PM is rolling off. Standard PM transition — scope, team, cadence, financials, RAID, access — then back to the regular weekly rhythm.",
+    desc: "Programs where the previous PM is stepping off. I get current on scope, team, risk, and financials fast, and take the program from there without disrupting delivery.",
   },
 ];
 

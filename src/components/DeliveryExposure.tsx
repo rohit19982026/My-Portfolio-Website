@@ -23,7 +23,7 @@ const stacks = [
     items: ["dbt", "Airflow / MWAA", "ETL / ELT Pipelines", "Qlik Replicate", "Spark SQL", "LandingAI / Computer Vision", "AWS", "Azure"],
   },
   {
-    label: "PMO & delivery stack I operate daily",
+    label: "Delivery tools I run daily",
     color: "#64D2FF",
     textColor: "#0A7EA6",
     icon: LayoutDashboard,
@@ -65,7 +65,7 @@ export default function DeliveryExposure() {
             across <span className="gradient-text font-normal">these stacks</span>.
           </h2>
           <p className="text-[15px] max-w-2xl leading-relaxed mb-4" style={{ color: "var(--color-text-secondary)" }}>
-            I&apos;m a Technical Program Manager, not a hands-on engineer. What follows is the
+            I&apos;m a Program Manager, not a hands-on engineer. What follows is the
             technology surface area I&apos;ve owned delivery across — enough to scope, sequence,
             and govern risk without needing the engineering team to translate everything.
           </p>
