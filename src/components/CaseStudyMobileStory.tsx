@@ -51,20 +51,37 @@ function OverviewSlide({ study, accent, accentText }: { study: CaseStudy; accent
           {study.capability}
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-2">
-        {study.scale.slice(0, 4).map((s) => (
-          <div
+      <div className="grid grid-cols-2 gap-2.5">
+        {study.scale.slice(0, 4).map((s, i) => (
+          <motion.div
             key={s.label}
-            className="px-3 py-2.5 rounded-xl"
-            style={{ background: `linear-gradient(150deg, ${accent}10, ${accent}04)`, border: `1px solid ${accent}1E` }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.07, type: "spring", stiffness: 130, damping: 20 }}
+            className="rounded-2xl p-3.5 flex flex-col gap-1.5 overflow-hidden relative"
+            style={{
+              background: `linear-gradient(145deg, ${accent}24 0%, ${accent}0C 100%)`,
+              border: `1px solid ${accent}38`,
+              boxShadow: `inset 0 1px 0 ${accent}28, 0 4px 16px ${accent}10`,
+            }}
           >
-            <div className="font-heading font-black tabular-nums text-[15px] leading-none mb-1" style={{ color: accentText }}>
+            <div
+              className="absolute top-0 left-0 right-0 h-[2px]"
+              style={{ background: `linear-gradient(90deg, ${accent}, ${accent}40)` }}
+            />
+            <div
+              className="font-heading font-black tabular-nums text-[22px] leading-none"
+              style={{ color: accent }}
+            >
               {s.value}
             </div>
-            <div className="text-[10px] font-medium uppercase tracking-wider leading-tight" style={{ color: "var(--color-text-secondary)" }}>
+            <div
+              className="text-[9.5px] font-semibold uppercase tracking-[0.12em] leading-tight"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
               {s.label}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
