@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { GraduationCap, Trophy, ChevronDown } from "lucide-react";
 import GlassSurface from "./GlassSurface";
@@ -83,100 +83,136 @@ const tagItemVariants = {
   visible: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 320, damping: 22 } },
 };
 
-// Mobile-only: collapsible role card
+// Mobile: proper timeline entry with animated bullets on expand
 function MobileRoleCard({ role, inView, index }: { role: typeof roles[0]; inView: boolean; index: number }) {
   const [expanded, setExpanded] = useState(index === 0);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 + index * 0.15 }}
-      className="rounded-2xl"
-      style={{ border: `1px solid var(--glass-border)`, background: "var(--color-bg-secondary)" }}
+      className="relative"
+      initial={{ opacity: 0, x: -16, filter: "blur(6px)" }}
+      animate={inView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+      transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.25 + index * 0.15 }}
     >
-      {/* Header — always visible, tap to expand */}
-      <button
-        onClick={() => setExpanded((v) => !v)}
-        className="w-full text-left px-4 py-4 flex items-start justify-between gap-3"
-        style={{ background: "none", border: "none" }}
-      >
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-1">
-            <span className="text-[9.5px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-text-secondary)" }}>
-              {role.period}
-            </span>
-            {role.current && (
-              <span
-                className="glass inline-flex items-center gap-1.5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide"
-                style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green-text)" }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
-                CURRENT
-              </span>
-            )}
-          </div>
-          <h3 className="font-heading text-[16px] font-bold leading-snug tracking-tight mb-0.5" style={{ color: "var(--color-text)" }}>
-            {role.title}
-          </h3>
-          <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: role.textAccent }}>{role.org}</p>
-        </div>
+      {/* Timeline dot node */}
+      <div className="absolute -left-5 top-[18px] z-10">
         <motion.div
-          animate={{ rotate: expanded ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 22 }}
-          className="shrink-0 mt-1"
-          style={{ color: "var(--color-faint)" }}
+          initial={{ scale: 0 }}
+          animate={inView ? { scale: 1 } : {}}
+          transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.38 + index * 0.15 }}
+          className="relative w-4 h-4 rounded-full flex items-center justify-center"
+          style={{ backgroundColor: role.accent, border: "2.5px solid var(--color-bg)" }}
         >
-          <ChevronDown size={16} strokeWidth={2} />
+          {role.current && (
+            <motion.div
+              className="absolute rounded-full"
+              style={{ width: "32px", height: "32px", backgroundColor: role.accent }}
+              animate={{ scale: [1, 1.8, 1], opacity: [0.3, 0, 0.3] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            />
+          )}
         </motion.div>
-      </button>
+      </div>
 
-      {/* Expandable body — CSS max-height transition (reliable on mobile) */}
+      {/* Card */}
       <div
-        style={{
-          maxHeight: expanded ? "1800px" : "0",
-          overflow: "hidden",
-          transition: "max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease",
-          opacity: expanded ? 1 : 0,
-        }}
+        className="rounded-2xl overflow-hidden"
+        style={{ border: "1px solid var(--glass-border)", background: "var(--color-bg-secondary)" }}
       >
-        <div className="px-4 pb-4">
-          <div style={{ height: "1px", background: "var(--glass-border)", marginBottom: "14px" }} />
-          <ul className="space-y-2.5 mb-4">
-            {role.bullets.map((b, bi) => (
-              <li key={bi} className="flex gap-2.5 text-[12.5px] leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-                <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.accent }} />
-                {b}
-              </li>
-            ))}
-          </ul>
-          {/* Tags: horizontal scroll — no overflow-hidden parent so scroll works */}
-          <div
-            className="flex gap-2 pb-1"
-            style={{ overflowX: "auto", scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-          >
-            {role.tags.map((tag, ti) => (
-              ti === 0 ? (
+        {/* Header — always visible */}
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="w-full text-left px-4 py-4 flex items-start justify-between gap-3"
+          style={{ background: "none", border: "none" }}
+        >
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="text-[9.5px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-text-secondary)" }}>
+                {role.period}
+              </span>
+              {role.current && (
                 <span
-                  key={tag}
-                  className="shrink-0 text-[10.5px] px-3 py-1.5 rounded-full font-bold uppercase tracking-[0.04em]"
-                  style={{ backgroundColor: role.color, color: "#FFFFFF" }}
+                  className="glass inline-flex items-center gap-1.5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide"
+                  style={{ borderRadius: "var(--radius-pill)", color: "var(--color-green-text)" }}
                 >
-                  {tag}
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                  CURRENT
                 </span>
-              ) : (
-                <span
-                  key={tag}
-                  className="glass shrink-0 inline-flex items-center gap-1.5 text-[10.5px] px-3 py-1.5 rounded-full font-semibold"
-                  style={{ color: role.textAccent }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.accent }} />
-                  {tag}
-                </span>
-              )
-            ))}
+              )}
+            </div>
+            <h3 className="font-heading text-[16px] font-bold leading-snug tracking-tight mb-0.5" style={{ color: "var(--color-text)" }}>
+              {role.title}
+            </h3>
+            <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: role.textAccent }}>{role.org}</p>
           </div>
-        </div>
+          <motion.div
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 22 }}
+            className="shrink-0 mt-1"
+            style={{ color: "var(--color-faint)" }}
+          >
+            <ChevronDown size={16} strokeWidth={2} />
+          </motion.div>
+        </button>
+
+        {/* Animated expandable body */}
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="body"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+              style={{ overflow: "hidden" }}
+            >
+              <div className="px-4 pb-4">
+                <div style={{ height: "1px", background: "var(--glass-border)", marginBottom: "14px" }} />
+                <ul className="space-y-2.5 mb-4">
+                  {role.bullets.map((b, bi) => (
+                    <motion.li
+                      key={bi}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: bi * 0.045, type: "spring", stiffness: 140, damping: 22 }}
+                      className="flex gap-2.5 text-[12.5px] leading-relaxed"
+                      style={{ color: "var(--color-text-secondary)" }}
+                    >
+                      <span className="shrink-0 mt-[7px] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: role.accent }} />
+                      {b}
+                    </motion.li>
+                  ))}
+                </ul>
+                {/* Tags horizontal scroll */}
+                <div
+                  className="flex gap-2 pb-1"
+                  style={{ overflowX: "auto", scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                >
+                  {role.tags.map((tag, ti) =>
+                    ti === 0 ? (
+                      <span
+                        key={tag}
+                        className="shrink-0 text-[10.5px] px-3 py-1.5 rounded-full font-bold uppercase tracking-[0.04em]"
+                        style={{ backgroundColor: role.color, color: "#FFFFFF" }}
+                      >
+                        {tag}
+                      </span>
+                    ) : (
+                      <span
+                        key={tag}
+                        className="glass shrink-0 inline-flex items-center gap-1.5 text-[10.5px] px-3 py-1.5 rounded-full font-semibold"
+                        style={{ color: role.textAccent }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: role.accent }} />
+                        {tag}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
@@ -236,32 +272,79 @@ export default function Trajectory() {
         </motion.div>
 
         {/* ── MOBILE layout ───────────────────────────────────────── */}
-        <div className="lg:hidden space-y-4 mb-8">
-          {roles.map((role, i) => (
-            <MobileRoleCard key={role.title} role={role} inView={inView} index={i} />
-          ))}
+        <div className="lg:hidden mb-8">
 
-          {/* Mobile sidebar — horizontal scroll strip */}
+          {/* Timeline track with vertical line */}
+          <div className="relative pl-8">
+            {/* Animated vertical line */}
+            <motion.div
+              className="absolute left-3 top-4 w-px"
+              style={{
+                background: "linear-gradient(180deg, var(--color-accent) 0%, var(--color-teal) 55%, rgba(10,132,255,0.06) 100%)",
+                transformOrigin: "top",
+                bottom: "32px",
+              }}
+              initial={{ scaleY: 0 }}
+              animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            />
+
+            <div className="space-y-6">
+              {roles.map((role, i) => (
+                <MobileRoleCard key={role.title} role={role} inView={inView} index={i} />
+              ))}
+            </div>
+          </div>
+
+          {/* Horizontal scroll strip: education, award, certs */}
           <div
-            className="flex gap-3 overflow-x-auto pb-1 pt-2"
+            className="flex gap-3 overflow-x-auto pb-2 pt-6"
             style={{ scrollbarWidth: "none" }}
           >
-            {/* Education card */}
+            {/* Education card — redesigned, no empty space */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.55, duration: 0.5 }}
               className="shrink-0 w-[260px]"
             >
-              <GlassSurface radius="lg" className="p-4 flex items-start gap-3 h-full">
-                <IconBadge icon={GraduationCap} color="var(--color-accent)" size={32} iconSize={15} />
-                <div className="min-w-0">
-                  <p className="text-[9.5px] font-bold uppercase tracking-[0.14em] mb-1" style={{ color: "var(--color-accent-dk)" }}>Education</p>
-                  <p className="font-heading font-bold text-[13px] leading-snug mb-0.5" style={{ color: "var(--color-text)" }}>{education.degree}</p>
-                  <p className="text-[10px] font-medium" style={{ color: "var(--color-text-secondary)" }}>{education.institution}</p>
-                  <p className="text-[10px] mt-0.5" style={{ color: "var(--color-text-secondary)" }}>{education.year} · {education.grade}</p>
+              <div
+                className="rounded-2xl p-4"
+                style={{
+                  background: "linear-gradient(135deg, rgba(10,132,255,0.13) 0%, rgba(10,132,255,0.04) 100%)",
+                  border: "1px solid rgba(10,132,255,0.22)",
+                }}
+              >
+                <div className="flex items-center gap-2.5 mb-3">
+                  <div
+                    className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "var(--color-accent)" }}
+                  >
+                    <GraduationCap size={15} color="#fff" strokeWidth={2} />
+                  </div>
+                  <p className="text-[9.5px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--color-accent-dk)" }}>Education</p>
                 </div>
-              </GlassSurface>
+                <p className="font-heading font-bold text-[13.5px] leading-snug mb-1.5" style={{ color: "var(--color-text)" }}>
+                  {education.degree}
+                </p>
+                <p className="text-[10.5px] font-medium mb-3" style={{ color: "var(--color-text-secondary)" }}>
+                  {education.institution}
+                </p>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span
+                    className="text-[9.5px] font-bold px-2.5 py-1 rounded-full"
+                    style={{ background: "rgba(10,132,255,0.14)", color: "var(--color-accent-dk)" }}
+                  >
+                    {education.year}
+                  </span>
+                  <span
+                    className="text-[9.5px] font-bold px-2.5 py-1 rounded-full"
+                    style={{ background: "rgba(10,132,255,0.08)", color: "var(--color-accent-dk)" }}
+                  >
+                    {education.grade}
+                  </span>
+                </div>
+              </div>
             </motion.div>
 
             {/* Award card */}
@@ -281,7 +364,7 @@ export default function Trajectory() {
               </GlassSurface>
             </motion.div>
 
-            {/* Certs card — abbreviated on mobile */}
+            {/* Certs card */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}

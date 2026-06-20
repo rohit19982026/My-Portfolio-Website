@@ -71,8 +71,15 @@ export default function TabBar() {
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] pt-2 pointer-events-none">
       <div
-        className="glass-heavy pointer-events-auto mx-auto max-w-sm flex items-center justify-around px-2 py-2"
-        style={{ borderRadius: "var(--radius-lg)", boxShadow: "0 8px 30px rgba(0,0,0,0.08)" }}
+        className="pointer-events-auto mx-auto max-w-sm flex items-center justify-around px-2 py-2"
+        style={{
+          borderRadius: "var(--radius-lg)",
+          background: "rgba(14,14,16,0.84)",
+          backdropFilter: "blur(32px) saturate(1.8)",
+          WebkitBackdropFilter: "blur(32px) saturate(1.8)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 -1px 0 rgba(255,255,255,0.05), 0 20px 50px rgba(0,0,0,0.55), inset 0 0.5px 0 rgba(255,255,255,0.07)",
+        }}
       >
         {TABS.map((tab) => {
           const Icon = tab.icon;
@@ -89,12 +96,12 @@ export default function TabBar() {
                 <motion.span
                   layoutId="tab-highlight"
                   className="absolute inset-0 rounded-2xl"
-                  style={{ background: "rgba(10,132,255,0.12)" }}
+                  style={{ background: "rgba(10,132,255,0.22)", boxShadow: "0 0 14px rgba(10,132,255,0.18)" }}
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
                 />
               )}
-              <Icon size={20} strokeWidth={2} className="relative z-10" style={{ color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)" }} />
-              <span className="relative z-10 text-[10px] font-medium" style={{ color: isActive ? "var(--color-accent)" : "var(--color-text-secondary)" }}>
+              <Icon size={20} strokeWidth={2} className="relative z-10" style={{ color: isActive ? "var(--color-accent)" : "rgba(175,175,190,0.78)" }} />
+              <span className="relative z-10 text-[10px] font-medium" style={{ color: isActive ? "var(--color-accent)" : "rgba(175,175,190,0.78)" }}>
                 {tab.label}
               </span>
             </button>
@@ -105,8 +112,8 @@ export default function TabBar() {
           className="relative flex flex-col items-center gap-0.5 px-3.5 py-1.5 rounded-2xl"
           aria-label="Search"
         >
-          <Search size={20} strokeWidth={2} style={{ color: "var(--color-text-secondary)" }} />
-          <span className="text-[10px] font-medium" style={{ color: "var(--color-text-secondary)" }}>Search</span>
+          <Search size={20} strokeWidth={2} style={{ color: "rgba(175,175,190,0.78)" }} />
+          <span className="text-[10px] font-medium" style={{ color: "rgba(175,175,190,0.78)" }}>Search</span>
         </button>
       </div>
     </nav>
