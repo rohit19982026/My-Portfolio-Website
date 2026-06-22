@@ -16,10 +16,10 @@ export default function Home() {
       <ScrollRevealBridge />
       <Trajectory />
       <ImpactSummary />
-      <Work />
       <AIToolingTeaser />
       <DeliveryExposure />
       <SolutionDesignTeaser />
+      <Work />
       <Contact />
       <Footer />
     </>
