@@ -40,10 +40,10 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden gradient-mesh">
 
-      {/* ── Video masked to right side only.
-           mask-image keeps the left ~38% completely transparent so the
-           gradient-mesh background shows through cleanly under the text.
-           Video fades in from center-left and is fully visible on the right. ── */}
+      {/* ── Desktop: video masked to right side only, full-bleed behind text.
+           Hidden below md — a wide 16:9 mask crushed into a phone-width
+           viewport would either crop the subject out entirely or overlay
+           the text, so mobile gets its own contained card instead (below). ── */}
       <motion.video
         key="hero-bg-video"
         initial={{ opacity: 0, scale: 1.06 }}
@@ -55,18 +55,14 @@ export default function Hero() {
         playsInline
         preload="auto"
         aria-hidden="true"
+        className="hero-video-mask hidden md:block"
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          objectPosition: "center center",
           zIndex: 0,
-          maskImage:
-            "linear-gradient(to right, transparent 0%, transparent 36%, rgba(0,0,0,0.6) 52%, black 66%, black 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, transparent 36%, rgba(0,0,0,0.6) 52%, black 66%, black 100%)",
         }}
       >
         <source src="/hero-video.mp4" type="video/mp4" />
@@ -166,6 +162,47 @@ export default function Hero() {
                 sprint health, risk tracking, executive decks — automated so the team&apos;s
                 time goes to the work that actually moves programs forward.
               </p>
+            </motion.div>
+
+            {/* Mobile: contained video card — same clip as the desktop
+                background, framed as a normal element instead of a masked
+                full-bleed layer so the subject and AI-tool graphics stay
+                fully visible on narrow viewports. */}
+            <motion.div
+              initial={{ opacity: 0, y: 16, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="md:hidden mb-7 -mx-1"
+            >
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  borderRadius: "var(--radius-lg)",
+                  border: "1px solid var(--glass-border)",
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.1)",
+                }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  aria-hidden="true"
+                  className="w-full h-auto block"
+                  style={{ aspectRatio: "16 / 10", objectFit: "cover", objectPosition: "38% center" }}
+                >
+                  <source src="/hero-video.mp4" type="video/mp4" />
+                </video>
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to top, rgba(255,255,255,0.16) 0%, transparent 30%)",
+                  }}
+                />
+              </div>
             </motion.div>
 
             {/* Social icons */}
