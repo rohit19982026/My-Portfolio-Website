@@ -3,13 +3,12 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
-import { House, Briefcase, Bot, Mail, Search } from "lucide-react";
+import { House, Bot, Mail, Search } from "lucide-react";
 
-type TabId = "home" | "work" | "tools" | "contact";
+type TabId = "home" | "tools" | "contact";
 
 const TABS: { id: TabId; label: string; href: string; icon: typeof House }[] = [
   { id: "home", label: "Home", href: "#top", icon: House },
-  { id: "work", label: "Work", href: "#work", icon: Briefcase },
   { id: "tools", label: "AI", href: "#tools", icon: Bot },
   { id: "contact", label: "Contact", href: "#contact", icon: Mail },
 ];
@@ -29,7 +28,7 @@ export default function TabBar() {
       return;
     }
 
-    const sectionIds: TabId[] = ["work", "tools", "contact"];
+    const sectionIds: TabId[] = ["tools", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

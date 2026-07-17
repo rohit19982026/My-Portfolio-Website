@@ -245,7 +245,7 @@ export default function Hero() {
                   visible: { opacity: 1, scale: 1, y: 0, transition: SPRING_FAST },
                 }}
               >
-                <GlassButton href="#work" variant="primary" icon={<ArrowUpRight size={15} strokeWidth={2.5} />}>
+                <GlassButton href="#tools" variant="primary" icon={<ArrowUpRight size={15} strokeWidth={2.5} />}>
                   See My Work
                 </GlassButton>
               </motion.div>

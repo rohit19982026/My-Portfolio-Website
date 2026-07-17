@@ -6,7 +6,6 @@ import GlassSurface from "./GlassSurface";
 import IconBadge from "./IconBadge";
 
 const exploreLinks: [string, string][] = [
-  ["Work", "#work"],
   ["Tools", "#tools"],
   ["Exposure", "#exposure"],
   ["Trajectory", "#trajectory"],

@@ -4,14 +4,13 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Search, ArrowUpRight,
-  House, Briefcase, Sparkles, TrendingUp, Mail,
+  House, Sparkles, TrendingUp, Mail,
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import GlassButton from "./GlassButton";
 
 const LINKS = [
   { label: "Home",       href: "#top",        icon: House,       section: "home" },
-  { label: "Work",       href: "#work",        icon: Briefcase,   section: "work" },
   { label: "AI Skills",  href: "/ai-skills",   icon: Sparkles,    section: "tools" },
   { label: "Trajectory", href: "#trajectory",  icon: TrendingUp,  section: "trajectory" },
   { label: "Contact",    href: "#contact",     icon: Mail,        section: "contact" },
@@ -39,7 +38,7 @@ export default function Navbar() {
   // IntersectionObserver → active section
   useEffect(() => {
     if (pathname !== "/") return;
-    const ids: Section[] = ["work", "tools", "trajectory", "contact"];
+    const ids: Section[] = ["tools", "trajectory", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
