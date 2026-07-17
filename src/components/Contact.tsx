@@ -77,7 +77,7 @@ export default function Contact() {
       <div
         aria-hidden="true"
         className="hidden lg:block"
-        style={{ position: "absolute", bottom: "-8%", left: "-6%", width: "420px", height: "420px", opacity: 0.4, filter: "blur(24px)", zIndex: 0 }}
+        style={{ position: "absolute", bottom: "-8%", left: "-6%", width: "420px", height: "420px", opacity: 0.5, filter: "blur(10px)", zIndex: 0 }}
       >
         <GlassBlobScene color="#30D158" />
       </div>

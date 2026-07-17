@@ -50,7 +50,7 @@ export default function Hero() {
       <div
         aria-hidden="true"
         className="hidden md:block"
-        style={{ position: "absolute", top: "-8%", left: "-10%", width: "560px", height: "560px", opacity: 0.55, filter: "blur(28px)", zIndex: 0 }}
+        style={{ position: "absolute", top: "-8%", left: "-10%", width: "560px", height: "560px", opacity: 0.65, filter: "blur(12px)", zIndex: 0 }}
       >
         <GlassBlobScene color="#0A84FF" />
       </div>

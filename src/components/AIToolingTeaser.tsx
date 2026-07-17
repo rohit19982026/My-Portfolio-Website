@@ -126,7 +126,7 @@ export default function AIToolingTeaser() {
             className="hidden lg:block shrink-0"
             style={{ width: "260px", height: "260px" }}
           >
-            <AgentNetworkScene accent="#0A84FF" accent2="#BF5AF2" nodeCount={6} />
+            <AgentNetworkScene accent="#0A84FF" accent2="#BF5AF2" nodeCount={6} interactive />
           </motion.div>
         </div>
 
