@@ -40,10 +40,7 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden gradient-mesh">
 
-      {/* ── Desktop: video masked to right side only, full-bleed behind text.
-           Hidden below md — a wide 16:9 mask crushed into a phone-width
-           viewport would either crop the subject out entirely or overlay
-           the text, so mobile gets its own contained card instead (below). ── */}
+      {/* ── Desktop: video masked to right side only, full-bleed behind text. ── */}
       <motion.video
         key="hero-bg-video"
         initial={{ opacity: 0, scale: 1.06 }}
@@ -67,6 +64,50 @@ export default function Hero() {
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </motion.video>
+
+      {/* ── Mobile: same clip as a real full-bleed background — a top band
+           pinned behind the pill/name/title that dissolves into the page
+           through its own mask, not a bordered card sitting in the content
+           flow. A soft white scrim keeps the text legible over the busy
+           graphic without hiding that it's a video. ── */}
+      <motion.video
+        key="hero-bg-video-mobile"
+        initial={{ opacity: 0, scale: 1.08 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        className="hero-video-mask-mobile md:hidden"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+          height: "50vh",
+          objectFit: "cover",
+          zIndex: 0,
+        }}
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </motion.video>
+      <div
+        aria-hidden="true"
+        className="md:hidden"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "50vh",
+          background: "linear-gradient(to bottom, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.5) 35%, rgba(255,255,255,0.72) 58%, rgba(255,255,255,0.96) 80%, var(--color-bg) 100%)",
+          zIndex: 1,
+        }}
+      />
 
       {/* ── Bottom dissolve into page ── */}
       <div
@@ -162,47 +203,6 @@ export default function Hero() {
                 sprint health, risk tracking, executive decks — automated so the team&apos;s
                 time goes to the work that actually moves programs forward.
               </p>
-            </motion.div>
-
-            {/* Mobile: contained video card — same clip as the desktop
-                background, framed as a normal element instead of a masked
-                full-bleed layer so the subject and AI-tool graphics stay
-                fully visible on narrow viewports. */}
-            <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="md:hidden mb-7 -mx-1"
-            >
-              <div
-                className="relative overflow-hidden"
-                style={{
-                  borderRadius: "var(--radius-lg)",
-                  border: "1px solid var(--glass-border)",
-                  boxShadow: "0 12px 40px rgba(0,0,0,0.1)",
-                }}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  aria-hidden="true"
-                  className="w-full h-auto block"
-                  style={{ aspectRatio: "16 / 10", objectFit: "cover", objectPosition: "38% center" }}
-                >
-                  <source src="/hero-video.mp4" type="video/mp4" />
-                </video>
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(to top, rgba(255,255,255,0.16) 0%, transparent 30%)",
-                  }}
-                />
-              </div>
             </motion.div>
 
             {/* Social icons */}

@@ -118,11 +118,9 @@ h1, h2, h3, h4, h5, h6 {
     var(--color-bg);
 }
 
-/* Hero background video mask — desktop only. Reveals the video on the
+/* Hero background video mask — desktop. Reveals the video on the
    right ~60% of the frame, fading into the gradient-mesh background on
-   the left so hero text stays legible. Mobile uses a separate contained
-   video card instead (see Hero.tsx) rather than forcing this wide-format
-   mask onto a narrow viewport. */
+   the left so hero text stays legible. */
 .hero-video-mask {
   object-position: 62% center;
   mask-image: linear-gradient(to right, transparent 0%, transparent 34%, rgba(0,0,0,0.55) 48%, black 62%, black 100%);
@@ -135,6 +133,16 @@ h1, h2, h3, h4, h5, h6 {
     mask-image: linear-gradient(to right, transparent 0%, transparent 30%, rgba(0,0,0,0.55) 44%, black 58%, black 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 30%, rgba(0,0,0,0.55) 44%, black 58%, black 100%);
   }
+}
+
+/* Hero background video mask — mobile. Full-bleed top band that fades to
+   transparent through its lower half so the video dissolves straight into
+   the gradient-mesh page background — a real background layer behind the
+   name/title, not a bordered video card sitting in the content flow. */
+.hero-video-mask-mobile {
+  object-position: 40% 30%;
+  mask-image: linear-gradient(to bottom, black 0%, black 42%, rgba(0,0,0,0.4) 62%, transparent 88%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 42%, rgba(0,0,0,0.4) 62%, transparent 88%);
 }
 
 /* Specular sheen sweep — slow diagonal highlight pass across glass panels */
