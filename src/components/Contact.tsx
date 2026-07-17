@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mail, Phone, Building2, Bot, Repeat, ArrowRight, type LucideIcon } from "lucide-react";
@@ -7,6 +8,8 @@ import GlassSurface from "./GlassSurface";
 import GlassButton from "./GlassButton";
 import IconBadge from "./IconBadge";
 import MobileCarousel from "./MobileCarousel";
+
+const GlassBlobScene = dynamic(() => import("./three/GlassBlobScene"), { ssr: false });
 
 function LinkedInIcon({ size = 16, color = "currentColor" }: { size?: number; strokeWidth?: number; color?: string }) {
   return (
@@ -68,6 +71,16 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-16 sm:py-24 relative overflow-hidden">
+      {/* Closing visual — a soft green glass blob behind the "open for
+          programs" pill, desktop only. A calm, low-key note to end the
+          page on rather than a loud centerpiece. */}
+      <div
+        aria-hidden="true"
+        className="hidden lg:block"
+        style={{ position: "absolute", bottom: "-8%", left: "-6%", width: "420px", height: "420px", opacity: 0.4, filter: "blur(24px)", zIndex: 0 }}
+      >
+        <GlassBlobScene color="#30D158" />
+      </div>
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div

@@ -1,10 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Trophy, ArrowUpRight } from "lucide-react";
 import GlassSurface from "./GlassSurface";
 import GlassButton from "./GlassButton";
 import MobileCarousel from "./MobileCarousel";
+
+const AgentNetworkScene = dynamic(() => import("./three/AgentNetworkScene"), { ssr: false });
 
 const pov = [
   {
@@ -75,41 +78,57 @@ export default function AIToolingTeaser() {
       <div className="max-w-5xl mx-auto px-6 relative z-10">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12"
-        >
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>
-            05 / AI AGENTS
-          </p>
-          <h2
-            className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
-            style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--color-text)" }}
+        <div className="lg:flex lg:items-center lg:justify-between lg:gap-8 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Six production{" "}
-            <span
-              style={{
-                background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-teal) 55%, var(--color-purple) 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-5" style={{ color: "var(--color-accent-dk)" }}>
+              05 / AI AGENTS
+            </p>
+            <h2
+              className="font-heading font-bold tracking-tight leading-[0.97] mb-5"
+              style={{ fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--color-text)" }}
             >
-              AI agents
-            </span>
-            , built from scratch.
-          </h2>
-          <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-            Month-end billing reconciliation was 3–4 hours of copy-paste per PM, per program —
-            no judgment required, just a machine that hadn&apos;t been written yet.
-            Built with accuracy checks and human-review fallbacks before it touched a live
-            client invoice. Cut billing time by 60%, accurate above 95%, adopted team-wide
-            inside a month. Five more agents followed. Running programs while building the
-            tooling means every agent gets built for the real problem — not the documented version of it.
-          </p>
-        </motion.div>
+              Six production{" "}
+              <span
+                style={{
+                  background: "linear-gradient(130deg, var(--color-accent) 0%, var(--color-teal) 55%, var(--color-purple) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                AI agents
+              </span>
+              , built from scratch.
+            </h2>
+            <p className="text-[15px] max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+              Month-end billing reconciliation was 3–4 hours of copy-paste per PM, per program —
+              no judgment required, just a machine that hadn&apos;t been written yet.
+              Built with accuracy checks and human-review fallbacks before it touched a live
+              client invoice. Cut billing time by 60%, accurate above 95%, adopted team-wide
+              inside a month. Five more agents followed. Running programs while building the
+              tooling means every agent gets built for the real problem — not the documented version of it.
+            </p>
+          </motion.div>
+
+          {/* Flagship 3D moment — a literal orbiting network of 6 nodes
+              around a core, standing in for the 6 agents described in the
+              copy. Desktop only: the mobile carousel below is already
+              content-dense and this needs room to breathe. */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:block shrink-0"
+            style={{ width: "260px", height: "260px" }}
+          >
+            <AgentNetworkScene accent="#0A84FF" accent2="#BF5AF2" nodeCount={6} />
+          </motion.div>
+        </div>
 
         {/* Proof strip */}
         <motion.div

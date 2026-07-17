@@ -1,10 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Mail, Phone, ArrowUpRight, Download, ChevronDown } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import GlassButton from "./GlassButton";
 import IconBadge from "./IconBadge";
+
+const GlassBlobScene = dynamic(() => import("./three/GlassBlobScene"), { ssr: false });
 
 function LinkedInIcon({ size = 18, color = "currentColor" }: { size?: number; strokeWidth?: number; color?: string }) {
   return (
@@ -39,6 +42,18 @@ export default function Hero() {
 
   return (
     <section className="min-h-screen flex flex-col pt-[64px] relative overflow-hidden gradient-mesh">
+
+      {/* ── Desktop: real 3D glass blob, co-located with the top-left radial
+           gradient in .gradient-mesh — sits exactly where the video mask
+           stays transparent, so it reads as ambient depth behind the name
+           and title instead of competing with the video on the right. ── */}
+      <div
+        aria-hidden="true"
+        className="hidden md:block"
+        style={{ position: "absolute", top: "-8%", left: "-10%", width: "560px", height: "560px", opacity: 0.55, filter: "blur(28px)", zIndex: 0 }}
+      >
+        <GlassBlobScene color="#0A84FF" />
+      </div>
 
       {/* ── Desktop: video masked to right side only, full-bleed behind text. ── */}
       <motion.video

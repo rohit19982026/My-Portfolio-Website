@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
@@ -7,6 +8,8 @@ import { impactStats, transformation } from "@/lib/impactSummary";
 import AnimatedCounter from "./AnimatedCounter";
 import GlassSurface from "./GlassSurface";
 import MobileCarousel from "./MobileCarousel";
+
+const AgentNetworkScene = dynamic(() => import("./three/AgentNetworkScene"), { ssr: false });
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -32,6 +35,16 @@ export default function ImpactSummary() {
 
   return (
     <section id="impact" className="py-16 sm:py-24 relative overflow-hidden section-alt">
+      {/* Ambient 3D depth layer — low-opacity, sits behind everything,
+          desktop only. Adds real depth to the section without competing
+          with the stat cards or the before/after panel for attention. */}
+      <div
+        aria-hidden="true"
+        className="hidden lg:block"
+        style={{ position: "absolute", top: "-6%", right: "-6%", width: "480px", height: "480px", opacity: 0.22, zIndex: 0 }}
+      >
+        <AgentNetworkScene accent="#30D158" accent2="#0A84FF" nodeCount={7} />
+      </div>
       <div className="max-w-6xl mx-auto px-6 relative z-10">
 
         {/* Header */}
