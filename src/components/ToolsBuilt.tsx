@@ -5,40 +5,46 @@ import { useRef } from "react";
 
 const tools = [
   {
-    category: "DELIVERY ASSURANCE",
-    title: "Project Health Intelligence Agent",
-    body: "End-of-month financial controls across the active portfolio in one pass — EAC vs. SOW, burn rate, rate-card compliance, PO coverage, billing event readiness, timecard hygiene. Flags exactly what needs PM attention; ignores what doesn't.",
+    category: "EOM CONTROLS",
+    title: "EOM Billing Skill",
+    body: "End-of-month financial review across the full portfolio — EAC vs. SOW, burn rate, rate-card compliance, PO coverage, billing event readiness, timecard hygiene — in a single 6-prompt workflow. Flags exactly what needs PM attention.",
     color: "#A78BFA",
+    proof: ["60% time saved on EOM controls", ">95% accuracy, first pass", "Adopted team-wide in 1 month"],
   },
   {
     category: "ENGINEERING SIGNAL",
     title: "Delivery Pulse Agent",
-    body: "Triangulates Jira velocity, Slack signal, and meeting outcomes into standup-ready summaries — per-engineer progress, sprint burndown delta, blocker age, and yesterday's decisions. Surfaces risk before it hits the daily.",
+    body: "Pulls Jira velocity, Slack activity, and meeting transcripts into a single standup-ready brief — per-engineer progress, sprint burndown delta, and blocker age. Surfaces what's lagging before the daily standup.",
     color: "#6EE7B7",
+    proof: ["30+ min saved per standup prep", "Triangulates 3 signal sources", "Blocker detection before escalation"],
   },
   {
     category: "EXECUTIVE BRIEFING",
-    title: "Cross-Channel Brief Generator",
-    body: "Synthesizes 72 hours of email, Slack DMs, channel activity, and meeting transcripts into a prioritized action list per project — flagged by urgency, stakeholder, and decision dependency. Monday morning already prepped.",
+    title: "Weekly Status Brief Generator",
+    body: "Synthesizes 72 hours of email, Slack, and meeting transcripts into a prioritized per-project action list — flagged by urgency and decision dependency. Monday morning status already written.",
     color: "#F0ABFC",
+    proof: ["5+ hrs saved per week, PM overhead", "Covers 4+ active programs in parallel", "Used in live client reporting"],
   },
   {
     category: "STAKEHOLDER COMMS",
-    title: "Communication Engine",
-    body: "Context-aware talking points, openers, escalation drafts, and follow-ups for every stakeholder touchpoint — kickoff, steerco, 1:1, escalation, renewal. Calibrated to audience seniority, decision context, and political reality.",
+    title: "Stakeholder Message Designer",
+    body: "Drafts context-aware talking points, escalation messages, steerco openers, and renewal closes — calibrated to audience seniority, political context, and the specific decision at stake.",
     color: "#A78BFA",
+    proof: ["Covers kickoff → renewal lifecycle", "Seniority-calibrated drafts", "Saves 20+ min per high-stakes message"],
   },
   {
     category: "DISCOVERY",
     title: "Discovery Co-Pilot",
-    body: "Plans discovery goals, stakeholder maps, RACI drafts, and interview methodology for new engagements — tailored to engagement type, scope, and constraints. Turns a kickoff into a plan, not a question dump.",
+    body: "Generates stakeholder maps, RACI drafts, interview guides, and a phased discovery plan from a single kickoff brief. Turns an ambiguous scope conversation into a structured plan before Sprint 1.",
     color: "#6EE7B7",
+    proof: ["Full discovery plan in 1 session", "Covers RACI, risk, and interview methodology", "Tailored to engagement type and scope"],
   },
   {
-    category: "META-CAPABILITY",
-    title: "Agentic Workflow Designer",
-    body: "The skill I use to build new skills — encodes patterns for step design, model selection, memory strategy, validation gates. Every new agent ships production-ready, with consistent QA built into the workflow.",
+    category: "PROVISIONING",
+    title: "Project Setup Agent",
+    body: "Provisions Jira boards, sprint structure, RAID logs, RACI matrices, and governance templates for a new engagement — end to end. Cut project onboarding from 3 hours to 15 minutes.",
     color: "#F0ABFC",
+    proof: ["3 hrs → 15 min onboarding", "Won phData Innovation Award", "Triggers Slack notifications automatically"],
   },
 ];
 
@@ -110,7 +116,15 @@ export default function ToolsBuilt() {
               <h3 className="font-display text-[21px] font-bold leading-tight tracking-tight text-[#EDE9FE] mb-3">
                 {tool.title}
               </h3>
-              <p className="text-[13px] leading-relaxed text-[#A8A4C7]">{tool.body}</p>
+              <p className="text-[13px] leading-relaxed text-[#A8A4C7] mb-5">{tool.body}</p>
+              <ul className="space-y-1.5">
+                {tool.proof.map((p) => (
+                  <li key={p} className="flex items-center gap-2 font-mono text-[10px]" style={{ color: tool.color }}>
+                    <span className="shrink-0">✓</span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>

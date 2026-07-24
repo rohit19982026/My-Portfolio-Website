@@ -24,21 +24,41 @@ const featured = [
   },
 ];
 
-const whatIDo = [
-  { icon: "🗺️", title: "Translate strategy into executable roadmaps", color: "#A78BFA", desc: "Break down ambiguous business goals into epics, milestones, WBS structures, and engineering-ready deliverables — so teams know exactly what they're building and why." },
-  { icon: "🔗", title: "Drive cross-functional execution at scale", color: "#6EE7B7", desc: "Align engineering, data, product, and business teams across competing priorities, time zones, and timelines. Facilitate the decisions that fragmented teams avoid." },
-  { icon: "🔍", title: "Own dependency mapping and critical path", color: "#A78BFA", desc: "Identify upstream/downstream blockers before they land. Map cross-team dependencies, surface them in governance forums, and actively unblock engineering to maintain velocity." },
-  { icon: "⚠️", title: "Build and operationalize risk frameworks", color: "#F0ABFC", desc: "Proactively track risks, quantify impact in schedule and cost terms, and drive mitigation through structured RAID logs, escalation channels, and formal change control." },
-  { icon: "📢", title: "Run high-signal leadership communication", color: "#6EE7B7", desc: "Lead executive reviews, steerco sessions, and cross-org stakeholder syncs with clear visibility on progress, risks, and trade-offs — calibrated to the decision-maker's context." },
-  { icon: "⚡", title: "Optimize Agile execution beyond ceremonies", color: "#A78BFA", desc: "Ensure sprints drive outcomes, not just activity. Set measurable sprint goals, track velocity with intent, run retrospectives that actually change behavior." },
-  { icon: "💰", title: "Establish financial governance and control", color: "#6EE7B7", desc: "Track budget vs. burn rate, model EAC/ETC/CPI, manage rate cards and PO coverage, and build change-order business cases before teams see a funding cliff." },
-  { icon: "🛠️", title: "Actively remove engineering friction", color: "#F0ABFC", desc: "Work hands-on with teams to resolve blockers, clarify requirements, untangle cross-team ambiguity, and streamline workflows — so engineering velocity is protected." },
+const proofPoints = [
+  {
+    tag: "BLOCKER RESOLUTION",
+    color: "#A78BFA",
+    stat: "17 blockers cleared in 8 weeks",
+    title: "Escalation with data, not complaints",
+    desc: "Stalled $1.37M engagement. 17 external blockers, no resolution timeline. Built a live dependency map with named owners and aging data — triggered VP-level escalation that recovered engineering velocity within two sprints.",
+  },
+  {
+    tag: "FINANCIAL GOVERNANCE",
+    color: "#6EE7B7",
+    stat: "$831K change order in 10 business days",
+    title: "Identified the gap before the team felt it",
+    desc: "Spotted a funding shortfall six weeks before SOW expiry. Built the executive business case, presented to client CFO and VP Engineering, and secured approval in 10 business days.",
+  },
+  {
+    tag: "VELOCITY RECOVERY",
+    color: "#F0ABFC",
+    stat: "UAT cycle: 11 days → 4 days",
+    title: "Made the bottleneck visible to people who could move it",
+    desc: "Published approval-latency metrics to client leadership on a managed retainer. UAT cycle cut 64% — not by improving testing, but by making the delay undeniable to decision-makers.",
+  },
+  {
+    tag: "SCOPE GOVERNANCE",
+    color: "#A78BFA",
+    stat: "14 scope additions · 0 revenue leaks",
+    title: "SOWs that held under continuous pressure",
+    desc: "Scoped 10+ engagements with change-control governance that absorbed 14 undocumented scope additions across one program — every one tracked, priced, or formally declined.",
+  },
 ];
 
 const philosophy = [
-  { label: "Visibility", sub: "drives alignment" },
-  { label: "Alignment", sub: "drives speed" },
-  { label: "Speed", sub: "drives outcomes" },
+  { label: "Data", sub: "not narrative" },
+  { label: "Structure", sub: "not heroics" },
+  { label: "Margin", sub: "not just milestones" },
 ];
 
 export default function Approach() {
@@ -120,36 +140,41 @@ export default function Approach() {
           ))}
         </div>
 
-        {/* What I actually do — 8 items */}
+        {/* Proof points — 4 specific moments */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
           className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#A78BFA] mb-5"
         >
-          // WHAT I ACTUALLY DO
+          // MOMENTS THAT PROVE IT
         </motion.p>
 
         <div className="grid sm:grid-cols-2 gap-3 mb-14">
-          {whatIDo.map((item, i) => (
+          {proofPoints.map((item, i) => (
             <motion.div
-              key={item.title}
+              key={item.tag}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: 0.1 + i * 0.05 }}
-              className="flex gap-4 p-5 rounded-xl transition-all duration-250"
+              className="p-5 rounded-xl"
               style={{ background: "#1B1B2A", border: "1px solid rgba(255,255,255,0.05)" }}
             >
-              <span className="text-2xl shrink-0 mt-0.5">{item.icon}</span>
-              <div>
-                <h3
-                  className="font-heading font-bold text-[13px] text-[#EDE9FE] mb-1.5"
-                  style={{ borderLeft: `2px solid ${item.color}`, paddingLeft: "8px" }}
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span
+                  className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] px-2 py-0.5 rounded"
+                  style={{ color: item.color, background: `${item.color}18` }}
                 >
-                  {item.title}
-                </h3>
-                <p className="text-[12.5px] text-[#A8A4C7] leading-relaxed">{item.desc}</p>
+                  {item.tag}
+                </span>
+                <span className="font-mono text-[10px] font-bold" style={{ color: item.color }}>
+                  {item.stat}
+                </span>
               </div>
+              <h3 className="font-heading font-bold text-[14px] text-[#EDE9FE] mb-2 leading-snug">
+                {item.title}
+              </h3>
+              <p className="text-[12.5px] text-[#A8A4C7] leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </div>

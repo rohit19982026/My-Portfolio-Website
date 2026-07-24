@@ -51,7 +51,7 @@ export const caseStudies: CaseStudy[] = [
       "Built the onboarding runbook and cross-training plan for the 11-person dual-region pod — eliminating single points of failure on the critical path before Sprint 1 started. Dependency mapping at the team level, not just the tech level.",
       "Embedded AI-Assisted Development as a governed SDLC lever — established review guardrails, tracked productivity uplift per sprint, and documented the audit trail required for the client's risk and compliance review. Leadership communication that turned a novel approach into a defensible program decision.",
     ],
-    result: "ON-PACE FOR 16-WEEK CUTOVER · AHEAD OF M&A TIMELINE",
+    result: "16-WEEK M&A CUTOVER DELIVERED · ~2,300 OBJECTS MIGRATED",
     stack: ["Databricks", "Redshift", "Unity Catalog", "Spark SQL", "AIAD"],
     metrics: [
       { label: "CONTRACT", value: "$669K" },
