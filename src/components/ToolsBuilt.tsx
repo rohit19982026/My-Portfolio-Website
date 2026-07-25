@@ -7,42 +7,42 @@ const tools = [
   {
     category: "EOM CONTROLS",
     title: "EOM Billing Skill",
-    body: "End-of-month financial review across the full portfolio — EAC vs. SOW, burn rate, rate-card compliance, PO coverage, billing event readiness, timecard hygiene — in a single 6-prompt workflow. Flags exactly what needs PM attention.",
+    body: "Every month I review the financial health of 4+ active programs — budget vs. spend, billing readiness, timecard compliance. I built a 6-step workflow that runs that review for me and flags what needs attention. 15 minutes instead of 2 hours. Now used across the team.",
     color: "#A78BFA",
     proof: ["60% time saved on EOM controls", ">95% accuracy, first pass", "Adopted team-wide in 1 month"],
   },
   {
     category: "ENGINEERING SIGNAL",
     title: "Delivery Pulse Agent",
-    body: "Pulls Jira velocity, Slack activity, and meeting transcripts into a single standup-ready brief — per-engineer progress, sprint burndown delta, and blocker age. Surfaces what's lagging before the daily standup.",
+    body: "Before every standup I need to know what was actually completed, what's blocked, and whether the sprint is on track. This agent pulls from Jira, Slack, and meeting notes and gives me a one-page brief. 30 seconds of reading instead of 30 minutes of digging.",
     color: "#6EE7B7",
     proof: ["30+ min saved per standup prep", "Triangulates 3 signal sources", "Blocker detection before escalation"],
   },
   {
     category: "EXECUTIVE BRIEFING",
     title: "Weekly Status Brief Generator",
-    body: "Synthesizes 72 hours of email, Slack, and meeting transcripts into a prioritized per-project action list — flagged by urgency and decision dependency. Monday morning status already written.",
+    body: "Writing status updates for 4+ programs every Monday used to take all morning. This agent reads 3 days of emails, Slack, and meeting notes per program and drafts the update. I review and edit — I don't write from scratch. Saves 5+ hours a week.",
     color: "#F0ABFC",
     proof: ["5+ hrs saved per week, PM overhead", "Covers 4+ active programs in parallel", "Used in live client reporting"],
   },
   {
     category: "STAKEHOLDER COMMS",
     title: "Stakeholder Message Designer",
-    body: "Drafts context-aware talking points, escalation messages, steerco openers, and renewal closes — calibrated to audience seniority, political context, and the specific decision at stake.",
+    body: "Escalations, renewal conversations, steerco openers — some messages are hard to write and slow to get right. I describe what I need to say and who I'm talking to, and this agent drafts the message calibrated to their seniority and the situation.",
     color: "#A78BFA",
     proof: ["Covers kickoff → renewal lifecycle", "Seniority-calibrated drafts", "Saves 20+ min per high-stakes message"],
   },
   {
     category: "DISCOVERY",
     title: "Discovery Co-Pilot",
-    body: "Generates stakeholder maps, RACI drafts, interview guides, and a phased discovery plan from a single kickoff brief. Turns an ambiguous scope conversation into a structured plan before Sprint 1.",
+    body: "New program kickoffs are chaotic — nobody knows who owns what, scope isn't clear, questions outnumber answers. I give this agent the kickoff brief and it outputs a stakeholder map, interview guide, and discovery plan. Sprint 1 starts with structure.",
     color: "#6EE7B7",
     proof: ["Full discovery plan in 1 session", "Covers RACI, risk, and interview methodology", "Tailored to engagement type and scope"],
   },
   {
     category: "PROVISIONING",
     title: "Project Setup Agent",
-    body: "Provisions Jira boards, sprint structure, RAID logs, RACI matrices, and governance templates for a new engagement — end to end. Cut project onboarding from 3 hours to 15 minutes.",
+    body: "Standing up a new program used to take 3 hours — Jira board, sprint structure, risk log, RACI, governance templates. Give this agent the program brief and it provisions everything in 15 minutes. Won phData's Innovation Award.",
     color: "#F0ABFC",
     proof: ["3 hrs → 15 min onboarding", "Won phData Innovation Award", "Triggers Slack notifications automatically"],
   },
@@ -72,15 +72,14 @@ export default function ToolsBuilt() {
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            <span className="gradient-text italic font-normal">I don&apos;t just use AI</span>.
-            <br />I build it.
+            Six tools I built to{" "}
+            <span className="gradient-text italic font-normal">stop doing things manually</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
-            A growing toolbox of{" "}
-            <strong className="font-semibold text-[#EDE9FE]">Glean agents and skills</strong> that
-            automate the parts of program management that should never have been manual — EOM
-            controls, standup synthesis, executive briefs, stakeholder comms, discovery, and agent
-            design itself.
+            Monthly financial reviews used to take{" "}
+            <strong className="font-semibold text-[#EDE9FE]">2 hours</strong>. Standup prep took{" "}
+            <strong className="font-semibold text-[#EDE9FE]">30 minutes</strong>. Status updates
+            took all morning. I automated all of it.
           </p>
         </motion.div>
 

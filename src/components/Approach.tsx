@@ -6,21 +6,21 @@ import { useRef } from "react";
 const featured = [
   {
     num: "01 / ARCHITECTURE",
-    title: <>I <em className="text-[#A78BFA] not-italic">architect</em> delivery, not manage it.</>,
-    body: "Most PMs execute the plan they're handed. I design it from scratch — WBS decomposition, parallel epic tracks, weighted % complete, critical-path mapping, float allocation. Anyone can track a Gantt. Few can build one that holds under load.",
-    highlights: ["WBS decomposition", "Parallel epic tracks", "Critical-path mapping"],
+    title: <>I <em className="text-[#A78BFA] not-italic">design</em> the delivery. I don&apos;t just manage it.</>,
+    body: "When I start a new program, the first question isn't 'what are the deliverables' — it's 'what are the real constraints?' Fixed deadline, client approval cycles, regulatory gates, shared infrastructure. The delivery model has to be built around those from the start. If you design the plan and then discover the constraints, you spend the rest of the engagement working around decisions that were already made.",
+    highlights: ["Constraint mapping", "Parallel epic tracks", "Critical-path ownership"],
   },
   {
     num: "02 / FINANCE",
-    title: <>Margin is a <em className="text-[#A78BFA] not-italic">feature</em>.</>,
-    body: "99.98% budget execution isn't luck — it's discipline. I instrument burn rate, EAC, ETC, CPI/SPI, rate cards and PO coverage the way an engineer instruments a system. P&L is part of the deliverable, not a finance afterthought.",
-    highlights: ["EAC / ETC / CPI / SPI", "Rate-card governance", "PO coverage"],
+    title: <>Budget is a <em className="text-[#A78BFA] not-italic">forecast</em>, not a record.</>,
+    body: "Most people treat budget management as accounting — how much have we spent? I treat it as forecasting — at this rate, where do we end up? That one shift means I spot a funding problem six weeks before a contract ends, not one week before. The business case, the extension conversation, the change order — all of that is easier when you're not already in crisis.",
+    highlights: ["Burn-rate forecasting", "Change order readiness", "Margin protection"],
   },
   {
     num: "03 / RISK",
-    title: <><em className="text-[#A78BFA] not-italic">Anticipation</em> beats escalation.</>,
-    body: "Risk is cheapest the day it appears. I run a live RAID register, dependency map, and weighted-progress model backed by leading indicators — UAT aging, approval latency, blocker age, velocity drift — so trouble surfaces in steerco weeks before a vanilla burndown.",
-    highlights: ["Live RAID register", "Dependency mapping", "Leading indicators"],
+    title: <>I fix problems at the <em className="text-[#A78BFA] not-italic">signal</em>, not the symptom.</>,
+    body: "By the time a risk shows up in a status report, it's already costing something. The signals come earlier — an approval that's been waiting 11 days, a sprint where easy stories are closing but hard ones aren't, a dependency that's gone quiet. Those signals tell you what's going wrong two weeks before it's visible. Two weeks is enough time to fix it cheaply. After that, you're managing consequences.",
+    highlights: ["Approval-lag tracking", "Weighted completion", "Leading indicators"],
   },
 ];
 
@@ -91,15 +91,14 @@ export default function Approach() {
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            Three things I do<br />
-            that <span className="gradient-text italic font-normal">most PMs don&apos;t</span>.
+            How I approach <span className="gradient-text italic font-normal">programs</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
-            Applied across{" "}
+            The same three things, across{" "}
             <strong className="font-semibold text-[#EDE9FE]">
               fixed-price, T&amp;M, and managed-services
             </strong>{" "}
-            commercials, regardless of stack or industry.
+            — regardless of stack or industry.
           </p>
         </motion.div>
 

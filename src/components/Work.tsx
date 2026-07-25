@@ -193,12 +193,11 @@ export default function Work() {
             <span className="gradient-text italic font-normal">Real numbers</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
-            End-to-end across{" "}
+            Six programs —{" "}
             <strong className="font-semibold text-[#EDE9FE]">
-              scope baseline, governance cadence, EVM tracking, change control and executive
-              close-out
-            </strong>{" "}
-            — anonymized by industry, real on the numbers and the judgment calls behind them.
+              real budgets, real timelines, real decisions
+            </strong>
+            . Anonymized by client.
           </p>
         </motion.div>
 

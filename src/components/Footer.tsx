@@ -11,15 +11,14 @@ export default function Footer() {
               Rohit<span className="text-[#A78BFA]">.</span>
             </p>
             <p className="font-heading text-[#6B6B8A] leading-relaxed text-[12px]">
-              Technical Project Manager · 5+ years · phData (Snowflake Elite Partner).
-              PSM1 · ITIL certified. phData Innovation Award for AI automation.
-              Bengaluru, India · working globally.
+              Senior Technical PM at phData — 5 years, data and AI delivery, enterprise clients.
+              PSM1 · ITIL · phData Innovation Award. Bengaluru.
             </p>
           </div>
           <div>
             <p className="font-mono font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">// EXPLORE</p>
             <ul className="space-y-2">
-              {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Exposure", "#exposure"]].map(([label, href]) => (
+              {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
                 <li key={label}>
                   <a
                     href={href}

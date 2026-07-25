@@ -203,13 +203,12 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.55 }}
           className="text-[17px] leading-[1.65] text-[#A8A4C7] max-w-[680px] mb-10"
         >
-          Senior <em className="not-italic text-[#A78BFA] font-semibold">Technical Program Manager</em>{" "}
-          for data &amp; AI delivery — $3.5M+ portfolio, 10+ enterprise programs, 99.98% budget
-          execution. I own scope baseline, EVM, change control, and exec reporting end-to-end —
-          and{" "}
+          I manage data and AI delivery programs for enterprise companies —{" "}
+          <em className="not-italic text-[#A78BFA] font-semibold">migrations, lakehouses, AI deployments</em>.
+          {" "}$3.5M+ portfolio, 10+ programs, 99.98% budget accuracy. I also{" "}
           <strong className="font-semibold text-[#EDE9FE]">
-            build AI agents that automate the parts of program management that should never have
-            been manual
+            build AI agents that handle the routine work — so I can focus on the things that
+            actually require judgment
           </strong>
           .
         </motion.p>
@@ -257,8 +256,8 @@ export default function Hero() {
 
           <div className="flex justify-between items-center mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6B6B8A]">
-              // PROGRAM{" "}
-              <span className="text-[#A78BFA]">OPERATING SYSTEM</span> · LIVE PORTFOLIO
+              // ACTIVE PORTFOLIO ·{" "}
+              <span className="text-[#A78BFA]">LIVE NUMBERS</span>
             </p>
             <div className="hidden sm:flex gap-4 font-mono text-[10px] tracking-[0.14em] text-[#6B6B8A]">
               <span>STATUS · <span className="text-[#6EE7B7]">GREEN</span></span>

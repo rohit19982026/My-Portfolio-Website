@@ -11,13 +11,13 @@ const roles = [
     current: true,
     color: "#A78BFA",
     bullets: [
-      "Run PMO governance across 4–6 concurrent Data Platform and Analytics programs — RACI maintained from kickoff through delivery close, WBS tracked throughout, decision logs updated every sprint.",
-      "Own full financial management for all active programs — monthly invoicing, budget forecast vs. actuals, burn-down reporting, and variance flags to client PMO and internal leadership.",
-      "Manage C-level, VP, and Technical Director stakeholders on the client side — weekly status reporting, QBR facilitation, and escalation management.",
-      "Own presales-to-delivery lifecycle — review technical scope with Principal Architects during presales, size engineering effort, structure SOWs for delivery governance from day one.",
-      "Identify and develop account expansion opportunities — QBRs consistently surface new Analytics, GenAI, and data platform workstreams through structured discovery.",
-      "Built AI agents using Glean (Salesforce, Slack, Google Drive MCP connectors), Claude, and n8n — automated project provisioning from signed SOWs, cross-program financial status rollup, and executive Slack updates.",
-      "Maintain program-level risk registers with escalation protocols — each risk documented with probability, impact, owner, mitigation plan, and escalation trigger.",
+      "At any point I'm running 4–6 active programs — fixed-price migrations, T&M engagements, managed retainers. Different clients, different stacks, no two look the same. $3.5M+ total portfolio value.",
+      "99.98% average budget accuracy across all active programs. I track where we'll end up, not just where we've been — and flag gaps before the client sees them.",
+      "Found a funding gap on a $1.37M program six weeks before the contract ended. Built the business case for extending it. $831K change order approved in 10 business days.",
+      "On the same program: 17 external approvals stuck for weeks with no owner tracking them. Put every one on the weekly executive agenda with a name and a day count. Cleared in 8 weeks.",
+      "UAT cycle running 11 days on a managed retainer. Made the approval lag visible to the people who could fix it. Dropped to 4 days.",
+      "Built AI agents (Glean + Claude + n8n) for monthly financial reviews, weekly status briefs, and new program setup. Saves 5+ hours a week. Won phData's Innovation Award.",
+      "Scoped 10+ programs end to end. One client pushed 14 scope additions beyond the agreed contract. Every one formally logged and resolved — none became free work.",
     ],
     tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "Scrum Master (PSM1)", "AI Agent Builder"],
   },
@@ -28,9 +28,8 @@ const roles = [
     current: false,
     color: "#6EE7B7",
     bullets: [
-      "Managed ITIL-compliant IT infrastructure change programs — CAB governance, risk assessment frameworks, rollback planning, and post-implementation validation for 50+ changes annually. Maintained 99.9% uptime across critical telecom infrastructure.",
-      "Owned cross-functional stakeholder communication for all change events — pre-change briefings, real-time status updates during change windows, and post-implementation reports to business and technology leadership.",
-      "ITIL governance, PMO documentation standards, structured change delivery discipline, and financial impact assessment frameworks all carried directly into data platform program management.",
+      "Change governance for critical UK telecom infrastructure — formal review, rollback planning, approval gating for 50+ changes a year. 99.9% uptime.",
+      "Owned all stakeholder communication around change events: brief before, live status during, report after.",
     ],
     tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Cross-functional Communication"],
   },
@@ -81,11 +80,12 @@ export default function Trajectory() {
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            The <span className="gradient-text italic font-normal">seat</span><br />I sit in.
+            Where I&apos;ve been.{" "}
+            <span className="gradient-text italic font-normal">What I delivered</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
-            5+ years owning programs — not participating in them. Full PMO lifecycle from
-            presales scoping through delivery close.
+            5 years at phData managing data and AI delivery programs. Before that, British Telecom.
+            Same discipline, different domain.
           </p>
         </motion.div>
 
