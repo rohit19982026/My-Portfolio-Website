@@ -5,46 +5,46 @@ import { useRef } from "react";
 
 const tools = [
   {
-    category: "EOM CONTROLS",
-    title: "EOM Billing Skill",
+    category: "MONTH-END BILLING",
+    title: "Month-end billing review",
     body: "Every month I review the financial health of 4+ active programs — budget vs. spend, billing readiness, timecard compliance. I built a 6-step workflow that runs that review for me and flags what needs attention. 15 minutes instead of 2 hours. Now used across the team.",
     color: "#A78BFA",
-    proof: ["60% time saved on EOM controls", ">95% accuracy, first pass", "Adopted team-wide in 1 month"],
+    notes: ["2 hours → 15 minutes", "Used across the team"],
   },
   {
-    category: "ENGINEERING SIGNAL",
-    title: "Delivery Pulse Agent",
+    category: "STANDUP PREP",
+    title: "Standup brief agent",
     body: "Before every standup I need to know what was actually completed, what's blocked, and whether the sprint is on track. This agent pulls from Jira, Slack, and meeting notes and gives me a one-page brief. 30 seconds of reading instead of 30 minutes of digging.",
     color: "#6EE7B7",
-    proof: ["30+ min saved per standup prep", "Triangulates 3 signal sources", "Blocker detection before escalation"],
+    notes: ["30 minutes → 30 seconds", "Reads Jira, Slack, meeting notes"],
   },
   {
-    category: "EXECUTIVE BRIEFING",
-    title: "Weekly Status Brief Generator",
+    category: "STATUS REPORTING",
+    title: "Weekly status brief",
     body: "Writing status updates for 4+ programs every Monday used to take all morning. This agent reads 3 days of emails, Slack, and meeting notes per program and drafts the update. I review and edit — I don't write from scratch. Saves 5+ hours a week.",
     color: "#F0ABFC",
-    proof: ["5+ hrs saved per week, PM overhead", "Covers 4+ active programs in parallel", "Used in live client reporting"],
+    notes: ["5+ hours saved per week", "Runs across 4+ programs"],
   },
   {
-    category: "STAKEHOLDER COMMS",
-    title: "Stakeholder Message Designer",
-    body: "Escalations, renewal conversations, steerco openers — some messages are hard to write and slow to get right. I describe what I need to say and who I'm talking to, and this agent drafts the message calibrated to their seniority and the situation.",
+    category: "STAKEHOLDER MESSAGES",
+    title: "Stakeholder message drafter",
+    body: "Escalations, renewal conversations, steerco openers — some messages are hard to write and slow to get right. I describe what I need to say and who I'm talking to, and this agent drafts a first version I can edit.",
     color: "#A78BFA",
-    proof: ["Covers kickoff → renewal lifecycle", "Seniority-calibrated drafts", "Saves 20+ min per high-stakes message"],
+    notes: ["Drafts I edit, not messages I send"],
   },
   {
-    category: "DISCOVERY",
-    title: "Discovery Co-Pilot",
+    category: "PROGRAM KICKOFF",
+    title: "Kickoff planning agent",
     body: "New program kickoffs are chaotic — nobody knows who owns what, scope isn't clear, questions outnumber answers. I give this agent the kickoff brief and it outputs a stakeholder map, interview guide, and discovery plan. Sprint 1 starts with structure.",
     color: "#6EE7B7",
-    proof: ["Full discovery plan in 1 session", "Covers RACI, risk, and interview methodology", "Tailored to engagement type and scope"],
+    notes: ["Discovery plan in one session"],
   },
   {
-    category: "PROVISIONING",
-    title: "Project Setup Agent",
-    body: "Standing up a new program used to take 3 hours — Jira board, sprint structure, risk log, RACI, governance templates. Give this agent the program brief and it provisions everything in 15 minutes. Won phData's Innovation Award.",
+    category: "PROJECT SETUP",
+    title: "Project setup agent",
+    body: "Standing up a new program used to take 3 hours — Jira board, sprint structure, risk log, RACI, governance templates. Give this agent the program brief and it provisions everything in 15 minutes. This is the one that won phData's Innovation Award.",
     color: "#F0ABFC",
-    proof: ["3 hrs → 15 min onboarding", "Won phData Innovation Award", "Triggers Slack notifications automatically"],
+    notes: ["3 hours → 15 minutes", "phData Innovation Award"],
   },
 ];
 
@@ -117,10 +117,10 @@ export default function ToolsBuilt() {
               </h3>
               <p className="text-[13px] leading-relaxed text-[#A8A4C7] mb-5">{tool.body}</p>
               <ul className="space-y-1.5">
-                {tool.proof.map((p) => (
-                  <li key={p} className="flex items-center gap-2 font-heading text-[10px]" style={{ color: tool.color }}>
-                    <span className="shrink-0">✓</span>
-                    {p}
+                {tool.notes.map((n) => (
+                  <li key={n} className="flex items-center gap-2 font-heading text-[10px]" style={{ color: tool.color }}>
+                    <span className="shrink-0">·</span>
+                    {n}
                   </li>
                 ))}
               </ul>

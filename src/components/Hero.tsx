@@ -73,13 +73,7 @@ function StatCell({
       <p className="font-display text-[38px] leading-none font-bold tracking-tight text-[#EDE9FE]">
         {prefix}{val}{suffix}
       </p>
-      <p className="mt-2 font-heading text-[10px] tracking-[0.1em] text-[#6EE7B7] flex items-center gap-2">
-        <span
-          className="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"
-          style={{ animation: "ticker-blink 1.4s ease-in-out infinite" }}
-        />
-        {delta}
-      </p>
+      <p className="mt-2 font-heading text-[10px] tracking-[0.1em] text-[#6B6B8A]">{delta}</p>
     </motion.div>
   );
 }
@@ -137,13 +131,13 @@ export default function Hero() {
             className="w-2 h-2 rounded-full bg-[#6EE7B7]"
             style={{ boxShadow: "0 0 10px #6EE7B7", animation: "pulse-dot 2s ease-in-out infinite" }}
           />
-          AVAILABLE FOR PROGRAMS · BENGALURU IN · UTC+5:30
+          AVAILABLE FOR PROGRAMS · BENGALURU · UTC+5:30
         </motion.div>
 
         {/* The orchestration backdrop carries the hero visually; the heading stays
             in the document for search engines and screen readers. */}
         <h1 className="sr-only">
-          Rohit Kumar Singh — Technical Program Manager, data and AI delivery
+          Rohit Kumar Singh — Technical Project Manager, Data &amp; AI
         </h1>
 
         {/* Lead copy */}
@@ -154,12 +148,12 @@ export default function Hero() {
           className="leading-[1.55] text-[#A8A4C7] max-w-[740px] mb-10"
           style={{ fontSize: "clamp(19px, 2.3vw, 25px)" }}
         >
-          I manage data and AI delivery programs for enterprise companies —{" "}
-          <em className="not-italic text-[#A78BFA] font-semibold">migrations, lakehouses, AI deployments</em>.
-          {" "}$3.5M+ portfolio, 10+ programs, 99.98% budget accuracy. I also{" "}
+          I&apos;m a technical project manager at phData. I run data and AI delivery programs
+          for enterprise clients —{" "}
+          <em className="not-italic text-[#A78BFA] font-semibold">platform migrations, lakehouses, AI deployments</em>.
+          {" "}Ten so far, the largest $1.37M. I also{" "}
           <strong className="font-semibold text-[#EDE9FE]">
-            build AI agents that handle the routine work — so I can focus on the things that
-            actually require judgment
+            build the AI agents that handle the repetitive parts of my own job
           </strong>
           .
         </motion.p>
@@ -205,23 +199,17 @@ export default function Hero() {
             style={{ background: "linear-gradient(90deg, transparent, #A78BFA, transparent)" }}
           />
 
-          <div className="flex justify-between items-center mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+          <div className="mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
             <p className="font-heading text-[11px] uppercase tracking-[0.18em] text-[#6B6B8A]">
-              ACTIVE PORTFOLIO ·{" "}
-              <span className="text-[#A78BFA]">LIVE NUMBERS</span>
+              The numbers
             </p>
-            <div className="hidden sm:flex gap-4 font-heading text-[10px] tracking-[0.14em] text-[#6B6B8A]">
-              <span>STATUS · <span className="text-[#6EE7B7]">GREEN</span></span>
-              <span>SYNC · LIVE</span>
-              <span>VER · 26.5.1</span>
-            </div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCell label="Portfolio Value"  target={3.5}  decimals={1} prefix="$" suffix="M+" delta="multi-commercial"       active={panelInView} delay={0.15} />
-            <StatCell label="Programs Owned"   target={10}   decimals={0}             suffix="+"   delta="end-to-end"             active={panelInView} delay={0.25} />
-            <StatCell label="Budget Execution" target={99.98} decimals={2}            suffix="%"   delta="avg. across portfolio"  active={panelInView} delay={0.35} />
-            <StatCell label="Geo Coverage"     target={3}    decimals={0}             suffix="×"   delta="continents · FTS gov"   active={panelInView} delay={0.45} />
+            <StatCell label="Programs delivered"     target={10}   decimals={0}             suffix="+"   delta="scoped end to end"       active={panelInView} delay={0.15} />
+            <StatCell label="Largest program"        target={1.37} decimals={2} prefix="$" suffix="M"   delta="two-year engagement"     active={panelInView} delay={0.25} />
+            <StatCell label="Combined contract value" target={3.5} decimals={1} prefix="$" suffix="M+"  delta="across all programs"     active={panelInView} delay={0.35} />
+            <StatCell label="Largest pod managed"    target={11}   decimals={0}             suffix=""    delta="engineers, two regions"  active={panelInView} delay={0.45} />
           </div>
         </motion.div>
       </div>

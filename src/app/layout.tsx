@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -18,20 +18,14 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Rohit Kumar Singh — Technical Project Manager",
+  title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
   description:
-    "Technical Project Manager with 5+ years leading enterprise data & AI programs at phData. PSM1 · ITIL certified. $3.5M+ portfolio managed across cloud migrations, platform delivery, and AI automation.",
+    "Technical Project Manager at phData. Six years running data and AI delivery programs for enterprise clients — platform migrations, lakehouses, AI deployments. PSM1 and ITIL certified. Based in Bengaluru.",
   keywords: [
     "Technical Project Manager",
-    "Program Manager",
-    "Data Platform",
+    "Data Delivery",
+    "Data Platform Migration",
     "Snowflake",
     "Databricks",
     "AI Automation",
@@ -42,17 +36,17 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Rohit Kumar Singh" }],
   openGraph: {
-    title: "Rohit Kumar Singh — Technical Project Manager",
+    title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "5+ years owning enterprise data & AI programs end-to-end. $3.5M+ portfolio · 10+ programs delivered · PSM1 · ITIL · phData Innovation Award.",
+      "Six years running data and AI delivery programs for enterprise clients. Ten-plus programs, the largest $1.37M. I also build the AI agents that handle my own routine work.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary",
-    title: "Rohit Kumar Singh — Technical Project Manager",
+    title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "5+ years owning enterprise data & AI programs end-to-end. $3.5M+ portfolio · 10+ programs delivered · phData Innovation Award.",
+      "Six years running data and AI delivery programs for enterprise clients. Ten-plus programs, the largest $1.37M.",
   },
 };
 
@@ -64,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${manrope.variable} ${jetbrains.variable} h-full`}
+      className={`${fraunces.variable} ${manrope.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-[#0A0A12] text-[#EDE9FE] antialiased">
         <ScrollProgress />

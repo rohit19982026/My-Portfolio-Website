@@ -15,7 +15,6 @@
   --font-display: var(--font-fraunces);
   --font-heading: var(--font-manrope);
   --font-body:    var(--font-manrope);
-  --font-mono:    var(--font-jetbrains);
 }
 
 * { box-sizing: border-box; }

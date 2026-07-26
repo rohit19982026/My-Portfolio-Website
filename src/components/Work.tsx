@@ -35,16 +35,10 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
         onClick={() => setOpen(!open)}
         className="w-full text-left p-6 flex items-start gap-5 group"
       >
-        {/* Number + badge */}
+        {/* Number */}
         <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
           <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-[#6B6B8A]">
             {study.number}
-          </span>
-          <span
-            className="text-[9px] font-heading font-bold px-2 py-0.5 rounded"
-            style={{ background: "rgba(110,231,183,0.12)", color: "#6EE7B7" }}
-          >
-            ● LIVE
           </span>
         </div>
 
@@ -108,9 +102,9 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
                 {study.context}
               </p>
 
-              {/* The move that mattered */}
+              {/* Key decisions */}
               <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
-                THE MOVE THAT MATTERED
+                KEY DECISIONS
               </p>
               <ul className="space-y-3 mb-6 max-w-3xl">
                 {study.moves.map((move, i) => (
@@ -182,22 +176,19 @@ export default function Work() {
         >
           <div className="flex items-center gap-3 mb-5">
             <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
-              01 / WORK
+              02 / WORK
             </span>
           </div>
           <h2
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            Six programs.{" "}
-            <span className="gradient-text font-normal">Real numbers</span>.
+            Six programs I{" "}
+            <span className="gradient-text font-normal">ran</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
-            Six programs —{" "}
-            <strong className="font-semibold text-[#EDE9FE]">
-              real budgets, real timelines, real decisions
-            </strong>
-            . Anonymized by client.
+            The budget, the constraint, and the decisions that changed the outcome on each
+            one. Clients are anonymised.
           </p>
         </motion.div>
 
@@ -207,32 +198,6 @@ export default function Work() {
             <CaseStudyRow key={study.id} study={study} index={i} />
           ))}
         </div>
-
-        {/* Pull quote */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 p-10 rounded-2xl text-center relative overflow-hidden"
-          style={{
-            background: "radial-gradient(ellipse at 30% 20%, rgba(167,139,250,0.14), transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(240,171,252,0.09), transparent 60%), #13131F",
-            border: "1px solid rgba(167,139,250,0.14)",
-          }}
-        >
-          <p
-            className="font-display font-normal leading-[1.18] tracking-tight text-[#EDE9FE] max-w-3xl mx-auto"
-            style={{ fontSize: "clamp(26px, 3.5vw, 40px)" }}
-          >
-            Most PMs{" "}
-            <em className="not-italic text-[#A78BFA]">coordinate</em>.{" "}
-            <strong className="font-bold">I architect delivery</strong>, protect margin like a
-            P&amp;L owner, and build AI tooling that{" "}
-            <em className="not-italic text-[#A78BFA]">compounds my own throughput</em>.
-          </p>
-          <p className="mt-6 font-heading text-[11px] uppercase tracking-[0.2em] text-[#6B6B8A]">
-            — THE PHILOSOPHY
-          </p>
-        </motion.div>
       </div>
     </section>
   );

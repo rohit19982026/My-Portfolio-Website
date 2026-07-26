@@ -3,12 +3,10 @@
 import { useState, useEffect } from "react";
 
 const links = [
+  { label: "Experience", href: "#experience" },
   { label: "Work", href: "#work" },
-  { label: "Approach", href: "#approach" },
   { label: "Tools", href: "#tools" },
-  { label: "Exposure", href: "#exposure" },
-  { label: "Trajectory", href: "#trajectory" },
-  { label: "Contact", href: "#contact" },
+  { label: "Stack", href: "#stack" },
 ];
 
 export default function Navbar() {
@@ -74,7 +72,7 @@ export default function Navbar() {
               boxShadow: "0 0 20px rgba(167,139,250,0.3)",
             }}
           >
-            Let&apos;s Talk ↗
+            Contact
           </a>
         </nav>
 
@@ -113,7 +111,7 @@ export default function Navbar() {
             className="mt-4 inline-block px-5 py-2.5 text-[11px] font-heading font-bold uppercase tracking-[0.12em] rounded-full text-[#0A0A12]"
             style={{ background: "#A78BFA" }}
           >
-            Let&apos;s Talk ↗
+            Contact
           </a>
         </div>
       )}

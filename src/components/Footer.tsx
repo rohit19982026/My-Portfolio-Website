@@ -11,14 +11,14 @@ export default function Footer() {
               Rohit<span className="text-[#A78BFA]">.</span>
             </p>
             <p className="font-heading text-[#6B6B8A] leading-relaxed text-[12px]">
-              Senior Technical PM at phData — 5 years, data and AI delivery, enterprise clients.
-              PSM1 · ITIL · phData Innovation Award. Bengaluru.
+              Technical Project Manager at phData — data and AI delivery for enterprise
+              clients. Six years in delivery. PSM1 · ITIL · phData Innovation Award. Bengaluru.
             </p>
           </div>
           <div>
             <p className="font-heading font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">EXPLORE</p>
             <ul className="space-y-2">
-              {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
+              {[["Experience", "#experience"], ["Work", "#work"], ["Tools", "#tools"], ["Stack", "#stack"]].map(([label, href]) => (
                 <li key={label}>
                   <a
                     href={href}
@@ -62,7 +62,6 @@ export default function Footer() {
               Open for programs
             </div>
             <p className="font-heading text-[11px] text-[#6B6B8A]">Bengaluru, India · IST</p>
-            <p className="font-heading text-[11px] text-[#6B6B8A]">Available globally</p>
           </div>
         </div>
         <div

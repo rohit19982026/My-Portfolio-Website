@@ -4,11 +4,6 @@ const links = [
   { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119" },
 ];
 
-const engagementTypes = [
-  { label: "Fixed-Price Program", desc: "Defined scope, hard deadline, margin matters" },
-  { label: "Time & Materials", desc: "Ongoing delivery, evolving scope" },
-  { label: "Managed Services / Pod", desc: "Embedded team, retainer model" },
-];
 
 export default function Contact() {
   return (
@@ -40,23 +35,22 @@ export default function Contact() {
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-5">
             <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
-              06 / LET&apos;S BUILD SOMETHING
+              05 / CONTACT
             </span>
           </div>
           <h2
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            Got a <span className="gradient-text font-normal">complex</span>
-            <br />data &amp; AI program?
+            Get in <span className="gradient-text font-normal">touch</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
-            Let&apos;s talk. Whether it&apos;s a platform migration, a program rescue, or a
-            managed delivery engagement — I&apos;d rather understand the problem first.
+            Email is the most reliable way to reach me. I work on fixed-price, time
+            and materials, and managed retainer engagements.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-14">
+        <div className="max-w-xl">
           {/* Contact info */}
           <div>
             <div className="space-y-5 mb-10">
@@ -86,38 +80,13 @@ export default function Contact() {
               />
               <div>
                 <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">
-                  ● OPEN FOR PROGRAMS
+                  Open for programs
                 </p>
                 <p className="font-heading text-[10px] text-[#6B6B8A] mt-0.5">
-                  Bengaluru, India · IST · Available globally
+                  Bengaluru, India · IST
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* Engagement types + CTA */}
-          <div className="space-y-4">
-            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
-              I WORK ON
-            </p>
-            {engagementTypes.map((type) => (
-              <div
-                key={type.label}
-                className="p-4 rounded-xl"
-                style={{ border: "1px solid rgba(167,139,250,0.14)", background: "#1B1B2A" }}
-              >
-                <p className="font-heading text-[14px] font-semibold text-[#EDE9FE] mb-1">{type.label}</p>
-                <p className="font-heading text-[11px] text-[#6B6B8A]">{type.desc}</p>
-              </div>
-            ))}
-
-            <a
-              href="mailto:singhrohit.25119@gmail.com"
-              className="mt-6 w-full flex items-center justify-center py-3.5 rounded-full font-heading font-bold text-[12px] uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110"
-              style={{ background: "#A78BFA", boxShadow: "0 0 24px rgba(167,139,250,0.3)" }}
-            >
-              Email me directly →
-            </a>
           </div>
         </div>
       </div>
