@@ -37,11 +37,11 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
       >
         {/* Number + badge */}
         <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
-          <span className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#6B6B8A]">
+          <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-[#6B6B8A]">
             {study.number}
           </span>
           <span
-            className="text-[9px] font-mono font-bold px-2 py-0.5 rounded"
+            className="text-[9px] font-heading font-bold px-2 py-0.5 rounded"
             style={{ background: "rgba(110,231,183,0.12)", color: "#6EE7B7" }}
           >
             ● LIVE
@@ -54,7 +54,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
               {study.title}
             </h3>
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-[#6B6B8A] tracking-[0.1em]">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-heading text-[#6B6B8A] tracking-[0.1em]">
             <span className="uppercase">{study.industry}</span>
             <span>·</span>
             <span>{study.year}</span>
@@ -74,7 +74,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
               <div className="font-display text-[20px] font-bold tracking-tight text-[#A78BFA] leading-none">
                 {m.value}
               </div>
-              <div className="font-mono text-[9px] uppercase tracking-wider text-[#6B6B8A] mt-0.5">
+              <div className="font-heading text-[9px] uppercase tracking-wider text-[#6B6B8A] mt-0.5">
                 {m.label}
               </div>
             </div>
@@ -109,8 +109,8 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
               </p>
 
               {/* The move that mattered */}
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
-                // THE MOVE THAT MATTERED
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
+                THE MOVE THAT MATTERED
               </p>
               <ul className="space-y-3 mb-6 max-w-3xl">
                 {study.moves.map((move, i) => (
@@ -122,7 +122,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
               </ul>
 
               {/* Result */}
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#6EE7B7] mb-6 px-3 py-2 rounded w-fit"
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-[#6EE7B7] mb-6 px-3 py-2 rounded w-fit"
                 style={{ background: "rgba(110,231,183,0.08)", border: "1px solid rgba(110,231,183,0.2)" }}>
                 {study.result}
               </p>
@@ -139,7 +139,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
                       <div className="font-display font-bold text-[20px] tracking-tight text-[#EDE9FE] leading-none">
                         {m.value}
                       </div>
-                      <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-[#6B6B8A] mt-1">
+                      <div className="font-heading text-[9px] font-bold uppercase tracking-wider text-[#6B6B8A] mt-1">
                         {m.label}
                       </div>
                     </div>
@@ -149,7 +149,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
                   {study.stack.map((s) => (
                     <span
                       key={s}
-                      className="font-mono text-[11px] font-semibold px-2.5 py-1 rounded-md"
+                      className="font-heading text-[11px] font-semibold px-2.5 py-1 rounded-md"
                       style={{ background: "rgba(167,139,250,0.08)", border: "1px solid rgba(167,139,250,0.18)", color: "#A8A4C7" }}
                     >
                       {s}
@@ -181,7 +181,7 @@ export default function Work() {
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
               01 / WORK
             </span>
           </div>
@@ -190,7 +190,7 @@ export default function Work() {
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             Six programs.{" "}
-            <span className="gradient-text italic font-normal">Real numbers</span>.
+            <span className="gradient-text font-normal">Real numbers</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
             Six programs —{" "}
@@ -224,12 +224,12 @@ export default function Work() {
             style={{ fontSize: "clamp(26px, 3.5vw, 40px)" }}
           >
             Most PMs{" "}
-            <em className="text-[#A78BFA]">coordinate</em>.{" "}
+            <em className="not-italic text-[#A78BFA]">coordinate</em>.{" "}
             <strong className="font-bold">I architect delivery</strong>, protect margin like a
             P&amp;L owner, and build AI tooling that{" "}
-            <em className="text-[#A78BFA]">compounds my own throughput</em>.
+            <em className="not-italic text-[#A78BFA]">compounds my own throughput</em>.
           </p>
-          <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-[#6B6B8A]">
+          <p className="mt-6 font-heading text-[11px] uppercase tracking-[0.2em] text-[#6B6B8A]">
             — THE PHILOSOPHY
           </p>
         </motion.div>

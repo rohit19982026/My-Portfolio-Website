@@ -39,7 +39,7 @@ export default function Contact() {
         {/* Header */}
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
               06 / LET&apos;S BUILD SOMETHING
             </span>
           </div>
@@ -47,7 +47,7 @@ export default function Contact() {
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            Got a <span className="gradient-text italic font-normal">complex</span>
+            Got a <span className="gradient-text font-normal">complex</span>
             <br />data &amp; AI program?
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
@@ -62,7 +62,7 @@ export default function Contact() {
             <div className="space-y-5 mb-10">
               {links.map((link) => (
                 <div key={link.label} className="flex items-center gap-4 group">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A] w-20 shrink-0">
+                  <span className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A] w-20 shrink-0">
                     {link.label}
                   </span>
                   <a
@@ -85,10 +85,10 @@ export default function Contact() {
                 style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
               />
               <div>
-                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">
+                <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">
                   ● OPEN FOR PROGRAMS
                 </p>
-                <p className="font-mono text-[10px] text-[#6B6B8A] mt-0.5">
+                <p className="font-heading text-[10px] text-[#6B6B8A] mt-0.5">
                   Bengaluru, India · IST · Available globally
                 </p>
               </div>
@@ -97,8 +97,8 @@ export default function Contact() {
 
           {/* Engagement types + CTA */}
           <div className="space-y-4">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
-              // I WORK ON
+            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
+              I WORK ON
             </p>
             {engagementTypes.map((type) => (
               <div
@@ -107,13 +107,13 @@ export default function Contact() {
                 style={{ border: "1px solid rgba(167,139,250,0.14)", background: "#1B1B2A" }}
               >
                 <p className="font-heading text-[14px] font-semibold text-[#EDE9FE] mb-1">{type.label}</p>
-                <p className="font-mono text-[11px] text-[#6B6B8A]">{type.desc}</p>
+                <p className="font-heading text-[11px] text-[#6B6B8A]">{type.desc}</p>
               </div>
             ))}
 
             <a
               href="mailto:singhrohit.25119@gmail.com"
-              className="mt-6 w-full flex items-center justify-center py-3.5 rounded-full font-mono font-bold text-[12px] uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110"
+              className="mt-6 w-full flex items-center justify-center py-3.5 rounded-full font-heading font-bold text-[12px] uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110"
               style={{ background: "#A78BFA", boxShadow: "0 0 24px rgba(167,139,250,0.3)" }}
             >
               Email me directly →

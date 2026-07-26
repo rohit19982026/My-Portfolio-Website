@@ -83,7 +83,7 @@ export default function Approach() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
               02 / APPROACH
             </span>
           </div>
@@ -91,7 +91,7 @@ export default function Approach() {
             className="font-display font-bold tracking-tight leading-[0.97] mb-5"
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
-            How I approach <span className="gradient-text italic font-normal">programs</span>.
+            How I approach <span className="gradient-text font-normal">programs</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
             The same three things, across{" "}
@@ -115,7 +115,7 @@ export default function Approach() {
               onMouseMove={handleSpotlight}
             >
               <span
-                className="inline-block font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded mb-7"
+                className="inline-block font-heading text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded mb-7"
                 style={{ color: "#A78BFA", border: "1px solid rgba(167,139,250,0.4)" }}
               >
                 {card.num}
@@ -128,7 +128,7 @@ export default function Approach() {
                 {card.highlights.map((h) => (
                   <span
                     key={h}
-                    className="font-mono text-[10px] px-2 py-0.5 rounded"
+                    className="font-heading text-[10px] px-2 py-0.5 rounded"
                     style={{ background: "rgba(167,139,250,0.1)", color: "#A78BFA" }}
                   >
                     {h}
@@ -144,9 +144,9 @@ export default function Approach() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
-          className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#A78BFA] mb-5"
+          className="font-heading text-[10px] font-bold uppercase tracking-[0.2em] text-[#A78BFA] mb-5"
         >
-          // MOMENTS THAT PROVE IT
+          MOMENTS THAT PROVE IT
         </motion.p>
 
         <div className="grid sm:grid-cols-2 gap-3 mb-14">
@@ -161,12 +161,12 @@ export default function Approach() {
             >
               <div className="flex items-center justify-between gap-2 mb-3">
                 <span
-                  className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] px-2 py-0.5 rounded"
+                  className="font-heading text-[9px] font-bold uppercase tracking-[0.18em] px-2 py-0.5 rounded"
                   style={{ color: item.color, background: `${item.color}18` }}
                 >
                   {item.tag}
                 </span>
-                <span className="font-mono text-[10px] font-bold" style={{ color: item.color }}>
+                <span className="font-heading text-[10px] font-bold" style={{ color: item.color }}>
                   {item.stat}
                 </span>
               </div>
@@ -186,8 +186,8 @@ export default function Approach() {
           className="rounded-2xl p-8 md:p-10"
           style={{ border: "1px solid rgba(167,139,250,0.2)", background: "rgba(167,139,250,0.04)" }}
         >
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B8A] mb-7">
-            // EXECUTION PHILOSOPHY
+          <p className="font-heading text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B8A] mb-7">
+            EXECUTION PHILOSOPHY
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {philosophy.map((item, i) => (
@@ -196,7 +196,7 @@ export default function Approach() {
                   <p className="font-display text-[28px] font-bold gradient-text leading-none">
                     {item.label}
                   </p>
-                  <p className="font-mono text-[11px] text-[#6B6B8A] mt-1">{item.sub}</p>
+                  <p className="font-heading text-[11px] text-[#6B6B8A] mt-1">{item.sub}</p>
                 </div>
                 {i < 2 && (
                   <span className="text-[28px] text-[#6B6B8A] font-light md:mx-2">→</span>

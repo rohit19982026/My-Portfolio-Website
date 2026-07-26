@@ -33,7 +33,7 @@ export default function Navbar() {
         {/* Brand */}
         <a href="#" className="flex items-center gap-3 group">
           <div
-            className="w-9 h-9 rounded-[10px] flex items-center justify-center text-[#0A0A12] font-mono font-black text-sm relative overflow-hidden"
+            className="w-9 h-9 rounded-[10px] flex items-center justify-center text-[#0A0A12] font-heading font-black text-sm relative overflow-hidden"
             style={{ background: "linear-gradient(135deg, #A78BFA, #8B5CF6)", boxShadow: "0 0 20px rgba(139,92,246,0.4)" }}
           >
             R
@@ -46,11 +46,11 @@ export default function Navbar() {
               }}
             />
           </div>
-          <span className="font-mono text-sm font-semibold text-[#EDE9FE] tracking-wide">
+          <span className="font-heading text-sm font-semibold text-[#EDE9FE] tracking-wide">
             rohit.singh
           </span>
-          <span className="font-mono text-[10px] text-[#6B6B8A] tracking-[0.18em] hidden sm:inline">
-            // PORTFOLIO &apos;26
+          <span className="font-heading text-[10px] text-[#6B6B8A] tracking-[0.18em] hidden sm:inline">
+            PORTFOLIO &apos;26
           </span>
         </a>
 
@@ -60,14 +60,14 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="px-3.5 py-2 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#A8A4C7] hover:text-[#EDE9FE] hover:bg-[rgba(255,255,255,0.05)] rounded-full transition-all duration-200"
+              className="px-3.5 py-2 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#A8A4C7] hover:text-[#EDE9FE] hover:bg-[rgba(255,255,255,0.05)] rounded-full transition-all duration-200"
             >
               {link.label}
             </a>
           ))}
           <a
             href="#contact"
-            className="ml-3 px-4 py-2 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full transition-all duration-200 hover:brightness-110"
+            className="ml-3 px-4 py-2 text-[11px] font-heading font-bold uppercase tracking-[0.12em] rounded-full transition-all duration-200 hover:brightness-110"
             style={{
               background: "#A78BFA",
               color: "#0A0A12",
@@ -102,7 +102,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="block py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#A8A4C7] hover:text-[#A78BFA] transition-colors border-b border-[rgba(255,255,255,0.04)] last:border-0"
+              className="block py-3 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#A8A4C7] hover:text-[#A78BFA] transition-colors border-b border-[rgba(255,255,255,0.04)] last:border-0"
             >
               {link.label}
             </a>
@@ -110,7 +110,7 @@ export default function Navbar() {
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-block px-5 py-2.5 text-[11px] font-mono font-bold uppercase tracking-[0.12em] rounded-full text-[#0A0A12]"
+            className="mt-4 inline-block px-5 py-2.5 text-[11px] font-heading font-bold uppercase tracking-[0.12em] rounded-full text-[#0A0A12]"
             style={{ background: "#A78BFA" }}
           >
             Let&apos;s Talk ↗

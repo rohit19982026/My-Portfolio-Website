@@ -116,7 +116,7 @@ export default function Skills() {
                   {group.category}
                 </h3>
               </div>
-              <p className="text-xs text-[#6b7280] mb-4 italic">{group.context}:</p>
+              <p className="text-xs text-[#6b7280] mb-4">{group.context}:</p>
               <ul className="space-y-3">
                 {group.items.map((item) => (
                   <li key={item.name}>

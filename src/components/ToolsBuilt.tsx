@@ -64,7 +64,7 @@ export default function ToolsBuilt() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
               03 / TOOLS I&apos;VE BUILT
             </span>
           </div>
@@ -73,7 +73,7 @@ export default function ToolsBuilt() {
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             Six tools I built to{" "}
-            <span className="gradient-text italic font-normal">stop doing things manually</span>.
+            <span className="gradient-text font-normal">stop doing things manually</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
             Monthly financial reviews used to take{" "}
@@ -106,7 +106,7 @@ export default function ToolsBuilt() {
                   style={{ background: tool.color, boxShadow: `0 0 8px ${tool.color}` }}
                 />
                 <p
-                  className="font-mono text-[9.5px] font-bold uppercase tracking-[0.18em]"
+                  className="font-heading text-[9.5px] font-bold uppercase tracking-[0.18em]"
                   style={{ color: tool.color }}
                 >
                   {tool.category}
@@ -118,7 +118,7 @@ export default function ToolsBuilt() {
               <p className="text-[13px] leading-relaxed text-[#A8A4C7] mb-5">{tool.body}</p>
               <ul className="space-y-1.5">
                 {tool.proof.map((p) => (
-                  <li key={p} className="flex items-center gap-2 font-mono text-[10px]" style={{ color: tool.color }}>
+                  <li key={p} className="flex items-center gap-2 font-heading text-[10px]" style={{ color: tool.color }}>
                     <span className="shrink-0">✓</span>
                     {p}
                   </li>

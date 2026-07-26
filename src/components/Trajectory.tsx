@@ -72,7 +72,7 @@ export default function Trajectory() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
               05 / TRAJECTORY
             </span>
           </div>
@@ -81,7 +81,7 @@ export default function Trajectory() {
             style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}
           >
             Where I&apos;ve been.{" "}
-            <span className="gradient-text italic font-normal">What I delivered</span>.
+            <span className="gradient-text font-normal">What I delivered</span>.
           </h2>
           <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
             5 years at phData managing data and AI delivery programs. Before that, British Telecom.
@@ -113,12 +113,12 @@ export default function Trajectory() {
                     />
 
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A]">
+                      <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A]">
                         {role.period}
                       </p>
                       {role.current && (
                         <span
-                          className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wide"
+                          className="px-2 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wide"
                           style={{ background: "rgba(110,231,183,0.1)", color: "#6EE7B7", border: "1px solid rgba(110,231,183,0.25)" }}
                         >
                           CURRENT
@@ -130,7 +130,7 @@ export default function Trajectory() {
                       {role.title}
                     </h3>
                     <p
-                      className="font-mono text-[11px] font-bold uppercase tracking-wider mb-5"
+                      className="font-heading text-[11px] font-bold uppercase tracking-wider mb-5"
                       style={{ color: role.color }}
                     >
                       {role.org}
@@ -152,7 +152,7 @@ export default function Trajectory() {
                       {role.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="font-mono text-[10px] px-2.5 py-1 rounded-full font-semibold"
+                          className="font-heading text-[10px] px-2.5 py-1 rounded-full font-semibold"
                           style={{
                             borderColor: `${role.color}35`,
                             backgroundColor: `${role.color}0D`,
@@ -182,14 +182,14 @@ export default function Trajectory() {
               className="p-5 rounded-2xl"
               style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
-                // EDUCATION
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
+                EDUCATION
               </p>
               <p className="font-display font-bold text-[#EDE9FE] text-[15px] leading-snug mb-1">
                 {education.degree}
               </p>
-              <p className="font-mono text-[11px] text-[#A8A4C7] font-medium">{education.institution}</p>
-              <p className="font-mono text-[11px] text-[#6B6B8A] mt-0.5">{education.year} · {education.grade}</p>
+              <p className="font-heading text-[11px] text-[#A8A4C7] font-medium">{education.institution}</p>
+              <p className="font-heading text-[11px] text-[#6B6B8A] mt-0.5">{education.year} · {education.grade}</p>
             </div>
 
             {/* Certifications */}
@@ -197,14 +197,14 @@ export default function Trajectory() {
               className="p-5 rounded-2xl"
               style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
-                // CERTIFICATIONS & COURSES
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
+                CERTIFICATIONS & COURSES
               </p>
               <ul className="space-y-2.5">
                 {certifications.map((c) => (
                   <li key={c.name} className="flex items-start gap-2">
                     <span
-                      className="mt-0.5 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0"
+                      className="mt-0.5 text-[10px] font-heading font-bold px-1.5 py-0.5 rounded shrink-0"
                       style={
                         c.type === "cert"
                           ? { background: "#A78BFA", color: "#0A0A12" }
@@ -215,7 +215,7 @@ export default function Trajectory() {
                     </span>
                     <div>
                       <p className="font-heading text-[12px] font-semibold text-[#EDE9FE] leading-tight">{c.name}</p>
-                      <p className="font-mono text-[10px] text-[#6B6B8A]">{c.issuer}</p>
+                      <p className="font-heading text-[10px] text-[#6B6B8A]">{c.issuer}</p>
                     </div>
                   </li>
                 ))}
@@ -227,8 +227,8 @@ export default function Trajectory() {
               className="p-5 rounded-2xl"
               style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.05)" }}
             >
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#FBBF24" }}>
-                // AWARD
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#FBBF24" }}>
+                AWARD
               </p>
               <p className="font-display font-bold text-[#EDE9FE] text-[14px] mb-2 flex items-center gap-2">
                 🏆 {award.title}

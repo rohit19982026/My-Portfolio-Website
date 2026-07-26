@@ -68,11 +68,11 @@ function StatCell({
         className="absolute bottom-0 left-0 h-[2px] w-[60%] rounded-bl-[10px]"
         style={{ background: "linear-gradient(90deg, #A78BFA, transparent)" }}
       />
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#6B6B8A] mb-3">{label}</p>
+      <p className="font-heading text-[10px] uppercase tracking-[0.16em] text-[#6B6B8A] mb-3">{label}</p>
       <p className="font-display text-[38px] leading-none font-bold tracking-tight text-[#EDE9FE]">
         {prefix}{val}{suffix}
       </p>
-      <p className="mt-2 font-mono text-[10px] tracking-[0.1em] text-[#6EE7B7] flex items-center gap-2">
+      <p className="mt-2 font-heading text-[10px] tracking-[0.1em] text-[#6EE7B7] flex items-center gap-2">
         <span
           className="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"
           style={{ animation: "ticker-blink 1.4s ease-in-out infinite" }}
@@ -159,7 +159,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] text-[#A8A4C7] w-fit"
+          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full font-heading text-[11px] tracking-[0.16em] text-[#A8A4C7] w-fit"
           style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.06)" }}
         >
           <span
@@ -179,7 +179,7 @@ export default function Hero() {
           <WordRise delay={0.17}>that </WordRise>
           <WordRise delay={0.22}>
             <span
-              className="italic font-normal"
+              className="font-normal"
               style={{
                 background: "linear-gradient(90deg, #A78BFA 0%, #F0ABFC 50%, #A78BFA 100%)",
                 backgroundSize: "200% auto",
@@ -222,14 +222,14 @@ export default function Hero() {
         >
           <a
             href="#work"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110 active:scale-95"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110 active:scale-95"
             style={{ background: "#A78BFA", boxShadow: "0 0 28px rgba(167,139,250,0.4)" }}
           >
             See the work →
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-[#EDE9FE] transition-all duration-200 hover:bg-[rgba(167,139,250,0.08)]"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-[#EDE9FE] transition-all duration-200 hover:bg-[rgba(167,139,250,0.08)]"
             style={{ border: "1px solid rgba(167,139,250,0.3)" }}
           >
             Email me ✉
@@ -255,11 +255,11 @@ export default function Hero() {
           />
 
           <div className="flex justify-between items-center mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6B6B8A]">
-              // ACTIVE PORTFOLIO ·{" "}
+            <p className="font-heading text-[11px] uppercase tracking-[0.18em] text-[#6B6B8A]">
+              ACTIVE PORTFOLIO ·{" "}
               <span className="text-[#A78BFA]">LIVE NUMBERS</span>
             </p>
-            <div className="hidden sm:flex gap-4 font-mono text-[10px] tracking-[0.14em] text-[#6B6B8A]">
+            <div className="hidden sm:flex gap-4 font-heading text-[10px] tracking-[0.14em] text-[#6B6B8A]">
               <span>STATUS · <span className="text-[#6EE7B7]">GREEN</span></span>
               <span>SYNC · LIVE</span>
               <span>VER · 26.5.1</span>
@@ -290,7 +290,7 @@ export default function Hero() {
           {[...industries, ...industries].map(([name, sub], i) => (
             <span key={i} className="inline-flex items-center gap-2 px-6 shrink-0">
               <span className="font-display text-[20px] font-normal text-[#A8A4C7] tracking-[-0.01em]">{name}</span>
-              <span className="font-display italic text-[16px] text-[#A78BFA]">{sub}</span>
+              <span className="font-display text-[16px] text-[#A78BFA]">{sub}</span>
               <span className="text-[#6B6B8A] ml-4">◆</span>
             </span>
           ))}

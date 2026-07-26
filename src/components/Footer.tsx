@@ -16,13 +16,13 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <p className="font-mono font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">// EXPLORE</p>
+            <p className="font-heading font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">EXPLORE</p>
             <ul className="space-y-2">
               {[["Work", "#work"], ["Approach", "#approach"], ["Tools", "#tools"], ["Trajectory", "#trajectory"]].map(([label, href]) => (
                 <li key={label}>
                   <a
                     href={href}
-                    className="font-mono text-[12px] text-[#6B6B8A] hover:text-[#A78BFA] transition-colors"
+                    className="font-heading text-[12px] text-[#6B6B8A] hover:text-[#A78BFA] transition-colors"
                   >
                     → {label}
                   </a>
@@ -31,7 +31,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-mono font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">// CONNECT</p>
+            <p className="font-heading font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">CONNECT</p>
             <ul className="space-y-2">
               {[
                 ["Email", "mailto:singhrohit.25119@gmail.com"],
@@ -41,7 +41,7 @@ export default function Footer() {
                 <li key={label}>
                   <a
                     href={href}
-                    className="font-mono text-[12px] text-[#6B6B8A] hover:text-[#A78BFA] transition-colors"
+                    className="font-heading text-[12px] text-[#6B6B8A] hover:text-[#A78BFA] transition-colors"
                   >
                     → {label}
                   </a>
@@ -50,9 +50,9 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-mono font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">// AVAILABILITY</p>
+            <p className="font-heading font-bold uppercase tracking-widest text-[#6B6B8A] mb-3 text-[10px]">AVAILABILITY</p>
             <div
-              className="flex items-center gap-2 font-mono text-[11px] font-bold mb-1.5"
+              className="flex items-center gap-2 font-heading text-[11px] font-bold mb-1.5"
               style={{ color: "#6EE7B7" }}
             >
               <span
@@ -61,12 +61,12 @@ export default function Footer() {
               />
               Open for programs
             </div>
-            <p className="font-mono text-[11px] text-[#6B6B8A]">Bengaluru, India · IST</p>
-            <p className="font-mono text-[11px] text-[#6B6B8A]">Available globally</p>
+            <p className="font-heading text-[11px] text-[#6B6B8A]">Bengaluru, India · IST</p>
+            <p className="font-heading text-[11px] text-[#6B6B8A]">Available globally</p>
           </div>
         </div>
         <div
-          className="pt-6 flex flex-col sm:flex-row justify-between gap-2 font-mono text-[10px] text-[#6B6B8A] uppercase tracking-[0.16em]"
+          className="pt-6 flex flex-col sm:flex-row justify-between gap-2 font-heading text-[10px] text-[#6B6B8A] uppercase tracking-[0.16em]"
           style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
           <p>© 2026 ROHIT KUMAR SINGH · ALL WORK ANONYMIZED</p>
