@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import HeroBackdrop from "./HeroBackdrop";
 
 const industries = [
   ["EdTech", "K-12 to higher-ed"],
@@ -83,39 +84,6 @@ function StatCell({
   );
 }
 
-// Word-rise: each word clips from overflow:hidden container
-function WordRise({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <span
-      style={{
-        display: "inline-block",
-        overflow: "hidden",
-        paddingBottom: "0.08em",
-        marginBottom: "-0.08em",
-        verticalAlign: "bottom",
-      }}
-    >
-      <motion.span
-        className={className}
-        style={{ display: "inline-block" }}
-        initial={{ y: "115%" }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {children}
-      </motion.span>
-    </span>
-  );
-}
-
 export default function Hero() {
   const panelRef = useRef(null);
   const panelInView = useInView(panelRef, { once: true, margin: "-80px" });
@@ -153,6 +121,9 @@ export default function Hero() {
         }}
       />
 
+      {/* Agent-orchestration loop, composited behind the content */}
+      <HeroBackdrop />
+
       <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20 relative z-10">
         {/* Available pill */}
         <motion.div
@@ -169,39 +140,19 @@ export default function Hero() {
           AVAILABLE FOR PROGRAMS · BENGALURU IN · UTC+5:30
         </motion.div>
 
-        {/* H1 — word rise */}
-        <h1
-          className="font-display leading-[0.93] tracking-[-0.04em] mb-8"
-          style={{ fontSize: "clamp(64px, 11vw, 148px)" }}
-        >
-          <WordRise delay={0.05}>Programs</WordRise>
-          <br />
-          <WordRise delay={0.17}>that </WordRise>
-          <WordRise delay={0.22}>
-            <span
-              className="font-normal"
-              style={{
-                background: "linear-gradient(90deg, #A78BFA 0%, #F0ABFC 50%, #A78BFA 100%)",
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                animation: "gradient-shift 6s linear infinite",
-              }}
-            >
-              hold
-            </span>
-          </WordRise>
-          <br />
-          <WordRise delay={0.36}>under load.</WordRise>
+        {/* The orchestration backdrop carries the hero visually; the heading stays
+            in the document for search engines and screen readers. */}
+        <h1 className="sr-only">
+          Rohit Kumar Singh — Technical Program Manager, data and AI delivery
         </h1>
 
-        {/* Sub */}
+        {/* Lead copy */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="text-[17px] leading-[1.65] text-[#A8A4C7] max-w-[680px] mb-10"
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="leading-[1.55] text-[#A8A4C7] max-w-[740px] mb-10"
+          style={{ fontSize: "clamp(19px, 2.3vw, 25px)" }}
         >
           I manage data and AI delivery programs for enterprise companies —{" "}
           <em className="not-italic text-[#A78BFA] font-semibold">migrations, lakehouses, AI deployments</em>.
@@ -217,7 +168,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap gap-3 mb-14"
         >
           <a
