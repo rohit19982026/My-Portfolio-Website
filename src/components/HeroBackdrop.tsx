@@ -9,23 +9,34 @@ import { useEffect, useRef, useState } from "react";
  * contributes nothing over the page background, so only the neon graph adds
  * light and there is no visible video rectangle to give the trick away.
  *
- * Cost is kept deliberately low. The poster carries first paint, and the video
- * is only fetched on wider viewports where the graph actually has room to read
- * as a diagram — phones get the still alone, so no one downloads 685KB of
- * decoration over cellular. Playback also pauses off-screen and on hidden tabs,
- * and reduced-motion or save-data visitors never load the video at all.
+ * The wrapper is pinned to exactly one viewport tall (`h-screen`), not
+ * `inset-0` on the hero section. The section itself grows taller than one
+ * screen on narrow viewports because the lead paragraph wraps to many lines —
+ * an `inset-0` backdrop would stretch across that whole, variable height and
+ * the composition below would land in a different place on every screen size.
+ * Pinning to one screen keeps it consistent.
+ *
+ * Cost is kept deliberately low. The poster carries first paint everywhere,
+ * and the 685KB video streams in on top of it on every viewport, including
+ * phones. Playback pauses off-screen and on hidden tabs, and anyone who has
+ * asked for reduced motion, turned on Data Saver, or is on a 2G-class
+ * connection gets the still poster only.
  */
 
 const DESKTOP_Q = "(min-width: 768px)";
 const REDUCED_Q = "(prefers-reduced-motion: reduce)";
+const SLOW_CONNECTIONS = new Set(["slow-2g", "2g"]);
 
-// Softens the clip into the page so its edges never read as a hard boundary.
-const MASK =
+// On mobile the graph sits behind the lead paragraph rather than beside it,
+// so it's masked tighter and anchored higher than the desktop composition.
+const MASK_MOBILE =
+  "radial-gradient(90% 60% at 68% 30%, #000 40%, rgba(0,0,0,0.5) 70%, transparent 90%)";
+const MASK_DESKTOP =
   "radial-gradient(100% 76% at 62% 44%, #000 42%, rgba(0,0,0,0.55) 72%, transparent 92%)";
 
-// Holds copy legible on the left, lets the graph breathe right of centre, and
-// clears the stats panel so it never sits on top of moving light.
-const SCRIM = [
+const SCRIM_MOBILE =
+  "linear-gradient(180deg, rgba(10,10,18,0.5) 0%, rgba(10,10,18,0.12) 24%, rgba(10,10,18,0.35) 46%, rgba(10,10,18,0.94) 68%, #0A0A12 88%)";
+const SCRIM_DESKTOP = [
   "linear-gradient(90deg, #0A0A12 0%, #0A0A12 26%, rgba(10,10,18,0.82) 44%, rgba(10,10,18,0.22) 72%, rgba(10,10,18,0.5) 100%)",
   "linear-gradient(180deg, rgba(10,10,18,0.85) 0%, rgba(10,10,18,0.08) 22%, rgba(10,10,18,0.42) 58%, rgba(10,10,18,0.88) 78%, #0A0A12 92%)",
 ].join(", ");
@@ -34,24 +45,45 @@ export default function HeroBackdrop() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [allowVideo, setAllowVideo] = useState(false);
   const [ready, setReady] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Load the clip only where it earns its bytes.
+  // Composition differs enough between the mobile (behind-text) and desktop
+  // (beside-text) layouts that the mask/scrim are picked in JS rather than
+  // fought over with responsive Tailwind classes on gradient strings.
   useEffect(() => {
-    const desktop = window.matchMedia(DESKTOP_Q);
+    const mq = window.matchMedia(DESKTOP_Q);
+    const evaluate = () => setIsDesktop(mq.matches);
+    evaluate();
+    mq.addEventListener("change", evaluate);
+    return () => mq.removeEventListener("change", evaluate);
+  }, []);
+
+  // Load the clip everywhere except for visitors who've opted out of motion
+  // or data usage — viewport size no longer gates it.
+  useEffect(() => {
     const reduced = window.matchMedia(REDUCED_Q);
     const conn = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
+      navigator as Navigator & {
+        connection?: EventTarget & {
+          saveData?: boolean;
+          effectiveType?: string;
+        };
+      }
     ).connection;
 
     const evaluate = () =>
-      setAllowVideo(desktop.matches && !reduced.matches && !conn?.saveData);
+      setAllowVideo(
+        !reduced.matches &&
+          !conn?.saveData &&
+          !SLOW_CONNECTIONS.has(conn?.effectiveType ?? ""),
+      );
 
     evaluate();
-    desktop.addEventListener("change", evaluate);
     reduced.addEventListener("change", evaluate);
+    conn?.addEventListener?.("change", evaluate);
     return () => {
-      desktop.removeEventListener("change", evaluate);
       reduced.removeEventListener("change", evaluate);
+      conn?.removeEventListener?.("change", evaluate);
     };
   }, []);
 
@@ -86,17 +118,27 @@ export default function HeroBackdrop() {
     };
   }, [allowVideo]);
 
+  const mask = isDesktop ? MASK_DESKTOP : MASK_MOBILE;
+  const scrim = isDesktop ? SCRIM_DESKTOP : SCRIM_MOBILE;
+  const position = isDesktop ? "50% 42%" : "68% 30%";
+  const targetOpacity = isDesktop ? 0.46 : 0.34;
+
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      {/* Poster carries first paint, and is the whole backdrop on phones and
-          for anyone who has asked for reduced motion. */}
+    <div
+      className="absolute inset-x-0 top-0 h-screen pointer-events-none overflow-hidden"
+      aria-hidden="true"
+    >
+      {/* Poster carries first paint, and is the whole backdrop for anyone who
+          has asked for reduced motion. */}
       <div
-        className="absolute inset-0 bg-contain bg-no-repeat bg-[center_18%] opacity-[0.18] md:bg-[center_42%] md:opacity-[0.34]"
+        className="absolute inset-0 bg-contain bg-no-repeat"
         style={{
           backgroundImage: "url(/hero/orchestration-poster.jpg)",
+          backgroundPosition: position,
           mixBlendMode: "screen",
-          maskImage: MASK,
-          WebkitMaskImage: MASK,
+          maskImage: mask,
+          WebkitMaskImage: mask,
+          opacity: isDesktop ? 0.34 : 0.22,
         }}
       />
 
@@ -106,14 +148,14 @@ export default function HeroBackdrop() {
           style={{
             opacity: ready ? 1 : 0,
             mixBlendMode: "screen",
-            maskImage: MASK,
-            WebkitMaskImage: MASK,
+            maskImage: mask,
+            WebkitMaskImage: mask,
           }}
         >
           <video
             ref={videoRef}
-            className="w-full h-full object-contain object-[50%_42%]"
-            style={{ opacity: 0.46 }}
+            className="w-full h-full object-contain"
+            style={{ opacity: targetOpacity, objectPosition: position }}
             poster="/hero/orchestration-poster.jpg"
             muted
             loop
@@ -129,7 +171,7 @@ export default function HeroBackdrop() {
         </div>
       )}
 
-      <div className="absolute inset-0" style={{ background: SCRIM }} />
+      <div className="absolute inset-0" style={{ background: scrim }} />
     </div>
   );
 }
