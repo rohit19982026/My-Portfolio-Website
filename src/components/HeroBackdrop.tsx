@@ -1,13 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+function subscribeToTheme(callback: () => void) {
+  window.addEventListener("themechange", callback);
+  return () => window.removeEventListener("themechange", callback);
+}
+
+function getThemeSnapshot() {
+  return document.documentElement.getAttribute("data-theme") === "dark";
+}
+
+function getThemeServerSnapshot() {
+  return false;
+}
 
 /**
  * Decorative agent-orchestration loop sitting behind the hero content.
  *
- * The clip is composited with `screen` blending: its near-black field
- * contributes nothing over the page background, so only the neon graph adds
- * light and there is no visible video rectangle to give the trick away.
+ * The clip is composited with `screen` blending in dark mode: its near-black
+ * field contributes nothing over the page background, so only the neon graph
+ * adds light and there is no visible video rectangle to give the trick away.
+ * `screen` only works on a dark canvas — blended onto white it resolves to
+ * solid white — so in light mode the composite switches to `multiply`
+ * instead, reusing the same dark-tuned asset (dimmer/muddier than the dark-
+ * mode look, accepted rather than commissioning a light-mode asset).
  *
  * The wrapper is pinned to exactly one viewport tall (`h-screen`), not
  * `inset-0` on the hero section. The section itself grows taller than one
@@ -35,10 +52,10 @@ const MASK_DESKTOP =
   "radial-gradient(100% 76% at 62% 44%, #000 42%, rgba(0,0,0,0.55) 72%, transparent 92%)";
 
 const SCRIM_MOBILE =
-  "linear-gradient(180deg, rgba(10,10,18,0.5) 0%, rgba(10,10,18,0.12) 24%, rgba(10,10,18,0.35) 46%, rgba(10,10,18,0.94) 68%, #0A0A12 88%)";
+  "linear-gradient(180deg, color-mix(in srgb, var(--color-bg) 50%, transparent) 0%, color-mix(in srgb, var(--color-bg) 12%, transparent) 24%, color-mix(in srgb, var(--color-bg) 35%, transparent) 46%, color-mix(in srgb, var(--color-bg) 94%, transparent) 68%, var(--color-bg) 88%)";
 const SCRIM_DESKTOP = [
-  "linear-gradient(90deg, #0A0A12 0%, #0A0A12 26%, rgba(10,10,18,0.82) 44%, rgba(10,10,18,0.22) 72%, rgba(10,10,18,0.5) 100%)",
-  "linear-gradient(180deg, rgba(10,10,18,0.85) 0%, rgba(10,10,18,0.08) 22%, rgba(10,10,18,0.42) 58%, rgba(10,10,18,0.88) 78%, #0A0A12 92%)",
+  "linear-gradient(90deg, var(--color-bg) 0%, var(--color-bg) 26%, color-mix(in srgb, var(--color-bg) 82%, transparent) 44%, color-mix(in srgb, var(--color-bg) 22%, transparent) 72%, color-mix(in srgb, var(--color-bg) 50%, transparent) 100%)",
+  "linear-gradient(180deg, color-mix(in srgb, var(--color-bg) 85%, transparent) 0%, color-mix(in srgb, var(--color-bg) 8%, transparent) 22%, color-mix(in srgb, var(--color-bg) 42%, transparent) 58%, color-mix(in srgb, var(--color-bg) 88%, transparent) 78%, var(--color-bg) 92%)",
 ].join(", ");
 
 export default function HeroBackdrop() {
@@ -46,6 +63,11 @@ export default function HeroBackdrop() {
   const [allowVideo, setAllowVideo] = useState(false);
   const [ready, setReady] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+
+  // Tracks the site's data-theme attribute so the blend mode can switch —
+  // `screen` (dark canvas) vs `multiply` (light canvas) — in step with the
+  // navbar toggle, which lives outside this component's render tree.
+  const isDark = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getThemeServerSnapshot);
 
   // Composition differs enough between the mobile (behind-text) and desktop
   // (beside-text) layouts that the mask/scrim are picked in JS rather than
@@ -121,7 +143,16 @@ export default function HeroBackdrop() {
   const mask = isDesktop ? MASK_DESKTOP : MASK_MOBILE;
   const scrim = isDesktop ? SCRIM_DESKTOP : SCRIM_MOBILE;
   const position = isDesktop ? "50% 42%" : "68% 30%";
-  const targetOpacity = isDesktop ? 0.46 : 0.34;
+  const blendMode = isDark ? "screen" : "multiply";
+
+  // `multiply`'s identity color is white, not black — unlike `screen` on a
+  // dark canvas, the clip's near-black field doesn't disappear in light mode,
+  // it darkens the page. Cutting opacity hard shrinks that footprint, and
+  // lifting the source's luminance via `filter` (light mode only) softens
+  // the remaining darkening into a faint tint instead of a visible smudge.
+  const posterOpacity = isDark ? (isDesktop ? 0.34 : 0.22) : (isDesktop ? 0.09 : 0.06);
+  const targetOpacity = isDark ? (isDesktop ? 0.46 : 0.34) : (isDesktop ? 0.12 : 0.09);
+  const lightLift = isDark ? "none" : "brightness(1.9) saturate(1.15)";
 
   return (
     <div
@@ -135,10 +166,11 @@ export default function HeroBackdrop() {
         style={{
           backgroundImage: "url(/hero/orchestration-poster.jpg)",
           backgroundPosition: position,
-          mixBlendMode: "screen",
+          mixBlendMode: blendMode,
+          filter: lightLift,
           maskImage: mask,
           WebkitMaskImage: mask,
-          opacity: isDesktop ? 0.34 : 0.22,
+          opacity: posterOpacity,
         }}
       />
 
@@ -147,7 +179,8 @@ export default function HeroBackdrop() {
           className="absolute inset-0 transition-opacity duration-[1600ms] ease-out"
           style={{
             opacity: ready ? 1 : 0,
-            mixBlendMode: "screen",
+            mixBlendMode: blendMode,
+            filter: lightLift,
             maskImage: mask,
             WebkitMaskImage: mask,
           }}

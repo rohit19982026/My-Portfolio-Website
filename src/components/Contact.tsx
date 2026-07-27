@@ -11,8 +11,8 @@ export default function Contact() {
       id="contact"
       className="py-24 relative overflow-hidden"
       style={{
-        background: "radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.18), transparent 65%), #0A0A12",
-        borderTop: "1px solid rgba(167,139,250,0.14)",
+        background: "radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 65%), var(--color-bg)",
+        borderTop: "1px solid color-mix(in srgb, var(--color-accent) 14%, transparent)",
       }}
     >
       {/* Glow orb */}
@@ -21,8 +21,8 @@ export default function Contact() {
         style={{
           width: 500,
           height: 500,
-          background: "#8B5CF6",
-          opacity: 0.08,
+          background: "var(--color-glow)",
+          opacity: "calc(var(--orb-opacity) * 0.67)",
           filter: "blur(80px)",
           top: -100,
           left: "50%",
@@ -34,7 +34,7 @@ export default function Contact() {
         {/* Header */}
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
               05 / CONTACT
             </span>
           </div>
@@ -44,7 +44,7 @@ export default function Contact() {
           >
             Get in <span className="gradient-text font-normal">touch</span>.
           </h2>
-          <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
+          <p className="text-[16px] text-text-2 max-w-xl leading-relaxed">
             Email is the most reliable way to reach me. I work on fixed-price, time
             and materials, and managed retainer engagements.
           </p>
@@ -56,12 +56,12 @@ export default function Contact() {
             <div className="space-y-5 mb-10">
               {links.map((link) => (
                 <div key={link.label} className="flex items-center gap-4 group">
-                  <span className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A] w-20 shrink-0">
+                  <span className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-text-3 w-20 shrink-0">
                     {link.label}
                   </span>
                   <a
                     href={link.href}
-                    className="text-[14px] font-semibold text-[#A8A4C7] group-hover:text-[#A78BFA] transition-colors"
+                    className="text-[14px] font-semibold text-text-2 group-hover:text-accent transition-colors"
                   >
                     {link.value}
                   </a>
@@ -72,17 +72,17 @@ export default function Contact() {
             {/* Availability badge */}
             <div
               className="inline-flex items-center gap-3 px-5 py-3.5 rounded-xl"
-              style={{ border: "1px solid rgba(110,231,183,0.25)", background: "rgba(110,231,183,0.06)" }}
+              style={{ border: "1px solid color-mix(in srgb, var(--color-mint) 25%, transparent)", background: "color-mix(in srgb, var(--color-mint) 6%, transparent)" }}
             >
               <span
-                className="w-2.5 h-2.5 rounded-full bg-[#6EE7B7] shrink-0"
+                className="w-2.5 h-2.5 rounded-full bg-mint shrink-0"
                 style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
               />
               <div>
-                <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-[#6EE7B7]">
+                <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-mint">
                   Open for programs
                 </p>
-                <p className="font-heading text-[10px] text-[#6B6B8A] mt-0.5">
+                <p className="font-heading text-[10px] text-text-3 mt-0.5">
                   Bengaluru, India · IST
                 </p>
               </div>

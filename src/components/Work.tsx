@@ -5,15 +5,15 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { caseStudies } from "@/lib/caseStudies";
 
 const modelColor: Record<string, string> = {
-  "T&M":          "#A78BFA",
-  "FIXED-PRICE":  "#6EE7B7",
-  "MANAGED":      "#F0ABFC",
+  "T&M":          "var(--color-accent)",
+  "FIXED-PRICE":  "var(--color-mint)",
+  "MANAGED":      "var(--color-pink)",
 };
 
 const modelBg: Record<string, string> = {
-  "T&M":          "rgba(167,139,250,0.12)",
-  "FIXED-PRICE":  "rgba(110,231,183,0.12)",
-  "MANAGED":      "rgba(240,171,252,0.12)",
+  "T&M":          "color-mix(in srgb, var(--color-accent) 12%, transparent)",
+  "FIXED-PRICE":  "color-mix(in srgb, var(--color-mint) 12%, transparent)",
+  "MANAGED":      "color-mix(in srgb, var(--color-pink) 12%, transparent)",
 };
 
 function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: number }) {
@@ -28,7 +28,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.06 }}
       className="rounded-xl overflow-hidden card-hover"
-      style={{ border: "1px solid rgba(255,255,255,0.06)", background: "linear-gradient(180deg, #13131F, #0D0D1A)" }}
+      style={{ border: "1px solid color-mix(in srgb, var(--color-line) 6%, transparent)", background: "linear-gradient(180deg, var(--color-bg-2), var(--color-bg))" }}
     >
       {/* Row header */}
       <button
@@ -37,18 +37,18 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
       >
         {/* Number */}
         <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
-          <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-[#6B6B8A]">
+          <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-text-3">
             {study.number}
           </span>
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-[#EDE9FE] group-hover:text-[#A78BFA] transition-colors">
+            <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-text group-hover:text-accent transition-colors">
               {study.title}
             </h3>
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-heading text-[#6B6B8A] tracking-[0.1em]">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-heading text-text-3 tracking-[0.1em]">
             <span className="uppercase">{study.industry}</span>
             <span>·</span>
             <span>{study.year}</span>
@@ -65,10 +65,10 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
         <div className="hidden lg:flex gap-3 shrink-0 mr-4">
           {study.metrics.slice(0, 2).map((m) => (
             <div key={m.label} className="text-right">
-              <div className="font-display text-[20px] font-bold tracking-tight text-[#A78BFA] leading-none">
+              <div className="font-display text-[20px] font-bold tracking-tight text-accent leading-none">
                 {m.value}
               </div>
-              <div className="font-heading text-[9px] uppercase tracking-wider text-[#6B6B8A] mt-0.5">
+              <div className="font-heading text-[9px] uppercase tracking-wider text-text-3 mt-0.5">
                 {m.label}
               </div>
             </div>
@@ -76,7 +76,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
         </div>
 
         <span
-          className="text-xl text-[#6B6B8A] group-hover:text-[#A78BFA] transition-all shrink-0 mt-0.5"
+          className="text-xl text-text-3 group-hover:text-accent transition-all shrink-0 mt-0.5"
           style={{ transform: open ? "rotate(45deg)" : "none", transition: "transform 0.25s, color 0.2s" }}
         >
           ↗
@@ -95,15 +95,15 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
           >
             <div
               className="px-6 pb-8 pt-2"
-              style={{ borderTop: "1px solid rgba(167,139,250,0.1)" }}
+              style={{ borderTop: "1px solid color-mix(in srgb, var(--color-accent) 10%, transparent)" }}
             >
               {/* Context */}
-              <p className="text-[14px] leading-relaxed text-[#A8A4C7] mb-6 max-w-3xl pt-4">
+              <p className="text-[14px] leading-relaxed text-text-2 mb-6 max-w-3xl pt-4">
                 {study.context}
               </p>
 
               {/* Key decisions */}
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-accent mb-4">
                 HOW I RAN IT
               </p>
               <div className="mb-6 max-w-3xl">
@@ -111,18 +111,18 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
                   <div
                     key={i}
                     className={i > 0 ? "pt-5 mt-5" : ""}
-                    style={i > 0 ? { borderTop: "1px solid rgba(255,255,255,0.06)" } : undefined}
+                    style={i > 0 ? { borderTop: "1px solid color-mix(in srgb, var(--color-line) 6%, transparent)" } : undefined}
                   >
-                    <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#6B6B8A] mb-1.5">
+                    <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-text-3 mb-1.5">
                       THE PROBLEM
                     </p>
-                    <p className="text-[13.5px] text-[#A8A4C7] leading-relaxed mb-3">
+                    <p className="text-[13.5px] text-text-2 leading-relaxed mb-3">
                       {decision.problem}
                     </p>
-                    <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-1.5">
+                    <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-accent mb-1.5">
                       WHAT I DID
                     </p>
-                    <p className="text-[13.5px] text-[#EDE9FE] leading-relaxed">
+                    <p className="text-[13.5px] text-text leading-relaxed">
                       {decision.action}
                     </p>
                   </div>
@@ -131,18 +131,18 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
 
               {/* Trade-off — candor, not a win: neutral treatment */}
               <div className="mb-6 max-w-3xl px-4 py-3 rounded-xl"
-                style={{ background: "rgba(168,164,199,0.06)", border: "1px solid rgba(168,164,199,0.22)" }}>
-                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A8A4C7] mb-1.5">
+                style={{ background: "color-mix(in srgb, var(--color-text-2) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--color-text-2) 22%, transparent)" }}>
+                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-text-2 mb-1.5">
                   THE TRADE-OFF
                 </p>
-                <p className="text-[13.5px] text-[#A8A4C7] leading-relaxed">
+                <p className="text-[13.5px] text-text-2 leading-relaxed">
                   {study.tradeoff}
                 </p>
               </div>
 
               {/* Result */}
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-[#6EE7B7] mb-6 px-3 py-2 rounded w-fit"
-                style={{ background: "rgba(110,231,183,0.08)", border: "1px solid rgba(110,231,183,0.2)" }}>
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-mint mb-6 px-3 py-2 rounded w-fit"
+                style={{ background: "color-mix(in srgb, var(--color-mint) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-mint) 20%, transparent)" }}>
                 {study.result}
               </p>
 
@@ -153,12 +153,12 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
                     <div
                       key={m.label}
                       className="px-4 py-3 rounded-xl text-center min-w-[80px]"
-                      style={{ background: "#1B1B2A", border: "1px solid rgba(167,139,250,0.14)" }}
+                      style={{ background: "var(--color-bg-3)", border: "1px solid color-mix(in srgb, var(--color-accent) 14%, transparent)" }}
                     >
-                      <div className="font-display font-bold text-[20px] tracking-tight text-[#EDE9FE] leading-none">
+                      <div className="font-display font-bold text-[20px] tracking-tight text-text leading-none">
                         {m.value}
                       </div>
-                      <div className="font-heading text-[9px] font-bold uppercase tracking-wider text-[#6B6B8A] mt-1">
+                      <div className="font-heading text-[9px] font-bold uppercase tracking-wider text-text-3 mt-1">
                         {m.label}
                       </div>
                     </div>
@@ -169,7 +169,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
                     <span
                       key={s}
                       className="font-heading text-[11px] font-semibold px-2.5 py-1 rounded-md"
-                      style={{ background: "rgba(167,139,250,0.08)", border: "1px solid rgba(167,139,250,0.18)", color: "#A8A4C7" }}
+                      style={{ background: "color-mix(in srgb, var(--color-accent) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-accent) 18%, transparent)", color: "var(--color-text-2)" }}
                     >
                       {s}
                     </span>
@@ -189,7 +189,7 @@ export default function Work() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="work" className="py-24 bg-[#0A0A12]">
+    <section id="work" className="py-24 bg-bg">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -200,7 +200,7 @@ export default function Work() {
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
               02 / WORK
             </span>
           </div>
@@ -211,7 +211,7 @@ export default function Work() {
             Six programs I{" "}
             <span className="gradient-text font-normal">ran</span>.
           </h2>
-          <p className="text-[16px] text-[#A8A4C7] max-w-2xl leading-relaxed">
+          <p className="text-[16px] text-text-2 max-w-2xl leading-relaxed">
             The budget, the constraint, and the decisions that changed the outcome on each
             one. Clients are anonymised.
           </p>

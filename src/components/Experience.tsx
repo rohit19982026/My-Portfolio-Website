@@ -3,13 +3,16 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const alpha = (token: string, pct: number) =>
+  `color-mix(in srgb, var(--color-${token}) ${pct}%, transparent)`;
+
 const roles = [
   {
     period: "DEC 2022 — PRESENT",
     title: "Technical Project Manager — Data & AI",
     org: "phData · Snowflake Elite Partner · Bengaluru",
     current: true,
-    color: "#A78BFA",
+    color: "accent",
     bullets: [
       "At any point I'm running 4–6 active programs — fixed-price migrations, T&M engagements, managed retainers. Different clients, different stacks, no two look the same. $3.5M+ in combined contract value.",
       "I forecast where a program will land rather than only reporting what it has spent. That's the difference between finding a funding gap with six weeks to act on it and finding it with one.",
@@ -26,7 +29,7 @@ const roles = [
     title: "Change Manager — IT Infrastructure",
     org: "British Telecom (BT) · Kolkata",
     current: false,
-    color: "#6EE7B7",
+    color: "mint",
     bullets: [
       "Change governance for critical UK telecom infrastructure — formal review, rollback planning, approval gating for 50+ changes a year. 99.9% uptime.",
       "Owned all stakeholder communication around change events: brief before, live status during, report after.",
@@ -61,7 +64,7 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" className="py-24 bg-[#0A0A12]">
+    <section id="experience" className="py-24 bg-bg">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -72,7 +75,7 @@ export default function Trajectory() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-[#A78BFA]">
+            <span className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
               01 / EXPERIENCE
             </span>
           </div>
@@ -83,7 +86,7 @@ export default function Trajectory() {
             Where I&apos;ve worked.{" "}
             <span className="gradient-text font-normal">What I delivered</span>.
           </h2>
-          <p className="text-[16px] text-[#A8A4C7] max-w-xl leading-relaxed">
+          <p className="text-[16px] text-text-2 max-w-xl leading-relaxed">
             Six years in delivery. Three and a half at phData running data and AI programs,
             two and a half before that at British Telecom running change for UK network
             infrastructure.
@@ -96,7 +99,7 @@ export default function Trajectory() {
             <div className="relative">
               <div
                 className="absolute left-0 top-2 bottom-2 w-px"
-                style={{ background: "linear-gradient(180deg, #A78BFA, rgba(167,139,250,0.1))" }}
+                style={{ background: `linear-gradient(180deg, var(--color-accent), ${alpha("accent", 10)})` }}
               />
 
               <div className="space-y-12">
@@ -109,40 +112,40 @@ export default function Trajectory() {
                     className="pl-8 relative"
                   >
                     <div
-                      className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-[#0A0A12] -translate-x-1/2"
-                      style={{ backgroundColor: role.color }}
+                      className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-bg -translate-x-1/2"
+                      style={{ backgroundColor: `var(--color-${role.color})` }}
                     />
 
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B8A]">
+                      <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-text-3">
                         {role.period}
                       </p>
                       {role.current && (
                         <span
                           className="px-2 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wide"
-                          style={{ background: "rgba(110,231,183,0.1)", color: "#6EE7B7", border: "1px solid rgba(110,231,183,0.25)" }}
+                          style={{ background: alpha("mint", 10), color: "var(--color-mint)", border: `1px solid ${alpha("mint", 25)}` }}
                         >
                           CURRENT
                         </span>
                       )}
                     </div>
 
-                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-[#EDE9FE] mb-1">
+                    <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-text mb-1">
                       {role.title}
                     </h3>
                     <p
                       className="font-heading text-[11px] font-bold uppercase tracking-wider mb-5"
-                      style={{ color: role.color }}
+                      style={{ color: `var(--color-${role.color})` }}
                     >
                       {role.org}
                     </p>
 
                     <ul className="space-y-3 mb-5">
                       {role.bullets.map((b, bi) => (
-                        <li key={bi} className="flex gap-3 text-[13.5px] text-[#A8A4C7] leading-relaxed">
+                        <li key={bi} className="flex gap-3 text-[13.5px] text-text-2 leading-relaxed">
                           <span
                             className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full"
-                            style={{ backgroundColor: role.color }}
+                            style={{ backgroundColor: `var(--color-${role.color})` }}
                           />
                           {b}
                         </li>
@@ -155,10 +158,10 @@ export default function Trajectory() {
                           key={tag}
                           className="font-heading text-[10px] px-2.5 py-1 rounded-full font-semibold"
                           style={{
-                            borderColor: `${role.color}35`,
-                            backgroundColor: `${role.color}0D`,
-                            border: `1px solid ${role.color}35`,
-                            color: role.color,
+                            borderColor: alpha(role.color, 21),
+                            backgroundColor: alpha(role.color, 5),
+                            border: `1px solid ${alpha(role.color, 21)}`,
+                            color: `var(--color-${role.color})`,
                           }}
                         >
                           {tag}
@@ -181,24 +184,24 @@ export default function Trajectory() {
             {/* Education */}
             <div
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
+              style={{ border: `1px solid ${alpha("accent", 18)}`, background: alpha("accent", 5) }}
             >
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-accent mb-3">
                 EDUCATION
               </p>
-              <p className="font-display font-bold text-[#EDE9FE] text-[15px] leading-snug mb-1">
+              <p className="font-display font-bold text-text text-[15px] leading-snug mb-1">
                 {education.degree}
               </p>
-              <p className="font-heading text-[11px] text-[#A8A4C7] font-medium">{education.institution}</p>
-              <p className="font-heading text-[11px] text-[#6B6B8A] mt-0.5">{education.year} · {education.grade}</p>
+              <p className="font-heading text-[11px] text-text-2 font-medium">{education.institution}</p>
+              <p className="font-heading text-[11px] text-text-3 mt-0.5">{education.year} · {education.grade}</p>
             </div>
 
             {/* Certifications */}
             <div
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.05)" }}
+              style={{ border: `1px solid ${alpha("accent", 18)}`, background: alpha("accent", 5) }}
             >
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-[#A78BFA] mb-3">
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-accent mb-3">
                 CERTIFICATIONS & COURSES
               </p>
               <ul className="space-y-2.5">
@@ -208,15 +211,15 @@ export default function Trajectory() {
                       className="mt-0.5 text-[10px] font-heading font-bold px-1.5 py-0.5 rounded shrink-0"
                       style={
                         c.type === "cert"
-                          ? { background: "#A78BFA", color: "#0A0A12" }
-                          : { background: "rgba(255,255,255,0.07)", color: "#6B6B8A" }
+                          ? { background: "var(--color-accent)", color: "var(--color-bg)" }
+                          : { background: alpha("line", 7), color: "var(--color-text-3)" }
                       }
                     >
                       {c.type === "cert" ? "CERT" : "COURSE"}
                     </span>
                     <div>
-                      <p className="font-heading text-[12px] font-semibold text-[#EDE9FE] leading-tight">{c.name}</p>
-                      <p className="font-heading text-[10px] text-[#6B6B8A]">{c.issuer}</p>
+                      <p className="font-heading text-[12px] font-semibold text-text leading-tight">{c.name}</p>
+                      <p className="font-heading text-[10px] text-text-3">{c.issuer}</p>
                     </div>
                   </li>
                 ))}
@@ -226,15 +229,15 @@ export default function Trajectory() {
             {/* Award */}
             <div
               className="p-5 rounded-2xl"
-              style={{ border: "1px solid rgba(251,191,36,0.3)", background: "rgba(251,191,36,0.05)" }}
+              style={{ border: `1px solid ${alpha("award", 30)}`, background: alpha("award", 5) }}
             >
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "#FBBF24" }}>
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--color-award)" }}>
                 AWARD
               </p>
-              <p className="font-display font-bold text-[#EDE9FE] text-[14px] mb-2 flex items-center gap-2">
+              <p className="font-display font-bold text-text text-[14px] mb-2 flex items-center gap-2">
                 🏆 {award.title}
               </p>
-              <p className="text-[12.5px] text-[#A8A4C7] leading-relaxed">{award.desc}</p>
+              <p className="text-[12.5px] text-text-2 leading-relaxed">{award.desc}</p>
             </div>
           </motion.div>
         </div>

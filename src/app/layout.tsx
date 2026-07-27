@@ -60,7 +60,21 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${manrope.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-[#0A0A12] text-[#EDE9FE] antialiased">
+      <body className="min-h-full flex flex-col bg-bg text-text antialiased">
+        {/* Plain, literal, blocking script — not next/script — deliberately.
+            next/script's beforeInteractive queues into a runtime array that a
+            later-loading JS chunk executes, which does not reliably beat the
+            browser's first paint. A raw inline script with no src, placed as
+            the very first thing in <body>, executes synchronously as the
+            parser reaches it, before any subsequent content is parsed or
+            painted — the only reliable way to avoid a flash of the wrong
+            theme for a returning dark-mode visitor. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();",
+          }}
+        />
         <ScrollProgress />
         <Navbar />
         <main className="flex-1 relative z-[2]">{children}</main>

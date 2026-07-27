@@ -59,21 +59,21 @@ function StatCell({
       transition={{ duration: 0.6, delay }}
       className="p-4 relative"
       style={{
-        background: "rgba(0,0,0,0.35)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        background: "var(--color-bg-3)",
+        border: "1px solid color-mix(in srgb, var(--color-line) 6%, transparent)",
         borderRadius: 10,
       }}
     >
       {/* Bottom accent line */}
       <span
         className="absolute bottom-0 left-0 h-[2px] w-[60%] rounded-bl-[10px]"
-        style={{ background: "linear-gradient(90deg, #A78BFA, transparent)" }}
+        style={{ background: "linear-gradient(90deg, var(--color-accent), transparent)" }}
       />
-      <p className="font-heading text-[10px] uppercase tracking-[0.16em] text-[#6B6B8A] mb-3">{label}</p>
-      <p className="font-display text-[38px] leading-none font-bold tracking-tight text-[#EDE9FE]">
+      <p className="font-heading text-[10px] uppercase tracking-[0.16em] text-text-3 mb-3">{label}</p>
+      <p className="font-display text-[38px] leading-none font-bold tracking-tight text-text">
         {prefix}{val}{suffix}
       </p>
-      <p className="mt-2 font-heading text-[10px] tracking-[0.1em] text-[#6B6B8A]">{delta}</p>
+      <p className="mt-2 font-heading text-[10px] tracking-[0.1em] text-text-3">{delta}</p>
     </motion.div>
   );
 }
@@ -83,7 +83,7 @@ export default function Hero() {
   const panelInView = useInView(panelRef, { once: true, margin: "-80px" });
 
   return (
-    <section className="min-h-screen flex flex-col pt-[64px] bg-[#0A0A12] relative overflow-hidden">
+    <section className="min-h-screen flex flex-col pt-[64px] bg-bg relative overflow-hidden">
       {/* Grid background */}
       <div className="absolute inset-0 hero-grid pointer-events-none" />
 
@@ -93,8 +93,8 @@ export default function Hero() {
         style={{
           width: 600,
           height: 600,
-          background: "#8B5CF6",
-          opacity: 0.12,
+          background: "var(--color-glow)",
+          opacity: "var(--orb-opacity)",
           filter: "blur(80px)",
           top: -200,
           left: -100,
@@ -106,8 +106,8 @@ export default function Hero() {
         style={{
           width: 500,
           height: 500,
-          background: "#F0ABFC",
-          opacity: 0.08,
+          background: "var(--color-pink)",
+          opacity: "calc(var(--orb-opacity) * 0.67)",
           filter: "blur(80px)",
           top: 300,
           right: -150,
@@ -124,12 +124,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full font-heading text-[11px] tracking-[0.16em] text-[#A8A4C7] w-fit"
-          style={{ border: "1px solid rgba(167,139,250,0.18)", background: "rgba(167,139,250,0.06)" }}
+          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full font-heading text-[11px] tracking-[0.16em] text-text-2 w-fit"
+          style={{ border: "1px solid color-mix(in srgb, var(--color-accent) 18%, transparent)", background: "color-mix(in srgb, var(--color-accent) 6%, transparent)" }}
         >
           <span
-            className="w-2 h-2 rounded-full bg-[#6EE7B7]"
-            style={{ boxShadow: "0 0 10px #6EE7B7", animation: "pulse-dot 2s ease-in-out infinite" }}
+            className="w-2 h-2 rounded-full bg-mint"
+            style={{ boxShadow: "0 0 10px var(--color-mint)", animation: "pulse-dot 2s ease-in-out infinite" }}
           />
           AVAILABLE FOR PROGRAMS · BENGALURU · UTC+5:30
         </motion.div>
@@ -145,14 +145,14 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="leading-[1.55] text-[#A8A4C7] max-w-[740px] mb-10"
+          className="leading-[1.55] text-text-2 max-w-[740px] mb-10"
           style={{ fontSize: "clamp(19px, 2.3vw, 25px)" }}
         >
           I&apos;m a technical project manager at phData. I run data and AI delivery programs
           for enterprise clients —{" "}
-          <em className="not-italic text-[#A78BFA] font-semibold">platform migrations, lakehouses, AI deployments</em>.
+          <em className="not-italic text-accent font-semibold">platform migrations, lakehouses, AI deployments</em>.
           {" "}Ten so far, the largest $1.37M. I also{" "}
-          <strong className="font-semibold text-[#EDE9FE]">
+          <strong className="font-semibold text-text">
             build the AI agents that handle the repetitive parts of my own job
           </strong>
           .
@@ -167,15 +167,15 @@ export default function Hero() {
         >
           <a
             href="#work"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-[#0A0A12] transition-all duration-200 hover:brightness-110 active:scale-95"
-            style={{ background: "#A78BFA", boxShadow: "0 0 28px rgba(167,139,250,0.4)" }}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-bg transition-all duration-200 hover:brightness-110 active:scale-95"
+            style={{ background: "var(--color-accent)", boxShadow: "0 0 28px color-mix(in srgb, var(--color-accent) 40%, transparent)" }}
           >
             See the work →
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-[#EDE9FE] transition-all duration-200 hover:bg-[rgba(167,139,250,0.08)]"
-            style={{ border: "1px solid rgba(167,139,250,0.3)" }}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-text transition-all duration-200 hover:bg-accent/8"
+            style={{ border: "1px solid color-mix(in srgb, var(--color-accent) 30%, transparent)" }}
           >
             Email me ✉
           </a>
@@ -189,18 +189,18 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="relative rounded-xl p-6 overflow-hidden"
           style={{
-            background: "linear-gradient(180deg, rgba(167,139,250,0.05), rgba(167,139,250,0.01))",
-            border: "1px solid rgba(167,139,250,0.14)",
+            background: "linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 5%, transparent), color-mix(in srgb, var(--color-accent) 1%, transparent))",
+            border: "1px solid color-mix(in srgb, var(--color-accent) 14%, transparent)",
           }}
         >
           {/* Top accent line */}
           <span
             className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, #A78BFA, transparent)" }}
+            style={{ background: "linear-gradient(90deg, transparent, var(--color-accent), transparent)" }}
           />
 
-          <div className="mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-            <p className="font-heading text-[11px] uppercase tracking-[0.18em] text-[#6B6B8A]">
+          <div className="mb-5 pb-4" style={{ borderBottom: "1px solid color-mix(in srgb, var(--color-line) 5%, transparent)" }}>
+            <p className="font-heading text-[11px] uppercase tracking-[0.18em] text-text-3">
               The numbers
             </p>
           </div>
@@ -217,20 +217,20 @@ export default function Hero() {
       {/* Industries marquee */}
       <div
         className="relative py-5 overflow-hidden"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+        style={{ borderTop: "1px solid color-mix(in srgb, var(--color-line) 5%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--color-line) 5%, transparent)" }}
       >
         {/* Fade masks */}
         <span className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(90deg, #0A0A12, transparent)" }} />
+          style={{ background: "linear-gradient(90deg, var(--color-bg), transparent)" }} />
         <span className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(-90deg, #0A0A12, transparent)" }} />
+          style={{ background: "linear-gradient(-90deg, var(--color-bg), transparent)" }} />
 
         <div className="flex animate-marquee">
           {[...industries, ...industries].map(([name, sub], i) => (
             <span key={i} className="inline-flex items-center gap-2 px-6 shrink-0">
-              <span className="font-display text-[20px] font-normal text-[#A8A4C7] tracking-[-0.01em]">{name}</span>
-              <span className="font-display text-[16px] text-[#A78BFA]">{sub}</span>
-              <span className="text-[#6B6B8A] ml-4">◆</span>
+              <span className="font-display text-[20px] font-normal text-text-2 tracking-[-0.01em]">{name}</span>
+              <span className="font-display text-[16px] text-accent">{sub}</span>
+              <span className="text-text-3 ml-4">◆</span>
             </span>
           ))}
         </div>
