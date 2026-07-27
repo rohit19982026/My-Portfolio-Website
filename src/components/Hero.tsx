@@ -4,17 +4,6 @@ import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import HeroBackdrop from "./HeroBackdrop";
 
-const industries = [
-  ["EdTech", "K-12 to higher-ed"],
-  ["Enterprise SaaS", "Fortune 500"],
-  ["Investment Mgmt", "regulated"],
-  ["MarTech / AdTech", "B2B2C"],
-  ["Software Intelligence", "code analytics"],
-  ["Industrial Mfg", "PIPL · global"],
-  ["Healthcare", "HIPAA"],
-  ["Filtration", "OT / IoT"],
-];
-
 function useCounter(target: number, decimals: number, active: boolean) {
   const [val, setVal] = useState(0);
   useEffect(() => {
@@ -212,28 +201,6 @@ export default function Hero() {
             <StatCell label="Largest pod managed"    target={11}   decimals={0}             suffix=""    delta="engineers, two regions"  active={panelInView} delay={0.45} />
           </div>
         </motion.div>
-      </div>
-
-      {/* Industries marquee */}
-      <div
-        className="relative py-5 overflow-hidden"
-        style={{ borderTop: "1px solid color-mix(in srgb, var(--color-line) 5%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--color-line) 5%, transparent)" }}
-      >
-        {/* Fade masks */}
-        <span className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(90deg, var(--color-bg), transparent)" }} />
-        <span className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(-90deg, var(--color-bg), transparent)" }} />
-
-        <div className="flex animate-marquee">
-          {[...industries, ...industries].map(([name, sub], i) => (
-            <span key={i} className="inline-flex items-center gap-2 px-6 shrink-0">
-              <span className="font-display text-[20px] font-normal text-text-2 tracking-[-0.01em]">{name}</span>
-              <span className="font-display text-[16px] text-accent">{sub}</span>
-              <span className="text-text-3 ml-4">◆</span>
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   );
