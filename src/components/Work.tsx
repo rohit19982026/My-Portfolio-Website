@@ -104,16 +104,41 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
 
               {/* Key decisions */}
               <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-4">
-                KEY DECISIONS
+                HOW I RAN IT
               </p>
-              <ul className="space-y-3 mb-6 max-w-3xl">
-                {study.moves.map((move, i) => (
-                  <li key={i} className="flex gap-3 text-[13.5px] text-[#A8A4C7] leading-relaxed">
-                    <span className="text-[#A78BFA] font-bold shrink-0 mt-0.5">→</span>
-                    {move}
-                  </li>
+              <div className="mb-6 max-w-3xl">
+                {study.decisions.map((decision, i) => (
+                  <div
+                    key={i}
+                    className={i > 0 ? "pt-5 mt-5" : ""}
+                    style={i > 0 ? { borderTop: "1px solid rgba(255,255,255,0.06)" } : undefined}
+                  >
+                    <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#6B6B8A] mb-1.5">
+                      THE PROBLEM
+                    </p>
+                    <p className="text-[13.5px] text-[#A8A4C7] leading-relaxed mb-3">
+                      {decision.problem}
+                    </p>
+                    <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A78BFA] mb-1.5">
+                      WHAT I DID
+                    </p>
+                    <p className="text-[13.5px] text-[#EDE9FE] leading-relaxed">
+                      {decision.action}
+                    </p>
+                  </div>
                 ))}
-              </ul>
+              </div>
+
+              {/* Trade-off — candor, not a win: neutral treatment */}
+              <div className="mb-6 max-w-3xl px-4 py-3 rounded-xl"
+                style={{ background: "rgba(168,164,199,0.06)", border: "1px solid rgba(168,164,199,0.22)" }}>
+                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-[#A8A4C7] mb-1.5">
+                  THE TRADE-OFF
+                </p>
+                <p className="text-[13.5px] text-[#A8A4C7] leading-relaxed">
+                  {study.tradeoff}
+                </p>
+              </div>
 
               {/* Result */}
               <p className="font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-[#6EE7B7] mb-6 px-3 py-2 rounded w-fit"
