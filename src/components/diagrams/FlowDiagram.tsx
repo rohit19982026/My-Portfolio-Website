@@ -9,9 +9,14 @@ export type DiagramNode = {
   y: number;
   w: number;
   h: number;
+  /** Use "\n" to wrap onto a second line in narrow (e.g. side-by-side
+   *  parallel) nodes. */
   label: string;
   sub: string;
   tone?: "ink" | "blue" | "lime" | "white";
+  /** Small tag above the label (e.g. "SKILL", "TOOL CALL") — used instead
+   *  of prefixing the label itself when a node is too narrow for both. */
+  eyebrow?: string;
   /** "marker" renders a small unlabeled circle — used for graph-style
    *  start/end nodes, not a content node. */
   shape?: "rect" | "marker";
@@ -142,6 +147,18 @@ export default function FlowDiagram({
             );
           }
 
+          // Label supports "\n" (compact side-by-side nodes wrap to a 2nd
+          // line); an optional eyebrow tag stacks above it. Every line is
+          // laid out from one line-height table so a plain single-line
+          // label+sub node and a compact eyebrow+2-line node use the same
+          // vertical-centering math.
+          const lines: { text: string; size: number; weight: string; opacity: number; isEyebrow?: boolean }[] = [];
+          if (n.eyebrow) lines.push({ text: n.eyebrow, size: 8, weight: "700", opacity: 0.65, isEyebrow: true });
+          n.label.split("\n").forEach((l) => lines.push({ text: l, size: 12, weight: "700", opacity: 1 }));
+          if (n.sub) lines.push({ text: n.sub, size: 9.5, weight: "400", opacity: 0.75 });
+          const lineH = 13;
+          const startY = n.y + n.h / 2 - (lines.length * lineH) / 2 + lineH * 0.72;
+
           return (
             <motion.g
               key={n.id}
@@ -151,12 +168,21 @@ export default function FlowDiagram({
               style={{ transformOrigin: `${n.x + n.w / 2}px ${n.y + n.h / 2}px` }}
             >
               <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={4} fill={tone.fill} stroke="rgba(255,255,255,0.12)" />
-              <text x={n.x + n.w / 2} y={n.y + n.h / 2 - 2} textAnchor="middle" fill={tone.text} fontSize="13" fontWeight="700">
-                {n.label}
-              </text>
-              <text x={n.x + n.w / 2} y={n.y + n.h / 2 + 14} textAnchor="middle" fill={tone.text} fontSize="10.5" opacity={0.75}>
-                {n.sub}
-              </text>
+              {lines.map((ln, li) => (
+                <text
+                  key={li}
+                  x={n.x + n.w / 2}
+                  y={startY + li * lineH}
+                  textAnchor="middle"
+                  fill={tone.text}
+                  fontSize={ln.size}
+                  fontWeight={ln.weight}
+                  opacity={ln.opacity}
+                  letterSpacing={ln.isEyebrow ? "0.08em" : undefined}
+                >
+                  {ln.text}
+                </text>
+              ))}
             </motion.g>
           );
         })}
