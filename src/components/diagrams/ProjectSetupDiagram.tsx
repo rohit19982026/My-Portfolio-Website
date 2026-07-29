@@ -8,39 +8,40 @@ import FlowDiagram, { type DiagramNode, type DiagramEdge } from "./FlowDiagram";
 // cards, connection-point dots, smooth rounded connectors.
 const nodes: DiagramNode[] = [
   { id: "start",  x: 160, y: 2,   w: 20,  h: 20, label: "", sub: "", shape: "marker" },
-  { id: "brief",  x: 30,  y: 32,  w: 280, h: 46, label: "Program Brief", sub: "Signed SOW in",        tone: "ink",  icon: "trigger" },
-  { id: "agent",  x: 70,  y: 96,  w: 200, h: 44, label: "Setup Agent",   sub: "Glean Agent · Claude",  tone: "lime", icon: "agent" },
-  { id: "jira",   x: 25,  y: 160, w: 90,  h: 68, label: "Jira API",         sub: "", eyebrow: "TOOL CALL", tone: "blue",  icon: "tool" },
-  { id: "sprint", x: 125, y: 160, w: 90,  h: 68, label: "Sprint\nCadence",  sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "risk",   x: 225, y: 160, w: 90,  h: 68, label: "Risk Log",        sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "raci",   x: 35,  y: 250, w: 125, h: 64, label: "RACI",            sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "gov",    x: 180, y: 250, w: 125, h: 64, label: "Governance\nTemplates", sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "ready",  x: 70,  y: 334, w: 200, h: 44, label: "Program Ready",   sub: "15 minutes, day one", tone: "lime", icon: "output" },
-  { id: "end",    x: 160, y: 392, w: 20,  h: 20, label: "", sub: "", shape: "marker" },
+  { id: "brief",  x: 30,  y: 34,  w: 280, h: 46, label: "Program Brief", sub: "Signed SOW in",        tone: "ink",  icon: "trigger" },
+  { id: "agent",  x: 70,  y: 100, w: 200, h: 44, label: "Setup Agent",   sub: "Glean Agent · Claude",  tone: "lime", icon: "agent" },
+  { id: "jira",   x: 25,  y: 208, w: 90,  h: 68, label: "Jira API",         sub: "", eyebrow: "TOOL CALL", tone: "blue",  icon: "tool" },
+  { id: "sprint", x: 125, y: 208, w: 90,  h: 68, label: "Sprint\nCadence",  sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
+  { id: "risk",   x: 225, y: 208, w: 90,  h: 68, label: "Risk Log",        sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
+  { id: "raci",   x: 35,  y: 350, w: 125, h: 64, label: "RACI",            sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
+  { id: "gov",    x: 180, y: 350, w: 125, h: 64, label: "Governance\nTemplates", sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
+  { id: "ready",  x: 70,  y: 474, w: 200, h: 44, label: "Program Ready",   sub: "15 minutes, day one", tone: "lime", icon: "output" },
+  { id: "end",    x: 160, y: 536, w: 20,  h: 20, label: "", sub: "", shape: "marker" },
 ];
 
 // Row A (Jira/Sprint/Risk) and row B (RACI/Governance) both dispatch
-// straight from the agent — row A directly below it (clear gap, no
-// obstruction), row B via a margin trunk on each side that clears row A's
-// footprint entirely before dropping down. Convergence to "Program Ready"
-// mirrors the same shape: row A routes around row B's footprint via the
-// same margins, row B (already below, clear gap) connects directly, and
+// straight from the agent — row A directly below it with a generous 64px
+// drop (a shallow drop over this much horizontal spread reads as flat,
+// cluttered lines), row B via a margin trunk on each side that clears row
+// A's footprint entirely before dropping down. Convergence to "Program
+// Ready" mirrors the same shape: row A routes around row B's footprint via
+// the same margins, row B (already below, clear gap) connects directly, and
 // the one node with no lateral obstruction (Sprint Cadence) runs straight
 // down the natural gap between RACI and Governance.
 const edges: DiagramEdge[] = [
-  { points: [[170, 22], [170, 32]],  delay: 0.05 },
-  { points: [[170, 78], [170, 96]],  delay: 0.15 },
-  { points: [[170, 140], [70, 160]], delay: 0.3 },
-  { points: [[170, 140], [170, 160]], delay: 0.35 },
-  { points: [[170, 140], [270, 160]], delay: 0.4 },
-  { points: [[170, 140], [170, 150], [10, 150], [10, 282], [35, 282]],   delay: 0.45 },
-  { points: [[170, 140], [170, 150], [330, 150], [330, 282], [305, 282]], delay: 0.5 },
-  { points: [[70, 228], [70, 238], [10, 238], [10, 325], [100, 325], [100, 334]],   delay: 0.65 },
-  { points: [[170, 228], [170, 334]],                                              delay: 0.7 },
-  { points: [[270, 228], [270, 238], [330, 238], [330, 325], [240, 325], [240, 334]], delay: 0.75 },
-  { points: [[98, 314], [130, 334]],  delay: 0.8 },
-  { points: [[242, 314], [210, 334]], delay: 0.85 },
-  { points: [[170, 378], [170, 392]], delay: 0.95 },
+  { points: [[170, 22], [170, 34]],  delay: 0.05 },
+  { points: [[170, 80], [170, 100]],  delay: 0.15 },
+  { points: [[170, 144], [70, 208]], delay: 0.3 },
+  { points: [[170, 144], [170, 208]], delay: 0.35 },
+  { points: [[170, 144], [270, 208]], delay: 0.4 },
+  { points: [[170, 144], [170, 154], [10, 154], [10, 340], [98, 340], [98, 350]],   delay: 0.45 },
+  { points: [[170, 144], [170, 154], [330, 154], [330, 340], [242, 340], [242, 350]], delay: 0.5 },
+  { points: [[70, 276], [70, 286], [10, 286], [10, 460], [100, 460], [100, 474]],   delay: 0.65 },
+  { points: [[170, 276], [170, 474]],                                              delay: 0.7 },
+  { points: [[270, 276], [270, 286], [330, 286], [330, 460], [240, 460], [240, 474]], delay: 0.75 },
+  { points: [[98, 414], [130, 474]],  delay: 0.8 },
+  { points: [[242, 414], [210, 474]], delay: 0.85 },
+  { points: [[170, 518], [170, 536]], delay: 0.95 },
 ];
 
 export default function ProjectSetupDiagram() {

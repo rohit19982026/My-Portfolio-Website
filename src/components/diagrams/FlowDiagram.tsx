@@ -242,21 +242,41 @@ export default function FlowDiagram({
           </motion.g>
         )}
 
-        {phases?.map((ph) => (
-          <motion.text
-            key={ph.label}
-            x={ph.x}
-            y={ph.y}
-            textAnchor="middle"
-            fontSize="10.5"
-            fill="rgba(255,255,255,0.45)"
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 1.2, duration: 0.4 }}
-          >
-            {ph.label}
-          </motion.text>
-        ))}
+        {phases?.map((ph) => {
+          // Sits inside the fan-out gap, where edges cross underneath — an
+          // opaque pill (n8n's own "sticky note" annotation look) keeps the
+          // label legible on top of those lines instead of tangling with them.
+          const pillW = ph.label.length * 5.7 + 20;
+          return (
+            <motion.g
+              key={ph.label}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 1.2, duration: 0.4 }}
+            >
+              <rect
+                x={ph.x - pillW / 2}
+                y={ph.y - 13}
+                width={pillW}
+                height={17}
+                rx={8.5}
+                fill="#0d0d0f"
+                stroke="rgba(255,255,255,0.16)"
+              />
+              <text
+                x={ph.x}
+                y={ph.y - 1}
+                textAnchor="middle"
+                fontSize="9.5"
+                fontWeight="700"
+                letterSpacing="0.06em"
+                fill="rgba(255,255,255,0.5)"
+              >
+                {ph.label}
+              </text>
+            </motion.g>
+          );
+        })}
 
         {/* Execution loop — only once the reveal has actually started */}
         {inView && (
