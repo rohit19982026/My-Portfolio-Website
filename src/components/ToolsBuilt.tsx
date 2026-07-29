@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, type ComponentType } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef, type ComponentType } from "react";
 import SectionHeading from "./ui/SectionHeading";
-import ArrowCircle from "./ui/ArrowCircle";
 import BillingSkillDiagram from "./diagrams/BillingSkillDiagram";
 import StandupBriefDiagram from "./diagrams/StandupBriefDiagram";
 import ProjectSetupDiagram from "./diagrams/ProjectSetupDiagram";
@@ -18,6 +17,9 @@ const toneVar: Record<string, string> = {
   white: "var(--color-white)",
 };
 
+// The three diagrammed tools lead (row 1 in the 3-col grid); the three
+// single-LLM-call tools without a diagram follow (row 2) — keeps each grid
+// row a consistent height instead of interleaving tall/short cards.
 const tools: {
   category: string;
   title: string;
@@ -40,6 +42,13 @@ const tools: {
     diagram: StandupBriefDiagram,
   },
   {
+    category: "PROJECT SETUP",
+    title: "Project setup agent",
+    body: "Standing up a new program used to take 3 hours — Jira board, sprint structure, risk log, RACI, governance templates. Give this agent the program brief and it provisions everything in 15 minutes. This is the one that won phData's Innovation Award.",
+    notes: ["3 hours → 15 minutes", "phData Innovation Award"],
+    diagram: ProjectSetupDiagram,
+  },
+  {
     category: "STATUS REPORTING",
     title: "Weekly status brief",
     body: "Writing status updates for 4+ programs every Monday used to take all morning. This agent reads 3 days of emails, Slack, and meeting notes per program and drafts the update. I review and edit — I don't write from scratch. Saves 5+ hours a week.",
@@ -57,17 +66,9 @@ const tools: {
     body: "New program kickoffs are chaotic — nobody knows who owns what, scope isn't clear, questions outnumber answers. I give this agent the kickoff brief and it outputs a stakeholder map, interview guide, and discovery plan. Sprint 1 starts with structure.",
     notes: ["Discovery plan in one session"],
   },
-  {
-    category: "PROJECT SETUP",
-    title: "Project setup agent",
-    body: "Standing up a new program used to take 3 hours — Jira board, sprint structure, risk log, RACI, governance templates. Give this agent the program brief and it provisions everything in 15 minutes. This is the one that won phData's Innovation Award.",
-    notes: ["3 hours → 15 minutes", "phData Innovation Award"],
-    diagram: ProjectSetupDiagram,
-  },
 ];
 
 function ToolCard({ tool, tone, index, inView }: { tool: (typeof tools)[number]; tone: string; index: number; inView: boolean }) {
-  const [showDiagram, setShowDiagram] = useState(false);
   const Diagram = tool.diagram;
 
   return (
@@ -101,30 +102,12 @@ function ToolCard({ tool, tone, index, inView }: { tool: (typeof tools)[number];
       </ul>
 
       {Diagram && (
-        <>
-          <button
-            onClick={() => setShowDiagram((v) => !v)}
-            className="group mt-4 inline-flex items-center gap-2 font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-white/70 hover:text-lime transition-colors"
-          >
-            View flow
-            <ArrowCircle open={showDiagram} className="w-6 h-6" />
-          </button>
-          <AnimatePresence>
-            {showDiagram && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.35, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                <div className="pt-5 mt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                  <Diagram />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </>
+        <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+          <p className="font-heading text-[9.5px] font-bold uppercase tracking-[0.16em] text-white/50 mb-3">
+            How it flows
+          </p>
+          <Diagram />
+        </div>
       )}
     </motion.div>
   );

@@ -1,31 +1,26 @@
 import FlowDiagram, { type DiagramNode, type DiagramEdge } from "./FlowDiagram";
 
 const nodes: DiagramNode[] = [
-  { id: "jira",  x: 20,  y: 20,  w: 130, h: 40, label: "Jira",          sub: "Sprint board",     tone: "ink" },
-  { id: "slack", x: 20,  y: 90,  w: 130, h: 40, label: "Slack",         sub: "Channel threads",  tone: "ink" },
-  { id: "notes", x: 20,  y: 160, w: 130, h: 40, label: "Meeting Notes", sub: "Standup history",  tone: "ink" },
-  { id: "orch",  x: 250, y: 90,  w: 150, h: 40, label: "Orchestrator",  sub: "Synthesis prompt",  tone: "lime" },
-  { id: "brief", x: 470, y: 90,  w: 150, h: 40, label: "One-Page Brief", sub: "30-second read",  tone: "blue" },
+  { id: "jira",  x: 30, y: 20,  w: 280, h: 44, label: "Jira",           sub: "Sprint board",     tone: "ink" },
+  { id: "slack", x: 30, y: 76,  w: 280, h: 44, label: "Slack",          sub: "Channel threads",  tone: "ink" },
+  { id: "notes", x: 30, y: 132, w: 280, h: 44, label: "Meeting Notes",  sub: "Standup history",  tone: "ink" },
+  { id: "orch",  x: 70, y: 204, w: 200, h: 48, label: "Orchestrator",   sub: "Synthesis prompt", tone: "lime" },
+  { id: "brief", x: 50, y: 284, w: 240, h: 52, label: "One-Page Brief", sub: "30-second read",   tone: "blue" },
 ];
 
 const edges: DiagramEdge[] = [
-  { d: "M 150 40 Q 200 60 250 100",  delay: 0.15 },
-  { d: "M 150 110 L 250 110",         delay: 0.3 },
-  { d: "M 150 180 Q 200 150 250 120", delay: 0.45 },
-  { d: "M 400 110 L 470 110",         delay: 0.65 },
+  { d: "M 170 64  Q 100 140 140 204", delay: 0.15 },
+  { d: "M 170 120 Q 170 160 170 204", delay: 0.3 },
+  { d: "M 170 176 Q 240 190 200 204", delay: 0.45 },
+  { d: "M 170 252 L 170 284",         delay: 0.65 },
 ];
 
 export default function StandupBriefDiagram() {
   return (
     <FlowDiagram
-      viewBox="0 0 660 220"
+      viewBox="0 0 340 360"
       nodes={nodes}
       edges={edges}
-      phases={[
-        { x: 85, label: "Sources" },
-        { x: 325, label: "Orchestration" },
-        { x: 545, label: "Output" },
-      ]}
       ariaLabel="Standup brief agent architecture"
     />
   );
