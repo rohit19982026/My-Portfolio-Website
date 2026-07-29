@@ -50,7 +50,7 @@ export default function StatCounter({
     >
       <span className="absolute bottom-0 left-0 h-[2px] w-[60%]" style={{ background: "linear-gradient(90deg, var(--color-lime), transparent)" }} />
       <p className="font-heading text-[10px] uppercase tracking-[0.16em] text-white/60 mb-3">{label}</p>
-      <p className="font-display text-[38px] leading-none font-bold tracking-tight text-white">
+      <p className="font-display text-[38px] leading-none tracking-tight text-white">
         {prefix}{val}{suffix}
       </p>
       <p className="mt-2 font-heading text-[10px] tracking-[0.1em] text-white/60">{delta}</p>
