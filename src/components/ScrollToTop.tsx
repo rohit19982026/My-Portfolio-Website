@@ -23,9 +23,9 @@ export default function ScrollToTop() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fixed bottom-8 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:brightness-110"
           style={{
-            background: "var(--color-accent)",
-            boxShadow: "0 0 20px color-mix(in srgb, var(--color-accent) 40%, transparent)",
-            color: "var(--color-bg)",
+            background: "var(--color-lime)",
+            boxShadow: "0 0 20px color-mix(in srgb, var(--color-lime) 40%, transparent)",
+            color: "var(--color-ink)",
           }}
           aria-label="Scroll to top"
         >
