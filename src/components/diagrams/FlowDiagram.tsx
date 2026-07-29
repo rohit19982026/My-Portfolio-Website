@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import { Bot, FileCheck, Plug, UserCheck, Wrench, Zap } from "lucide-react";
 import { useId, useRef } from "react";
 
 export type DiagramNode = {
@@ -17,11 +18,14 @@ export type DiagramNode = {
   /** Small tag above the label (e.g. "SKILL", "TOOL CALL") — used instead
    *  of prefixing the label itself when a node is too narrow for both. */
   eyebrow?: string;
+  /** n8n-style node icon — every node type gets one, matching a no-code
+   *  workflow builder's icon-forward card look. */
+  icon?: "trigger" | "tool" | "agent" | "skill" | "output" | "human";
   /** "marker" renders a small unlabeled circle — used for graph-style
    *  start/end nodes, not a content node. */
   shape?: "rect" | "marker";
 };
-export type DiagramEdge = { d: string; delay: number };
+export type DiagramEdge = { points: [number, number][]; delay: number };
 export type DiagramBadge = { x: number; y: number; w: number; h: number; label: string };
 export type DiagramPhase = { x: number; y: number; label: string };
 
@@ -31,6 +35,8 @@ const toneStyle: Record<string, { fill: string; text: string }> = {
   lime:  { fill: "#d7ff3f", text: "#0d0d0f" },
   white: { fill: "#efeee8", text: "#0d0d0f" },
 };
+
+const iconMap = { trigger: Zap, tool: Plug, agent: Bot, skill: Wrench, output: FileCheck, human: UserCheck };
 
 /**
  * Turns a waypoint polyline into a path with each interior corner rounded —
@@ -110,7 +116,7 @@ export default function FlowDiagram({
         {edges.map((e, i) => (
           <motion.path
             key={i}
-            d={e.d}
+            d={roundedPath(e.points)}
             fill="none"
             stroke="#d7ff3f"
             strokeWidth={2}
@@ -122,6 +128,19 @@ export default function FlowDiagram({
             transition={{ duration: 0.5, delay: e.delay }}
           />
         ))}
+
+        {/* n8n-style connection "ports" — small dots at each anchor point,
+            not just a bare line meeting the node edge. */}
+        {edges.map((e, i) => {
+          const [sx, sy] = e.points[0];
+          const [ex, ey] = e.points[e.points.length - 1];
+          return (
+            <g key={`ports-${i}`}>
+              <circle cx={sx} cy={sy} r={2.5} fill="#0d0d0f" stroke="#d7ff3f" strokeWidth={1.5} />
+              <circle cx={ex} cy={ey} r={2.5} fill="#0d0d0f" stroke="#d7ff3f" strokeWidth={1.5} />
+            </g>
+          );
+        })}
 
         {nodes.map((n, i) => {
           const tone = toneStyle[n.tone ?? "ink"];
@@ -147,17 +166,36 @@ export default function FlowDiagram({
             );
           }
 
-          // Label supports "\n" (compact side-by-side nodes wrap to a 2nd
-          // line); an optional eyebrow tag stacks above it. Every line is
-          // laid out from one line-height table so a plain single-line
-          // label+sub node and a compact eyebrow+2-line node use the same
-          // vertical-centering math.
+          const Icon = n.icon ? iconMap[n.icon] : null;
+          const compact = !!n.eyebrow;
+
+          // Icon-forward, n8n-card layout: a full-width node gets its icon
+          // in a small badge on the left with text indented beside it; a
+          // compact side-by-side node gets its icon centered on top with
+          // text stacked below — either way the icon badge claims its own
+          // space and the text block is centered within what's left.
+          let textCenterX = n.x + n.w / 2;
+          let textTop = n.y;
+          let iconCx = 0;
+          let iconCy = 0;
+          const iconR = compact ? 10 : 12;
+          if (Icon && compact) {
+            iconCx = n.x + n.w / 2;
+            iconCy = n.y + 16;
+            textTop = n.y + 26;
+          } else if (Icon) {
+            iconCx = n.x + 22;
+            iconCy = n.y + n.h / 2;
+            textCenterX = n.x + 40 + (n.w - 40 - 10) / 2;
+          }
+
           const lines: { text: string; size: number; weight: string; opacity: number; isEyebrow?: boolean }[] = [];
           if (n.eyebrow) lines.push({ text: n.eyebrow, size: 8, weight: "700", opacity: 0.65, isEyebrow: true });
           n.label.split("\n").forEach((l) => lines.push({ text: l, size: 12, weight: "700", opacity: 1 }));
           if (n.sub) lines.push({ text: n.sub, size: 9.5, weight: "400", opacity: 0.75 });
           const lineH = 13;
-          const startY = n.y + n.h / 2 - (lines.length * lineH) / 2 + lineH * 0.72;
+          const textAreaH = n.y + n.h - textTop;
+          const startY = textTop + textAreaH / 2 - (lines.length * lineH) / 2 + lineH * 0.72;
 
           return (
             <motion.g
@@ -167,11 +205,19 @@ export default function FlowDiagram({
               transition={{ duration: 0.4, delay: i * 0.07 }}
               style={{ transformOrigin: `${n.x + n.w / 2}px ${n.y + n.h / 2}px` }}
             >
-              <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={4} fill={tone.fill} stroke="rgba(255,255,255,0.12)" />
+              <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={9} fill={tone.fill} stroke="rgba(255,255,255,0.14)" />
+              {Icon && (
+                <>
+                  <circle cx={iconCx} cy={iconCy} r={iconR} fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.2)" />
+                  <g transform={`translate(${iconCx - iconR * 0.6}, ${iconCy - iconR * 0.6})`}>
+                    <Icon size={iconR * 1.2} color={tone.text} strokeWidth={2.25} />
+                  </g>
+                </>
+              )}
               {lines.map((ln, li) => (
                 <text
                   key={li}
-                  x={n.x + n.w / 2}
+                  x={textCenterX}
                   y={startY + li * lineH}
                   textAnchor="middle"
                   fill={tone.text}
@@ -215,16 +261,19 @@ export default function FlowDiagram({
         {/* Execution loop — only once the reveal has actually started */}
         {inView && (
           <g ref={hideIfReducedMotion}>
-            {edges.map((e, i) => (
-              <circle key={i} r={3.5} fill="#d7ff3f" opacity={0.9}>
-                <animateMotion
-                  dur="2.2s"
-                  begin={`${e.delay + 0.6}s`}
-                  repeatCount="indefinite"
-                  path={e.d}
-                />
-              </circle>
-            ))}
+            {edges.map((e, i) => {
+              const d = roundedPath(e.points);
+              return (
+                <circle key={i} r={3.5} fill="#d7ff3f" opacity={0.9}>
+                  <animateMotion
+                    dur="2.2s"
+                    begin={`${e.delay + 0.6}s`}
+                    repeatCount="indefinite"
+                    path={d}
+                  />
+                </circle>
+              );
+            })}
 
             {nodes
               .filter((n) => n.shape !== "marker")
@@ -235,7 +284,7 @@ export default function FlowDiagram({
                   y={n.y}
                   width={n.w}
                   height={n.h}
-                  rx={4}
+                  rx={9}
                   fill="none"
                   stroke="#d7ff3f"
                   strokeWidth={2}
