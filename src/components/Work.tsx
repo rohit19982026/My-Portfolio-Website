@@ -50,7 +50,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
 
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <h3 className="font-display text-[20px] sm:text-[22px] leading-tight tracking-tight text-white group-hover:text-lime transition-colors">
+              <h3 className="font-heading text-[17px] sm:text-[19px] font-bold leading-snug text-white group-hover:text-lime transition-colors">
                 {study.title}
               </h3>
             </div>

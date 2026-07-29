@@ -87,7 +87,7 @@ function ToolCard({ tool, tone, index, inView }: { tool: (typeof tools)[number];
           {tool.category}
         </p>
       </div>
-      <h3 className="font-display text-[21px] leading-tight tracking-tight text-white mb-3">
+      <h3 className="font-heading text-[18px] font-bold leading-snug text-white mb-3">
         {tool.title}
       </h3>
       <p className="text-[13px] leading-relaxed text-white/70 mb-5">{tool.body}</p>

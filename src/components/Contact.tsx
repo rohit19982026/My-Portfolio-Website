@@ -38,7 +38,7 @@ export default function Contact() {
           <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-lime mb-3">
             ALSO A BUILDER
           </p>
-          <h3 className="font-display text-[26px] sm:text-[30px] leading-tight tracking-tight text-white mb-3 max-w-lg">
+          <h3 className="font-heading text-[22px] sm:text-[26px] font-bold leading-snug text-white mb-3 max-w-lg">
             Most technical project managers stop at the roadmap. I don&apos;t.
           </h3>
           <p className="text-[14.5px] text-white/70 leading-relaxed mb-6 max-w-lg">

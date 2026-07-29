@@ -118,7 +118,7 @@ export default function Trajectory() {
                       )}
                     </div>
 
-                    <h3 className="font-display text-[22px] leading-tight tracking-tight text-white mb-1">
+                    <h3 className="font-heading text-[19px] font-bold leading-snug text-white mb-1">
                       {role.title}
                     </h3>
                     <p
@@ -176,7 +176,7 @@ export default function Trajectory() {
               <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-lime mb-3">
                 EDUCATION
               </p>
-              <p className="font-display text-white text-[16px] leading-snug tracking-tight mb-1">
+              <p className="font-heading text-white text-[14px] font-bold leading-snug mb-1">
                 {education.degree}
               </p>
               <p className="font-heading text-[11px] text-white/70 font-medium">{education.institution}</p>
@@ -221,7 +221,7 @@ export default function Trajectory() {
               <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--color-award)" }}>
                 AWARD
               </p>
-              <p className="font-display text-white text-[15px] tracking-tight mb-2 flex items-center gap-2">
+              <p className="font-heading text-white text-[14px] font-bold mb-2 flex items-center gap-2">
                 🏆 {award.title}
               </p>
               <p className="text-[12.5px] text-white/70 leading-relaxed">{award.desc}</p>
