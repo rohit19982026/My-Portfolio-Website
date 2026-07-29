@@ -1,40 +1,39 @@
 import FlowDiagram, { type DiagramNode, type DiagramEdge } from "./FlowDiagram";
 
-// Compact portrait layout — reads natively at ~340px (this site's Tools
-// cards are ~340-390px wide on both mobile and desktop), no horizontal
-// scroll needed on either.
+// Sequential chain (trigger -> data -> agent) with a parallelization
+// section (3 skills) re-converging into a synthesis + human review step —
+// matches the card copy's own word "workflow," and the "6-step" count it
+// names: pull, 3 skills, synthesize, route-to-review.
 const nodes: DiagramNode[] = [
-  { id: "psa",     x: 15,  y: 20,  w: 150, h: 48, label: "PSA Tool",     sub: "Raw time data",      tone: "ink" },
-  { id: "json",    x: 175, y: 20,  w: 150, h: 48, label: "JSON Input",   sub: "Structured payload", tone: "ink" },
-  { id: "orch",    x: 70,  y: 96,  w: 200, h: 48, label: "Prompt Chain", sub: "Orchestrator",       tone: "lime" },
-  { id: "disc",    x: 30,  y: 180, w: 280, h: 44, label: "Discrepancy",  sub: "Detector prompt",    tone: "blue" },
-  { id: "narr",    x: 30,  y: 236, w: 280, h: 44, label: "Narrative",    sub: "Generator prompt",   tone: "blue" },
-  { id: "expl",    x: 30,  y: 292, w: 280, h: 44, label: "Exception",    sub: "Explainer prompt",   tone: "blue" },
-  { id: "llm",     x: 90,  y: 396, w: 160, h: 48, label: "LLM API",      sub: "Claude",             tone: "lime" },
-  { id: "review",  x: 15,  y: 468, w: 150, h: 48, label: "PM Review",    sub: "Human gate",         tone: "white" },
-  { id: "finance", x: 175, y: 468, w: 150, h: 48, label: "Finance Out",  sub: "Sign-off ready",     tone: "lime" },
+  { id: "trigger",  x: 30, y: 36,  w: 280, h: 44, label: "Month-End Trigger",       sub: "Runs 1st business day",      tone: "ink" },
+  { id: "pull",     x: 30, y: 100, w: 280, h: 44, label: "Tool Call: PSA + Timecard", sub: "Budget & time data",       tone: "blue" },
+  { id: "agent",    x: 70, y: 164, w: 200, h: 48, label: "Billing Review Agent",    sub: "Glean Agent · Claude",      tone: "lime" },
+  { id: "budget",   x: 30, y: 232, w: 280, h: 42, label: "Skill: Budget vs. Spend", sub: "Plan vs. actuals",          tone: "blue" },
+  { id: "ready",    x: 30, y: 284, w: 280, h: 42, label: "Skill: Billing Readiness", sub: "Unbilled time, WIP",       tone: "blue" },
+  { id: "timecard", x: 30, y: 336, w: 280, h: 42, label: "Skill: Timecard Compliance", sub: "Missing or late entries", tone: "blue" },
+  { id: "flag",     x: 70, y: 408, w: 200, h: 48, label: "Flag Report",            sub: "Synthesized findings",       tone: "lime" },
+  { id: "review",   x: 70, y: 480, w: 200, h: 48, label: "PM + Team Review",       sub: "Human sign-off",             tone: "white" },
 ];
 
 const edges: DiagramEdge[] = [
-  { d: "M 90 68 Q 90 84 140 96",     delay: 0.1 },
-  { d: "M 250 68 Q 250 84 200 96",   delay: 0.15 },
-  { d: "M 170 144 L 170 180",        delay: 0.3 },
-  { d: "M 170 144 Q 40 190 60 236",  delay: 0.35 },
-  { d: "M 170 144 Q 20 220 60 292",  delay: 0.4 },
-  { d: "M 170 224 Q 150 320 140 396", delay: 0.55 },
-  { d: "M 170 280 Q 220 330 200 396", delay: 0.6 },
-  { d: "M 170 336 Q 220 365 200 396", delay: 0.65 },
-  { d: "M 170 444 Q 130 456 90 468",  delay: 0.8 },
-  { d: "M 170 444 Q 210 456 250 468", delay: 0.85 },
+  { d: "M 170 80  L 170 100",         delay: 0.1 },
+  { d: "M 170 144 L 170 164",         delay: 0.2 },
+  { d: "M 170 212 L 170 232",         delay: 0.3 },
+  { d: "M 170 212 Q 30 246 60 305",   delay: 0.35 },
+  { d: "M 170 212 Q 15 296 60 357",   delay: 0.4 },
+  { d: "M 300 253 Q 320 320 270 408", delay: 0.55 },
+  { d: "M 300 305 Q 320 350 250 408", delay: 0.6 },
+  { d: "M 300 357 Q 320 380 230 408", delay: 0.65 },
+  { d: "M 170 456 L 170 480",         delay: 0.8 },
 ];
 
 export default function BillingSkillDiagram() {
   return (
     <FlowDiagram
-      viewBox="0 0 340 540"
+      viewBox="0 0 340 550"
       nodes={nodes}
       edges={edges}
-      badge={{ x: 30, y: 344, w: 280, h: 28, label: "Schema validation guardrail" }}
+      phases={[{ x: 170, y: 18, label: "6-STEP AUTOMATED WORKFLOW" }]}
       ariaLabel="Month-end billing review agent architecture"
     />
   );

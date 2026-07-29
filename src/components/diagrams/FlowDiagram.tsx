@@ -43,6 +43,20 @@ export default function FlowDiagram({
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const arrowId = useId();
 
+  // The reveal (below) plays once. The execution loop is the "it's still
+  // running" signal — a pulse traveling each edge, a faint breathing glow
+  // on each node — so the diagram doesn't read as a static picture once
+  // revealed. It's only rendered once `inView` flips true, so a plain
+  // mount-effect would run before that element exists; a ref callback
+  // fires exactly when the node is actually attached, whenever that is.
+  // Hidden outright under reduced-motion, same as MagneticCursor/
+  // SmoothScrollProvider elsewhere in this codebase.
+  const hideIfReducedMotion = (el: SVGGElement | null) => {
+    if (el && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.display = "none";
+    }
+  };
+
   return (
     <div ref={ref} className="w-full">
       <svg viewBox={viewBox} className="w-full h-auto" aria-label={ariaLabel}>
@@ -112,6 +126,45 @@ export default function FlowDiagram({
             {ph.label}
           </motion.text>
         ))}
+
+        {/* Execution loop — only once the reveal has actually started */}
+        {inView && (
+          <g ref={hideIfReducedMotion}>
+            {edges.map((e, i) => (
+              <circle key={i} r={3.5} fill="#d7ff3f" opacity={0.9}>
+                <animateMotion
+                  dur="2.2s"
+                  begin={`${e.delay + 0.6}s`}
+                  repeatCount="indefinite"
+                  path={e.d}
+                />
+              </circle>
+            ))}
+
+            {nodes.map((n, i) => (
+              <motion.rect
+                key={n.id}
+                x={n.x}
+                y={n.y}
+                width={n.w}
+                height={n.h}
+                rx={4}
+                fill="none"
+                stroke="#d7ff3f"
+                strokeWidth={2}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.5, 0] }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  repeatDelay: 1.2,
+                  delay: 0.5 + i * 0.07,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </g>
+        )}
       </svg>
     </div>
   );
