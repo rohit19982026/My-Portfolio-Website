@@ -12,6 +12,9 @@ export type DiagramNode = {
   label: string;
   sub: string;
   tone?: "ink" | "blue" | "lime" | "white";
+  /** "marker" renders a small unlabeled circle — used for graph-style
+   *  start/end nodes, not a content node. */
+  shape?: "rect" | "marker";
 };
 export type DiagramEdge = { d: string; delay: number };
 export type DiagramBadge = { x: number; y: number; w: number; h: number; label: string };
@@ -23,6 +26,39 @@ const toneStyle: Record<string, { fill: string; text: string }> = {
   lime:  { fill: "#d7ff3f", text: "#0d0d0f" },
   white: { fill: "#efeee8", text: "#0d0d0f" },
 };
+
+/**
+ * Turns a waypoint polyline into a path with each interior corner rounded —
+ * a graph/node-editor-style smooth elbow connector instead of a sharp right
+ * angle. The route (and therefore its guarantee of not crossing through
+ * unrelated nodes) is unchanged from the straight-line polyline; only the
+ * corners are softened, each by at most half its shortest adjacent segment
+ * so the curve never overshoots into a neighboring segment.
+ */
+export function roundedPath(points: [number, number][], radius = 14): string {
+  if (points.length < 2) return "";
+  if (points.length === 2) {
+    return `M${points[0][0]} ${points[0][1]} L${points[1][0]} ${points[1][1]}`;
+  }
+  let d = `M${points[0][0]} ${points[0][1]}`;
+  for (let i = 1; i < points.length - 1; i++) {
+    const [px, py] = points[i - 1];
+    const [cx, cy] = points[i];
+    const [nx, ny] = points[i + 1];
+    const dIn = Math.hypot(cx - px, cy - py);
+    const dOut = Math.hypot(nx - cx, ny - cy);
+    const rIn = Math.min(radius, dIn / 2);
+    const rOut = Math.min(radius, dOut / 2);
+    const inX = cx + ((px - cx) / dIn) * rIn;
+    const inY = cy + ((py - cy) / dIn) * rIn;
+    const outX = cx + ((nx - cx) / dOut) * rOut;
+    const outY = cy + ((ny - cy) / dOut) * rOut;
+    d += ` L${inX} ${inY} Q${cx} ${cy} ${outX} ${outY}`;
+  }
+  const [lx, ly] = points[points.length - 1];
+  d += ` L${lx} ${ly}`;
+  return d;
+}
 
 export default function FlowDiagram({
   viewBox,
@@ -74,6 +110,7 @@ export default function FlowDiagram({
             stroke="#d7ff3f"
             strokeWidth={2}
             strokeLinecap="round"
+            strokeLinejoin="round"
             markerEnd={`url(#${arrowId})`}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={inView ? { pathLength: 1, opacity: 1 } : {}}
@@ -83,6 +120,28 @@ export default function FlowDiagram({
 
         {nodes.map((n, i) => {
           const tone = toneStyle[n.tone ?? "ink"];
+
+          if (n.shape === "marker") {
+            const cx = n.x + n.w / 2;
+            const cy = n.y + n.h / 2;
+            const r = Math.min(n.w, n.h) / 2;
+            return (
+              <motion.circle
+                key={n.id}
+                cx={cx}
+                cy={cy}
+                r={r}
+                fill="#0d0d0f"
+                stroke="#d7ff3f"
+                strokeWidth={2}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.3, delay: i * 0.07 }}
+                style={{ transformOrigin: `${cx}px ${cy}px` }}
+              />
+            );
+          }
+
           return (
             <motion.g
               key={n.id}
@@ -141,28 +200,30 @@ export default function FlowDiagram({
               </circle>
             ))}
 
-            {nodes.map((n, i) => (
-              <motion.rect
-                key={n.id}
-                x={n.x}
-                y={n.y}
-                width={n.w}
-                height={n.h}
-                rx={4}
-                fill="none"
-                stroke="#d7ff3f"
-                strokeWidth={2}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.5, 0] }}
-                transition={{
-                  duration: 1.6,
-                  repeat: Infinity,
-                  repeatDelay: 1.2,
-                  delay: 0.5 + i * 0.07,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
+            {nodes
+              .filter((n) => n.shape !== "marker")
+              .map((n, i) => (
+                <motion.rect
+                  key={n.id}
+                  x={n.x}
+                  y={n.y}
+                  width={n.w}
+                  height={n.h}
+                  rx={4}
+                  fill="none"
+                  stroke="#d7ff3f"
+                  strokeWidth={2}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 0.5, 0] }}
+                  transition={{
+                    duration: 1.6,
+                    repeat: Infinity,
+                    repeatDelay: 1.2,
+                    delay: 0.5 + i * 0.07,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
           </g>
         )}
       </svg>

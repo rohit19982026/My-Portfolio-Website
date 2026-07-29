@@ -1,10 +1,14 @@
-import FlowDiagram, { type DiagramNode, type DiagramEdge } from "./FlowDiagram";
+import FlowDiagram, { roundedPath, type DiagramNode, type DiagramEdge } from "./FlowDiagram";
 
 // Sequential chain (trigger -> data -> agent) with a parallelization
 // section (3 skills) re-converging into a synthesis + human review step —
 // matches the card copy's own word "workflow," and the "6-step" count it
-// names: pull, 3 skills, synthesize, route-to-review.
+// names: pull, 3 skills, synthesize, route-to-review. Graph-style start/end
+// marker nodes bookend the flow; edges are smooth rounded elbow connectors
+// routed through a margin "trunk" so a curve never crosses a node it isn't
+// connecting to (see roundedPath in FlowDiagram.tsx).
 const nodes: DiagramNode[] = [
+  { id: "start",    x: 160, y: 5,   w: 20,  h: 20, label: "", sub: "", shape: "marker" },
   { id: "trigger",  x: 30, y: 36,  w: 280, h: 44, label: "Month-End Trigger",       sub: "Runs 1st business day",      tone: "ink" },
   { id: "pull",     x: 30, y: 100, w: 280, h: 44, label: "Tool Call: PSA + Timecard", sub: "Budget & time data",       tone: "blue" },
   { id: "agent",    x: 70, y: 164, w: 200, h: 48, label: "Billing Review Agent",    sub: "Glean Agent · Claude",      tone: "lime" },
@@ -13,27 +17,30 @@ const nodes: DiagramNode[] = [
   { id: "timecard", x: 30, y: 336, w: 280, h: 42, label: "Skill: Timecard Compliance", sub: "Missing or late entries", tone: "blue" },
   { id: "flag",     x: 70, y: 408, w: 200, h: 48, label: "Flag Report",            sub: "Synthesized findings",       tone: "lime" },
   { id: "review",   x: 70, y: 480, w: 200, h: 48, label: "PM + Team Review",       sub: "Human sign-off",             tone: "white" },
+  { id: "end",      x: 160, y: 542, w: 20,  h: 20, label: "", sub: "", shape: "marker" },
 ];
 
 const edges: DiagramEdge[] = [
-  { d: "M 170 80  L 170 100",         delay: 0.1 },
-  { d: "M 170 144 L 170 164",         delay: 0.2 },
-  { d: "M 170 212 L 170 232",         delay: 0.3 },
-  { d: "M 170 212 Q 30 246 60 305",   delay: 0.35 },
-  { d: "M 170 212 Q 15 296 60 357",   delay: 0.4 },
-  { d: "M 300 253 Q 320 320 270 408", delay: 0.55 },
-  { d: "M 300 305 Q 320 350 250 408", delay: 0.6 },
-  { d: "M 300 357 Q 320 380 230 408", delay: 0.65 },
-  { d: "M 170 456 L 170 480",         delay: 0.8 },
+  { d: roundedPath([[170, 22], [170, 36]]),                                          delay: 0.05 },
+  { d: roundedPath([[170, 80], [170, 100]]),                                         delay: 0.15 },
+  { d: roundedPath([[170, 144], [170, 164]]),                                        delay: 0.25 },
+  { d: roundedPath([[170, 212], [170, 232]]),                                        delay: 0.35 },
+  { d: roundedPath([[170, 212], [170, 222], [15, 222], [15, 305], [30, 305]]),       delay: 0.4 },
+  { d: roundedPath([[170, 212], [170, 222], [15, 222], [15, 357], [30, 357]]),       delay: 0.45 },
+  { d: roundedPath([[310, 253], [325, 253], [325, 400], [170, 400], [170, 408]]),    delay: 0.6 },
+  { d: roundedPath([[310, 305], [325, 305], [325, 400], [170, 400], [170, 408]]),    delay: 0.65 },
+  { d: roundedPath([[310, 357], [325, 357], [325, 400], [170, 400], [170, 408]]),    delay: 0.7 },
+  { d: roundedPath([[170, 456], [170, 480]]),                                        delay: 0.85 },
+  { d: roundedPath([[170, 528], [170, 545]]),                                        delay: 0.95 },
 ];
 
 export default function BillingSkillDiagram() {
   return (
     <FlowDiagram
-      viewBox="0 0 340 550"
+      viewBox="0 0 340 565"
       nodes={nodes}
       edges={edges}
-      phases={[{ x: 170, y: 18, label: "6-STEP AUTOMATED WORKFLOW" }]}
+      phases={[{ x: 170, y: 30, label: "6-STEP AUTOMATED WORKFLOW" }]}
       ariaLabel="Month-end billing review agent architecture"
     />
   );
