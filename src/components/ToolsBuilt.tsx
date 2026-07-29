@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, type ComponentType } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { ChevronDown, Workflow } from "lucide-react";
+import { useRef, useState, type ComponentType } from "react";
 import SectionHeading from "./ui/SectionHeading";
 import BillingSkillDiagram from "./diagrams/BillingSkillDiagram";
 import StandupBriefDiagram from "./diagrams/StandupBriefDiagram";
@@ -70,6 +71,7 @@ const tools: {
 
 function ToolCard({ tool, tone, index, inView }: { tool: (typeof tools)[number]; tone: string; index: number; inView: boolean }) {
   const Diagram = tool.diagram;
+  const [open, setOpen] = useState(false);
 
   return (
     <motion.div
@@ -103,10 +105,53 @@ function ToolCard({ tool, tone, index, inView }: { tool: (typeof tools)[number];
 
       {Diagram && (
         <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-          <p className="font-heading text-[9.5px] font-bold uppercase tracking-[0.16em] text-white/50 mb-3">
-            How it flows
-          </p>
-          <Diagram />
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            className="w-full flex items-center justify-between gap-3 rounded-card px-3 py-2.5 -mx-3 -my-2.5 transition-colors duration-[var(--duration-base)] hover:bg-white/[0.06] cursor-pointer"
+            style={{
+              border: `1px solid color-mix(in srgb, ${toneVar[tone]} ${open ? "32%" : "20%"}, transparent)`,
+              background: `color-mix(in srgb, ${toneVar[tone]} ${open ? "9%" : "4%"}, transparent)`,
+            }}
+          >
+            <span
+              className="flex items-center gap-2 font-heading text-[10px] font-bold uppercase tracking-[0.15em]"
+              style={{ color: toneVar[tone] }}
+            >
+              <Workflow size={13} strokeWidth={2.25} />
+              {open ? "Hide the flow" : "See how it flows"}
+            </span>
+            <span className="relative flex items-center justify-center w-5 h-5 shrink-0" style={{ color: toneVar[tone] }}>
+              {!open && (
+                <span
+                  className="absolute inset-0 rounded-full"
+                  style={{ animation: "pulse-ring 1.7s ease-in-out infinite" }}
+                />
+              )}
+              <ChevronDown
+                size={14}
+                className="relative transition-transform duration-300"
+                style={{ transform: open ? "rotate(180deg)" : "none" }}
+              />
+            </span>
+          </button>
+
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="pt-4">
+                  <Diagram />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )}
     </motion.div>

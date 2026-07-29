@@ -107,6 +107,13 @@ body {
   50%     { opacity:.7; box-shadow:0 0 0 6px color-mix(in srgb, var(--color-lime) 0%, transparent); }
 }
 
+/* Same ring-pulse as pulse-dot but keyed off currentColor, so a single
+   toggle affordance can be reused across differently-toned cards. */
+@keyframes pulse-ring {
+  0%,100% { opacity:1;  box-shadow:0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
+  50%     { opacity:.6; box-shadow:0 0 0 7px color-mix(in srgb, currentColor 0%, transparent); }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-ink); }
