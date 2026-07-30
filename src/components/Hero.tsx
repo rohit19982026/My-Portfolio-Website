@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import HeroBackdrop from "./HeroBackdrop";
 import HeroPortrait from "./HeroPortrait";
 import Button from "./ui/Button";
 import StatCounter from "./ui/StatCounter";
@@ -45,9 +44,6 @@ export default function Hero() {
 
   return (
     <section className="min-h-screen flex flex-col pt-[64px] bg-blue relative overflow-hidden">
-      {/* Agent-orchestration loop, composited behind the content */}
-      <HeroBackdrop />
-
       <motion.div
         initial="hidden"
         animate="show"
