@@ -3,8 +3,41 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import HeroBackdrop from "./HeroBackdrop";
+import HeroPortrait from "./HeroPortrait";
 import Button from "./ui/Button";
 import StatCounter from "./ui/StatCounter";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.05 } },
+} as const;
+
+const fadeBlurUp = {
+  hidden: { opacity: 0, y: 26, filter: "blur(10px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: EASE },
+  },
+} as const;
+
+const pop = {
+  hidden: { opacity: 0, y: 10, scale: 0.94 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 260, damping: 22 },
+  },
+} as const;
+
+const swipe = {
+  hidden: { scaleX: 0 },
+  show: { scaleX: 1, transition: { duration: 0.7, ease: EASE, delay: 0.15 } },
+} as const;
 
 export default function Hero() {
   const panelRef = useRef(null);
@@ -15,72 +48,73 @@ export default function Hero() {
       {/* Agent-orchestration loop, composited behind the content */}
       <HeroBackdrop />
 
-      <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20 relative z-10">
-        {/* Available pill */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-pill font-heading text-[11px] tracking-[0.16em] text-white/80 w-fit"
-          style={{ border: "1px solid color-mix(in srgb, var(--color-lime) 30%, transparent)", background: "color-mix(in srgb, var(--color-lime) 10%, transparent)" }}
-        >
-          <span
-            className="w-2 h-2 rounded-full bg-lime"
-            style={{ boxShadow: "0 0 10px var(--color-lime)", animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-          AVAILABLE FOR PROGRAMS · BENGALURU · UTC+5:30
-        </motion.div>
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={container}
+        className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20 relative z-10"
+      >
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_420px] xl:grid-cols-[minmax(0,1fr)_480px] items-center gap-8 lg:gap-10">
+          <div className="max-w-[680px]">
+            {/* Greeting */}
+            <motion.p
+              variants={pop}
+              className="font-heading text-[16px] sm:text-[18px] font-medium text-white/65 mb-4"
+            >
+              Welcome, hi — I&apos;m
+            </motion.p>
 
-        {/* Byline */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="font-heading text-[13px] font-bold uppercase tracking-[0.2em] text-lime mb-4"
-        >
-          Rohit Kumar Singh
-        </motion.p>
+            {/* Name — the only heading in the hero */}
+            <motion.h1
+              variants={fadeBlurUp}
+              className="font-heading font-bold text-white tracking-tight leading-[1.05] mb-3"
+              style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
+            >
+              Rohit Kumar Singh
+            </motion.h1>
 
-        {/* Headline — the hero visual, Aurelia-style */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display uppercase leading-[0.88] mb-8"
-          style={{ fontSize: "clamp(3.25rem, 11vw, 8.5rem)" }}
-        >
-          <span className="block text-outline">Technical</span>
-          <span className="block text-white">Project Manager</span>
-        </motion.h1>
+            {/* Role */}
+            <motion.p
+              variants={fadeBlurUp}
+              className="font-heading font-medium leading-[1.3] mb-8"
+              style={{ fontSize: "clamp(1.375rem, 2.6vw, 1.875rem)" }}
+            >
+              <span className="relative inline-block text-lime font-semibold">
+                Technical Project Manager
+                <motion.span
+                  variants={swipe}
+                  className="absolute left-0 -bottom-1 h-[3px] w-full bg-lime origin-left"
+                />
+              </span>
+              <span className="text-white/80"> — and also an AI Builder.</span>
+            </motion.p>
 
-        {/* Lead copy */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="leading-[1.55] text-white/80 max-w-[740px] mb-10"
-          style={{ fontSize: "clamp(19px, 2.3vw, 25px)" }}
-        >
-          I&apos;m a technical project manager at phData. I run data and AI delivery programs
-          for enterprise clients —{" "}
-          <em className="not-italic text-lime font-semibold">platform migrations, lakehouses, AI deployments</em>.
-          {" "}Ten so far, the largest $1.37M. I also{" "}
-          <strong className="font-semibold text-white">
-            build the AI agents that handle the repetitive parts of my own job
-          </strong>
-          .
-        </motion.p>
+            {/* Lead copy */}
+            <motion.p
+              variants={fadeBlurUp}
+              className="leading-[1.55] text-white/80 max-w-[640px] mb-10"
+              style={{ fontSize: "clamp(17px, 1.9vw, 20px)" }}
+            >
+              At phData, I run data and AI delivery programs for enterprise clients —{" "}
+              <em className="not-italic text-lime font-semibold">platform migrations, lakehouses, AI deployments</em>.
+              {" "}Ten so far, the largest $1.37M. I also{" "}
+              <strong className="font-semibold text-white">
+                build the AI agents that handle the repetitive parts of my own job
+              </strong>
+              .
+            </motion.p>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap gap-3 mb-14"
-        >
-          <Button href="#work">See the work →</Button>
-          <Button href="#contact" variant="secondary">Email me ✉</Button>
-        </motion.div>
+            {/* CTAs */}
+            <motion.div variants={fadeBlurUp} className="flex flex-wrap gap-3">
+              <Button href="#work">See the work →</Button>
+              <Button href="#contact" variant="secondary">Email me ✉</Button>
+            </motion.div>
+          </div>
+
+          <div className="hidden lg:block relative h-[420px] xl:h-[480px]">
+            <HeroPortrait />
+          </div>
+        </div>
 
         {/* Live status panel */}
         <motion.div
@@ -88,7 +122,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={panelInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative rounded-card p-6 overflow-hidden"
+          className="relative rounded-card p-6 overflow-hidden mt-14"
           style={{
             background: "color-mix(in srgb, var(--color-white) 6%, transparent)",
             border: "1px solid color-mix(in srgb, var(--color-white) 16%, transparent)",
@@ -113,7 +147,7 @@ export default function Hero() {
             <StatCounter label="Largest pod managed"    target={11}   decimals={0}             suffix=""    delta="engineers, two regions"  active={panelInView} delay={0.45} />
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
