@@ -23,11 +23,41 @@ import { useEffect, useState } from "react";
  * this already-faded alpha, so it tapers away with the photo instead of
  * ringing a hard line.
  *
- * Desktop only: under ~1024px there isn't room for a second column without
- * crowding the greeting text, so this stays a progressive enhancement.
+ * Two variants share this exact recipe (mask + silhouette-hugging glow +
+ * reduced-motion-gated float) at two different sizes and with two different
+ * entrance owners:
+ * - "desktop": its own grid column in Hero.tsx, self-contained explicit
+ *   entrance timing (it isn't a stagger child of the text column).
+ * - "mobile": inline in the text stack between the Role and Lead
+ *   paragraphs, no entrance of its own — Hero.tsx wraps it in a
+ *   `variants={fadeBlurUp}` motion.div so it reveals in the same stagger
+ *   cascade as the surrounding copy instead of on an independent timeline.
+ * Visibility (`hidden lg:block` / `lg:hidden`) is owned by the caller in
+ * Hero.tsx, not hard-coded here.
  */
 const BOTTOM_FADE_MASK = "linear-gradient(to bottom, #000 0%, #000 82%, transparent 97%)";
-export default function HeroPortrait() {
+
+const IMAGE_SIZES = {
+  desktop: "(min-width: 1280px) 440px, 400px",
+  mobile: "(min-width: 640px) 220px, 190px",
+} as const;
+
+const GLOW_FILTER = {
+  desktop: [
+    "drop-shadow(0 14px 18px rgba(0,0,0,0.4))",
+    "drop-shadow(0 0 5px color-mix(in srgb, var(--color-lime) 85%, transparent))",
+    "drop-shadow(0 0 14px color-mix(in srgb, var(--color-lime) 60%, transparent))",
+    "drop-shadow(0 0 30px color-mix(in srgb, var(--color-lime) 35%, transparent))",
+  ].join(" "),
+  mobile: [
+    "drop-shadow(0 10px 13px rgba(0,0,0,0.4))",
+    "drop-shadow(0 0 4px color-mix(in srgb, var(--color-lime) 85%, transparent))",
+    "drop-shadow(0 0 10px color-mix(in srgb, var(--color-lime) 60%, transparent))",
+    "drop-shadow(0 0 21px color-mix(in srgb, var(--color-lime) 35%, transparent))",
+  ].join(" "),
+} as const;
+
+export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile" }) {
   const [motionEnabled, setMotionEnabled] = useState(false);
 
   useEffect(() => {
@@ -38,39 +68,40 @@ export default function HeroPortrait() {
     return () => mq.removeEventListener("change", evaluate);
   }, []);
 
+  const photo = (
+    <motion.div
+      animate={motionEnabled ? { y: [0, -10, 0] } : {}}
+      transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+      className="relative h-full w-full"
+    >
+      <Image
+        src="/hero/rohit-portrait-cutout.png"
+        alt="Rohit Kumar Singh"
+        fill
+        priority
+        sizes={IMAGE_SIZES[variant]}
+        className="object-contain object-bottom"
+        style={{
+          maskImage: BOTTOM_FADE_MASK,
+          WebkitMaskImage: BOTTOM_FADE_MASK,
+          filter: GLOW_FILTER[variant],
+        }}
+      />
+    </motion.div>
+  );
+
+  if (variant === "mobile") {
+    return photo;
+  }
+
   return (
-    <div className="hidden lg:block relative h-full w-full" aria-hidden="true">
-      <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.95, filter: "blur(12px)" }}
-        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative h-full w-full"
-      >
-        <motion.div
-          animate={motionEnabled ? { y: [0, -10, 0] } : {}}
-          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-          className="relative h-full w-full"
-        >
-          <Image
-            src="/hero/rohit-portrait-cutout.png"
-            alt="Rohit Kumar Singh"
-            fill
-            priority
-            sizes="(min-width: 1280px) 440px, 400px"
-            className="object-contain object-bottom"
-            style={{
-              maskImage: BOTTOM_FADE_MASK,
-              WebkitMaskImage: BOTTOM_FADE_MASK,
-              filter: [
-                "drop-shadow(0 14px 18px rgba(0,0,0,0.4))",
-                "drop-shadow(0 0 5px color-mix(in srgb, var(--color-lime) 85%, transparent))",
-                "drop-shadow(0 0 14px color-mix(in srgb, var(--color-lime) 60%, transparent))",
-                "drop-shadow(0 0 30px color-mix(in srgb, var(--color-lime) 35%, transparent))",
-              ].join(" "),
-            }}
-          />
-        </motion.div>
-      </motion.div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.95, filter: "blur(12px)" }}
+      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="relative h-full w-full"
+    >
+      {photo}
+    </motion.div>
   );
 }

@@ -85,6 +85,18 @@ export default function Hero() {
               <span className="text-white/80"> — and also an AI Builder.</span>
             </motion.p>
 
+            {/* Mobile/tablet portrait — sits between the identity block
+                (name + role) and the body copy, echoing a bio layout:
+                headline, portrait, body. Enters in the same stagger
+                cascade as the surrounding text via variants={fadeBlurUp}
+                — no independent entrance timing. Desktop gets its own
+                side-column portrait below instead. */}
+            <motion.div variants={fadeBlurUp} className="lg:hidden flex justify-center mb-8">
+              <div className="relative w-[190px] sm:w-[220px] aspect-[9/16]">
+                <HeroPortrait variant="mobile" />
+              </div>
+            </motion.div>
+
             {/* Lead copy */}
             <motion.p
               variants={fadeBlurUp}
@@ -108,7 +120,7 @@ export default function Hero() {
           </div>
 
           <div className="hidden lg:block relative h-[460px] xl:h-[520px]">
-            <HeroPortrait />
+            <HeroPortrait variant="desktop" />
           </div>
         </div>
 
