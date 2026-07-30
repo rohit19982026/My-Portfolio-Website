@@ -5,20 +5,26 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /**
- * No card, no border, no rounded rectangle — a bordered panel is a dated
- * pattern for a hero portrait; nothing about a personal photo should read
- * as "form field." Instead: an organic, heavily-blurred multi-tone gradient
- * aura (three overlapping radial gradients at different offsets, so the
- * combined shape has no geometric outline) sits behind the cutout, dense
- * enough at its core to fully obscure HeroBackdrop's orchestration graphic
- * in this region, dissolving into open blue at the margins with no visible
- * edge anywhere. A soft blurred contact shadow grounds him at the base
- * instead of a "floor." The cutout itself (real alpha transparency, from
- * @imgly/background-removal-node) keeps its natural silhouette — no
- * recolor, no filter on the photo besides a drop-shadow that traces the
- * actual alpha channel. The aura breathes and the portrait floats, both
- * subtle and continuous, gated off under prefers-reduced-motion like every
- * other loop in this codebase.
+ * No independent shape behind the photo — the previous gradient aura was
+ * still "an oval sitting near him," not something that reads as part of
+ * him. This version has no positioned shape at all: the glow and the
+ * graphic-blocking layer are both the *same cutout image*, reused as its
+ * own silhouette (scaled up slightly from its own base, brightness(0) to
+ * flatten it to a solid shape, blurred). Because it's literally his own
+ * alpha channel, the resulting glow/blocker traces his real outline — hair,
+ * shoulders, crossed arms — with a uniform margin, instead of an ellipse
+ * that happens to be positioned near him.
+ *
+ * Two stacked <Image>s, same src:
+ * 1. "Blocker" — scaled ~1.15x from its own bottom-center, flattened to
+ *    solid black via `brightness(0)`, blurred — fully hides HeroBackdrop's
+ *    orchestration graphic in that silhouette-shaped region, and doubles
+ *    as a soft dark grounding shadow.
+ * 2. The real photo on top, true colors and untouched, with a stacked
+ *    `drop-shadow()` glow in the site's neon-lime accent (not blue — lime
+ *    is the "opposite," high-contrast brand color against this blue hero)
+ *    — `drop-shadow` inherently traces the actual alpha silhouette, so the
+ *    glow hugs his outline rather than sitting behind him as a shape.
  *
  * Desktop only: under ~1024px there isn't room for a second column without
  * crowding the greeting text, so this stays a progressive enhancement.
@@ -37,35 +43,52 @@ export default function HeroPortrait() {
   return (
     <div className="hidden lg:block relative h-full w-full" aria-hidden="true">
       <motion.div
-        className="absolute inset-[-14%]"
-        animate={motionEnabled ? { scale: [1, 1.05, 1], opacity: [0.92, 1, 0.92] } : {}}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          background: [
-            "radial-gradient(60% 64% at 50% 42%, color-mix(in srgb, var(--color-ink) 62%, var(--color-blue) 38%) 0%, color-mix(in srgb, var(--color-ink) 62%, var(--color-blue) 38%) 46%, transparent 84%)",
-            "radial-gradient(32% 32% at 74% 56%, color-mix(in srgb, var(--color-lime) 24%, transparent) 0%, transparent 72%)",
-          ].join(", "),
-          filter: "blur(32px)",
-        }}
-      />
-
-      <motion.div
         initial={{ opacity: 0, y: 24, scale: 0.95, filter: "blur(12px)" }}
         animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="relative h-full w-full"
       >
-        {/* Contact shadow — grounds him without a floor or frame */}
-        <div
-          className="absolute left-1/2 bottom-[8%] -translate-x-1/2 w-[58%] h-[6%] rounded-full"
-          style={{ background: "rgba(0,0,0,0.4)", filter: "blur(20px)" }}
-        />
-
         <motion.div
           animate={motionEnabled ? { y: [0, -10, 0] } : {}}
           transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
           className="relative h-full w-full"
         >
+          {/* Blocker — his own silhouette, scaled up and flattened, hides
+              the orchestration graphic without being an independent shape.
+              Two passes: a tight, dense core for solid coverage close to
+              the outline, and a bigger, softer pass so the edge of that
+              coverage fades out rather than stopping abruptly. */}
+          <Image
+            src="/hero/rohit-portrait-cutout.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="(min-width: 1280px) 440px, 400px"
+            className="object-contain object-bottom"
+            style={{
+              filter: "brightness(0) blur(34px)",
+              opacity: 0.9,
+              transform: "scale(1.65)",
+              transformOrigin: "bottom center",
+            }}
+          />
+          <Image
+            src="/hero/rohit-portrait-cutout.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="(min-width: 1280px) 440px, 400px"
+            className="object-contain object-bottom"
+            style={{
+              filter: "brightness(0) blur(11px)",
+              opacity: 1,
+              transform: "scale(1.26)",
+              transformOrigin: "bottom center",
+            }}
+          />
+
+          {/* The real photo — true colors, neon-lime rim glow that traces
+              its own alpha silhouette via stacked drop-shadow */}
           <Image
             src="/hero/rohit-portrait-cutout.png"
             alt="Rohit Kumar Singh"
@@ -74,8 +97,13 @@ export default function HeroPortrait() {
             sizes="(min-width: 1280px) 440px, 400px"
             className="object-contain object-bottom"
             style={{
-              filter:
-                "drop-shadow(0 18px 26px rgba(0,0,0,0.45)) drop-shadow(0 0 42px color-mix(in srgb, var(--color-lime) 22%, transparent))",
+              filter: [
+                "drop-shadow(0 14px 18px rgba(0,0,0,0.4))",
+                "drop-shadow(0 0 5px color-mix(in srgb, var(--color-lime) 90%, transparent))",
+                "drop-shadow(0 0 14px color-mix(in srgb, var(--color-lime) 70%, transparent))",
+                "drop-shadow(0 0 30px color-mix(in srgb, var(--color-lime) 50%, transparent))",
+                "drop-shadow(0 0 52px color-mix(in srgb, var(--color-lime) 30%, transparent))",
+              ].join(" "),
             }}
           />
         </motion.div>
