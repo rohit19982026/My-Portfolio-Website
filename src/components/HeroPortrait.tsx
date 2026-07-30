@@ -13,9 +13,20 @@ import { useEffect, useState } from "react";
  * traces the image's real alpha silhouette) is purely a brand-accent touch
  * now, not doing double duty as camouflage.
  *
+ * The source photo is a waist-up shot — its bottom edge is where the
+ * camera's own framing cut him off, not a natural taper like a shoulder or
+ * sleeve line. Background removal preserves that straight edge exactly, and
+ * a silhouette-hugging glow around a perfectly straight line is what reads
+ * as "cut with scissors." A bottom mask fade (linear-gradient to
+ * transparent over the last ~14% of the frame) dissolves that edge into the
+ * hero's blue before the glow ever gets to trace it — the glow operates on
+ * this already-faded alpha, so it tapers away with the photo instead of
+ * ringing a hard line.
+ *
  * Desktop only: under ~1024px there isn't room for a second column without
  * crowding the greeting text, so this stays a progressive enhancement.
  */
+const BOTTOM_FADE_MASK = "linear-gradient(to bottom, #000 0%, #000 82%, transparent 97%)";
 export default function HeroPortrait() {
   const [motionEnabled, setMotionEnabled] = useState(false);
 
@@ -48,6 +59,8 @@ export default function HeroPortrait() {
             sizes="(min-width: 1280px) 440px, 400px"
             className="object-contain object-bottom"
             style={{
+              maskImage: BOTTOM_FADE_MASK,
+              WebkitMaskImage: BOTTOM_FADE_MASK,
               filter: [
                 "drop-shadow(0 14px 18px rgba(0,0,0,0.4))",
                 "drop-shadow(0 0 5px color-mix(in srgb, var(--color-lime) 85%, transparent))",
