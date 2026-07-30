@@ -54,7 +54,7 @@ export default function Hero() {
         variants={container}
         className="flex-1 flex flex-col justify-center max-w-6xl mx-auto px-6 w-full py-20 relative z-10"
       >
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_420px] xl:grid-cols-[minmax(0,1fr)_480px] items-center gap-8 lg:gap-10">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px] items-center gap-8 lg:gap-10">
           <div className="max-w-[680px]">
             {/* Greeting */}
             <motion.p
@@ -111,7 +111,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          <div className="hidden lg:block relative h-[420px] xl:h-[480px]">
+          <div className="hidden lg:block relative h-[460px] xl:h-[520px]">
             <HeroPortrait />
           </div>
         </div>
