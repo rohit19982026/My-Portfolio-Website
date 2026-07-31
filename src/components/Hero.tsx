@@ -52,50 +52,47 @@ export default function Hero() {
       >
         <div className="grid lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px] items-center gap-8 lg:gap-10">
           <div className="max-w-[680px]">
-            {/* Greeting */}
+            {/* Mobile/tablet portrait — the leading visual, read before the
+                greeting (face, then name, then bio) rather than dropped
+                mid-paragraph. Enters in the same stagger cascade as the
+                surrounding text via variants={fadeBlurUp} — no independent
+                entrance timing. Desktop gets its own side-column portrait
+                below instead. */}
+            <motion.div variants={fadeBlurUp} className="lg:hidden flex justify-center mb-6">
+              <div className="relative w-[210px] sm:w-[240px] aspect-[9/16]">
+                <HeroPortrait variant="mobile" />
+              </div>
+            </motion.div>
+
+            {/* Greeting — centered with the portrait/name/role on mobile
+                (one header block), left-aligned on desktop where it sits
+                beside its own photo column. */}
             <motion.p
               variants={pop}
-              className="font-heading text-[16px] sm:text-[18px] font-medium text-white/65 mb-4"
+              className="font-heading text-[16px] sm:text-[18px] font-medium text-white/65 mb-4 text-center lg:text-left"
             >
               Welcome, hi — I&apos;m
             </motion.p>
 
-            {/* Name — the only heading in the hero */}
+            {/* Name + Role — same treatment SectionHeading.tsx uses for
+                every other section's headline (font-display/Anton,
+                uppercase, same clamp(2.25rem,5vw,4.5rem) size, fill+lime
+                two-segment pattern), so the hero reads as part of the same
+                site instead of a one-off typographic choice. */}
             <motion.h1
               variants={fadeBlurUp}
-              className="font-heading font-bold text-white tracking-tight leading-[1.05] mb-3"
-              style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
+              className="font-display font-normal uppercase tracking-tight leading-[0.97] mb-5 text-center lg:text-left"
+              style={{ fontSize: "clamp(2.25rem, 5vw, 4.5rem)" }}
             >
-              Rohit Kumar Singh
-            </motion.h1>
-
-            {/* Role */}
-            <motion.p
-              variants={fadeBlurUp}
-              className="font-heading font-medium leading-[1.3] mb-8"
-              style={{ fontSize: "clamp(1.375rem, 2.6vw, 1.875rem)" }}
-            >
-              <span className="relative inline-block text-lime font-semibold">
-                Technical Project Manager
+              <span className="block text-white">Rohit Kumar Singh</span>
+              <span className="relative inline-block">
+                <span className="text-lime">Technical Project Manager</span>
                 <motion.span
                   variants={swipe}
                   className="absolute left-0 -bottom-1 h-[3px] w-full bg-lime origin-left"
                 />
               </span>
-              <span className="text-white/80"> — and also an AI Builder.</span>
-            </motion.p>
-
-            {/* Mobile/tablet portrait — sits between the identity block
-                (name + role) and the body copy, echoing a bio layout:
-                headline, portrait, body. Enters in the same stagger
-                cascade as the surrounding text via variants={fadeBlurUp}
-                — no independent entrance timing. Desktop gets its own
-                side-column portrait below instead. */}
-            <motion.div variants={fadeBlurUp} className="lg:hidden flex justify-center mb-8">
-              <div className="relative w-[190px] sm:w-[220px] aspect-[9/16]">
-                <HeroPortrait variant="mobile" />
-              </div>
-            </motion.div>
+            </motion.h1>
 
             {/* Lead copy */}
             <motion.p
@@ -103,13 +100,12 @@ export default function Hero() {
               className="leading-[1.55] text-white/80 max-w-[640px] mb-10"
               style={{ fontSize: "clamp(17px, 1.9vw, 20px)" }}
             >
-              At phData, I run data and AI delivery programs for enterprise clients —{" "}
+              I&apos;m also an{" "}
+              <strong className="font-semibold text-white">AI Builder</strong>. At
+              phData, I run data and AI delivery programs for enterprise clients —{" "}
               <em className="not-italic text-lime font-semibold">platform migrations, lakehouses, AI deployments</em>.
-              {" "}Ten so far, the largest $1.37M. I also{" "}
-              <strong className="font-semibold text-white">
-                build the AI agents that handle the repetitive parts of my own job
-              </strong>
-              .
+              {" "}Ten so far, the largest $1.37M. I build the AI agents that handle
+              the repetitive parts of my own job.
             </motion.p>
 
             {/* CTAs */}
