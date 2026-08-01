@@ -28,18 +28,29 @@ import { useEffect, useState } from "react";
  * entrance owners:
  * - "desktop": its own grid column in Hero.tsx, self-contained explicit
  *   entrance timing (it isn't a stagger child of the text column).
- * - "mobile": inline in the text stack between the Role and Lead
- *   paragraphs, no entrance of its own — Hero.tsx wraps it in a
+ * - "mobile": inline in the text stack, sized as a modest supporting
+ *   element (not the lead visual) — Hero.tsx wraps it in a
  *   `variants={fadeBlurUp}` motion.div so it reveals in the same stagger
  *   cascade as the surrounding copy instead of on an independent timeline.
  * Visibility (`hidden lg:block` / `lg:hidden`) is owned by the caller in
  * Hero.tsx, not hard-coded here.
+ *
+ * The mask and the glow filter live on two DIFFERENT elements (mask on the
+ * wrapper, filter on the `<Image>`) rather than both on the `<Image>`'s own
+ * `style`. Per spec, the composition order between `mask` and `filter` on a
+ * single element isn't consistently implemented across browser engines —
+ * on a real phone this showed up as a boxy artifact around the glow (the
+ * glow tracing the photo's original hard bottom edge, then the mask cutting
+ * through the already-rendered glow), invisible in this project's Chromium
+ * testing. Splitting them onto parent/child forces a deterministic order in
+ * every engine: the glow is fully computed on the child first, then the
+ * parent's mask fades that already-glowing result.
  */
 const BOTTOM_FADE_MASK = "linear-gradient(to bottom, #000 0%, #000 82%, transparent 97%)";
 
 const IMAGE_SIZES = {
   desktop: "(min-width: 1280px) 440px, 400px",
-  mobile: "(min-width: 640px) 220px, 190px",
+  mobile: "(min-width: 640px) 150px, 130px",
 } as const;
 
 const GLOW_FILTER = {
@@ -50,10 +61,10 @@ const GLOW_FILTER = {
     "drop-shadow(0 0 30px color-mix(in srgb, var(--color-lime) 35%, transparent))",
   ].join(" "),
   mobile: [
-    "drop-shadow(0 10px 13px rgba(0,0,0,0.4))",
-    "drop-shadow(0 0 4px color-mix(in srgb, var(--color-lime) 85%, transparent))",
-    "drop-shadow(0 0 10px color-mix(in srgb, var(--color-lime) 60%, transparent))",
-    "drop-shadow(0 0 21px color-mix(in srgb, var(--color-lime) 35%, transparent))",
+    "drop-shadow(0 7px 9px rgba(0,0,0,0.4))",
+    "drop-shadow(0 0 3px color-mix(in srgb, var(--color-lime) 85%, transparent))",
+    "drop-shadow(0 0 7px color-mix(in srgb, var(--color-lime) 60%, transparent))",
+    "drop-shadow(0 0 14px color-mix(in srgb, var(--color-lime) 35%, transparent))",
   ].join(" "),
 } as const;
 
@@ -74,19 +85,20 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
       transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
       className="relative h-full w-full"
     >
-      <Image
-        src="/hero/rohit-portrait-cutout.png"
-        alt="Rohit Kumar Singh"
-        fill
-        priority
-        sizes={IMAGE_SIZES[variant]}
-        className="object-contain object-bottom"
-        style={{
-          maskImage: BOTTOM_FADE_MASK,
-          WebkitMaskImage: BOTTOM_FADE_MASK,
-          filter: GLOW_FILTER[variant],
-        }}
-      />
+      <div
+        className="relative h-full w-full"
+        style={{ maskImage: BOTTOM_FADE_MASK, WebkitMaskImage: BOTTOM_FADE_MASK }}
+      >
+        <Image
+          src="/hero/rohit-portrait-cutout.png"
+          alt="Rohit Kumar Singh"
+          fill
+          priority
+          sizes={IMAGE_SIZES[variant]}
+          className="object-contain object-bottom"
+          style={{ filter: GLOW_FILTER[variant] }}
+        />
+      </div>
     </motion.div>
   );
 
