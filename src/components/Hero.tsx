@@ -133,7 +133,7 @@ export default function Hero() {
         variants={container}
         className="max-w-6xl mx-auto px-6 py-14 sm:py-16 lg:py-20 relative z-10"
       >
-        <div className="grid grid-cols-[1.3fr_1fr] lg:grid-cols-[1.15fr_420px] gap-x-6 sm:gap-x-10 gap-y-8 items-start">
+        <div className="grid grid-cols-[1.3fr_1fr] lg:grid-cols-[1.15fr_420px] gap-x-6 sm:gap-x-10 gap-y-8 items-start lg:items-stretch">
           {/* Text column */}
           <div>
             <motion.div
@@ -182,29 +182,17 @@ export default function Hero() {
               <span className="text-lime font-semibold">AI agents</span> that automate my own repetitive work.
             </motion.p>
 
-            {/* AI Enthusiast card — inline on mobile/tablet, floats on the photo at lg: */}
-            <motion.div variants={fadeBlurUp} className="lg:hidden mb-6 max-w-[420px]">
-              <AIEnthusiastCard />
-            </motion.div>
-
-            <motion.div variants={fadeBlurUp} className="flex flex-col sm:flex-row gap-3 max-w-[420px] lg:max-w-none">
-              <a
-                href="#experience"
-                className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
-              >
-                See My Work <span aria-hidden="true">→</span>
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
-              >
-                <Mail size={15} /> Let&apos;s Talk
-              </a>
-            </motion.div>
           </div>
 
-          {/* Photo column */}
-          <div className="relative h-[300px] sm:h-[360px] lg:h-[480px]">
+          {/* Photo column — comes right after the text column in DOM order
+              so grid auto-placement lands it in row 1's second column; the
+              CTA row below (col-span-2) then correctly starts a fresh row
+              instead of grid auto-placement pushing the photo down. At lg:
+              the CTA row collapses back to column 1 only, so the photo
+              needs row-span-2 there to keep covering column 2 alongside
+              it — otherwise that column-2 cell next to the CTA row would
+              sit empty, the exact bug being fixed, just moved to desktop. */}
+          <div className="relative h-[300px] sm:h-[360px] lg:h-auto lg:row-span-2">
             <HeroPortrait variant="desktop" />
 
             {/* Floating cards — desktop only */}
@@ -235,6 +223,34 @@ export default function Hero() {
                   <span key={i} className="w-1.5 rounded-sm bg-lime" style={{ height: `${h}px` }} />
                 ))}
               </div>
+            </motion.div>
+          </div>
+
+          {/* AI card + CTAs — a separate grid row spanning BOTH columns below
+              lg:, so it gets the section's full width to lay out in rather
+              than being trapped in the text column's ~55% while the photo
+              column (fixed height, often shorter than the text column on
+              tablet-ish widths) leaves dead space beside it. At lg: it
+              collapses back to the text column's width, matching the
+              reference where CTAs sit under the paragraph, not full width. */}
+          <div className="col-span-2 lg:col-span-1">
+            <motion.div variants={fadeBlurUp} className="lg:hidden mb-6 max-w-[420px]">
+              <AIEnthusiastCard />
+            </motion.div>
+
+            <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 max-w-[420px] lg:max-w-none">
+              <a
+                href="#experience"
+                className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
+              >
+                See My Work <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
+              >
+                <Mail size={15} /> Let&apos;s Talk
+              </a>
             </motion.div>
           </div>
         </div>
