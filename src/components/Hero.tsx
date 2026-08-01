@@ -108,7 +108,7 @@ export default function Hero() {
 
             {/* CTAs */}
             <motion.div variants={fadeBlurUp} className="flex flex-wrap gap-3">
-              <Button href="#work">See the work →</Button>
+              <Button href="#experience">See the work →</Button>
               <Button href="#contact" variant="secondary">Email me ✉</Button>
             </motion.div>
           </div>

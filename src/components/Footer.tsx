@@ -15,7 +15,7 @@ export default function Footer() {
           <div>
             <p className="font-heading font-bold uppercase tracking-widest text-white/50 mb-3 text-[10px]">EXPLORE</p>
             <ul className="space-y-2">
-              {[["Experience", "#experience"], ["Work", "#work"], ["Tools", "#tools"], ["Stack", "#stack"]].map(([label, href]) => (
+              {[["Experience", "#experience"], ["Tools", "#tools"], ["Stack", "#stack"]].map(([label, href]) => (
                 <li key={label}>
                   <a
                     href={href}

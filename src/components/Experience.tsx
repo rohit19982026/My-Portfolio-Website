@@ -16,9 +16,7 @@ const roles = [
     color: "white",
     bullets: [
       "At any point I'm running 4–6 active programs — fixed-price migrations, T&M engagements, managed retainers. Different clients, different stacks, no two look the same. $3.5M+ in combined contract value.",
-      "I forecast where a program will land rather than only reporting what it has spent. That's the difference between finding a funding gap with six weeks to act on it and finding it with one.",
-      "Forecasting the burn-down on a $1.37M program surfaced a funding gap six weeks out — early enough to act. Framed the extension around what stopping half-finished would cost the business, not around spend. $831K change order approved in 10 business days.",
-      "On the same program, 17 external approvals had stalled for weeks with no owner watching them. Made the cost of waiting visible — a name and a day count on each, in front of the people who could clear them. Once the aging was in their terms, they moved, and the team stopped idling on dependencies it didn't control.",
+      "17 external approvals had stalled for weeks with no owner watching them. Made the cost of waiting visible — a name and a day count on each, in front of the people who could clear them. Once the aging was in their terms, they moved, and the team stopped idling on dependencies it didn't control.",
       "A managed retainer's UAT was running 11 days. Root-caused where the pipeline actually stalled and put the specific items, owners, and wait times in front of the people who could act. The cycle dropped to 4 days.",
       "Built AI agents (Glean + Claude + n8n) for monthly financial reviews, weekly status briefs, and new program setup. Saves 5+ hours a week. Won phData's Innovation Award.",
       "Scoped 10+ programs end to end. One client pushed 14 scope additions beyond the agreed contract. Every one formally logged and resolved — none became free work.",

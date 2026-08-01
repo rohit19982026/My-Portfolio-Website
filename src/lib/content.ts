@@ -1,6 +1,7 @@
 export const navLinks = [
   { label: "Experience", href: "#experience" },
-  { label: "Work", href: "#work" },
+  // "Work" (case studies) nav link removed while that section is unmounted
+  // — see the comment in src/app/page.tsx.
   { label: "Tools", href: "#tools" },
   { label: "Stack", href: "#stack" },
 ];
