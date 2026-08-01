@@ -5,68 +5,43 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /**
- * Just the photo: real alpha-transparent cutout (from
- * @imgly/background-removal-node), true colors, no recolor. The hero no
- * longer renders any backdrop graphic behind it (HeroBackdrop was removed
- * from Hero.tsx entirely, not just hidden here), so there's nothing left to
- * mask or block — the neon-lime rim glow via stacked `drop-shadow()` (which
- * traces the image's real alpha silhouette) is purely a brand-accent touch
- * now, not doing double duty as camouflage.
+ * Real alpha-transparent cutout (from @imgly/background-removal-node),
+ * true colors, no recolor. Per the user's own reference design: a soft
+ * blue ambient glow + a faint dot-grid sit behind him (replacing the
+ * earlier neon-lime rim-glow treatment) — brand-accent color moves to the
+ * floating info cards and buttons instead of the portrait itself.
  *
  * The source photo is a waist-up shot — its bottom edge is where the
- * camera's own framing cut him off, not a natural taper like a shoulder or
- * sleeve line. Background removal preserves that straight edge exactly, and
- * a silhouette-hugging glow around a perfectly straight line is what reads
- * as "cut with scissors." A bottom mask fade (linear-gradient to
- * transparent over the last ~14% of the frame) dissolves that edge into the
- * hero's blue before the glow ever gets to trace it — the glow operates on
- * this already-faded alpha, so it tapers away with the photo instead of
- * ringing a hard line.
+ * camera's own framing cut him off, not a natural taper. A bottom mask
+ * fade (linear-gradient to transparent over the last ~14% of the frame)
+ * dissolves that edge into the background before any effect gets to trace
+ * it, so it never reads as a hard cut.
  *
- * Two variants share this exact recipe (mask + silhouette-hugging glow +
- * reduced-motion-gated float) at two different sizes and with two different
- * entrance owners:
- * - "desktop": its own grid column in Hero.tsx, self-contained explicit
- *   entrance timing (it isn't a stagger child of the text column).
- * - "mobile": inline in the text stack, sized as a modest supporting
- *   element (not the lead visual) — Hero.tsx wraps it in a
- *   `variants={fadeBlurUp}` motion.div so it reveals in the same stagger
- *   cascade as the surrounding copy instead of on an independent timeline.
- * Visibility (`hidden lg:block` / `lg:hidden`) is owned by the caller in
- * Hero.tsx, not hard-coded here.
+ * Two variants share this recipe (mask + glow/dot backdrop +
+ * reduced-motion-gated float) at two sizes with two different entrance
+ * owners — "desktop" (its own grid column, self-contained entrance timing)
+ * and "mobile" (inline in the text stack, entrance owned by Hero.tsx's
+ * stagger via variants={fadeBlurUp}). Visibility classes are owned by the
+ * caller in Hero.tsx.
  *
- * The mask and the glow filter live on two DIFFERENT elements (mask on the
- * wrapper, filter on the `<Image>`) rather than both on the `<Image>`'s own
- * `style`. Per spec, the composition order between `mask` and `filter` on a
- * single element isn't consistently implemented across browser engines —
- * on a real phone this showed up as a boxy artifact around the glow (the
- * glow tracing the photo's original hard bottom edge, then the mask cutting
- * through the already-rendered glow), invisible in this project's Chromium
- * testing. Splitting them onto parent/child forces a deterministic order in
- * every engine: the glow is fully computed on the child first, then the
- * parent's mask fades that already-glowing result.
+ * mask-image and filter/drop-shadow live on different elements (mask on a
+ * wrapper, filter on the <Image>) so the render order is deterministic
+ * across browser engines rather than depending on how any one engine
+ * resolves two effects stacked on a single element.
  */
 const BOTTOM_FADE_MASK = "linear-gradient(to bottom, #000 0%, #000 82%, transparent 97%)";
 
 const IMAGE_SIZES = {
   desktop: "(min-width: 1280px) 440px, 400px",
-  mobile: "(min-width: 640px) 150px, 130px",
+  mobile: "(min-width: 640px) 220px, 190px",
 } as const;
 
-const GLOW_FILTER = {
-  desktop: [
-    "drop-shadow(0 14px 18px rgba(0,0,0,0.4))",
-    "drop-shadow(0 0 5px color-mix(in srgb, var(--color-lime) 85%, transparent))",
-    "drop-shadow(0 0 14px color-mix(in srgb, var(--color-lime) 60%, transparent))",
-    "drop-shadow(0 0 30px color-mix(in srgb, var(--color-lime) 35%, transparent))",
-  ].join(" "),
-  mobile: [
-    "drop-shadow(0 7px 9px rgba(0,0,0,0.4))",
-    "drop-shadow(0 0 3px color-mix(in srgb, var(--color-lime) 85%, transparent))",
-    "drop-shadow(0 0 7px color-mix(in srgb, var(--color-lime) 60%, transparent))",
-    "drop-shadow(0 0 14px color-mix(in srgb, var(--color-lime) 35%, transparent))",
-  ].join(" "),
+const GROUND_SHADOW = {
+  desktop: "drop-shadow(0 18px 22px rgba(0,0,0,0.5))",
+  mobile: "drop-shadow(0 10px 14px rgba(0,0,0,0.5))",
 } as const;
+
+const DOT_GRID = "radial-gradient(circle, rgba(147,181,255,0.4) 1px, transparent 1.6px)";
 
 export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile" }) {
   const [motionEnabled, setMotionEnabled] = useState(false);
@@ -79,12 +54,29 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
     return () => mq.removeEventListener("change", evaluate);
   }, []);
 
+  const backdrop = (
+    <div className="absolute inset-[-14%] pointer-events-none" aria-hidden="true">
+      <div
+        className="absolute inset-0"
+        style={{ backgroundImage: DOT_GRID, backgroundSize: "20px 20px" }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(46% 56% at 52% 40%, rgba(64,96,224,0.4) 0%, rgba(64,96,224,0.14) 55%, transparent 78%)",
+        }}
+      />
+    </div>
+  );
+
   const photo = (
     <motion.div
       animate={motionEnabled ? { y: [0, -10, 0] } : {}}
       transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
       className="relative h-full w-full"
     >
+      {backdrop}
       <div
         className="relative h-full w-full"
         style={{ maskImage: BOTTOM_FADE_MASK, WebkitMaskImage: BOTTOM_FADE_MASK }}
@@ -96,7 +88,7 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
           priority
           sizes={IMAGE_SIZES[variant]}
           className="object-contain object-bottom"
-          style={{ filter: GLOW_FILTER[variant] }}
+          style={{ filter: GROUND_SHADOW[variant] }}
         />
       </div>
     </motion.div>
