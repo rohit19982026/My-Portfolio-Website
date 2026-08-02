@@ -442,7 +442,14 @@ export default function Hero() {
           initial="hidden"
           animate="show"
           variants={container}
-          className="max-w-6xl mx-auto px-6 py-14 sm:py-16 relative z-10"
+          // The section itself carries pt-[64px] (originally sized to clear
+          // a fixed navbar) but the navbar is `sticky`, not `fixed` — it
+          // already occupies its own space in normal flow, so that padding
+          // is pure dead space stacked on top of the navbar's real height.
+          // Left alone for desktop (untouched, out of scope here), but
+          // mobile pulls it back out with a negative margin so the badge
+          // sits right under the header instead of ~90px below it.
+          className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
         >
           <motion.div
             variants={pop}
