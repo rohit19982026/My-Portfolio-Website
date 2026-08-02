@@ -1,298 +1,388 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useId, useRef, type ComponentType } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 
-export type DiagramNode = {
+export type MainStep = {
+  kind: "step";
   id: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  /** Use "\n" to wrap onto a second line in narrow (e.g. side-by-side
-   *  parallel) nodes. */
   label: string;
   sub: string;
-  /** "card" = dark bordered card (the default, everything that isn't the
-   *  diagram's own headline step); "hero" = solid-filled in the diagram's
-   *  `accent` color — reserved for the agent step itself (and, on the
-   *  featured card only, its synthesized-output step too). */
   tone?: "card" | "hero";
-  /** Small tag above the label (e.g. "SKILL", "TOOL CALL") — used instead
-   *  of prefixing the label itself when a node is too narrow for both. */
-  eyebrow?: string;
-  /** A real icon component — lucide, react-icons/si, or one of this site's
-   *  own brand-mark components — rendered directly instead of looked up
-   *  from a fixed enum, so any node can carry a real brand mark (Jira,
-   *  Slack) alongside the generic semantic ones. */
   icon?: ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
-  /** Tints the icon glyph + its badge ring. Defaults to the node's own
-   *  text color (white on "card", heroTextColor on "hero") when omitted —
-   *  set explicitly for icons that should read as their own semantic or
-   *  brand color regardless of the node's fill (e.g. blue tool-call icons
-   *  on a dark card, or a brand mark that ignores tint entirely). */
   iconColor?: string;
-  /** "marker" renders a small unlabeled circle — used for graph-style
-   *  start/end nodes, not a content node. */
-  shape?: "rect" | "marker";
+  /** "start"/"end" render as a small connector-cap dot only — no card, no
+   *  badge, and (unlike every other MainStep) not counted in the numeral
+   *  sequence. */
+  marker?: "start" | "end";
 };
-export type DiagramEdge = { points: [number, number][]; delay: number };
+
+export type BranchItem = {
+  id: string;
+  label: string;
+  sub: string;
+  eyebrow: string;
+  icon?: ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+  iconColor?: string;
+};
+
+export type BranchGroup = {
+  kind: "branch";
+  id: string;
+  /** One row for 5 of the 6 diagrams; two rows (e.g. 3-then-2) only for
+   *  ProjectSetupDiagram, where a single parent fans out to two visually
+   *  distinct rows that both converge into the same next step. */
+  rows: BranchItem[][];
+};
+
+export type Step = MainStep | BranchGroup;
 
 // A nested-card fill distinct from both the section's navy background and
-// the translucent HTML card sitting behind the SVG, so "card" nodes read as
-// their own layer rather than blending into either.
+// the translucent HTML card sitting behind the diagram, so "card" steps
+// read as their own layer rather than blending into either.
 const CARD_FILL = "#10152b";
+const BADGE_BG = "#0d0d0f";
 
-/**
- * Turns a waypoint polyline into a path with each interior corner rounded —
- * a graph/node-editor-style smooth elbow connector instead of a sharp right
- * angle. The route (and therefore its guarantee of not crossing through
- * unrelated nodes) is unchanged from the straight-line polyline; only the
- * corners are softened, each by at most half its shortest adjacent segment
- * so the curve never overshoots into a neighboring segment.
- */
-export function roundedPath(points: [number, number][], radius = 14): string {
-  if (points.length < 2) return "";
-  if (points.length === 2) {
-    return `M${points[0][0]} ${points[0][1]} L${points[1][0]} ${points[1][1]}`;
-  }
-  let d = `M${points[0][0]} ${points[0][1]}`;
-  for (let i = 1; i < points.length - 1; i++) {
-    const [px, py] = points[i - 1];
-    const [cx, cy] = points[i];
-    const [nx, ny] = points[i + 1];
-    const dIn = Math.hypot(cx - px, cy - py);
-    const dOut = Math.hypot(nx - cx, ny - cy);
-    const rIn = Math.min(radius, dIn / 2);
-    const rOut = Math.min(radius, dOut / 2);
-    const inX = cx + ((px - cx) / dIn) * rIn;
-    const inY = cy + ((py - cy) / dIn) * rIn;
-    const outX = cx + ((nx - cx) / dOut) * rOut;
-    const outY = cy + ((ny - cy) / dOut) * rOut;
-    d += ` L${inX} ${inY} Q${cx} ${cy} ${outX} ${outY}`;
-  }
-  const [lx, ly] = points[points.length - 1];
-  d += ` L${lx} ${ly}`;
-  return d;
+function useReducedMotionSafe() {
+  const [motionEnabled, setMotionEnabled] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const evaluate = () => setMotionEnabled(!mq.matches);
+    evaluate();
+    mq.addEventListener("change", evaluate);
+    return () => mq.removeEventListener("change", evaluate);
+  }, []);
+  return motionEnabled;
+}
+
+// The circular badge every main-chain step (trigger, tool-call, agent,
+// output, human-review — everything that isn't a parallel branch item)
+// shares: a dark circle straddling the card's top border, glowing in
+// whatever color that step's icon is tinted. Badge treatment is always
+// dark-bg + accent-ring regardless of the card's own tone (hero cards
+// still get a plain dark badge above them, matching the reference — only
+// the card fill changes between "card" and "hero", never the badge).
+function StepBadge({
+  Icon,
+  color,
+  size = 54,
+  iconSize = 22,
+}: {
+  Icon?: ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+  color: string;
+  size?: number;
+  iconSize?: number;
+}) {
+  return (
+    <div
+      className="absolute left-1/2 top-0 z-10 flex items-center justify-center rounded-full"
+      style={{
+        width: size,
+        height: size,
+        transform: "translate(-50%, -50%)",
+        background: BADGE_BG,
+        border: `2px solid ${color}`,
+        boxShadow: `0 0 14px color-mix(in srgb, ${color} 55%, transparent)`,
+      }}
+    >
+      {Icon && <Icon size={iconSize} color={color} strokeWidth={2} />}
+    </div>
+  );
+}
+
+// Breathing pulse-outline — the HTML equivalent of the old SVG stroke-pulse
+// rect, same "still running" signal, gated behind reduced-motion + inView
+// exactly like the traveling connector dots below.
+function PulseOutline({ color, delay, active }: { color: string; delay: number; active: boolean }) {
+  if (!active) return null;
+  return (
+    <motion.div
+      className="absolute inset-0 rounded-2xl pointer-events-none"
+      style={{ border: `2px solid ${color}` }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0, 0.5, 0] }}
+      transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1.2, delay, ease: "easeInOut" }}
+    />
+  );
+}
+
+function MainStepCard({
+  step,
+  numeral,
+  accent,
+  heroTextColor,
+  delay,
+  inView,
+  motionOn,
+}: {
+  step: MainStep;
+  numeral: number | null;
+  accent: string;
+  heroTextColor: string;
+  delay: number;
+  inView: boolean;
+  motionOn: boolean;
+}) {
+  const tone = step.tone ?? "card";
+  const fill = tone === "hero" ? accent : CARD_FILL;
+  const textColor = tone === "hero" ? heroTextColor : "#ffffff";
+  const badgeColor = step.iconColor ?? accent;
+
+  return (
+    <motion.div
+      className="relative w-full"
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.4, delay }}
+    >
+      {step.icon && <StepBadge Icon={step.icon} color={badgeColor} />}
+      <div
+        className="relative w-full rounded-2xl pt-8 pb-4 px-5 flex items-center gap-3"
+        style={{ background: fill, border: tone === "hero" ? "none" : "1px solid rgba(255,255,255,0.14)" }}
+      >
+        <PulseOutline color={accent} delay={delay + 0.5} active={motionOn} />
+        {numeral !== null && (
+          <>
+            <span className="font-heading text-[18px] font-bold shrink-0" style={{ color: textColor }}>
+              {numeral}
+            </span>
+            <span className="w-px self-stretch shrink-0" style={{ background: `color-mix(in srgb, ${textColor} 20%, transparent)` }} />
+          </>
+        )}
+        <div className="min-w-0">
+          <p className="font-heading text-[13px] font-bold leading-snug" style={{ color: textColor }}>
+            {step.label}
+          </p>
+          {step.sub && (
+            <p className="text-[10.5px] leading-snug mt-0.5" style={{ color: textColor, opacity: 0.75 }}>
+              {step.sub}
+            </p>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function BranchItemCard({
+  item,
+  accent,
+  delay,
+  inView,
+  motionOn,
+}: {
+  item: BranchItem;
+  accent: string;
+  delay: number;
+  inView: boolean;
+  motionOn: boolean;
+}) {
+  const badgeColor = item.iconColor ?? accent;
+  return (
+    <motion.div
+      className="relative w-full min-h-[90px]"
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.4, delay }}
+    >
+      {item.icon && <StepBadge Icon={item.icon} color={badgeColor} size={40} iconSize={17} />}
+      <div
+        className="relative w-full h-full rounded-2xl pt-7 pb-3 px-3 flex flex-col items-center text-center justify-center"
+        style={{ background: CARD_FILL, border: "1px solid rgba(255,255,255,0.14)" }}
+      >
+        <PulseOutline color={accent} delay={delay + 0.5} active={motionOn} />
+        <p
+          className="font-heading text-[8.5px] font-bold uppercase tracking-[0.12em] mb-1"
+          style={{ color: `color-mix(in srgb, ${accent} 80%, white)` }}
+        >
+          {item.eyebrow}
+        </p>
+        <p className="font-heading text-[12px] font-bold text-white leading-snug">{item.label}</p>
+      </div>
+    </motion.div>
+  );
+}
+
+// Vertical connector between two consecutive full-width steps — a plain
+// CSS line, not SVG. There's no elbow to round when both cards are
+// already stacked and centered in normal document flow, so SVG adds
+// nothing here (the curved connectors are reserved for the fan-out/
+// fan-in branch regions below, where the routing genuinely branches).
+function Connector({ accent, delay, inView, motionOn, height = 32 }: { accent: string; delay: number; inView: boolean; motionOn: boolean; height?: number }) {
+  return (
+    <div className="relative flex items-center justify-center" style={{ height }} aria-hidden="true">
+      <motion.div
+        className="w-px"
+        style={{ height: "100%", background: accent, opacity: 0.5 }}
+        initial={{ scaleY: 0 }}
+        animate={inView ? { scaleY: 1 } : {}}
+        transition={{ duration: 0.4, delay }}
+      />
+      <div
+        className="absolute bottom-0 left-1/2"
+        style={{
+          transform: "translateX(-50%)",
+          width: 0,
+          height: 0,
+          borderLeft: "4px solid transparent",
+          borderRight: "4px solid transparent",
+          borderTop: `6px solid ${accent}`,
+        }}
+      />
+      {motionOn && (
+        <motion.span
+          className="absolute left-1/2 rounded-full"
+          style={{ width: 6, height: 6, background: accent, boxShadow: `0 0 6px ${accent}`, translateX: "-50%" }}
+          initial={{ top: "0%", opacity: 0 }}
+          animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, delay: delay + 0.6, ease: "linear" }}
+        />
+      )}
+    </div>
+  );
+}
+
+// Fan-out (or fan-in, mirrored) curved-connector overlay for one row of N
+// siblings. Proportional 0-100 viewBox scaled to 100% width via CSS —
+// the same technique this file already used before this rewrite — so
+// sibling k's anchor sits at exactly ((k+0.5)/N)*100, matching a CSS grid
+// of N equal columns without ever measuring real DOM geometry.
+function FanConnector({ count, direction, accent, delay, inView }: { count: number; direction: "out" | "in"; accent: string; delay: number; inView: boolean }) {
+  const parentX = 50;
+  const childXs = Array.from({ length: count }, (_, k) => ((k + 0.5) / count) * 100);
+  const paths =
+    direction === "out"
+      ? childXs.map((x) => `M${parentX},0 Q${parentX},20 ${(parentX + x) / 2},20 Q${x},20 ${x},40`)
+      : childXs.map((x) => `M${x},0 Q${x},20 ${(parentX + x) / 2},20 Q${parentX},20 ${parentX},40`);
+
+  return (
+    <svg viewBox="0 0 100 40" preserveAspectRatio="none" className="w-full" style={{ height: 32 }} aria-hidden="true">
+      {paths.map((d, i) => (
+        <motion.path
+          key={i}
+          d={d}
+          fill="none"
+          stroke={accent}
+          strokeWidth={0.6}
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: delay + i * 0.06 }}
+        />
+      ))}
+    </svg>
+  );
+}
+
+function BranchGroupBlock({
+  group,
+  accent,
+  delay,
+  inView,
+  motionOn,
+}: {
+  group: BranchGroup;
+  accent: string;
+  delay: number;
+  inView: boolean;
+  motionOn: boolean;
+}) {
+  const totalItems = group.rows.reduce((n, row) => n + row.length, 0);
+
+  return (
+    <div className="w-full">
+      <FanConnector count={group.rows[0].length} direction="out" accent={accent} delay={delay} inView={inView} />
+      {group.rows.map((row, ri) => (
+        <div key={ri} className={`grid gap-3 ${ri > 0 ? "mt-6" : ""}`} style={{ gridTemplateColumns: `repeat(${row.length}, minmax(0, 1fr))` }}>
+          {row.map((item, ii) => (
+            <BranchItemCard
+              key={item.id}
+              item={item}
+              accent={accent}
+              delay={delay + 0.1 + (ri * group.rows[0].length + ii) * 0.05}
+              inView={inView}
+              motionOn={motionOn}
+            />
+          ))}
+        </div>
+      ))}
+      <FanConnector count={group.rows[group.rows.length - 1].length} direction="in" accent={accent} delay={delay + 0.1 + totalItems * 0.05} inView={inView} />
+    </div>
+  );
 }
 
 export default function FlowDiagram({
-  viewBox,
-  nodes,
-  edges,
+  steps,
   ariaLabel,
   accent = "#d7ff3f",
   heroTextColor = "#ffffff",
 }: {
-  viewBox: string;
-  nodes: DiagramNode[];
-  edges: DiagramEdge[];
+  steps: Step[];
   ariaLabel: string;
-  /** Drives edge stroke/arrowheads/ports, the execution-loop dot + node
-   *  pulse, and the fill of any "hero" node — this is what gives each
-   *  agent's diagram its own identity color. */
+  /** Drives every badge ring/icon default, connector color, and the fill
+   *  of any "hero" step — this is what gives each agent's diagram its
+   *  own identity color. */
   accent?: string;
-  /** Text/icon color on "hero" nodes — pass a dark value when `accent` is
-   *  a light fill (e.g. lime). */
+  /** Text color on "hero" steps — pass a dark value when `accent` is a
+   *  light fill (e.g. lime). */
   heroTextColor?: string;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const arrowId = useId();
+  const motionOn = useReducedMotionSafe() && inView;
 
-  const toneStyle = {
-    card: { fill: CARD_FILL, text: "#ffffff" },
-    hero: { fill: accent, text: heroTextColor },
-  } as const;
-
-  // The reveal (below) plays once. The execution loop is the "it's still
-  // running" signal — a pulse traveling each edge, a faint breathing glow
-  // on each node — so the diagram doesn't read as a static picture once
-  // revealed. It's only rendered once `inView` flips true, so a plain
-  // mount-effect would run before that element exists; a ref callback
-  // fires exactly when the node is actually attached, whenever that is.
-  // Hidden outright under reduced-motion, same as MagneticCursor/
-  // SmoothScrollProvider elsewhere in this codebase.
-  const hideIfReducedMotion = (el: SVGGElement | null) => {
-    if (el && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.display = "none";
-    }
-  };
+  // Precomputed, not accumulated via a mutable counter during render — each
+  // entry's numeral (null for branches/markers) and stagger index are
+  // derived purely from how many numeral-eligible steps preceded it.
+  const entries = steps.map((step, i) => {
+    const priorNumeralSteps = steps.slice(0, i).filter((s) => s.kind === "step" && !s.marker).length;
+    const numeral = step.kind === "step" && !step.marker ? priorNumeralSteps + 1 : null;
+    return { step, index: i, numeral, delay: 0.1 + i * 0.12 };
+  });
 
   return (
-    <div ref={ref} className="w-full">
-      <svg viewBox={viewBox} className="w-full h-auto" aria-label={ariaLabel}>
-        <defs>
-          <marker id={arrowId} markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill={accent} />
-          </marker>
-        </defs>
+    <div ref={ref} className="w-full flex flex-col" role="img" aria-label={ariaLabel}>
+      {entries.map(({ step, index, numeral, delay }) => {
+        const isLast = index === steps.length - 1;
 
-        {edges.map((e, i) => (
-          <motion.path
-            key={i}
-            d={roundedPath(e.points)}
-            fill="none"
-            stroke={accent}
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            markerEnd={`url(#${arrowId})`}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={inView ? { pathLength: 1, opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: e.delay }}
-          />
-        ))}
-
-        {/* n8n-style connection "ports" — small dots at each anchor point,
-            not just a bare line meeting the node edge. */}
-        {edges.map((e, i) => {
-          const [sx, sy] = e.points[0];
-          const [ex, ey] = e.points[e.points.length - 1];
+        if (step.kind === "branch") {
           return (
-            <g key={`ports-${i}`}>
-              <circle cx={sx} cy={sy} r={2.5} fill="#0d0d0f" stroke={accent} strokeWidth={1.5} />
-              <circle cx={ex} cy={ey} r={2.5} fill="#0d0d0f" stroke={accent} strokeWidth={1.5} />
-            </g>
+            <div key={step.id}>
+              <BranchGroupBlock group={step} accent={accent} delay={delay} inView={inView} motionOn={motionOn} />
+              {!isLast && <Connector accent={accent} delay={delay + 0.3} inView={inView} motionOn={motionOn} />}
+            </div>
           );
-        })}
+        }
 
-        {nodes.map((n, i) => {
-          const tone = toneStyle[n.tone ?? "card"];
-
-          if (n.shape === "marker") {
-            const cx = n.x + n.w / 2;
-            const cy = n.y + n.h / 2;
-            const r = Math.min(n.w, n.h) / 2;
-            return (
-              <motion.circle
-                key={n.id}
-                cx={cx}
-                cy={cy}
-                r={r}
-                fill="#0d0d0f"
-                stroke={accent}
-                strokeWidth={2}
+        if (step.marker) {
+          return (
+            <div key={step.id} className="flex flex-col items-center" aria-hidden="true">
+              <motion.div
+                className="rounded-full shrink-0"
+                style={{ width: 14, height: 14, background: BADGE_BG, border: `2px solid ${accent}` }}
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.3, delay: i * 0.07 }}
-                style={{ transformOrigin: `${cx}px ${cy}px` }}
+                transition={{ duration: 0.3 }}
               />
-            );
-          }
-
-          const Icon = n.icon;
-          const iconColor = n.iconColor ?? tone.text;
-          const compact = !!n.eyebrow;
-
-          // Icon-forward, n8n-card layout: a full-width node gets its icon
-          // in a small badge on the left with text indented beside it; a
-          // compact side-by-side node gets its icon centered on top with
-          // text stacked below — either way the icon badge claims its own
-          // space and the text block is centered within what's left.
-          let textCenterX = n.x + n.w / 2;
-          let textTop = n.y;
-          let iconCx = 0;
-          let iconCy = 0;
-          const iconR = compact ? 10 : 12;
-          if (Icon && compact) {
-            iconCx = n.x + n.w / 2;
-            iconCy = n.y + 16;
-            textTop = n.y + 26;
-          } else if (Icon) {
-            iconCx = n.x + 22;
-            iconCy = n.y + n.h / 2;
-            textCenterX = n.x + 40 + (n.w - 40 - 10) / 2;
-          }
-
-          const lines: { text: string; size: number; weight: string; opacity: number; isEyebrow?: boolean }[] = [];
-          if (n.eyebrow) lines.push({ text: n.eyebrow, size: 8, weight: "700", opacity: 0.65, isEyebrow: true });
-          n.label.split("\n").forEach((l) => lines.push({ text: l, size: 12, weight: "700", opacity: 1 }));
-          if (n.sub) lines.push({ text: n.sub, size: 9.5, weight: "400", opacity: 0.75 });
-          const lineH = 13;
-          const textAreaH = n.y + n.h - textTop;
-          const startY = textTop + textAreaH / 2 - (lines.length * lineH) / 2 + lineH * 0.72;
-
-          return (
-            <motion.g
-              key={n.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
-              style={{ transformOrigin: `${n.x + n.w / 2}px ${n.y + n.h / 2}px` }}
-            >
-              <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={9} fill={tone.fill} stroke="rgba(255,255,255,0.14)" />
-              {Icon && (
-                <>
-                  <circle cx={iconCx} cy={iconCy} r={iconR} fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.2)" />
-                  <g transform={`translate(${iconCx - iconR * 0.6}, ${iconCy - iconR * 0.6})`}>
-                    <Icon size={iconR * 1.2} color={iconColor} strokeWidth={2.25} />
-                  </g>
-                </>
-              )}
-              {lines.map((ln, li) => (
-                <text
-                  key={li}
-                  x={textCenterX}
-                  y={startY + li * lineH}
-                  textAnchor="middle"
-                  fill={tone.text}
-                  fontSize={ln.size}
-                  fontWeight={ln.weight}
-                  opacity={ln.opacity}
-                  letterSpacing={ln.isEyebrow ? "0.08em" : undefined}
-                >
-                  {ln.text}
-                </text>
-              ))}
-            </motion.g>
+              {!isLast && <Connector accent={accent} delay={0.05} inView={inView} motionOn={motionOn} height={20} />}
+            </div>
           );
-        })}
+        }
 
-        {/* Execution loop — only once the reveal has actually started */}
-        {inView && (
-          <g ref={hideIfReducedMotion}>
-            {edges.map((e, i) => {
-              const d = roundedPath(e.points);
-              return (
-                <circle key={i} r={3.5} fill={accent} opacity={0.9}>
-                  <animateMotion
-                    dur="2.2s"
-                    begin={`${e.delay + 0.6}s`}
-                    repeatCount="indefinite"
-                    path={d}
-                  />
-                </circle>
-              );
-            })}
-
-            {nodes
-              .filter((n) => n.shape !== "marker")
-              .map((n, i) => (
-                <motion.rect
-                  key={n.id}
-                  x={n.x}
-                  y={n.y}
-                  width={n.w}
-                  height={n.h}
-                  rx={9}
-                  fill="none"
-                  stroke={accent}
-                  strokeWidth={2}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 0.5, 0] }}
-                  transition={{
-                    duration: 1.6,
-                    repeat: Infinity,
-                    repeatDelay: 1.2,
-                    delay: 0.5 + i * 0.07,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-          </g>
-        )}
-      </svg>
+        return (
+          <div key={step.id}>
+            <MainStepCard
+              step={step}
+              numeral={numeral}
+              accent={accent}
+              heroTextColor={heroTextColor}
+              delay={delay}
+              inView={inView}
+              motionOn={motionOn}
+            />
+            {!isLast && <Connector accent={accent} delay={delay + 0.15} inView={inView} motionOn={motionOn} />}
+          </div>
+        );
+      })}
     </div>
   );
 }

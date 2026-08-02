@@ -216,7 +216,7 @@ function DiagramPanel({ label, Diagram }: { label: string; Diagram: ComponentTyp
   return (
     <div>
       <div className="hidden lg:block">
-        <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 text-right mb-3">{label}</p>
+        <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 mb-3">{label}</p>
         <Diagram />
       </div>
 
@@ -287,7 +287,7 @@ function FeaturedAgentCard({ agent, inView }: { agent: Agent; inView: boolean })
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className="grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-12 rounded-2xl p-6 sm:p-8"
+      className="flex flex-col gap-8 rounded-2xl p-6 sm:p-8"
       style={{ background: CARD_BG, border: `1px solid ${isBilling ? "rgba(139,127,240,0.35)" : CARD_BORDER}` }}
     >
       <div>
