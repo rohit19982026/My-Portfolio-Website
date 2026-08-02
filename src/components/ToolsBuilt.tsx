@@ -25,6 +25,7 @@ import ProjectSetupDiagram from "./diagrams/ProjectSetupDiagram";
 import StatusBriefDiagram from "./diagrams/StatusBriefDiagram";
 import StakeholderMessageDiagram from "./diagrams/StakeholderMessageDiagram";
 import KickoffDiagram from "./diagrams/KickoffDiagram";
+import SwipeCarousel from "./ui/SwipeCarousel";
 
 // Same dark system Hero.tsx/DeliveryExposure.tsx already established this
 // session — kept as local literals here too, matching how both of those
@@ -468,11 +469,18 @@ export default function ToolsBuilt() {
         <div key={activeTab} className="space-y-5">
           <FeaturedAgentCard agent={featured} inView={inView} />
           {secondary.length > 0 && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {secondary.map((agent, i) => (
-                <AgentCard key={agent.id} agent={agent} index={i} inView={inView} />
-              ))}
-            </div>
+            <>
+              <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {secondary.map((agent, i) => (
+                  <AgentCard key={agent.id} agent={agent} index={i} inView={inView} />
+                ))}
+              </div>
+              <SwipeCarousel ariaLabel="More AI agents I've built, swipeable carousel" className="sm:hidden">
+                {secondary.map((agent, i) => (
+                  <AgentCard key={agent.id} agent={agent} index={i} inView={inView} />
+                ))}
+              </SwipeCarousel>
+            </>
           )}
         </div>
 

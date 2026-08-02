@@ -35,6 +35,7 @@ import SectionHeading from "./ui/SectionHeading";
 import SalesforceMark from "./icons/SalesforceMark";
 import SlackMark from "./icons/SlackMark";
 import GleanMark from "./icons/GleanMark";
+import SwipeCarousel from "./ui/SwipeCarousel";
 
 /**
  * Dark-navy treatment matching Hero.tsx's reference-driven redesign this
@@ -240,11 +241,16 @@ export default function DeliveryExposure() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="hidden sm:grid sm:grid-cols-2 gap-5">
           {stacks.map((category, i) => (
             <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
           ))}
         </div>
+        <SwipeCarousel ariaLabel="Tools and platforms I've delivered on, swipeable carousel" className="sm:hidden">
+          {stacks.map((category, i) => (
+            <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
+          ))}
+        </SwipeCarousel>
       </div>
     </section>
   );
