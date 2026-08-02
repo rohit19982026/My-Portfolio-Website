@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Inter, Space_Grotesk } from "next/font/google";
+import { Anton, Caveat, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -23,6 +23,12 @@ const inter = Inter({
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
   display: "swap",
 });
@@ -67,7 +73,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${inter.variable} ${spaceGrotesk.variable} h-full`}
+      className={`${anton.variable} ${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
         <SmoothScrollProvider>

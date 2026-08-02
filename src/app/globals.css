@@ -22,6 +22,7 @@
   --font-display: var(--font-anton);
   --font-heading: var(--font-space-grotesk);
   --font-sans:    var(--font-inter);
+  --font-signature: var(--font-caveat);
 }
 
 * { box-sizing: border-box; }

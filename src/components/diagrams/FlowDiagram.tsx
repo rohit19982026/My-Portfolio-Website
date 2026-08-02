@@ -1,8 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { Bot, FileCheck, Plug, UserCheck, Wrench, Zap } from "lucide-react";
-import { useId, useRef } from "react";
+import { useId, useRef, type ComponentType } from "react";
 
 export type DiagramNode = {
   id: string;
@@ -14,29 +13,35 @@ export type DiagramNode = {
    *  parallel) nodes. */
   label: string;
   sub: string;
-  tone?: "ink" | "blue" | "lime" | "white";
+  /** "card" = dark bordered card (the default, everything that isn't the
+   *  diagram's own headline step); "hero" = solid-filled in the diagram's
+   *  `accent` color — reserved for the agent step itself (and, on the
+   *  featured card only, its synthesized-output step too). */
+  tone?: "card" | "hero";
   /** Small tag above the label (e.g. "SKILL", "TOOL CALL") — used instead
    *  of prefixing the label itself when a node is too narrow for both. */
   eyebrow?: string;
-  /** n8n-style node icon — every node type gets one, matching a no-code
-   *  workflow builder's icon-forward card look. */
-  icon?: "trigger" | "tool" | "agent" | "skill" | "output" | "human";
+  /** A real icon component — lucide, react-icons/si, or one of this site's
+   *  own brand-mark components — rendered directly instead of looked up
+   *  from a fixed enum, so any node can carry a real brand mark (Jira,
+   *  Slack) alongside the generic semantic ones. */
+  icon?: ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+  /** Tints the icon glyph + its badge ring. Defaults to the node's own
+   *  text color (white on "card", heroTextColor on "hero") when omitted —
+   *  set explicitly for icons that should read as their own semantic or
+   *  brand color regardless of the node's fill (e.g. blue tool-call icons
+   *  on a dark card, or a brand mark that ignores tint entirely). */
+  iconColor?: string;
   /** "marker" renders a small unlabeled circle — used for graph-style
    *  start/end nodes, not a content node. */
   shape?: "rect" | "marker";
 };
 export type DiagramEdge = { points: [number, number][]; delay: number };
-export type DiagramBadge = { x: number; y: number; w: number; h: number; label: string };
-export type DiagramPhase = { x: number; y: number; label: string };
 
-const toneStyle: Record<string, { fill: string; text: string }> = {
-  ink:   { fill: "#1c1c22", text: "#ffffff" },
-  blue:  { fill: "#0d22ee", text: "#ffffff" },
-  lime:  { fill: "#d7ff3f", text: "#0d0d0f" },
-  white: { fill: "#efeee8", text: "#0d0d0f" },
-};
-
-const iconMap = { trigger: Zap, tool: Plug, agent: Bot, skill: Wrench, output: FileCheck, human: UserCheck };
+// A nested-card fill distinct from both the section's navy background and
+// the translucent HTML card sitting behind the SVG, so "card" nodes read as
+// their own layer rather than blending into either.
+const CARD_FILL = "#10152b";
 
 /**
  * Turns a waypoint polyline into a path with each interior corner rounded —
@@ -75,20 +80,30 @@ export default function FlowDiagram({
   viewBox,
   nodes,
   edges,
-  badge,
-  phases,
   ariaLabel,
+  accent = "#d7ff3f",
+  heroTextColor = "#ffffff",
 }: {
   viewBox: string;
   nodes: DiagramNode[];
   edges: DiagramEdge[];
-  badge?: DiagramBadge;
-  phases?: DiagramPhase[];
   ariaLabel: string;
+  /** Drives edge stroke/arrowheads/ports, the execution-loop dot + node
+   *  pulse, and the fill of any "hero" node — this is what gives each
+   *  agent's diagram its own identity color. */
+  accent?: string;
+  /** Text/icon color on "hero" nodes — pass a dark value when `accent` is
+   *  a light fill (e.g. lime). */
+  heroTextColor?: string;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const arrowId = useId();
+
+  const toneStyle = {
+    card: { fill: CARD_FILL, text: "#ffffff" },
+    hero: { fill: accent, text: heroTextColor },
+  } as const;
 
   // The reveal (below) plays once. The execution loop is the "it's still
   // running" signal — a pulse traveling each edge, a faint breathing glow
@@ -109,7 +124,7 @@ export default function FlowDiagram({
       <svg viewBox={viewBox} className="w-full h-auto" aria-label={ariaLabel}>
         <defs>
           <marker id={arrowId} markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#d7ff3f" />
+            <path d="M0,0 L0,6 L8,3 z" fill={accent} />
           </marker>
         </defs>
 
@@ -118,7 +133,7 @@ export default function FlowDiagram({
             key={i}
             d={roundedPath(e.points)}
             fill="none"
-            stroke="#d7ff3f"
+            stroke={accent}
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -136,14 +151,14 @@ export default function FlowDiagram({
           const [ex, ey] = e.points[e.points.length - 1];
           return (
             <g key={`ports-${i}`}>
-              <circle cx={sx} cy={sy} r={2.5} fill="#0d0d0f" stroke="#d7ff3f" strokeWidth={1.5} />
-              <circle cx={ex} cy={ey} r={2.5} fill="#0d0d0f" stroke="#d7ff3f" strokeWidth={1.5} />
+              <circle cx={sx} cy={sy} r={2.5} fill="#0d0d0f" stroke={accent} strokeWidth={1.5} />
+              <circle cx={ex} cy={ey} r={2.5} fill="#0d0d0f" stroke={accent} strokeWidth={1.5} />
             </g>
           );
         })}
 
         {nodes.map((n, i) => {
-          const tone = toneStyle[n.tone ?? "ink"];
+          const tone = toneStyle[n.tone ?? "card"];
 
           if (n.shape === "marker") {
             const cx = n.x + n.w / 2;
@@ -156,7 +171,7 @@ export default function FlowDiagram({
                 cy={cy}
                 r={r}
                 fill="#0d0d0f"
-                stroke="#d7ff3f"
+                stroke={accent}
                 strokeWidth={2}
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -166,7 +181,8 @@ export default function FlowDiagram({
             );
           }
 
-          const Icon = n.icon ? iconMap[n.icon] : null;
+          const Icon = n.icon;
+          const iconColor = n.iconColor ?? tone.text;
           const compact = !!n.eyebrow;
 
           // Icon-forward, n8n-card layout: a full-width node gets its icon
@@ -210,7 +226,7 @@ export default function FlowDiagram({
                 <>
                   <circle cx={iconCx} cy={iconCy} r={iconR} fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.2)" />
                   <g transform={`translate(${iconCx - iconR * 0.6}, ${iconCy - iconR * 0.6})`}>
-                    <Icon size={iconR * 1.2} color={tone.text} strokeWidth={2.25} />
+                    <Icon size={iconR * 1.2} color={iconColor} strokeWidth={2.25} />
                   </g>
                 </>
               )}
@@ -233,58 +249,13 @@ export default function FlowDiagram({
           );
         })}
 
-        {badge && (
-          <motion.g initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 1.1 }}>
-            <rect x={badge.x} y={badge.y} width={badge.w} height={badge.h} rx={4} fill="#2b1f04" stroke="#f59e0b" strokeWidth={1} />
-            <text x={badge.x + badge.w / 2} y={badge.y + badge.h / 2 + 4} textAnchor="middle" fontSize="10.5" fill="#f59e0b" fontWeight="700">
-              {"⚠"} {badge.label}
-            </text>
-          </motion.g>
-        )}
-
-        {phases?.map((ph) => {
-          // Sits inside the fan-out gap, where edges cross underneath — an
-          // opaque pill (n8n's own "sticky note" annotation look) keeps the
-          // label legible on top of those lines instead of tangling with them.
-          const pillW = ph.label.length * 5.7 + 20;
-          return (
-            <motion.g
-              key={ph.label}
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 1.2, duration: 0.4 }}
-            >
-              <rect
-                x={ph.x - pillW / 2}
-                y={ph.y - 13}
-                width={pillW}
-                height={17}
-                rx={8.5}
-                fill="#0d0d0f"
-                stroke="rgba(255,255,255,0.16)"
-              />
-              <text
-                x={ph.x}
-                y={ph.y - 1}
-                textAnchor="middle"
-                fontSize="9.5"
-                fontWeight="700"
-                letterSpacing="0.06em"
-                fill="rgba(255,255,255,0.5)"
-              >
-                {ph.label}
-              </text>
-            </motion.g>
-          );
-        })}
-
         {/* Execution loop — only once the reveal has actually started */}
         {inView && (
           <g ref={hideIfReducedMotion}>
             {edges.map((e, i) => {
               const d = roundedPath(e.points);
               return (
-                <circle key={i} r={3.5} fill="#d7ff3f" opacity={0.9}>
+                <circle key={i} r={3.5} fill={accent} opacity={0.9}>
                   <animateMotion
                     dur="2.2s"
                     begin={`${e.delay + 0.6}s`}
@@ -306,7 +277,7 @@ export default function FlowDiagram({
                   height={n.h}
                   rx={9}
                   fill="none"
-                  stroke="#d7ff3f"
+                  stroke={accent}
                   strokeWidth={2}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: [0, 0.5, 0] }}

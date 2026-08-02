@@ -1,21 +1,24 @@
+import { AlertTriangle, Bot, Calendar, CheckCircle2, FileText, Users, Zap } from "lucide-react";
+import { SiJira } from "react-icons/si";
 import FlowDiagram, { type DiagramNode, type DiagramEdge } from "./FlowDiagram";
+
+const ACCENT = "#5B9BF0";
 
 // Orchestrator-workers: the agent parses a brief and dispatches 5 workers
 // that run in parallel — laid out as two horizontal rows (3 + 2) of
 // side-by-side siblings, not a vertical stack, since that's what actually
 // happens. One genuine external tool call (Jira) and four agent-drafted,
-// brief-specific skills, converging on one output. n8n-style: icon-forward
-// cards, connection-point dots, smooth rounded connectors.
+// brief-specific skills, converging on one output.
 const nodes: DiagramNode[] = [
   { id: "start",  x: 160, y: 2,   w: 20,  h: 20, label: "", sub: "", shape: "marker" },
-  { id: "brief",  x: 30,  y: 34,  w: 280, h: 46, label: "Program Brief", sub: "Signed SOW in",        tone: "ink",  icon: "trigger" },
-  { id: "agent",  x: 70,  y: 100, w: 200, h: 44, label: "Setup Agent",   sub: "Glean Agent · Claude",  tone: "lime", icon: "agent" },
-  { id: "jira",   x: 25,  y: 208, w: 90,  h: 68, label: "Jira API",         sub: "", eyebrow: "TOOL CALL", tone: "blue",  icon: "tool" },
-  { id: "sprint", x: 125, y: 208, w: 90,  h: 68, label: "Sprint\nCadence",  sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "risk",   x: 225, y: 208, w: 90,  h: 68, label: "Risk Log",        sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "raci",   x: 35,  y: 350, w: 125, h: 64, label: "RACI",            sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "gov",    x: 180, y: 350, w: 125, h: 64, label: "Governance\nTemplates", sub: "", eyebrow: "SKILL", tone: "white", icon: "skill" },
-  { id: "ready",  x: 70,  y: 474, w: 200, h: 44, label: "Program Ready",   sub: "15 minutes, day one", tone: "lime", icon: "output" },
+  { id: "brief",  x: 30,  y: 34,  w: 280, h: 46, label: "Program Brief", sub: "Signed SOW in",        tone: "card", icon: Zap },
+  { id: "agent",  x: 70,  y: 100, w: 200, h: 44, label: "Setup Agent",   sub: "Glean Agent · Claude",  tone: "hero", icon: Bot },
+  { id: "jira",   x: 25,  y: 208, w: 90,  h: 68, label: "Jira API",         sub: "", eyebrow: "TOOL CALL", tone: "card", icon: SiJira, iconColor: "#2684FF" },
+  { id: "sprint", x: 125, y: 208, w: 90,  h: 68, label: "Sprint\nCadence",  sub: "", eyebrow: "SKILL", tone: "card", icon: Calendar },
+  { id: "risk",   x: 225, y: 208, w: 90,  h: 68, label: "Risk Log",        sub: "", eyebrow: "SKILL", tone: "card", icon: AlertTriangle },
+  { id: "raci",   x: 35,  y: 350, w: 125, h: 64, label: "RACI",            sub: "", eyebrow: "SKILL", tone: "card", icon: Users },
+  { id: "gov",    x: 180, y: 350, w: 125, h: 64, label: "Governance\nTemplates", sub: "", eyebrow: "SKILL", tone: "card", icon: FileText },
+  { id: "ready",  x: 70,  y: 474, w: 200, h: 44, label: "Program Ready",   sub: "15 minutes, day one", tone: "card", icon: CheckCircle2 },
   { id: "end",    x: 160, y: 536, w: 20,  h: 20, label: "", sub: "", shape: "marker" },
 ];
 
@@ -47,9 +50,10 @@ const edges: DiagramEdge[] = [
 export default function ProjectSetupDiagram() {
   return (
     <FlowDiagram
-      viewBox="0 0 340 415"
+      viewBox="0 0 340 556"
       nodes={nodes}
       edges={edges}
+      accent={ACCENT}
       ariaLabel="Project setup agent architecture — phData Innovation Award"
     />
   );

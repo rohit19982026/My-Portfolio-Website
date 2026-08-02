@@ -1,19 +1,23 @@
+import { Bot, FileCheck, FileText, Zap } from "lucide-react";
+import { SiJira } from "react-icons/si";
+import SlackMark from "../icons/SlackMark";
 import FlowDiagram, { type DiagramNode, type DiagramEdge } from "./FlowDiagram";
+
+const ACCENT = "#8B7FF0";
 
 // Parallelization: three independent tool-call retrievals as horizontal
 // siblings at one level (they run at the same time, not one after another)
 // synthesized by one reasoning step. No guardrail, no human-review node —
 // the copy frames the brief as read directly ("30 seconds of reading"),
-// not formally reviewed before use. n8n-style: icon-forward cards,
-// connection-point dots, smooth rounded connectors.
+// not formally reviewed before use.
 const nodes: DiagramNode[] = [
   { id: "start",   x: 160, y: 2,   w: 20,  h: 20, label: "", sub: "", shape: "marker" },
-  { id: "trigger", x: 30,  y: 34,  w: 280, h: 42, label: "Standup Trigger", sub: "Daily, before standup", tone: "ink", icon: "trigger" },
-  { id: "jira",    x: 10,  y: 140, w: 100, h: 64, label: "Jira",           sub: "", eyebrow: "TOOL CALL", tone: "blue", icon: "tool" },
-  { id: "slack",   x: 120, y: 140, w: 100, h: 64, label: "Slack",          sub: "", eyebrow: "TOOL CALL", tone: "blue", icon: "tool" },
-  { id: "notes",   x: 230, y: 140, w: 100, h: 64, label: "Meeting\nNotes", sub: "", eyebrow: "TOOL CALL", tone: "blue", icon: "tool" },
-  { id: "agent",   x: 70,  y: 268, w: 200, h: 44, label: "Standup Agent",  sub: "Claude",         tone: "lime",  icon: "agent" },
-  { id: "brief",   x: 50,  y: 332, w: 240, h: 48, label: "One-Page Brief", sub: "30-second read", tone: "white", icon: "output" },
+  { id: "trigger", x: 30,  y: 34,  w: 280, h: 42, label: "Standup Trigger", sub: "Daily, before standup", tone: "card", icon: Zap },
+  { id: "jira",    x: 10,  y: 140, w: 100, h: 64, label: "Jira",           sub: "", eyebrow: "TOOL CALL", tone: "card", icon: SiJira, iconColor: "#2684FF" },
+  { id: "slack",   x: 120, y: 140, w: 100, h: 64, label: "Slack",          sub: "", eyebrow: "TOOL CALL", tone: "card", icon: SlackMark },
+  { id: "notes",   x: 230, y: 140, w: 100, h: 64, label: "Meeting\nNotes", sub: "", eyebrow: "TOOL CALL", tone: "card", icon: FileText },
+  { id: "agent",   x: 70,  y: 268, w: 200, h: 44, label: "Standup Agent",  sub: "Claude",         tone: "hero",  icon: Bot },
+  { id: "brief",   x: 50,  y: 332, w: 240, h: 48, label: "One-Page Brief", sub: "30-second read", tone: "card", icon: FileCheck },
   { id: "end",     x: 160, y: 398, w: 20,  h: 20, label: "", sub: "", shape: "marker" },
 ];
 
@@ -39,6 +43,7 @@ export default function StandupBriefDiagram() {
       viewBox="0 0 340 425"
       nodes={nodes}
       edges={edges}
+      accent={ACCENT}
       ariaLabel="Standup brief agent architecture"
     />
   );
