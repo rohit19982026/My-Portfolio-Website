@@ -42,6 +42,11 @@ const GROUND_SHADOW = {
 } as const;
 
 const DOT_GRID = "radial-gradient(circle, rgba(147,181,255,0.4) 1px, transparent 1.6px)";
+// Lime-tinted counterpart to DOT_GRID, used only by the mobile ring backdrop
+// below — mobile's new reference design moves the ambient glow from blue to
+// lime, matching the accent color used everywhere else in the new mobile
+// hero rather than desktop's blue.
+const DOT_GRID_LIME = "radial-gradient(circle, rgba(215,255,63,0.22) 1px, transparent 1.6px)";
 
 export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile" }) {
   const [motionEnabled, setMotionEnabled] = useState(false);
@@ -54,7 +59,7 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
     return () => mq.removeEventListener("change", evaluate);
   }, []);
 
-  const backdrop = (
+  const desktopBackdrop = (
     <div className="absolute inset-[-14%] pointer-events-none" aria-hidden="true">
       <div
         className="absolute inset-0"
@@ -69,6 +74,35 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
       />
     </div>
   );
+
+  // Mobile's reference design: two concentric lime ring outlines + a soft
+  // centered lime glow + the same dot-grid technique (just re-tinted) +
+  // one small "port dot" marker on the outer ring's circumference — the
+  // exact dark-fill/accent-stroke marker already used for edge endpoints
+  // in FlowDiagram.tsx, reused here instead of inventing a new dot style.
+  const mobileBackdrop = (
+    <div className="absolute inset-[-14%] pointer-events-none" aria-hidden="true">
+      <div
+        className="absolute inset-0"
+        style={{ backgroundImage: DOT_GRID_LIME, backgroundSize: "22px 22px" }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(50% 55% at 50% 42%, rgba(215,255,63,0.22) 0%, rgba(215,255,63,0.08) 55%, transparent 78%)",
+        }}
+      />
+      <div className="absolute rounded-full" style={{ inset: "16%", border: "1px solid rgba(215,255,63,0.18)" }} />
+      <div className="absolute rounded-full" style={{ inset: "7%", border: "1px solid rgba(215,255,63,0.12)" }} />
+      <div
+        className="absolute rounded-full"
+        style={{ top: "12%", right: "10%", width: 7, height: 7, background: "#0d0d0f", border: "1.5px solid var(--color-lime)" }}
+      />
+    </div>
+  );
+
+  const backdrop = variant === "mobile" ? mobileBackdrop : desktopBackdrop;
 
   const photo = (
     <motion.div
