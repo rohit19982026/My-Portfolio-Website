@@ -241,15 +241,25 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Desktop/tablet hero — unchanged from before this pass. The new
-          mobile-only hero below has genuinely different content (headline,
-          bio, stats, AI card), not just different styling, so it's a full
-          sibling block rather than threaded through this one via props. */}
+      {/* Desktop/tablet hero. The new mobile-only hero below has genuinely
+          different content (headline, bio, stats, AI card), not just
+          different styling, so it's a full sibling block rather than
+          threaded through this one via props.
+
+          Like the mobile block, this pulls back the section's own
+          pt-[64px] — sized long ago to clear a fixed navbar, but Navbar is
+          `sticky`, not `fixed`, so it already occupies its own space in
+          normal flow and that padding was pure dead space stacked on top
+          of it. -mt-16 cancels it back out, pt-10 restores real breathing
+          room (this block only ever renders at lg:+, since it's
+          `hidden lg:block`, so the old py-14/sm:py-16 steps below that
+          were dead weight — lg:py-20 was the only value that ever actually
+          applied). */}
       <motion.div
         initial="hidden"
         animate="show"
         variants={container}
-        className="hidden lg:block max-w-6xl mx-auto px-6 py-14 sm:py-16 lg:py-20 relative z-10"
+        className="hidden lg:block max-w-6xl mx-auto px-6 -mt-16 pt-10 pb-20 relative z-10"
       >
         <div className="grid grid-cols-[1.3fr_1fr] lg:grid-cols-[1.15fr_420px] gap-x-6 sm:gap-x-10 gap-y-8 items-start lg:items-stretch">
           {/* Text column */}
