@@ -457,24 +457,17 @@ export default function Hero() {
           // already occupies its own space in normal flow, so that padding
           // is pure dead space stacked on top of the navbar's real height.
           // Left alone for desktop (untouched, out of scope here), but
-          // mobile pulls it back out with a negative margin so the badge
+          // mobile pulls it back out with a negative margin so the headline
           // sits right under the header instead of ~90px below it.
+          //
+          // No badge pill here (unlike desktop) — the headline itself opens
+          // with "I am a Technical Project Manager," so a "TECHNICAL
+          // PROJECT MANAGER" tag directly above it just restated the same
+          // words twice in a row. Desktop's badge stays: its headline is
+          // name-first ("Hi, I'm Rohit Kumar Singh"), so the badge is the
+          // only place that states the role there — no repetition.
           className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
         >
-          <motion.div
-            variants={pop}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-pill mb-6 whitespace-nowrap"
-            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-          >
-            <span
-              className="w-2 h-2 rounded-full bg-lime shrink-0"
-              style={{ boxShadow: "0 0 8px var(--color-lime)", animation: "pulse-dot 2s ease-in-out infinite" }}
-            />
-            <span className="font-heading text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.1em] text-white/75">
-              Technical Project Manager
-            </span>
-          </motion.div>
-
           <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
             <motion.h1 variants={fadeBlurUp} className="font-heading leading-[1.15]">
               <span className="block font-medium text-white/70" style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}>
