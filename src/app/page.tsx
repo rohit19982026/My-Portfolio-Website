@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Marquee from "@/components/ui/Marquee";
 import Experience from "@/components/Experience";
+import Credentials from "@/components/Credentials";
 import ToolsBuilt from "@/components/ToolsBuilt";
 import DeliveryExposure from "@/components/DeliveryExposure";
 import Contact from "@/components/Contact";
@@ -19,6 +20,7 @@ export default function Home() {
       <Hero />
       <Marquee items={skillMarqueeItems} variant="lime" tilt />
       <Experience />
+      <Credentials />
       <ToolsBuilt />
       <DeliveryExposure />
       <Contact />
