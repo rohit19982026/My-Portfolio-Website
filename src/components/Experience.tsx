@@ -15,13 +15,14 @@ const roles = [
     current: true,
     color: "white",
     bullets: [
-      "At any point I'm running 4–6 active programs — fixed-price migrations, T&M engagements, managed retainers. Different clients, different stacks, no two look the same. $3.5M+ in combined contract value.",
-      "17 external approvals had stalled for weeks with no owner watching them. Made the cost of waiting visible — a name and a day count on each, in front of the people who could clear them. Once the aging was in their terms, they moved, and the team stopped idling on dependencies it didn't control.",
-      "A managed retainer's UAT was running 11 days. Root-caused where the pipeline actually stalled and put the specific items, owners, and wait times in front of the people who could act. The cycle dropped to 4 days.",
+      "Run PMO governance across 4–6 concurrent Data Platform and AI programs — fixed-price migrations, T&M, managed retainers, $3.5M+ combined contract value. RACI, WBS, decision logs, and budget variance stay current from kickoff to close; risk gets flagged two sprints before it becomes a real problem.",
+      "17 external approvals had stalled for weeks with no owner watching them. I put a name and a day-count on each, visible to the people who could actually clear them — the wait stopped being invisible, and so did the delay.",
+      "A managed retainer's UAT was running 11 days. I traced exactly where the pipeline stalled and put the specific items, owners, and wait times in front of the people who could act. The cycle dropped to 4 days.",
+      "I'm the bridge between the engineering team and the client's business leadership — weekly status, quarterly business reviews, and scoping new programs with Principal Architects during presales, then carrying them through delivery myself. Those relationships have grown single-program work into multi-year platform engagements more than once.",
       "Built AI agents (Glean + Claude + n8n) for monthly financial reviews, weekly status briefs, and new program setup. Saves 5+ hours a week. Won phData's Innovation Award.",
       "Scoped 10+ programs end to end. One client pushed 14 scope additions beyond the agreed contract. Every one formally logged and resolved — none became free work.",
     ],
-    tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "Scrum Master (PSM1)", "AI Agent Builder"],
+    tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "Account Expansion", "Scrum Master (PSM1)", "AI Agent Builder"],
   },
   {
     period: "AUG 2020 — NOV 2022",
