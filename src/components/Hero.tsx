@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { SiJira, SiClaude, SiCursor } from "react-icons/si";
+import { SiJira, SiClaude, SiCursor, SiSnowflake } from "react-icons/si";
 import {
   Terminal,
   Briefcase,
@@ -11,16 +11,23 @@ import {
   Cpu,
   Plus,
   Mail,
+  MessageCircle,
   BrainCircuit,
   TrendingUp,
   Sparkle,
-  ArrowUpRight,
-  ChevronRight,
-  CalendarDays,
   Users,
   Brain,
   BarChart3,
   Network,
+  Zap,
+  Clock,
+  Target,
+  Bot,
+  CheckCircle2,
+  FileText,
+  DollarSign,
+  Bell,
+  Cloud,
 } from "lucide-react";
 import HeroPortrait from "./HeroPortrait";
 import GithubMark from "./icons/GithubMark";
@@ -77,26 +84,106 @@ const stats = [
   { Icon: Cpu, value: "AI", label: "Automation First Mindset", color: "var(--color-lime)" },
 ] as const;
 
-// Mobile-only stats per the new reference design — deliberately its own
-// array, not a mobile-styling variant of `stats` above: two of the four
-// values genuinely differ ("$3.5M+ Impact Delivered" and "100% Client
-// Focused" replace "On-time Delivery" and "Automation First Mindset").
-// "$3.5M+" already appears verified elsewhere on the site (skillMarqueeItems
-// in src/lib/content.ts), so it isn't a new/fabricated figure.
+// Mobile-only stats — swapped (per explicit confirmation) to the
+// automation-impact figures from the newest mobile reference design.
+// These replace the previous experience/impact figures rather than
+// supplementing them, to avoid two different "at a glance" stat rows.
 const mobileStats = [
-  { Icon: CalendarDays, value: "4.5+", label: "Years Experience" },
-  { Icon: Layers, value: "15+", label: "Enterprise Projects" },
-  { Icon: TrendingUp, value: "$3.5M+", label: "Impact Delivered" },
-  { Icon: Users, value: "100%", label: "Client Focused" },
+  { Icon: Zap, value: "15+", label: "Workflows Automated" },
+  { Icon: Clock, value: "300+", label: "Hours Saved / Month" },
+  { Icon: Target, value: "95%", label: "Manual Effort Cut" },
+  { Icon: CheckCircle2, value: "100%", label: "On-time Reporting" },
 ] as const;
 
-// Floating icon badges over the mobile photo — new to this design, no
-// existing precedent to extend (desktop's floating cards are rectangular
-// info cards, not small icon badges).
+// Floating icon badges over the mobile photo — 4 now (was 3), matching
+// the newest reference design's brain/chart/lightning/network ring.
 const photoBadges = [
   { Icon: Brain, position: "-left-3 -top-3" },
   { Icon: BarChart3, position: "-right-3 -top-3" },
+  { Icon: Zap, position: "-left-3 bottom-8" },
   { Icon: Network, position: "-right-3 bottom-8" },
+] as const;
+
+// 4-tile capability strip — a leaner icon+label restatement of the bio,
+// per feedback that paragraph-heavy mobile sections read as too bulky.
+const capabilityTiles = [
+  { label: "Lead Enterprise Programs", Icon: Users, color: "var(--color-lime)" },
+  { label: "Drive Delivery Excellence", Icon: Target, color: "#8B7FF0" },
+  { label: "Build AI Agents & Automations", Icon: Bot, color: "#8B7FF0" },
+  { label: "Improve Operations with Data & AI", Icon: Cpu, color: "var(--color-lime)" },
+] as const;
+
+// Two capability cards — condensed checklists standing in for a
+// paragraph description. Each item restates an already-verified fact
+// from Experience.tsx (PMO/financial governance, full-lifecycle
+// delivery, the Glean+Claude agent work) in shorthand form.
+const capabilityCards = [
+  {
+    title: "Enterprise Delivery",
+    Icon: Briefcase,
+    color: "var(--color-lime)",
+    items: ["Program Management", "Stakeholder Management", "Financial Governance", "End-to-End Delivery"],
+  },
+  {
+    title: "AI Systems & Automation",
+    Icon: Bot,
+    color: "#8B7FF0",
+    items: ["AI Agents (Glean + Claude)", "Workflow Automation", "Internal Tools & Integrations", "Operational Intelligence"],
+  },
+] as const;
+
+// "What I automate" mini pipeline — a condensed teaser; the full 6 agent
+// architectures live in the Tools section further down the page.
+const automateSteps = [
+  { label: "Project Initiation", Icon: FileText },
+  { label: "Delivery Workflows", Icon: Network },
+  { label: "Financial Reviews", Icon: DollarSign },
+  { label: "Reporting & Updates", Icon: BarChart3 },
+  { label: "Notifications & Briefs", Icon: Bell },
+] as const;
+
+// Small brand marks with no react-icons/si entry (or, for phData/AWS,
+// where a styled wordmark reads truer than an invented glyph) — same
+// "clean initial badge, don't guess at an unofficial logo" convention
+// already established for Kantata in DeliveryExposure.tsx.
+function PhDataMark({ size = 15 }: { size?: number }) {
+  return <span style={{ fontSize: size, fontWeight: 800, color: "#ffffff", lineHeight: 1 }}>phData</span>;
+}
+function AwsMark({ size = 15 }: { size?: number }) {
+  return <span style={{ fontSize: size, fontWeight: 800, color: "#FF9900", lineHeight: 1 }}>aws</span>;
+}
+function InitialBadge({ letter, size = 15, color }: { letter: string; size?: number; color: string }) {
+  return (
+    <span
+      style={{
+        width: size, height: size, fontSize: size * 0.62, fontWeight: 800, color,
+        border: "1.5px solid currentColor", borderRadius: 4, lineHeight: 1,
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+      }}
+    >
+      {letter}
+    </span>
+  );
+}
+function TableauBadge({ size = 15 }: { size?: number }) {
+  return <InitialBadge letter="T" size={size} color="#5B9BF0" />;
+}
+function MavenlinkBadge({ size = 15 }: { size?: number }) {
+  return <InitialBadge letter="M" size={size} color="#8B7FF0" />;
+}
+
+// Trusted-by strip — the client-delivery/employer logo set, deliberately
+// distinct from `tools` above (my own personal AI tool stack). Overlaps
+// with DeliveryExposure's Stack section by design (confirmed): this is a
+// condensed teaser, the full breakdown lives there.
+const trustedBy = [
+  { name: "phData", Icon: PhDataMark, color: null, wordmark: true },
+  { name: "Snowflake", Icon: SiSnowflake, color: "#29B5E8", wordmark: false },
+  { name: "AWS", Icon: AwsMark, color: "#FF9900", wordmark: true },
+  { name: "Azure", Icon: Cloud, color: "#0078D4", wordmark: false },
+  { name: "Tableau", Icon: TableauBadge, color: "#5B9BF0", wordmark: false },
+  { name: "Jira", Icon: SiJira, color: "#2684FF", wordmark: false },
+  { name: "Mavenlink", Icon: MavenlinkBadge, color: "#8B7FF0", wordmark: false },
 ] as const;
 
 function ToolIcon({ tool }: { tool: (typeof tools)[number] }) {
@@ -177,53 +264,6 @@ function PhotoBadge({ Icon, position }: { Icon: (typeof photoBadges)[number]["Ic
   );
 }
 
-// The new mobile design's larger "AI Enthusiast" card wants a photorealistic
-// glowing-brain image (per the reference mockup) — no such asset exists in
-// this repo and this sandboxed environment blocks outbound fetches to
-// external image hosts (confirmed: even a plain curl to example.com is
-// rejected at the proxy), so sourcing one wasn't possible here. This is a
-// stylized stand-in using the same dot/glow language already established
-// site-wide (DOT_PATTERN, FlowDiagram's port-dots) instead of a real photo —
-// swap in a sourced image later by replacing this function's contents with
-// a positioned <Image>.
-function BrainGraphic() {
-  const dots = [
-    { top: "22%", left: "30%", size: 5, delay: 0 },
-    { top: "62%", left: "22%", size: 4, delay: 0.4 },
-    { top: "38%", left: "68%", size: 4, delay: 0.8 },
-    { top: "72%", left: "60%", size: 5, delay: 1.2 },
-  ];
-  return (
-    <div
-      className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden flex items-center justify-center"
-      style={{
-        background: "radial-gradient(60% 60% at 50% 50%, rgba(215,255,63,0.16) 0%, transparent 75%)",
-        border: `1px solid ${CARD_BORDER}`,
-      }}
-    >
-      <Brain
-        size={40}
-        strokeWidth={1.3}
-        style={{ color: "var(--color-lime)", filter: "drop-shadow(0 0 8px color-mix(in srgb, var(--color-lime) 60%, transparent))" }}
-      />
-      {dots.map((d, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            top: d.top,
-            left: d.left,
-            width: d.size,
-            height: d.size,
-            background: "var(--color-lime)",
-            boxShadow: "0 0 6px var(--color-lime)",
-            animation: `pulse-dot 2.2s ease-in-out ${d.delay}s infinite`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
 
 export default function Hero() {
   const panelRef = useRef(null);
@@ -440,13 +480,12 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Mobile-only hero — new reference design (role-first headline, a
-          different bio, a lime ring-glow photo with floating badges, an
-          all-lime single-row stats strip, a larger AI Enthusiast card, and
-          a horizontal-scroll tools row). Genuinely different content from
-          desktop above, not a restyle of it — see Hero.tsx's own git
-          history/plan notes for why that's an intentional, stated tradeoff
-          of a mobile-only redesign rather than an oversight. */}
+      {/* Mobile-only hero — leaner, icon/pointer-driven reference design:
+          badge, punchy 2-line headline, ring-glow photo with 4 floating
+          badges, a capability tile strip, two checklist cards, a
+          condensed automation pipeline, impact stats, a trusted-by logo
+          strip, and the tools row. Genuinely different content from
+          desktop above, not a restyle of it. */}
       <div className="lg:hidden">
         <motion.div
           initial="hidden"
@@ -460,39 +499,32 @@ export default function Hero() {
           // mobile pulls it back out with a negative margin so the headline
           // sits right under the header instead of ~90px below it.
           //
-          // No badge pill here (unlike desktop) — the headline itself opens
-          // with "I am a Technical Project Manager," so a "TECHNICAL
-          // PROJECT MANAGER" tag directly above it just restated the same
-          // words twice in a row. Desktop's badge stays: its headline is
-          // name-first ("Hi, I'm Rohit Kumar Singh"), so the badge is the
-          // only place that states the role there — no repetition.
+          // Badge pill is back (unlike the previous mobile design), because
+          // the headline below no longer opens with "I am a Technical
+          // Project Manager" — it leads with "I lead enterprise programs,"
+          // so the two no longer restate the same words in a row.
           className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
         >
+          <motion.div
+            variants={pop}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill mb-5"
+            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+          >
+            <Sparkle size={11} className="text-lime shrink-0" />
+            <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-white/75">
+              Technical Project Manager &bull; AI Systems Builder
+            </span>
+          </motion.div>
+
           <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
-            <motion.h1 variants={fadeBlurUp} className="font-heading leading-[1.15]">
-              <span className="block font-medium text-white/70" style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}>
-                I am a
-              </span>
-              <span className="block font-bold text-white" style={{ fontSize: "clamp(1.7rem, 8.5vw, 2.4rem)" }}>
-                Technical
-              </span>
-              <span className="block font-bold text-white" style={{ fontSize: "clamp(1.7rem, 8.5vw, 2.4rem)" }}>
-                Project Manager
-              </span>
-              <span
-                className="block font-medium text-white mt-2"
-                style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}
-              >
-                and good at building
-              </span>
-              <span
-                className="block font-bold text-lime whitespace-nowrap"
-                style={{ fontSize: "clamp(0.9rem, 3.7vw, 1.15rem)" }}
-              >
-                AI agents &amp; systems
-              </span>
-              <span className="block font-medium text-white" style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}>
-                that drive impact.
+            <motion.h1
+              variants={fadeBlurUp}
+              className="font-heading font-bold leading-[1.2]"
+              style={{ fontSize: "clamp(1.35rem, 6.5vw, 1.85rem)" }}
+            >
+              <span className="block text-white">I lead enterprise programs.</span>
+              <span className="block text-white mt-2">
+                I build <span className="text-lime">AI systems</span> that run project operations.
               </span>
             </motion.h1>
 
@@ -515,24 +547,119 @@ export default function Hero() {
             automate my own repetitive work and save time for teams.
           </motion.p>
 
-          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 mb-10">
+          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 mb-8">
             <a
               href="#experience"
               className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
             >
-              See My Work <ArrowUpRight size={15} />
+              <Briefcase size={15} /> View My Work
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
             >
-              <Mail size={15} /> Let&apos;s Talk
+              <MessageCircle size={15} /> Let&apos;s Talk
             </a>
+          </motion.div>
+
+          {/* 4-tile capability strip — a leaner icon+label restatement of
+              "what I do," standing in for another paragraph. */}
+          <motion.div variants={fadeBlurUp} className="grid grid-cols-4 gap-2 mb-6">
+            {capabilityTiles.map((tile) => (
+              <div key={tile.label} className="flex flex-col items-center gap-2 text-center">
+                <div
+                  className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
+                  style={{
+                    background: `color-mix(in srgb, ${tile.color} 16%, transparent)`,
+                    border: `1px solid color-mix(in srgb, ${tile.color} 32%, transparent)`,
+                  }}
+                >
+                  <tile.Icon size={19} strokeWidth={1.75} style={{ color: tile.color }} />
+                </div>
+                <p className="text-[10px] leading-tight text-white/70 font-medium">{tile.label}</p>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Two capability cards with checklists, replacing what used to
+              be a second paragraph of description. */}
+          <motion.div variants={fadeBlurUp} className="relative grid grid-cols-2 gap-3 mb-6">
+            {capabilityCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-2xl p-4"
+                style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <card.Icon size={15} style={{ color: card.color }} />
+                  <p className="font-heading text-[10px] font-bold uppercase tracking-wide text-white leading-tight">
+                    {card.title}
+                  </p>
+                </div>
+                <span className="block w-6 h-0.5 rounded-full mb-2.5" style={{ background: card.color }} />
+                <ul className="space-y-1.5">
+                  {card.items.map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-[10.5px] text-white/65 leading-snug">
+                      <CheckCircle2 size={12} className="shrink-0 mt-[1.5px]" style={{ color: card.color }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full flex items-center justify-center"
+              style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
+              aria-hidden="true"
+            >
+              <Plus size={13} className="text-white/50" />
+            </div>
+          </motion.div>
+
+          {/* "What I automate" mini pipeline — a condensed teaser; the full
+              6 agent architectures live in the Tools section below. The
+              circle backgrounds are solid NAVY (not the translucent
+              CARD_BG) so they fully occlude the dashed connector line
+              behind them at each step, the standard "line behind, nodes
+              on top" stepper trick. */}
+          <motion.div
+            variants={fadeBlurUp}
+            className="rounded-2xl p-5 mb-6"
+            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+          >
+            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-lime mb-4">
+              What I Automate
+            </p>
+            <div className="relative mb-2">
+              <div
+                className="absolute left-5 right-5 top-5 h-px"
+                style={{ borderTop: "1.5px dashed rgba(255,255,255,0.22)" }}
+                aria-hidden="true"
+              />
+              <div className="relative flex items-center justify-between">
+                {automateSteps.map((step) => (
+                  <div
+                    key={step.label}
+                    className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
+                  >
+                    <step.Icon size={15} strokeWidth={1.75} className="text-white/80" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-5 gap-1">
+              {automateSteps.map((step) => (
+                <p key={step.label} className="text-[8.5px] leading-tight text-white/55 text-center">
+                  {step.label}
+                </p>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div
             variants={fadeBlurUp}
-            className="rounded-2xl p-5 mb-6"
+            className="rounded-2xl p-5 mb-8"
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
             <div className="grid grid-cols-4 gap-2">
@@ -544,21 +671,22 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          <motion.div
-            variants={fadeBlurUp}
-            className="flex items-center gap-4 rounded-2xl p-5 mb-10"
-            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-          >
-            <BrainGraphic />
-            <div className="flex-1 min-w-0">
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.1em] text-lime mb-1.5">
-                AI Enthusiast &bull; Builder &bull; Automator
-              </p>
-              <p className="text-[13px] text-white leading-snug">
-                I design AI agents and systems that turn manual work into intelligent automation.
-              </p>
+          {/* Trusted by — condensed, muted logo strip (client-delivery +
+              employer marks, distinct from "Tools & Platforms" below,
+              which is my own personal AI tool stack). Overlaps with the
+              Stack section further down by design — this is a teaser. */}
+          <motion.div variants={fadeBlurUp} className="mb-10">
+            <p className="text-center font-heading text-[9.5px] font-bold uppercase tracking-[0.22em] text-white/35 mb-4">
+              Trusted By
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+              {trustedBy.map((logo) => (
+                <div key={logo.name} className="flex items-center gap-1.5">
+                  <logo.Icon size={16} style={{ color: logo.color ?? undefined }} />
+                  {!logo.wordmark && <span className="text-[11px] text-white/50 font-medium">{logo.name}</span>}
+                </div>
+              ))}
             </div>
-            <ChevronRight size={18} className="text-white/40 shrink-0" />
           </motion.div>
 
           <motion.div variants={fadeBlurUp}>
