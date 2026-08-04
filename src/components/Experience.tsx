@@ -16,9 +16,10 @@ const roles = [
     color: "white",
     bullets: [
       "Own full project lifecycle — initiation to closure — for 4–6 concurrent Data Platform and AI programs ($3.5M+ combined contract value), held against agreed scope, timeline, budget, and quality KPIs.",
-      "Maintain RACI, WBS, decision logs, and risk registers in Jira and Confluence across every active program, from kickoff through delivery close.",
+      "Maintain RACI, WBS, decision logs, dependency maps, and risk registers in Jira and Confluence, with milestone tracking dashboards keeping every active program visible from kickoff through delivery close.",
       "Manage full financial governance — monthly invoicing, budget forecast vs. actuals, burn-rate tracking, and variance reporting to client and internal leadership.",
-      "Turn program data — burn rates, sprint velocity, ticket ages — into the weekly status and risk reports leadership and clients act on, so problems surface before they're client-visible.",
+      "Run the delivery cadence that keeps programs on track — standups, program syncs, and steering reviews — with focused retrospectives feeding fixes back into how the next sprint runs.",
+      "Turn program data — burn rates, sprint velocity, ticket ages — into the weekly status, risk, and trade-off reporting leadership and clients act on, so problems surface before they're client-visible.",
       "Primary bridge between engineering delivery, QA, and client C-level/VP stakeholders — own weekly status reporting, quarterly business reviews, and escalation management; issues get root-caused and fixed systemically, not patched over.",
       "Drive account expansion through QBR-led discovery — grown multiple single-program engagements into multi-year platform relationships.",
       "Keep client satisfaction high by communicating progress, risk, and trade-offs before they're asked for, not after.",
