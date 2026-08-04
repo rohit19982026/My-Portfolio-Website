@@ -24,7 +24,7 @@ const roles = [
       "Drive account expansion through QBR-led discovery — grown multiple single-program engagements into multi-year platform relationships.",
       "Keep client satisfaction high by communicating progress, risk, and trade-offs before they're asked for, not after.",
       "Design, pilot, and scale AI-integrated PM processes — built AI agents (Glean + Claude + n8n) that generate status and risk reports, run financial reviews, and automate program setup, now standard workflow across the PMO team. Saves 5+ hours a week; won phData's Innovation Award.",
-      "Scoped 10+ programs end to end; logged and resolved 14 out-of-scope additions on one engagement so none became free work.",
+      "Manage scope discipline once a program is live — one engagement pushed 14 additions beyond the signed SOW; every one formally logged and resolved so none became free work.",
     ],
     tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Account Expansion", "Scrum Master (PSM1)", "AI Agent Builder", "Predictive Risk Reporting"],
   },
