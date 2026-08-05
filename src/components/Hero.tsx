@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SiJira, SiClaude, SiCursor, SiSnowflake } from "react-icons/si";
+import { SiJira, SiClaude, SiCursor } from "react-icons/si";
 import {
   Terminal,
   Briefcase,
@@ -21,7 +21,6 @@ import {
   FileText,
   DollarSign,
   Bell,
-  Cloud,
   ArrowRight,
 } from "lucide-react";
 import HeroPortrait from "./HeroPortrait";
@@ -158,50 +157,6 @@ const automateSteps = [
   { label: "Financial Reviews", Icon: DollarSign },
   { label: "Reporting & Updates", Icon: BarChart3 },
   { label: "Notifications & Briefs", Icon: Bell },
-] as const;
-
-// Small brand marks with no react-icons/si entry (or, for phData/AWS,
-// where a styled wordmark reads truer than an invented glyph) — same
-// "clean initial badge, don't guess at an unofficial logo" convention
-// already established for Kantata in DeliveryExposure.tsx.
-function PhDataMark({ size = 15 }: { size?: number }) {
-  return <span style={{ fontSize: size, fontWeight: 800, color: "#ffffff", lineHeight: 1 }}>phData</span>;
-}
-function AwsMark({ size = 15 }: { size?: number }) {
-  return <span style={{ fontSize: size, fontWeight: 800, color: "#FF9900", lineHeight: 1 }}>aws</span>;
-}
-function InitialBadge({ letter, size = 15, color }: { letter: string; size?: number; color: string }) {
-  return (
-    <span
-      style={{
-        width: size, height: size, fontSize: size * 0.62, fontWeight: 800, color,
-        border: "1.5px solid currentColor", borderRadius: 4, lineHeight: 1,
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-      }}
-    >
-      {letter}
-    </span>
-  );
-}
-function TableauBadge({ size = 15 }: { size?: number }) {
-  return <InitialBadge letter="T" size={size} color="#5B9BF0" />;
-}
-function MavenlinkBadge({ size = 15 }: { size?: number }) {
-  return <InitialBadge letter="M" size={size} color="#8B7FF0" />;
-}
-
-// Trusted-by strip — the client-delivery/employer logo set, deliberately
-// distinct from `tools` above (my own personal AI tool stack). Overlaps
-// with DeliveryExposure's Stack section by design (confirmed): this is a
-// condensed teaser, the full breakdown lives there.
-const trustedBy = [
-  { name: "phData", Icon: PhDataMark, color: null, wordmark: true },
-  { name: "Snowflake", Icon: SiSnowflake, color: "#29B5E8", wordmark: false },
-  { name: "AWS", Icon: AwsMark, color: "#FF9900", wordmark: true },
-  { name: "Azure", Icon: Cloud, color: "#0078D4", wordmark: false },
-  { name: "Tableau", Icon: TableauBadge, color: "#5B9BF0", wordmark: false },
-  { name: "Jira", Icon: SiJira, color: "#2684FF", wordmark: false },
-  { name: "Mavenlink", Icon: MavenlinkBadge, color: "#8B7FF0", wordmark: false },
 ] as const;
 
 function ToolIcon({ tool }: { tool: (typeof tools)[number] }) {
@@ -486,23 +441,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Trusted by — condensed logo strip; the full stack breakdown
-            lives in the Stack section further down the page. */}
-        <motion.div
-          variants={fadeBlurUp}
-          className="mt-6 rounded-2xl px-7 py-5 flex flex-wrap items-center gap-x-9 gap-y-4"
-          style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-        >
-          <p className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-white/40 shrink-0">
-            Trusted By
-          </p>
-          {trustedBy.map((logo) => (
-            <div key={logo.name} className="flex items-center gap-2">
-              <logo.Icon size={19} style={{ color: logo.color ?? undefined }} />
-              {!logo.wordmark && <span className="text-[13px] text-white/55 font-medium">{logo.name}</span>}
-            </div>
-          ))}
-        </motion.div>
 
         {/* Tools & platforms — my own personal AI tool stack, distinct
             from the client-delivery/employer logos above. */}
@@ -723,25 +661,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Trusted by — condensed, muted logo strip (client-delivery +
-              employer marks, distinct from "Tools & Platforms" below,
-              which is my own personal AI tool stack). Overlaps with the
-              Stack section further down by design — this is a teaser. */}
-          <motion.div variants={fadeBlurUp} className="mb-10">
-            <p className="text-center font-heading text-[9.5px] font-bold uppercase tracking-[0.22em] text-white/35 mb-4">
-              Trusted By
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
-              {trustedBy.map((logo) => (
-                <div key={logo.name} className="flex items-center gap-1.5">
-                  <logo.Icon size={16} style={{ color: logo.color ?? undefined }} />
-                  {!logo.wordmark && <span className="text-[11px] text-white/50 font-medium">{logo.name}</span>}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div variants={fadeBlurUp}>
+          <motion.div variants={fadeBlurUp} className="mt-2">
             <div className="flex items-center justify-between gap-3 mb-4">
               <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/60 whitespace-nowrap">
                 Tools &amp; Platforms I Work With
