@@ -28,7 +28,7 @@ const steps: Step[] = [
       ],
     ],
   },
-  { kind: "step", id: "ready", label: "Program Ready", sub: "15 minutes, day one", tone: "card", icon: CheckCircle2 },
+  { kind: "step", id: "ready", label: "Program Ready", sub: "Signed SOW to live program", tone: "card", icon: CheckCircle2 },
   { kind: "step", id: "end", marker: "end", label: "", sub: "" },
 ];
 

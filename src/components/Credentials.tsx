@@ -342,8 +342,8 @@ function PullQuote({ inView }: { inView: boolean }) {
       <div className="lg:flex-1">
         <p className="font-display text-[36px] leading-none text-lime mb-2">&ldquo;</p>
         <p className="text-[15px] sm:text-[16px] text-white/75 italic leading-relaxed max-w-2xl">
-          I believe in lifelong learning and applying it to solve real business problems through technology and
-          automation.
+          Learning stays applied — each certification and course has fed directly into a program, a process, or
+          an agent that&apos;s actually in use.
         </p>
       </div>
       <div className="h-px w-full my-6 lg:hidden" style={{ background: "rgba(255,255,255,0.14)" }} />

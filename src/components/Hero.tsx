@@ -71,15 +71,14 @@ const tools = [
   { name: "Slack", Icon: SlackMark, color: null },
 ] as const;
 
-// Impact stats — shared by both breakpoints (per explicit confirmation),
-// swapped to the automation-impact figures from the newest reference
-// designs. These replace the previous experience/impact figures rather
-// than supplementing them, to avoid two different "at a glance" stat rows.
+// Impact stats — shared by both breakpoints. Every value is a figure
+// stated on the resume (years in delivery, program count, team size,
+// PMO hours saved), not an estimated or rounded-up one.
 const mobileStats = [
-  { Icon: Zap, value: "15+", label: "Workflows Automated" },
-  { Icon: Clock, value: "300+", label: "Hours Saved / Month" },
-  { Icon: Target, value: "95%", label: "Manual Effort Cut" },
-  { Icon: CheckCircle2, value: "100%", label: "On-time Reporting" },
+  { Icon: Clock, value: "6 Yrs", label: "IT Delivery" },
+  { Icon: Target, value: "4–5", label: "Concurrent Programs" },
+  { Icon: CheckCircle2, value: "12–15", label: "Engineers / Program" },
+  { Icon: Zap, value: "4–8 Hrs", label: "PMO Time Saved / Wk" },
 ] as const;
 
 // Floating icon badges over the mobile photo — 4 now (was 3), matching
@@ -93,29 +92,31 @@ const photoBadges = [
 
 // 4-tile capability strip — a leaner icon+label restatement of the bio,
 // per feedback that paragraph-heavy sections read as too bulky. Mobile
-// renders label only; desktop has room for the description too.
+// renders label only; desktop has room for the description too. Each
+// description is a condensed version of an actual resume bullet, not a
+// generic restatement.
 const capabilityTiles = [
   {
-    label: "Lead Enterprise Programs",
-    description: "Drive strategic programs that deliver business impact.",
+    label: "Own Program Delivery",
+    description: "Scope, budget, and timeline across 4–5 concurrent data and AI programs, SOW to closure.",
     Icon: Users,
     color: "var(--color-lime)",
   },
   {
-    label: "Drive Delivery Excellence",
-    description: "Ensure on-time delivery with quality and clarity.",
+    label: "Run Financial Governance",
+    description: "Monthly invoicing, burn-rate tracking, and variance reporting on $250K–$1M program budgets.",
     Icon: Target,
     color: "#8B7FF0",
   },
   {
-    label: "Build AI Agents & Automations",
-    description: "Design intelligent agents that save time and scale.",
+    label: "Build PMO Agents",
+    description: "Glean and Claude agents for billing audits, status reporting, and project setup.",
     Icon: Bot,
     color: "#8B7FF0",
   },
   {
-    label: "Improve Operations with Data & AI",
-    description: "Unlock insights and efficiency using data and AI.",
+    label: "Bridge Client & Engineering",
+    description: "Primary contact for client VPs and directors across a 10–12 hour time gap.",
     Icon: Cpu,
     color: "var(--color-lime)",
   },
@@ -124,33 +125,32 @@ const capabilityTiles = [
 // Labeled floating badges over the desktop photo — same 4 themes as the
 // mobile icon-only badges, with room for a text label at this width.
 const desktopPhotoBadges = [
-  { label: "AI Systems Builder", Icon: Brain, position: "-left-5 top-8" },
-  { label: "Data Driven Decisions", Icon: BarChart3, position: "-right-5 top-8" },
-  { label: "Automate Workflows", Icon: Zap, position: "-left-5 bottom-12" },
-  { label: "Project Leadership", Icon: Network, position: "-right-5 bottom-12" },
+  { label: "Program Delivery", Icon: Brain, position: "-left-5 top-8" },
+  { label: "Financial Governance", Icon: BarChart3, position: "-right-5 top-8" },
+  { label: "PMO Agents (Glean + Claude)", Icon: Zap, position: "-left-5 bottom-12" },
+  { label: "C-Level Stakeholder Mgmt", Icon: Network, position: "-right-5 bottom-12" },
 ] as const;
 
 // Two capability cards — condensed checklists standing in for a
-// paragraph description. Each item restates an already-verified fact
-// from Experience.tsx (PMO/financial governance, full-lifecycle
-// delivery, the Glean+Claude agent work) in shorthand form.
+// paragraph description. Items are the resume's own Skills lines
+// (Core Skills / AI & Automation), not a restatement.
 const capabilityCards = [
   {
-    title: "Enterprise Delivery",
+    title: "Core Skills",
     Icon: Briefcase,
     color: "var(--color-lime)",
-    items: ["Program Management", "Stakeholder Management", "Financial Governance", "End-to-End Delivery"],
+    items: ["Stakeholder Management", "Cross-Team Coordination", "Executive Communication", "Risk & Budget Control"],
   },
   {
-    title: "AI Systems & Automation",
+    title: "AI & Automation",
     Icon: Bot,
     color: "#8B7FF0",
-    items: ["AI Agents (Glean + Claude)", "Workflow Automation", "Internal Tools & Integrations", "Operational Intelligence"],
+    items: ["Claude & Claude Code", "Glean Agents", "n8n", "MCP · Jira REST API"],
   },
 ] as const;
 
-// "What I automate" mini pipeline — a condensed teaser; the full 6 agent
-// architectures live in the Tools section further down the page.
+// Automation pipeline mini-teaser; the full 6 agent architectures live
+// in the Tools section further down the page.
 const automateSteps = [
   { label: "Project Initiation", Icon: FileText },
   { label: "Delivery Workflows", Icon: Network },
@@ -271,7 +271,7 @@ export default function Hero() {
             >
               <Sparkle size={13} className="text-lime shrink-0" />
               <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-white/75">
-                Technical Project Manager &bull; AI Systems Builder
+                Technical Project Manager &bull; Data, Analytics &amp; AI Programs
               </span>
             </motion.div>
 
@@ -280,11 +280,11 @@ export default function Hero() {
               className="font-heading font-bold leading-[1.18] mb-5"
               style={{ fontSize: "clamp(1.9rem, 3.4vw, 2.85rem)" }}
             >
-              <span className="block text-white">I lead enterprise programs</span>
+              <span className="block text-white">Technical Project Manager</span>
               <span className="block text-white">
-                and build <span className="text-lime">AI systems</span> that
+                running data, analytics &amp; <span className="text-lime">AI programs</span>
               </span>
-              <span className="block text-white">drive impact.</span>
+              <span className="block text-white">for enterprise clients.</span>
             </motion.h1>
 
             <motion.p
@@ -292,10 +292,11 @@ export default function Hero() {
               className="leading-[1.6] text-white/65 max-w-[520px] mb-7"
               style={{ fontSize: "clamp(13.5px, 1.6vw, 16px)" }}
             >
-              I lead enterprise data &amp; AI programs at <span className="text-white font-semibold">phData</span> —
-              from <span className="text-lime font-semibold">platform migrations</span> and data warehouses to{" "}
-              <span className="text-lime font-semibold">AI deployments</span> — and build AI agents and systems that
-              automate my own repetitive work and save time for teams.
+              Six years in IT delivery, moving from infrastructure change management at British Telecom to data
+              platform, analytics, and AI programs at <span className="text-white font-semibold">phData</span>.
+              Runs <span className="text-lime font-semibold">4–5 concurrent programs</span> for US Fortune 500
+              clients and builds the <span className="text-lime font-semibold">Glean and Claude agents</span> that
+              run PMO work in the background.
             </motion.p>
 
             <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3">
@@ -402,7 +403,7 @@ export default function Hero() {
 
           <div className="rounded-2xl p-6" style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}>
             <p className="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-lime mb-6">
-              What I Automate
+              Automation Pipeline
             </p>
             <div className="flex items-start justify-between mb-7">
               {automateSteps.map((step, i) => (
@@ -490,9 +491,8 @@ export default function Hero() {
           // sits right under the header instead of ~90px below it.
           //
           // Badge pill is back (unlike the previous mobile design), because
-          // the headline below no longer opens with "I am a Technical
-          // Project Manager" — it leads with "I lead enterprise programs,"
-          // so the two no longer restate the same words in a row.
+          // the headline below leads straight with the role title, so the
+          // two would otherwise restate the same words in a row.
           className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
         >
           <motion.div
@@ -502,7 +502,7 @@ export default function Hero() {
           >
             <Sparkle size={11} className="text-lime shrink-0" />
             <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-white/75">
-              Technical Project Manager &bull; AI Systems Builder
+              Technical Project Manager &bull; Data, Analytics &amp; AI Programs
             </span>
           </motion.div>
 
@@ -512,9 +512,9 @@ export default function Hero() {
               className="font-heading font-bold leading-[1.2]"
               style={{ fontSize: "clamp(1.35rem, 6.5vw, 1.85rem)" }}
             >
-              <span className="block text-white">I lead enterprise programs.</span>
+              <span className="block text-white">Technical Project Manager.</span>
               <span className="block text-white mt-2">
-                I build <span className="text-lime">AI systems</span> that run project operations.
+                Data, analytics &amp; <span className="text-lime">AI programs</span> at enterprise scale.
               </span>
             </motion.h1>
 
@@ -531,10 +531,11 @@ export default function Hero() {
             className="leading-[1.6] text-white/65 mt-5 mb-6"
             style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
           >
-            I lead enterprise data &amp; AI programs at <span className="text-white font-semibold">phData</span> —
-            from <span className="text-lime font-semibold">platform migrations</span> and data warehouses to{" "}
-            <span className="text-lime font-semibold">AI deployments</span> — and build AI agents and systems that
-            automate my own repetitive work and save time for teams.
+            Six years in IT delivery, moving from infrastructure change management at British Telecom to data
+            platform, analytics, and AI programs at <span className="text-white font-semibold">phData</span>.
+            Runs <span className="text-lime font-semibold">4–5 concurrent programs</span> for US Fortune 500
+            clients and builds the <span className="text-lime font-semibold">Glean and Claude agents</span> that
+            run PMO work in the background.
           </motion.p>
 
           <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 mb-8">
@@ -618,7 +619,7 @@ export default function Hero() {
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
             <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-lime mb-4">
-              What I Automate
+              Automation Pipeline
             </p>
             <div className="relative mb-2">
               <div
@@ -664,7 +665,7 @@ export default function Hero() {
           <motion.div variants={fadeBlurUp} className="mt-2">
             <div className="flex items-center justify-between gap-3 mb-4">
               <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/60 whitespace-nowrap">
-                Tools &amp; Platforms I Work With
+                Tools &amp; Platforms
               </p>
               <p className="flex items-center gap-1.5 font-heading text-[10px] text-white/45 whitespace-nowrap">
                 and many more <span className="w-1.5 h-1.5 rounded-full bg-lime shrink-0" />

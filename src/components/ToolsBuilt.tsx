@@ -7,6 +7,7 @@ import {
   ChevronDown,
   Clock,
   Compass,
+  Cpu,
   LayoutGrid,
   MessageSquare,
   Package,
@@ -15,7 +16,6 @@ import {
   Send,
   Sparkle,
   Target,
-  TrendingUp,
   Users,
   Zap,
 } from "lucide-react";
@@ -45,94 +45,81 @@ type Agent = {
   cardTitle: string;
   body: string;
   cadence: string;
+  builtWith: string;
   accent: string;
   icon: IconType;
-  timeBefore: string;
-  timeAfter: string;
-  percentSaved: string;
   diagram: ComponentType;
 };
 
+// Body copy stays close to what's actually written on the resume's "AI
+// and automation" bullets — no invented before/after timing figures.
+// Only the billing agent's "17 checks" is a number the resume states;
+// the rest describe what each agent does, not an unmeasured time saved.
 const agents: Agent[] = [
   {
     id: "billing",
     title: "Month-end billing review",
     cardTitle: "Month-end Billing Review Agent",
-    body: "Every month I review the financial health of 4+ active programs — budget vs. spend, billing readiness, timecard compliance. I built a 6-step workflow that runs that review for me and flags what needs attention. 15 minutes instead of 2 hours. Now used across the team.",
+    body: "Runs 17 checks against budget vs. spend, billing readiness, and timecard compliance each month, then lists every inconsistency with an action item. A companion rollup agent combines financial status across all active programs into one view.",
     cadence: "Monthly",
+    builtWith: "Glean + Claude",
     accent: "#d7ff3f",
     icon: Package,
-    timeBefore: "2 hrs",
-    timeAfter: "15 min",
-    percentSaved: "87%",
     diagram: BillingSkillDiagram,
   },
   {
     id: "standup",
     title: "Standup brief agent",
     cardTitle: "Standup Brief Agent",
-    body: "Before every standup I need to know what was actually completed, what's blocked, and whether the sprint is on track. This agent pulls from Jira, Slack, and meeting notes and gives me a one-page brief. 30 seconds of reading instead of 30 minutes of digging.",
+    body: "Pulls from Jira, Slack, and meeting notes before each standup and compiles what's done, what's blocked, and whether the sprint is on track into a one-page brief.",
     cadence: "Daily",
+    builtWith: "Claude",
     accent: "#8B7FF0",
     icon: MessageSquare,
-    timeBefore: "30 min",
-    timeAfter: "30 sec",
-    percentSaved: "99%",
     diagram: StandupBriefDiagram,
   },
   {
     id: "setup",
     title: "Project setup agent",
     cardTitle: "Project Setup Agent",
-    body: "Standing up a new program used to take 3 hours — Jira board, sprint structure, risk log, RACI, governance templates. Give this agent the program brief and it provisions everything in 15 minutes. This is the one that won phData's Innovation Award.",
+    body: "Takes a signed SOW from Salesforce and provisions the new program end to end — Jira board, sprint cadence, risk log, RACI, and governance templates — then sends status updates to client email and Slack. Part of the work recognized with phData's Innovation Award.",
     cadence: "One-time",
+    builtWith: "Glean + Claude",
     accent: "#5B9BF0",
     icon: Rocket,
-    timeBefore: "3 hrs",
-    timeAfter: "15 min",
-    percentSaved: "92%",
     diagram: ProjectSetupDiagram,
   },
   {
     id: "reports",
     title: "Weekly status brief",
     cardTitle: "Weekly Status Agent",
-    body: "Writing status updates for 4+ programs every Monday used to take all morning. This agent reads 3 days of emails, Slack, and meeting notes per program and drafts the update. I review and edit — I don't write from scratch. Saves 5+ hours a week.",
+    body: "Pulls data from Jira, Slack, and meeting notes across active programs every Monday, scores program health, and drafts the weekly status update for review before it goes out.",
     cadence: "Weekly",
+    builtWith: "Glean + Claude",
     accent: "#2DD4BF",
     icon: BarChart3,
-    timeBefore: "5+ hrs",
-    timeAfter: "20 min",
-    percentSaved: "85%",
     diagram: StatusBriefDiagram,
   },
   {
     id: "messages",
     title: "Stakeholder message drafter",
     cardTitle: "Stakeholder Message Agent",
-    body: "Escalations, renewal conversations, steerco openers — some messages are hard to write and slow to get right. I describe what I need to say and who I'm talking to, and this agent drafts a first version I can edit.",
+    body: "Drafts a first version of stakeholder messages — escalations, renewal conversations, steering committee openers — from a short brief on what needs to be said and who it's going to.",
     cadence: "On-demand",
+    builtWith: "Claude",
     accent: "#f59e0b",
     icon: Send,
-    // Estimated, not measured — the existing copy doesn't give a timing
-    // figure for this agent. Flagging for Rohit to confirm before shipping.
-    timeBefore: "~25 min",
-    timeAfter: "~5 min",
-    percentSaved: "80%",
     diagram: StakeholderMessageDiagram,
   },
   {
     id: "kickoff",
     title: "Kickoff planning agent",
     cardTitle: "Kickoff Planning Agent",
-    body: "New program kickoffs are chaotic — nobody knows who owns what, scope isn't clear, questions outnumber answers. I give this agent the kickoff brief and it outputs a stakeholder map, interview guide, and discovery plan. Sprint 1 starts with structure.",
+    body: "Turns a kickoff brief into a stakeholder map, interview guide, and discovery plan, so the first sprint starts with structure instead of open questions.",
     cadence: "Per-kickoff",
+    builtWith: "Claude",
     accent: "#F0618B",
     icon: Compass,
-    // Estimated, not measured — same flag as above.
-    timeBefore: "~4 hrs",
-    timeAfter: "~30 min",
-    percentSaved: "88%",
     diagram: KickoffDiagram,
   },
 ];
@@ -302,10 +289,9 @@ function FeaturedAgentCard({ agent, inView }: { agent: Agent; inView: boolean })
         <h3 className="font-heading text-[22px] sm:text-[26px] font-bold text-white leading-snug mb-3">{agent.cardTitle}</h3>
         <p className="text-[14px] leading-relaxed text-white/70 mb-6">{agent.body}</p>
 
-        <div className="grid grid-cols-3 gap-2.5 mb-5">
-          <StatTile icon={Clock} color="#5B9BF0" value={agent.timeBefore} label="Manual Effort" />
-          <StatTile icon={Zap} color="var(--color-lime)" value={agent.timeAfter} label="With Agent" />
-          <StatTile icon={TrendingUp} color="#8B7FF0" value={agent.percentSaved} label="Time Saved" />
+        <div className="grid grid-cols-2 gap-2.5 mb-5">
+          <StatTile icon={Clock} color="#5B9BF0" value={agent.cadence} label="Cadence" />
+          <StatTile icon={Cpu} color="var(--color-lime)" value={agent.builtWith} label="Built With" />
         </div>
 
         {isBilling && (
@@ -348,22 +334,22 @@ function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inVi
         </span>
       </div>
       <p className="text-[13px] leading-relaxed text-white/65 mb-4">{agent.body}</p>
-      <div className="flex items-center justify-between mb-5 font-heading text-[11px] font-bold" style={{ color: agent.accent }}>
-        <span>
-          {agent.timeBefore} → {agent.timeAfter}
-        </span>
-        <span>{agent.percentSaved} time saved</span>
+      <div className="flex items-center gap-1.5 mb-5 font-heading text-[11px] font-bold" style={{ color: agent.accent }}>
+        <Cpu size={13} />
+        <span>{agent.builtWith}</span>
       </div>
       <DiagramPanel label="WORKFLOW" Diagram={agent.diagram} />
     </motion.div>
   );
 }
 
+// Every figure here is stated on the resume — no rounded-up or
+// estimated numbers standing in for metrics that were never measured.
 const impactStats = [
-  { Icon: Clock, value: "50+", label: "Hours Saved / Week", color: "#5B9BF0" },
-  { Icon: Target, value: "97%", label: "Automation Accuracy", color: "var(--color-lime)" },
-  { Icon: Zap, value: "4+", label: "Active Programs Supported", color: "var(--color-lime)" },
-  { Icon: Users, value: "100%", label: "Team Adoption", color: "#2DD4BF" },
+  { Icon: Clock, value: "4–8 Hrs", label: "PMO Time Saved / Week", color: "#5B9BF0" },
+  { Icon: Target, value: "17", label: "Billing Checks Automated", color: "var(--color-lime)" },
+  { Icon: Zap, value: "4–5", label: "Concurrent Programs Supported", color: "var(--color-lime)" },
+  { Icon: Users, value: "5", label: "Agents & Tools in Production", color: "#2DD4BF" },
 ] as const;
 
 function ImpactStatIcon({ stat, active, delay }: { stat: (typeof impactStats)[number]; active: boolean; delay: number }) {
@@ -438,7 +424,7 @@ export default function ToolsBuilt() {
             transition={{ duration: 0.5 }}
             className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] mb-5 text-lime"
           >
-            03 / TOOLS I&apos;VE BUILT
+            03 / TOOLS BUILT
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -447,7 +433,7 @@ export default function ToolsBuilt() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-white mb-5"
           >
-            AI Agents I&apos;ve Built to <span className="text-lime">Automate PM Workflows</span>
+            AI Agents Built to <span className="text-lime">Automate PM Workflows</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -456,9 +442,9 @@ export default function ToolsBuilt() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-[15px] sm:text-[16px] text-white/70 max-w-2xl leading-relaxed"
           >
-            These AI-powered agents automate my most repetitive PM workflows, save{" "}
-            <strong className="text-lime font-semibold">50+ hours</strong> every week, and help teams ship faster with
-            accuracy and consistency.
+            Built to handle the repetitive parts of running multiple programs at once — financial reviews, status
+            reporting, project setup — saving roughly{" "}
+            <strong className="text-lime font-semibold">4–8 hours</strong> of PMO work a week.
           </motion.p>
         </div>
 
@@ -475,7 +461,7 @@ export default function ToolsBuilt() {
                   <AgentCard key={agent.id} agent={agent} index={i} inView={inView} />
                 ))}
               </div>
-              <SwipeCarousel ariaLabel="More AI agents I've built, swipeable carousel" className="sm:hidden">
+              <SwipeCarousel ariaLabel="More AI agents built for PM workflows, swipeable carousel" className="sm:hidden">
                 {secondary.map((agent, i) => (
                   <AgentCard key={agent.id} agent={agent} index={i} inView={inView} />
                 ))}
@@ -495,7 +481,8 @@ export default function ToolsBuilt() {
         >
           <p className="font-display text-[36px] leading-none text-lime mb-2">&ldquo;</p>
           <p className="text-[15px] sm:text-[16px] text-white/75 italic leading-relaxed mb-4 max-w-2xl">
-            I build AI agents that handle the busywork, so teams can focus on what actually moves the needle.
+            Most of these started as a fix for one recurring piece of PMO work. They stayed in use because the
+            rest of the team found them useful too.
           </p>
           <p className="text-right font-signature text-[28px] text-lime">Rohit Singh</p>
         </motion.div>

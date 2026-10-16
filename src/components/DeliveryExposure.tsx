@@ -103,7 +103,7 @@ function KantataBadge({ size = 16, style }: { size?: number; style?: CSSProperti
 
 const stacks: StackCategory[] = [
   {
-    label: ["DATA PLATFORMS", "I'VE DELIVERED ON"],
+    label: ["DATA PLATFORMS", "DELIVERED ON"],
     HeaderIcon: Database,
     items: [
       { name: "Snowflake", Icon: SiSnowflake, color: "#29B5E8" },
@@ -129,7 +129,7 @@ const stacks: StackCategory[] = [
     ],
   },
   {
-    label: ["PMO & DELIVERY", "TOOLS I USE DAILY"],
+    label: ["PMO & DELIVERY", "TOOLS USED DAILY"],
     HeaderIcon: Laptop,
     items: [
       { name: "Jira", Icon: SiJira, color: "#2684FF" },
@@ -143,7 +143,7 @@ const stacks: StackCategory[] = [
     ],
   },
   {
-    label: ["AI & AUTOMATION", "I'VE BUILT"],
+    label: ["AI & AUTOMATION", "BUILT & RUN"],
     HeaderIcon: Zap,
     items: [
       { name: "Glean Agent Builder", Icon: GleanMark, color: "#8B7FF0" },
@@ -230,14 +230,14 @@ export default function DeliveryExposure() {
           <SectionHeading
             eyebrow="04 / STACK"
             segments={[
-              { text: "The tools and platforms I've", style: "fill" },
-              { text: "delivered on.", style: "lime" },
+              { text: "The tools and platforms", style: "fill" },
+              { text: "behind the programs.", style: "lime" },
             ]}
           />
           <p className="text-[15px] text-white/65 max-w-2xl leading-relaxed mt-5">
-            I&apos;m a project manager, not an engineer. This is what I&apos;ve run programs on,
-            not a list of things I can build with — enough to scope the work, sequence it, and
-            follow the technical conversation without needing everything translated.
+            A project manager, not an engineer — this is what gets run on, not a list of
+            things to build with. Enough to scope the work, sequence it, and follow the
+            technical conversation without needing everything translated.
           </p>
         </div>
 
@@ -246,7 +246,7 @@ export default function DeliveryExposure() {
             <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
           ))}
         </div>
-        <SwipeCarousel ariaLabel="Tools and platforms I've delivered on, swipeable carousel" className="sm:hidden">
+        <SwipeCarousel ariaLabel="Tools and platforms delivered on, swipeable carousel" className="sm:hidden">
           {stacks.map((category, i) => (
             <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
           ))}

@@ -7,9 +7,8 @@ const ACCENT = "#8B7FF0";
 
 // Parallelization: three independent tool-call retrievals as horizontal
 // siblings (they run at the same time, not one after another) synthesized
-// by one reasoning step. No guardrail, no human-review step — the copy
-// frames the brief as read directly ("30 seconds of reading"), not
-// formally reviewed before use.
+// by one reasoning step. No guardrail, no human-review step — the brief
+// is read directly, not formally reviewed before use.
 const steps: Step[] = [
   { kind: "step", id: "start", marker: "start", label: "", sub: "" },
   { kind: "step", id: "trigger", label: "Standup Trigger", sub: "Daily, before standup", tone: "card", icon: Zap },
@@ -25,7 +24,7 @@ const steps: Step[] = [
     ],
   },
   { kind: "step", id: "agent", label: "Standup Agent", sub: "Claude", tone: "hero", icon: Bot },
-  { kind: "step", id: "brief", label: "One-Page Brief", sub: "30-second read", tone: "card", icon: FileCheck },
+  { kind: "step", id: "brief", label: "One-Page Brief", sub: "Done, blocked, on track", tone: "card", icon: FileCheck },
   { kind: "step", id: "end", marker: "end", label: "", sub: "" },
 ];
 

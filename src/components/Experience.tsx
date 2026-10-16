@@ -15,7 +15,7 @@ const roles = [
     current: true,
     color: "white",
     bullets: [
-      "Own full project lifecycle — initiation to closure — for 4–6 concurrent Data Platform and AI programs ($3.5M+ combined contract value), held against agreed scope, timeline, budget, and quality KPIs.",
+      "Own full project lifecycle — initiation to closure — for 4–5 concurrent Data Platform and AI programs, each with a $250K–$1M budget and 12–15 engineers, held against agreed scope, timeline, budget, and quality KPIs.",
       "Maintain RACI, WBS, decision logs, dependency maps, and risk registers in Jira and Confluence, with milestone tracking dashboards keeping every active program visible from kickoff through delivery close.",
       "Manage full financial governance — monthly invoicing, budget forecast vs. actuals, burn-rate tracking, and variance reporting to client and internal leadership.",
       "Run the delivery cadence that keeps programs on track — standups, program syncs, and steering reviews — with focused retrospectives feeding fixes back into how the next sprint runs.",
@@ -23,7 +23,7 @@ const roles = [
       "Primary bridge between engineering delivery, QA, and client C-level/VP stakeholders — own weekly status reporting, quarterly business reviews, and escalation management; issues get root-caused and fixed systemically, not patched over.",
       "Drive account expansion through QBR-led discovery — grown multiple single-program engagements into multi-year platform relationships.",
       "Keep client satisfaction high by communicating progress, risk, and trade-offs before they're asked for, not after.",
-      "Design, pilot, and scale AI-integrated PM processes — built AI agents (Glean + Claude + n8n) that generate status and risk reports, run financial reviews, and automate program setup, now standard workflow across the PMO team. Saves 5+ hours a week; won phData's Innovation Award.",
+      "Design, pilot, and scale AI-integrated PM processes — built AI agents (Glean + Claude + n8n) that generate status and risk reports, run financial reviews, and automate program setup, now standard workflow across the PMO team. Saves 4–8 hours a week; won phData's Innovation Award.",
       "Manage scope discipline once a program is live — one engagement pushed 14 additions beyond the signed SOW; every one formally logged and resolved so none became free work.",
     ],
     tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Account Expansion", "Scrum Master (PSM1)", "AI Agent Builder", "Predictive Risk Reporting"],
@@ -52,8 +52,8 @@ export default function Trajectory() {
         <SectionHeading
           eyebrow="01 / EXPERIENCE"
           segments={[
-            { text: "Where I've worked.", style: "fill" },
-            { text: "What I delivered.", style: "lime" },
+            { text: "Role history.", style: "fill" },
+            { text: "What shipped.", style: "lime" },
           ]}
           className="mb-5"
         />

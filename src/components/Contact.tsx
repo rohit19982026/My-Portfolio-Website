@@ -22,7 +22,7 @@ export default function Contact() {
           className="mb-5"
         />
         <p className="text-[16px] text-white/70 max-w-xl leading-relaxed mb-14">
-          Email is the most reliable way to reach me. I work on fixed-price, time
+          Email is the most reliable way to reach me — open to fixed-price, time
           and materials, and managed retainer engagements.
         </p>
 
@@ -39,11 +39,11 @@ export default function Contact() {
             ALSO A BUILDER
           </p>
           <h3 className="font-heading text-[22px] sm:text-[26px] font-bold leading-snug text-white mb-3 max-w-lg">
-            Most technical project managers stop at the roadmap. I don&apos;t.
+            The automations and AI agents run alongside the roadmap, not instead of it.
           </h3>
           <p className="text-[14.5px] text-white/70 leading-relaxed mb-6 max-w-lg">
-            I write the automations and AI agents I run programs with — this site
-            included. The code is public, not just the case studies.
+            This site, and the PMO agents described above, are built and maintained
+            the same way. The code is public, not just the case studies.
           </p>
           <Button href="https://github.com/rohit19982026?tab=repositories" target="_blank" rel="noopener noreferrer">
             <GithubMark className="w-4 h-4 shrink-0" />

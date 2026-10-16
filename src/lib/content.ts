@@ -18,6 +18,6 @@ export const skillMarqueeItems = [
   "N8N",
   "PSM1 CERTIFIED",
   "ITIL FOUNDATION",
-  "$3.5M+ DELIVERED",
-  "6 PROGRAMS RUN",
+  "$250K–$1M PROGRAM BUDGETS",
+  "4–5 CONCURRENT PROGRAMS",
 ];
