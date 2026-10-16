@@ -248,8 +248,12 @@ function CredlyBadge({ className = "" }: { className?: string }) {
           its own, so against this site's dark card they'd go nearly
           illegible. Giving the iframe its own white backing (instead of
           letting the card's dark fill show through) restores the
-          contrast Credly's design assumes. */}
-      <div className="rounded-lg overflow-hidden" style={{ background: "#ffffff" }}>
+          contrast Credly's design assumes. Explicit width/height (matching
+          the badge's own data-iframe-width/height) keep this box its full
+          size even before embed.js has swapped the div for the real
+          iframe, so the badge never collapses down to an invisible sliver
+          while it loads. */}
+      <div className="rounded-lg overflow-hidden" style={{ background: "#ffffff", width: 150, height: 270 }}>
         <div
           data-iframe-width="150"
           data-iframe-height="270"
@@ -732,7 +736,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="lazyOnload" />
+      <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="afterInteractive" />
     </section>
   );
 }
