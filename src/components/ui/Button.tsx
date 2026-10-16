@@ -12,6 +12,7 @@ type ButtonProps = {
   className?: string;
   target?: string;
   rel?: string;
+  download?: boolean | string;
 };
 
 function useMagnetic() {
@@ -43,6 +44,7 @@ export default function Button({
   className = "",
   target,
   rel,
+  download,
 }: ButtonProps) {
   const { style, handleMove, handleLeave } = useMagnetic();
 
@@ -59,6 +61,7 @@ export default function Button({
         href={href}
         target={target}
         rel={rel}
+        download={download}
         onMouseMove={handleMove}
         onMouseLeave={handleLeave}
         whileTap={{ scale: 0.97 }}

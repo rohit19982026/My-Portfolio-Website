@@ -4,6 +4,7 @@ export const navLinks = [
   // — see the comment in src/app/page.tsx.
   { label: "Tools", href: "#tools" },
   { label: "Stack", href: "#stack" },
+  { label: "Resume", href: "#resume" },
 ];
 
 export const skillMarqueeItems = [

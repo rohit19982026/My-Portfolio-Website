@@ -14,7 +14,7 @@ export default function Contact() {
     <section id="contact" className="py-24 bg-ink border-t-2 border-white/10">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeading
-          eyebrow="05 / CONTACT"
+          eyebrow="06 / CONTACT"
           segments={[
             { text: "Get in", style: "fill" },
             { text: "touch.", style: "lime" },
