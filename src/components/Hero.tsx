@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Script from "next/script";
 import { SiJira, SiClaude, SiCursor } from "react-icons/si";
 import {
   Terminal,
@@ -228,6 +229,30 @@ function DesktopPhotoBadge({
 }
 
 
+// Credly's public badge-sharing embed — a fixed-size (150x270) iframe
+// that embed.js swaps the div for once it loads. The script only needs
+// to be included once per page; it scans the whole DOM for matching
+// data-share-badge-id divs, so this single component instance covers
+// both the desktop and mobile badge placements below.
+function CredlyBadge() {
+  return (
+    <div
+      className="inline-flex flex-col items-center gap-2 rounded-2xl p-3 shrink-0"
+      style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+    >
+      <p className="font-heading text-[9px] font-bold uppercase tracking-[0.14em] text-lime whitespace-nowrap">
+        Verified Credential
+      </p>
+      <div
+        data-iframe-width="150"
+        data-iframe-height="270"
+        data-share-badge-id="a388e87c-806c-4686-ad52-6b0703386abe"
+        data-share-badge-host="https://www.credly.com"
+      />
+    </div>
+  );
+}
+
 export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-[64px]" style={{ background: NAVY }}>
@@ -299,7 +324,7 @@ export default function Hero() {
               run PMO work in the background.
             </motion.p>
 
-            <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3">
+            <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3">
               <a
                 href="#experience"
                 className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
@@ -312,6 +337,7 @@ export default function Hero() {
               >
                 <MessageCircle size={15} /> Let&apos;s Talk
               </a>
+              <CredlyBadge />
             </motion.div>
           </div>
 
@@ -538,7 +564,7 @@ export default function Hero() {
             run PMO work in the background.
           </motion.p>
 
-          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 mb-8">
+          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-8">
             <a
               href="#experience"
               className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
@@ -551,6 +577,7 @@ export default function Hero() {
             >
               <MessageCircle size={15} /> Let&apos;s Talk
             </a>
+            <CredlyBadge />
           </motion.div>
 
           {/* 4-tile capability strip — a leaner icon+label restatement of
@@ -690,6 +717,8 @@ export default function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
+      <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="lazyOnload" />
     </section>
   );
 }
