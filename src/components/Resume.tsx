@@ -16,7 +16,7 @@ const CARD_BG = "rgba(255,255,255,0.03)";
 // a condensed "what's in the PDF" preview, not new claims.
 const highlights = [
   { Icon: Layers, label: "6 years in IT delivery", sub: "Infra change mgmt → data & AI programs" },
-  { Icon: Award, label: "Claude Certified Architect", sub: "Anthropic · PSM I · ITIL Foundation" },
+  { Icon: Award, label: "Claude Certified Architect – Foundations", sub: "Anthropic · PSM I · ITIL Foundation" },
   { Icon: GraduationCap, label: "phData Innovation Award", sub: "AI agents saving 4–8 hrs/week" },
 ];
 

@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, type ComponentType, type CSSProperties, type ReactNode } from "react";
+import { SiClaude } from "react-icons/si";
 import {
   BarChart3,
   Bell,
@@ -67,6 +68,7 @@ const education = {
 type CertItem = { name: string; issuer: string; icon: IconType; color: string };
 
 const certifications: CertItem[] = [
+  { name: "Claude Certified Architect – Foundations", issuer: "Anthropic", icon: SiClaude, color: "#D97757" },
   { name: "PSM I — Professional Scrum Master", issuer: "Scrum.org", icon: RefreshCcw, color: "#00ADEF" },
   { name: "ITIL Foundation", issuer: "Axelos", icon: ItilBadge, color: "#E6007E" },
   { name: "LandingLens Computer Vision Fundamentals", issuer: "LandingAI", icon: ScanEye, color: "#5B9BF0" },
