@@ -11,7 +11,7 @@ const links = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 bg-ink border-t-2 border-white/10">
+    <section id="contact" className="py-24 bg-surface border-t-2 border-fg/10">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeading
           eyebrow="06 / CONTACT"
@@ -21,7 +21,7 @@ export default function Contact() {
           ]}
           className="mb-5"
         />
-        <p className="text-[16px] text-white/70 max-w-xl leading-relaxed mb-14">
+        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-14">
           Email is the most reliable way to reach me — open to fixed-price, time
           and materials, and managed retainer engagements.
         </p>
@@ -29,19 +29,19 @@ export default function Contact() {
         {/* Also a builder — GitHub callout */}
         <div
           className="mb-12 p-7 sm:p-9 rounded-card relative overflow-hidden max-w-3xl"
-          style={{ border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.03)" }}
+          style={{ border: "1px solid var(--color-card-border)", background: "var(--color-card)" }}
         >
           <GithubMark
             className="absolute -right-4 -top-4 w-36 h-36 pointer-events-none"
-            style={{ color: "var(--color-white)", opacity: 0.06 }}
+            style={{ color: "var(--color-fg)", opacity: 0.06 }}
           />
-          <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-lime mb-3">
+          <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-accent mb-3">
             ALSO A BUILDER
           </p>
-          <h3 className="font-heading text-[22px] sm:text-[26px] font-bold leading-snug text-white mb-3 max-w-lg">
+          <h3 className="font-heading text-[22px] sm:text-[26px] font-bold leading-snug text-fg mb-3 max-w-lg">
             The automations and AI agents run alongside the roadmap, not instead of it.
           </h3>
-          <p className="text-[14.5px] text-white/70 leading-relaxed mb-6 max-w-lg">
+          <p className="text-[14.5px] text-fg/70 leading-relaxed mb-6 max-w-lg">
             This site, and the PMO agents described above, are built and maintained
             the same way. The code is public, not just the case studies.
           </p>
@@ -57,12 +57,12 @@ export default function Contact() {
             <div className="space-y-5 mb-10">
               {links.map((link) => (
                 <div key={link.label} className="flex items-center gap-4 group">
-                  <span className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/45 w-20 shrink-0">
+                  <span className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/45 w-20 shrink-0">
                     {link.label}
                   </span>
                   <a
                     href={link.href}
-                    className="text-[14px] font-semibold text-white/75 group-hover:text-lime transition-colors"
+                    className="text-[14px] font-semibold text-fg/75 group-hover:text-accent transition-colors"
                   >
                     {link.value}
                   </a>
@@ -73,17 +73,17 @@ export default function Contact() {
             {/* Availability badge */}
             <div
               className="inline-flex items-center gap-3 px-5 py-3.5 rounded-card"
-              style={{ border: "1px solid color-mix(in srgb, var(--color-lime) 30%, transparent)", background: "color-mix(in srgb, var(--color-lime) 8%, transparent)" }}
+              style={{ border: "1px solid color-mix(in srgb, var(--color-accent) 30%, transparent)", background: "color-mix(in srgb, var(--color-accent) 8%, transparent)" }}
             >
               <span
-                className="w-2.5 h-2.5 rounded-full bg-lime shrink-0"
-                style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
+                className="w-2.5 h-2.5 rounded-full shrink-0"
+                style={{ background: "var(--color-accent)", animation: "pulse-dot 2s ease-in-out infinite" }}
               />
               <div>
-                <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-lime">
+                <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-accent">
                   Open for programs
                 </p>
-                <p className="font-heading text-[10px] text-white/50 mt-0.5">
+                <p className="font-heading text-[10px] text-fg/50 mt-0.5">
                   Bengaluru, India · IST
                 </p>
               </div>

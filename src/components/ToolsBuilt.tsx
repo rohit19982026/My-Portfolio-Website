@@ -31,9 +31,9 @@ import SwipeCarousel from "./ui/SwipeCarousel";
 // session — kept as local literals here too, matching how both of those
 // files define their own copies rather than sharing a module (a separate
 // cleanup, not blocking here).
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
+const NAVY = "var(--color-surface-alt)";
+const CARD_BG = "var(--color-card)";
+const CARD_BORDER = "var(--color-card-border)";
 const DOT_PATTERN = "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)";
 
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; style?: CSSProperties; className?: string }>;
@@ -153,7 +153,7 @@ function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (
               className="flex items-center gap-2 rounded-pill px-4 py-2 font-heading text-[12.5px] font-semibold whitespace-nowrap transition-colors duration-[var(--duration-base)] cursor-pointer"
               style={{
                 background: isActive ? "rgba(215,255,63,0.1)" : "transparent",
-                color: isActive ? "var(--color-lime)" : "rgba(255,255,255,0.6)",
+                color: isActive ? "var(--color-accent)" : "color-mix(in srgb, var(--color-fg) 60%, transparent)",
               }}
             >
               <Icon size={14} strokeWidth={2.25} />
@@ -175,15 +175,15 @@ function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (
               onClick={() => onChange(tab.id)}
               className="flex flex-col items-center justify-center gap-1.5 shrink-0 rounded-2xl px-4 py-2.5 min-w-[72px] cursor-pointer"
               style={{
-                border: `1px solid ${isActive ? "var(--color-lime)" : CARD_BORDER}`,
+                border: `1px solid ${isActive ? "var(--color-accent)" : CARD_BORDER}`,
                 background: isActive ? "rgba(215,255,63,0.08)" : "transparent",
                 boxShadow: isActive ? "0 0 16px rgba(215,255,63,0.22)" : "none",
               }}
             >
-              <Icon size={17} strokeWidth={2} style={{ color: isActive ? "var(--color-lime)" : "rgba(255,255,255,0.7)" }} />
+              <Icon size={17} strokeWidth={2} style={{ color: isActive ? "var(--color-accent)" : "color-mix(in srgb, var(--color-fg) 70%, transparent)" }} />
               <span
                 className="font-heading text-[10px] font-semibold whitespace-nowrap"
-                style={{ color: isActive ? "var(--color-lime)" : "rgba(255,255,255,0.7)" }}
+                style={{ color: isActive ? "var(--color-accent)" : "color-mix(in srgb, var(--color-fg) 70%, transparent)" }}
               >
                 {tab.label}
               </span>
@@ -203,7 +203,7 @@ function DiagramPanel({ label, Diagram }: { label: string; Diagram: ComponentTyp
   return (
     <div>
       <div className="hidden lg:block">
-        <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 mb-3">{label}</p>
+        <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/40 mb-3">{label}</p>
         <Diagram />
       </div>
 
@@ -212,8 +212,8 @@ function DiagramPanel({ label, Diagram }: { label: string; Diagram: ComponentTyp
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          className="w-full flex items-center justify-between gap-3 rounded-card px-3.5 py-2.5 font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/60 cursor-pointer"
-          style={{ border: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.03)" }}
+          className="w-full flex items-center justify-between gap-3 rounded-card px-3.5 py-2.5 font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/60 cursor-pointer"
+          style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
         >
           {label}
           <ChevronDown
@@ -246,11 +246,11 @@ function StatTile({ icon: Icon, color, value, label }: { icon: IconType; color: 
   return (
     <div
       className="flex flex-col items-center gap-1 rounded-card px-2 py-3 text-center"
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.02)" }}
+      style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
     >
       <Icon size={18} strokeWidth={2} style={{ color }} />
-      <p className="font-heading text-[15px] font-bold text-white leading-none mt-0.5">{value}</p>
-      <p className="text-[9px] text-white/50 leading-tight">{label}</p>
+      <p className="font-heading text-[15px] font-bold text-fg leading-none mt-0.5">{value}</p>
+      <p className="text-[9px] text-fg/50 leading-tight">{label}</p>
     </div>
   );
 }
@@ -286,18 +286,18 @@ function FeaturedAgentCard({ agent, inView }: { agent: Agent; inView: boolean })
             <Plus size={11} /> Featured
           </span>
         )}
-        <h3 className="font-heading text-[22px] sm:text-[26px] font-bold text-white leading-snug mb-3">{agent.cardTitle}</h3>
-        <p className="text-[14px] leading-relaxed text-white/70 mb-6">{agent.body}</p>
+        <h3 className="font-heading text-[22px] sm:text-[26px] font-bold text-fg leading-snug mb-3">{agent.cardTitle}</h3>
+        <p className="text-[14px] leading-relaxed text-fg/70 mb-6">{agent.body}</p>
 
         <div className="grid grid-cols-2 gap-2.5 mb-5">
           <StatTile icon={Clock} color="#5B9BF0" value={agent.cadence} label="Cadence" />
-          <StatTile icon={Cpu} color="var(--color-lime)" value={agent.builtWith} label="Built With" />
+          <StatTile icon={Cpu} color="var(--color-accent)" value={agent.builtWith} label="Built With" />
         </div>
 
         {isBilling && (
           <div className="flex flex-wrap gap-2">
             <Tag icon={<span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />} label="Production" color="#22c55e" />
-            <Tag icon={<Plus size={11} />} label="Used Across Team" color="var(--color-lime)" />
+            <Tag icon={<Plus size={11} />} label="Used Across Team" color="var(--color-accent)" />
             <Tag icon={<Sparkle size={11} />} label="High Impact" color="#8B7FF0" />
           </div>
         )}
@@ -325,7 +325,7 @@ function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inVi
         >
           <Icon size={17} strokeWidth={2} style={{ color: agent.accent }} />
         </span>
-        <h3 className="font-heading text-[15px] font-bold text-white flex-1 leading-snug">{agent.title}</h3>
+        <h3 className="font-heading text-[15px] font-bold text-fg flex-1 leading-snug">{agent.title}</h3>
         <span
           className="rounded-pill px-2.5 py-1 font-heading text-[9.5px] font-bold uppercase tracking-[0.06em] shrink-0"
           style={{ border: `1px solid color-mix(in srgb, ${agent.accent} 45%, transparent)`, color: agent.accent }}
@@ -333,7 +333,7 @@ function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inVi
           {agent.cadence}
         </span>
       </div>
-      <p className="text-[13px] leading-relaxed text-white/65 mb-4">{agent.body}</p>
+      <p className="text-[13px] leading-relaxed text-fg/65 mb-4">{agent.body}</p>
       <div className="flex items-center gap-1.5 mb-5 font-heading text-[11px] font-bold" style={{ color: agent.accent }}>
         <Cpu size={13} />
         <span>{agent.builtWith}</span>
@@ -347,8 +347,8 @@ function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inVi
 // estimated numbers standing in for metrics that were never measured.
 const impactStats = [
   { Icon: Clock, value: "4–8 Hrs", label: "PMO Time Saved / Week", color: "#5B9BF0" },
-  { Icon: Target, value: "17", label: "Billing Checks Automated", color: "var(--color-lime)" },
-  { Icon: Zap, value: "4–5", label: "Concurrent Programs Supported", color: "var(--color-lime)" },
+  { Icon: Target, value: "17", label: "Billing Checks Automated", color: "var(--color-accent)" },
+  { Icon: Zap, value: "4–5", label: "Concurrent Programs Supported", color: "var(--color-accent)" },
   { Icon: Users, value: "5", label: "Agents & Tools in Production", color: "#2DD4BF" },
 ] as const;
 
@@ -362,8 +362,8 @@ function ImpactStatIcon({ stat, active, delay }: { stat: (typeof impactStats)[nu
       className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left px-2"
     >
       <Icon size={28} strokeWidth={1.6} style={{ color, filter: `drop-shadow(0 0 6px color-mix(in srgb, ${color} 65%, transparent))` }} />
-      <p className="font-heading text-[24px] sm:text-[26px] font-bold text-white leading-none mt-1">{value}</p>
-      <p className="text-[12px] text-white/55 leading-snug">{label}</p>
+      <p className="font-heading text-[24px] sm:text-[26px] font-bold text-fg leading-none mt-1">{value}</p>
+      <p className="text-[12px] text-fg/55 leading-snug">{label}</p>
     </motion.div>
   );
 }
@@ -382,7 +382,7 @@ function BusinessImpactPanel({ inView }: { inView: boolean }) {
         style={{ backgroundImage: DOT_PATTERN, backgroundSize: "8px 8px", opacity: 0.6 }}
         aria-hidden="true"
       />
-      <p className="flex items-center gap-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-lime mb-7">
+      <p className="flex items-center gap-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-7">
         Business Impact <Sparkle size={13} />
       </p>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8">
@@ -391,10 +391,10 @@ function BusinessImpactPanel({ inView }: { inView: boolean }) {
             key={stat.label}
             className={[
               "relative pl-5 -ml-5 lg:pl-6 lg:-ml-0",
-              i % 2 === 1 ? "border-l border-white/10" : "border-l border-transparent",
-              i >= 2 ? "border-t border-white/10 pt-6 -mt-px" : "",
+              i % 2 === 1 ? "border-l border-fg/10" : "border-l border-transparent",
+              i >= 2 ? "border-t border-fg/10 pt-6 -mt-px" : "",
               "lg:border-t-0 lg:pt-0 lg:mt-0",
-              i === 0 ? "lg:border-l-0" : "lg:border-l lg:border-white/10",
+              i === 0 ? "lg:border-l-0" : "lg:border-l lg:border-fg/10",
             ].join(" ")}
           >
             <ImpactStatIcon stat={stat} active={inView} delay={0.15 + i * 0.1} />
@@ -422,7 +422,7 @@ export default function ToolsBuilt() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
-            className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] mb-5 text-lime"
+            className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] mb-5 text-accent"
           >
             03 / TOOLS BUILT
           </motion.p>
@@ -431,20 +431,20 @@ export default function ToolsBuilt() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, delay: 0.05 }}
-            className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-white mb-5"
+            className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-fg mb-5"
           >
-            AI Agents Built to <span className="text-lime">Automate PM Workflows</span>
+            AI Agents Built to <span className="text-accent">Automate PM Workflows</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[15px] sm:text-[16px] text-white/70 max-w-2xl leading-relaxed"
+            className="text-[15px] sm:text-[16px] text-fg/70 max-w-2xl leading-relaxed"
           >
             Built to handle the repetitive parts of running multiple programs at once — financial reviews, status
             reporting, project setup — saving roughly{" "}
-            <strong className="text-lime font-semibold">4–8 hours</strong> of PMO work a week.
+            <strong className="text-accent font-semibold">4–8 hours</strong> of PMO work a week.
           </motion.p>
         </div>
 
@@ -479,12 +479,12 @@ export default function ToolsBuilt() {
           className="mt-6 rounded-2xl p-6 sm:p-8"
           style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
         >
-          <p className="font-display text-[36px] leading-none text-lime mb-2">&ldquo;</p>
-          <p className="text-[15px] sm:text-[16px] text-white/75 italic leading-relaxed mb-4 max-w-2xl">
+          <p className="font-display text-[36px] leading-none text-accent mb-2">&ldquo;</p>
+          <p className="text-[15px] sm:text-[16px] text-fg/75 italic leading-relaxed mb-4 max-w-2xl">
             Most of these started as a fix for one recurring piece of PMO work. They stayed in use because the
             rest of the team found them useful too.
           </p>
-          <p className="text-right font-signature text-[28px] text-lime">Rohit Singh</p>
+          <p className="text-right font-signature text-[28px] text-accent">Rohit Singh</p>
         </motion.div>
       </div>
     </section>

@@ -23,9 +23,9 @@ import {
 // established this session — kept as local literals here too, matching
 // how each of those files defines its own copy rather than sharing a
 // module (a separate cleanup, not blocking here).
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
+const NAVY = "var(--color-surface-alt)";
+const CARD_BG = "var(--color-card)";
+const CARD_BORDER = "var(--color-card-border)";
 
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; style?: CSSProperties; className?: string }>;
 
@@ -92,17 +92,17 @@ function CardNumberHeader({ number, label, headerIcon }: { number: string; label
     <div className="mb-5">
       <div className="flex items-center justify-between gap-3 mb-2.5">
         <div className="flex items-baseline gap-2">
-          <span className="font-heading text-[18px] font-bold text-lime leading-none">{number}</span>
-          <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">{label}</span>
+          <span className="font-heading text-[18px] font-bold text-accent leading-none">{number}</span>
+          <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/70">{label}</span>
         </div>
         {headerIcon && <div className="lg:hidden">{headerIcon}</div>}
       </div>
-      <div className="w-10 h-[3px] bg-lime rounded-full" />
+      <div className="w-10 h-[3px] rounded-full" style={{ background: "var(--color-accent)" }} />
     </div>
   );
 }
 
-function CornerIconBadge({ Icon, accentColor = "var(--color-lime)" }: { Icon: IconType; accentColor?: string }) {
+function CornerIconBadge({ Icon, accentColor = "var(--color-accent)" }: { Icon: IconType; accentColor?: string }) {
   return (
     <span
       className="flex items-center justify-center w-9 h-9 rounded-full shrink-0"
@@ -123,7 +123,7 @@ function CornerIconBadge({ Icon, accentColor = "var(--color-lime)" }: { Icon: Ic
 // from a hardcoded lime tint into a parameterized accentColor so Recognition
 // can reuse the exact same treatment in amber instead of inventing a
 // second visual language.
-function RingIconBadge({ Icon, accentColor = "var(--color-lime)", sparkle = false }: { Icon: IconType; accentColor?: string; sparkle?: boolean }) {
+function RingIconBadge({ Icon, accentColor = "var(--color-accent)", sparkle = false }: { Icon: IconType; accentColor?: string; sparkle?: boolean }) {
   return (
     <div className="relative w-28 h-28 mx-auto mb-5 flex items-center justify-center" aria-hidden="true">
       <div
@@ -169,7 +169,7 @@ function CertItemRow({ item, variant }: { item: CertItem; variant: "grid" | "lis
           ? "flex items-start gap-2.5 rounded-card p-3"
           : "flex items-center gap-3 rounded-card px-3.5 py-3"
       }
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.02)" }}
+      style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
     >
       <span
         className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
@@ -178,10 +178,10 @@ function CertItemRow({ item, variant }: { item: CertItem; variant: "grid" | "lis
         <Icon size={15} style={{ color }} />
       </span>
       <div className="flex-1 min-w-0">
-        <p className="font-heading text-[12.5px] font-bold text-white leading-snug">{name}</p>
-        <p className="text-[10.5px] text-white/50 mt-0.5">{issuer}</p>
+        <p className="font-heading text-[12.5px] font-bold text-fg leading-snug">{name}</p>
+        <p className="text-[10.5px] text-fg/50 mt-0.5">{issuer}</p>
       </div>
-      <CheckCircle2 size={14} className="text-lime shrink-0" />
+      <CheckCircle2 size={14} className="text-accent shrink-0" />
     </div>
   );
 }
@@ -199,17 +199,17 @@ function EducationCard({ inView }: { inView: boolean }) {
       <div className="hidden lg:block">
         <RingIconBadge Icon={GraduationCap} />
       </div>
-      <p className="font-heading text-white text-[17px] font-bold leading-snug mb-1">{education.degree}</p>
-      <p className="text-lime text-[13px] font-semibold mb-3">{education.institution}</p>
-      <div className="flex items-center gap-1.5 text-white/55 text-[12px] mb-6">
+      <p className="font-heading text-fg text-[17px] font-bold leading-snug mb-1">{education.degree}</p>
+      <p className="text-accent text-[13px] font-semibold mb-3">{education.institution}</p>
+      <div className="flex items-center gap-1.5 text-fg/55 text-[12px] mb-6">
         <Calendar size={13} />
         <span>
           {education.year} · {education.grade}
         </span>
       </div>
       <div className="pt-5" style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
-        <p className="font-display text-[24px] leading-none text-lime mb-2">&ldquo;</p>
-        <p className="italic text-white/70 text-[13px] leading-relaxed">{education.quote}</p>
+        <p className="font-display text-[24px] leading-none text-accent mb-2">&ldquo;</p>
+        <p className="italic text-fg/70 text-[13px] leading-relaxed">{education.quote}</p>
       </div>
     </motion.div>
   );
@@ -235,23 +235,23 @@ function CertificationsCard({ inView }: { inView: boolean }) {
           <CertItemRow key={c.name} item={c} variant="list" />
         ))}
       </div>
-      <div className="hidden lg:flex items-center gap-2 text-white/60 text-[12.5px]">
-        <BookOpen size={15} className="text-lime shrink-0" />
+      <div className="hidden lg:flex items-center gap-2 text-fg/60 text-[12.5px]">
+        <BookOpen size={15} className="text-accent shrink-0" />
         <span>
-          Continuously learning. <span className="text-lime font-semibold">Always building.</span>
+          Continuously learning. <span className="text-accent font-semibold">Always building.</span>
         </span>
       </div>
       <div
         className="lg:hidden flex items-center justify-between rounded-card px-3.5 py-2.5"
         style={{ border: `1px solid ${CARD_BORDER}` }}
       >
-        <div className="flex items-center gap-2 text-white/70 text-[12.5px]">
-          <BookOpen size={15} className="text-lime shrink-0" />
+        <div className="flex items-center gap-2 text-fg/70 text-[12.5px]">
+          <BookOpen size={15} className="text-accent shrink-0" />
           <span>
-            Continuously learning. <span className="text-lime font-semibold">Always building.</span>
+            Continuously learning. <span className="text-accent font-semibold">Always building.</span>
           </span>
         </div>
-        <ChevronRight size={14} className="text-white/40 shrink-0" />
+        <ChevronRight size={14} className="text-fg/40 shrink-0" />
       </div>
     </motion.div>
   );
@@ -274,8 +274,8 @@ function RecognitionCard({ inView }: { inView: boolean }) {
       <div className="hidden lg:block">
         <RingIconBadge Icon={Trophy} accentColor="var(--color-award)" sparkle />
       </div>
-      <p className="font-heading text-white text-[16px] font-bold mb-2">{award.title}</p>
-      <p className="text-[13px] text-white/70 leading-relaxed mb-6">{award.desc}</p>
+      <p className="font-heading text-fg text-[16px] font-bold mb-2">{award.title}</p>
+      <p className="text-[13px] text-fg/70 leading-relaxed mb-6">{award.desc}</p>
       <div className="grid grid-cols-3 gap-2">
         {award.stats.map((s) => (
           <div
@@ -284,7 +284,7 @@ function RecognitionCard({ inView }: { inView: boolean }) {
             style={{ border: `1px solid ${CARD_BORDER}` }}
           >
             <s.icon size={16} style={{ color: "var(--color-award)" }} />
-            <span className="text-[9.5px] text-white/60 leading-tight">{s.label}</span>
+            <span className="text-[9.5px] text-fg/60 leading-tight">{s.label}</span>
           </div>
         ))}
       </div>
@@ -296,14 +296,14 @@ function CredentialsHeader() {
   return (
     <div className="relative mb-14">
       <svg className="hidden lg:block absolute top-0 right-0 w-40 h-16 opacity-[0.15]" aria-hidden="true" viewBox="0 0 160 64">
-        <path d="M0,30 Q40,0 80,30 T160,30" stroke="var(--color-lime)" strokeWidth="1.5" fill="none" strokeDasharray="1 6" />
+        <path d="M0,30 Q40,0 80,30 T160,30" stroke="var(--color-accent)" strokeWidth="1.5" fill="none" strokeDasharray="1 6" />
       </svg>
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.5 }}
-        className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-lime mb-5"
+        className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-5"
       >
         02 / CREDENTIALS &amp; RECOGNITION
       </motion.p>
@@ -313,16 +313,16 @@ function CredentialsHeader() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.05 }}
-          className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-white mb-5 lg:mb-0"
+          className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-fg mb-5 lg:mb-0"
         >
-          Built on learning. <span className="text-lime">Proven by impact.</span>
+          Built on learning. <span className="text-accent">Proven by impact.</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-[14px] sm:text-[15px] text-white/70 leading-relaxed lg:max-w-sm lg:text-right"
+          className="text-[14px] sm:text-[15px] text-fg/70 leading-relaxed lg:max-w-sm lg:text-right"
         >
           A strong academic foundation, continuous learning and real-world impact that creates value for teams and
           businesses.
@@ -342,17 +342,17 @@ function PullQuote({ inView }: { inView: boolean }) {
       style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
       <div className="lg:flex-1">
-        <p className="font-display text-[36px] leading-none text-lime mb-2">&ldquo;</p>
-        <p className="text-[15px] sm:text-[16px] text-white/75 italic leading-relaxed max-w-2xl">
+        <p className="font-display text-[36px] leading-none text-accent mb-2">&ldquo;</p>
+        <p className="text-[15px] sm:text-[16px] text-fg/75 italic leading-relaxed max-w-2xl">
           Learning stays applied — each certification and course has fed directly into a program, a process, or
           an agent that&apos;s actually in use.
         </p>
       </div>
-      <div className="h-px w-full my-6 lg:hidden" style={{ background: "rgba(255,255,255,0.14)" }} />
-      <div className="hidden lg:block w-px self-stretch mx-2" style={{ background: "rgba(255,255,255,0.14)" }} />
+      <div className="h-px w-full my-6 lg:hidden" style={{ background: "var(--color-divider)" }} />
+      <div className="hidden lg:block w-px self-stretch mx-2" style={{ background: "var(--color-divider)" }} />
       <div className="lg:shrink-0 lg:w-56 text-right">
-        <p className="font-signature text-[28px] text-lime">Rohit Singh</p>
-        <p className="text-[12px] text-white/50 mt-1">Always shipping, always learning.</p>
+        <p className="font-signature text-[28px] text-accent">Rohit Singh</p>
+        <p className="text-[12px] text-fg/50 mt-1">Always shipping, always learning.</p>
       </div>
     </motion.div>
   );

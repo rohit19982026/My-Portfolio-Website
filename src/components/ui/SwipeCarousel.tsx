@@ -2,10 +2,12 @@
 
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
-// Matches the NAVY literal duplicated in Hero.tsx/DeliveryExposure.tsx/
+// Matches the surface-alt token used by Hero.tsx/DeliveryExposure.tsx/
 // ToolsBuilt.tsx — the edge fades need the section's own background color
-// to blend in, not a token.
-const NAVY = "#070b18";
+// to blend in. Both of this component's two call sites sit on a
+// surface-alt section; if it's ever reused over a plain surface section,
+// this would need to become a prop instead of an assumption.
+const NAVY = "var(--color-surface-alt)";
 const GAP_PX = 16; // must stay in sync with the track's gap-4 class
 
 function DotRow({ count, activeIndex }: { count: number; activeIndex: number }) {
@@ -19,7 +21,7 @@ function DotRow({ count, activeIndex }: { count: number; activeIndex: number }) 
           className="h-1.5 rounded-full transition-all motion-safe:transition-all duration-300"
           style={{
             width: i === activeIndex ? 20 : 6,
-            background: i === activeIndex ? "var(--color-lime)" : "rgba(255,255,255,0.25)",
+            background: i === activeIndex ? "var(--color-accent)" : "color-mix(in srgb, var(--color-fg) 25%, transparent)",
           }}
         />
       ))}

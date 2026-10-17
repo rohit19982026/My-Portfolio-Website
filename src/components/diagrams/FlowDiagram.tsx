@@ -39,8 +39,13 @@ export type Step = MainStep | BranchGroup;
 
 // A nested-card fill distinct from both the section's navy background and
 // the translucent HTML card sitting behind the diagram, so "card" steps
-// read as their own layer rather than blending into either.
-const CARD_FILL = "#10152b";
+// read as their own layer rather than blending into either — in light
+// mode this flips to a shade slightly darker than its backdrop instead,
+// preserving the same "distinct nested layer" relationship.
+const CARD_FILL = "var(--color-diagram-card)";
+// Small accent-ringed badge puck — stays pinned dark in both themes by
+// design (it's meant to read as a small dot the accent ring pops against,
+// not a themed surface).
 const BADGE_BG = "#0d0d0f";
 
 function useReducedMotionSafe() {
@@ -125,7 +130,7 @@ function MainStepCard({
 }) {
   const tone = step.tone ?? "card";
   const fill = tone === "hero" ? accent : CARD_FILL;
-  const textColor = tone === "hero" ? heroTextColor : "#ffffff";
+  const textColor = tone === "hero" ? heroTextColor : "var(--color-fg)";
   const badgeColor = step.iconColor ?? accent;
 
   return (
@@ -138,7 +143,7 @@ function MainStepCard({
       {step.icon && <StepBadge Icon={step.icon} color={badgeColor} />}
       <div
         className="relative w-full rounded-2xl pt-8 pb-4 px-5 flex items-center gap-3"
-        style={{ background: fill, border: tone === "hero" ? "none" : "1px solid rgba(255,255,255,0.14)" }}
+        style={{ background: fill, border: tone === "hero" ? "none" : "1px solid var(--color-card-border)" }}
       >
         <PulseOutline color={accent} delay={delay + 0.5} active={motionOn} />
         {numeral !== null && (
@@ -188,16 +193,16 @@ function BranchItemCard({
       {item.icon && <StepBadge Icon={item.icon} color={badgeColor} size={40} iconSize={17} />}
       <div
         className="relative w-full h-full rounded-2xl pt-7 pb-3 px-3 flex flex-col items-center text-center justify-center"
-        style={{ background: CARD_FILL, border: "1px solid rgba(255,255,255,0.14)" }}
+        style={{ background: CARD_FILL, border: "1px solid var(--color-card-border)" }}
       >
         <PulseOutline color={accent} delay={delay + 0.5} active={motionOn} />
         <p
           className="font-heading text-[8.5px] font-bold uppercase tracking-[0.12em] mb-1"
-          style={{ color: `color-mix(in srgb, ${accent} 80%, white)` }}
+          style={{ color: `color-mix(in srgb, ${accent} 80%, var(--color-fg))` }}
         >
           {item.eyebrow}
         </p>
-        <p className="font-heading text-[12px] font-bold text-white leading-snug">{item.label}</p>
+        <p className="font-heading text-[12px] font-bold text-fg leading-snug">{item.label}</p>
       </div>
     </motion.div>
   );

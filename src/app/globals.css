@@ -11,6 +11,22 @@
      achievement/warning hue exists, so this stays isolated on purpose. */
   --color-award: #f59e0b;
 
+  /* Semantic role tokens — layered on top of the 6 literal brand colors
+     above, which never change with theme (they back self-contained chips
+     like lime-fill buttons, where contrast is internal to the chip, not
+     page-dependent). These are what responds to the light/dark toggle;
+     default values here are dark mode, i.e. today's only look. Light
+     overrides live in the `:root[data-theme]`/`@media` block below. */
+  --color-surface:       #0d0d0f;                 /* = ink */
+  --color-surface-alt:   #070b18;                 /* = today's hardcoded NAVY */
+  --color-card:          rgba(255, 255, 255, .035);
+  --color-card-border:   rgba(255, 255, 255, .1);
+  --color-card-subtle:   rgba(255, 255, 255, .02);
+  --color-divider:       rgba(255, 255, 255, .14);
+  --color-fg:            #ffffff;                 /* = white */
+  --color-accent:        #d7ff3f;                 /* = lime */
+  --color-diagram-card:  #10152b;
+
   --radius-card: 4px;
   --radius-pill: 999px;
 
@@ -25,11 +41,59 @@
   --font-signature: var(--font-caveat);
 }
 
+/* Light theme. Three layers so a manual toggle always wins over OS
+   preference, and OS preference always wins over the dark default, with
+   zero flash in every case before any JS runs:
+     1. :root            — dark values (unconditional baseline above)
+     2. @media light      — light values, only when no explicit choice is
+                             stored and the OS/browser prefers light
+     3. :root[data-theme] — light or dark values, forced regardless of OS
+                             preference once the visitor has toggled once
+   (3) has higher selector specificity than the bare `:root` in (2), so it
+   always wins when present. */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-surface:      #efeee8; /* = paper */
+    --color-surface-alt:  #ffffff; /* = white */
+    --color-card:         rgba(13, 13, 15, .035);
+    --color-card-border:  rgba(13, 13, 15, .12);
+    --color-card-subtle:  rgba(13, 13, 15, .02);
+    --color-divider:      rgba(13, 13, 15, .14);
+    --color-fg:           #0d0d0f; /* = ink */
+    --color-accent:       #0d22ee; /* = blue */
+    --color-diagram-card: #e4e2da;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-surface:      #0d0d0f;
+  --color-surface-alt:  #070b18;
+  --color-card:         rgba(255, 255, 255, .035);
+  --color-card-border:  rgba(255, 255, 255, .1);
+  --color-card-subtle:  rgba(255, 255, 255, .02);
+  --color-divider:      rgba(255, 255, 255, .14);
+  --color-fg:           #ffffff;
+  --color-accent:       #d7ff3f;
+  --color-diagram-card: #10152b;
+}
+
+:root[data-theme="light"] {
+  --color-surface:      #efeee8;
+  --color-surface-alt:  #ffffff;
+  --color-card:         rgba(13, 13, 15, .035);
+  --color-card-border:  rgba(13, 13, 15, .12);
+  --color-card-subtle:  rgba(13, 13, 15, .02);
+  --color-divider:      rgba(13, 13, 15, .14);
+  --color-fg:           #0d0d0f;
+  --color-accent:       #0d22ee;
+  --color-diagram-card: #e4e2da;
+}
+
 * { box-sizing: border-box; }
 
 body {
-  background-color: var(--color-ink);
-  color: var(--color-white);
+  background-color: var(--color-surface);
+  color: var(--color-fg);
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -39,8 +103,8 @@ body {
 .scroll-progress {
   position: fixed; top: 0; left: 0;
   height: 2px; width: 0%;
-  background: var(--color-lime);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--color-lime) 60%, transparent);
+  background: var(--color-accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 60%, transparent);
   z-index: 200;
   transition: width 0.1s linear;
   pointer-events: none;
@@ -49,7 +113,7 @@ body {
 /* Hollow, stroke-only display letterforms — the signature headline treatment */
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 2px var(--color-white);
+  -webkit-text-stroke: 2px var(--color-fg);
 }
 .text-outline-ink {
   color: transparent;
@@ -104,8 +168,8 @@ body {
 }
 
 @keyframes pulse-dot {
-  0%,100% { opacity:1; box-shadow:0 0 0 0 color-mix(in srgb, var(--color-lime) 40%, transparent); }
-  50%     { opacity:.7; box-shadow:0 0 0 6px color-mix(in srgb, var(--color-lime) 0%, transparent); }
+  0%,100% { opacity:1; box-shadow:0 0 0 0 color-mix(in srgb, var(--color-accent) 40%, transparent); }
+  50%     { opacity:.7; box-shadow:0 0 0 6px color-mix(in srgb, var(--color-accent) 0%, transparent); }
 }
 
 /* Same ring-pulse as pulse-dot but keyed off currentColor, so a single
@@ -117,12 +181,20 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-ink); }
-::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-lime) 35%, transparent); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-lime) 55%, transparent); }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-accent) 35%, transparent); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-accent) 55%, transparent); }
 
-::selection { background: color-mix(in srgb, var(--color-lime) 35%, transparent); color: var(--color-ink); }
-:focus-visible { outline: 2px solid var(--color-lime); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 35%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* Blue-on-selection (light theme's accent) needs white text, not ink —
+   unlike lime, blue is dark/saturated enough that ink text on it reads
+   poorly. Dark theme's lime selection keeps the ink text set above. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) ::selection { color: var(--color-white); }
+}
+:root[data-theme="light"] ::selection { color: var(--color-white); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

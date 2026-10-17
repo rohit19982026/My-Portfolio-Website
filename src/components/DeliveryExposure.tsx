@@ -46,9 +46,9 @@ import SwipeCarousel from "./ui/SwipeCarousel";
  * while Work.tsx stays unmounted — a real, visible consequence of this
  * change, not a silent side effect.)
  */
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
+const NAVY = "var(--color-surface-alt)";
+const CARD_BG = "var(--color-card)";
+const CARD_BORDER = "var(--color-card-border)";
 const CATEGORY_ACCENT = "#8B7FF0";
 const DOT_PATTERN = "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)";
 
@@ -111,7 +111,7 @@ const stacks: StackCategory[] = [
       { name: "Amazon Redshift", Icon: Server, color: "#8C4FFF" },
       { name: "SQL Server", Icon: Database, color: "#CC2927" },
       { name: "Hadoop / HDFS", Icon: SiApachehadoop, color: "#66CCFF" },
-      { name: "Sigma", Icon: Sigma, color: "#e5e7eb" },
+      { name: "Sigma", Icon: Sigma, color: "var(--color-fg)" },
     ],
   },
   {
@@ -162,11 +162,11 @@ function ItemChip({ item }: { item: StackItem }) {
   return (
     <div
       className="inline-flex items-center gap-2 px-3 py-2 rounded-card"
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.02)" }}
+      style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
     >
       <Icon size={16} color={color ?? undefined} style={{ color: color ?? undefined }} />
       {!wordmark && (
-        <span className="font-heading text-[12.5px] text-white/80 whitespace-nowrap">{name}</span>
+        <span className="font-heading text-[12.5px] text-fg/80 whitespace-nowrap">{name}</span>
       )}
     </div>
   );
@@ -198,7 +198,7 @@ function CategoryCard({ category, index, inView }: { category: StackCategory; in
           }}
         />
         <p className="font-heading text-[13px] font-bold uppercase tracking-[0.1em] leading-snug">
-          <span className="text-white">{label[0]} </span>
+          <span className="text-fg">{label[0]} </span>
           <span
             className="bg-gradient-to-r from-[#8B7FF0] to-[#5B9BF0] bg-clip-text text-transparent"
           >
@@ -207,8 +207,8 @@ function CategoryCard({ category, index, inView }: { category: StackCategory; in
         </p>
       </div>
 
-      <div className="w-10 h-[3px] bg-lime rounded-full mb-4" />
-      <div className="h-px w-full mb-5" style={{ background: "rgba(255,255,255,0.14)" }} />
+      <div className="w-10 h-[3px] rounded-full mb-4" style={{ background: "var(--color-accent)" }} />
+      <div className="h-px w-full mb-5" style={{ background: "var(--color-divider)" }} />
 
       <div className="flex flex-wrap gap-2">
         {items.map((item) => (
@@ -234,7 +234,7 @@ export default function DeliveryExposure() {
               { text: "behind the programs.", style: "lime" },
             ]}
           />
-          <p className="text-[15px] text-white/65 max-w-2xl leading-relaxed mt-5">
+          <p className="text-[15px] text-fg/65 max-w-2xl leading-relaxed mt-5">
             A project manager, not an engineer — this is what gets run on, not a list of
             things to build with. Enough to scope the work, sequence it, and follow the
             technical conversation without needing everything translated.

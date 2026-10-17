@@ -52,7 +52,7 @@ export default function Button({
   const variantClasses =
     variant === "primary"
       ? "bg-lime text-ink"
-      : "bg-transparent text-white border-2 border-white/30 hover:border-lime hover:text-lime";
+      : "bg-transparent text-fg border-2 border-fg/30 hover:border-accent hover:text-accent";
   const classes = `inline-flex items-center gap-2 rounded-pill font-heading font-bold uppercase tracking-[0.12em] transition-colors duration-[var(--duration-base)] ${sizeClasses} ${variantClasses} ${className}`;
 
   if (href) {

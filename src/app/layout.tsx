@@ -76,6 +76,17 @@ export default function RootLayout({
       className={`${anton.variable} ${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
+        {/* Anti-FOUC: applies a stored manual theme choice before first
+            paint. The no-stored-choice case (OS preference) needs no JS at
+            all — it's handled flash-free by the `@media (prefers-color-
+            scheme)` block in globals.css — so this only ever needs to act
+            when localStorage holds an explicit override. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();",
+          }}
+        />
         <SmoothScrollProvider>
           <ScrollProgress />
           <Navbar />

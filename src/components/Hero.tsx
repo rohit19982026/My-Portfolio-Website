@@ -57,17 +57,17 @@ const pop = {
   },
 } as const;
 
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
+const NAVY = "var(--color-surface-alt)";
+const CARD_BG = "var(--color-card)";
+const CARD_BORDER = "var(--color-card-border)";
 
 const tools = [
   { name: "Jira", Icon: SiJira, color: "#2684FF" },
-  { name: "GitHub", Icon: GithubMark, color: "#ffffff" },
+  { name: "GitHub", Icon: GithubMark, color: "var(--color-fg)" },
   { name: "Salesforce", Icon: SalesforceMark, color: "#00A1E0" },
   { name: "Claude", Icon: SiClaude, color: "#D97757" },
   { name: "Claude Code", Icon: Terminal, color: "#D97757", accentBorder: true },
-  { name: "Cursor", Icon: SiCursor, color: "#e5e7eb" },
+  { name: "Cursor", Icon: SiCursor, color: "var(--color-fg)" },
   { name: "Glean", Icon: GleanMark, color: "#8B7FF0" },
   { name: "Slack", Icon: SlackMark, color: null },
 ] as const;
@@ -101,7 +101,7 @@ const capabilityTiles = [
     label: "Own Program Delivery",
     description: "Scope, budget, and timeline across 4–5 concurrent data and AI programs, SOW to closure.",
     Icon: Users,
-    color: "var(--color-lime)",
+    color: "var(--color-accent)",
   },
   {
     label: "Run Financial Governance",
@@ -119,7 +119,7 @@ const capabilityTiles = [
     label: "Bridge Client & Engineering",
     description: "Primary contact for client VPs and directors across a 10–12 hour time gap.",
     Icon: Cpu,
-    color: "var(--color-lime)",
+    color: "var(--color-accent)",
   },
 ] as const;
 
@@ -139,7 +139,7 @@ const capabilityCards = [
   {
     title: "Core Skills",
     Icon: Briefcase,
-    color: "var(--color-lime)",
+    color: "var(--color-accent)",
     items: ["Stakeholder Management", "Cross-Team Coordination", "Executive Communication", "Risk & Budget Control"],
   },
   {
@@ -172,7 +172,7 @@ function ToolIcon({ tool }: { tool: (typeof tools)[number] }) {
       }}
     >
       <Icon size={26} color={color ?? undefined} style={{ color: color ?? undefined }} />
-      <span className="font-heading text-[11px] sm:text-[12px] text-white/70">{name}</span>
+      <span className="font-heading text-[11px] sm:text-[12px] text-fg/70">{name}</span>
     </div>
   );
 }
@@ -184,10 +184,10 @@ function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
       <Icon
         size={22}
         strokeWidth={1.6}
-        style={{ color: "var(--color-lime)", filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-lime) 55%, transparent))" }}
+        style={{ color: "var(--color-accent)", filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 55%, transparent))" }}
       />
-      <p className="font-heading text-[17px] font-bold text-white leading-none mt-0.5">{value}</p>
-      <p className="text-[10px] text-white/55 leading-tight">{label}</p>
+      <p className="font-heading text-[17px] font-bold text-fg leading-none mt-0.5">{value}</p>
+      <p className="text-[10px] text-fg/55 leading-tight">{label}</p>
     </div>
   );
 }
@@ -240,7 +240,7 @@ function CredlyBadge() {
       className="inline-flex flex-col items-center gap-2 rounded-2xl p-3 shrink-0"
       style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
-      <p className="font-heading text-[9px] font-bold uppercase tracking-[0.14em] text-lime whitespace-nowrap">
+      <p className="font-heading text-[9px] font-bold uppercase tracking-[0.14em] text-accent whitespace-nowrap">
         Verified Credential
       </p>
       <div
@@ -294,8 +294,8 @@ export default function Hero() {
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-pill mb-6 whitespace-nowrap"
               style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
             >
-              <Sparkle size={13} className="text-lime shrink-0" />
-              <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-white/75">
+              <Sparkle size={13} className="text-accent shrink-0" />
+              <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/75">
                 Technical Project Manager &bull; Data, Analytics &amp; AI Programs
               </span>
             </motion.div>
@@ -305,22 +305,22 @@ export default function Hero() {
               className="font-heading font-bold leading-[1.18] mb-5"
               style={{ fontSize: "clamp(1.9rem, 3.4vw, 2.85rem)" }}
             >
-              <span className="block text-white">Technical Project Manager</span>
-              <span className="block text-white">
-                running data, analytics &amp; <span className="text-lime">AI programs</span>
+              <span className="block text-fg">Technical Project Manager</span>
+              <span className="block text-fg">
+                running data, analytics &amp; <span className="text-accent">AI programs</span>
               </span>
-              <span className="block text-white">for enterprise clients.</span>
+              <span className="block text-fg">for enterprise clients.</span>
             </motion.h1>
 
             <motion.p
               variants={fadeBlurUp}
-              className="leading-[1.6] text-white/65 max-w-[520px] mb-7"
+              className="leading-[1.6] text-fg/65 max-w-[520px] mb-7"
               style={{ fontSize: "clamp(13.5px, 1.6vw, 16px)" }}
             >
               Six years in IT delivery, moving from infrastructure change management at British Telecom to data
-              platform, analytics, and AI programs at <span className="text-white font-semibold">phData</span>.
-              Runs <span className="text-lime font-semibold">4–5 concurrent programs</span> for US Fortune 500
-              clients and builds the <span className="text-lime font-semibold">Glean and Claude agents</span> that
+              platform, analytics, and AI programs at <span className="text-fg font-semibold">phData</span>.
+              Runs <span className="text-accent font-semibold">4–5 concurrent programs</span> for US Fortune 500
+              clients and builds the <span className="text-accent font-semibold">Glean and Claude agents</span> that
               run PMO work in the background.
             </motion.p>
 
@@ -333,7 +333,7 @@ export default function Hero() {
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
+                className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-fg/25 text-fg font-heading font-bold text-[13px] px-6 py-3.5 hover:border-accent hover:text-accent transition"
               >
                 <MessageCircle size={15} /> Let&apos;s Talk
               </a>
@@ -383,8 +383,8 @@ export default function Hero() {
                 >
                   <tile.Icon size={20} strokeWidth={1.75} style={{ color: tile.color }} />
                 </div>
-                <p className="font-heading text-[15px] font-bold text-white mb-1.5 leading-snug">{tile.label}</p>
-                <p className="text-[12.5px] text-white/55 leading-snug">{tile.description}</p>
+                <p className="font-heading text-[15px] font-bold text-fg mb-1.5 leading-snug">{tile.label}</p>
+                <p className="text-[12.5px] text-fg/55 leading-snug">{tile.description}</p>
               </div>
             ))}
           </div>
@@ -403,14 +403,14 @@ export default function Hero() {
               >
                 <div className="flex items-center gap-2.5 mb-2">
                   <card.Icon size={18} style={{ color: card.color }} />
-                  <p className="font-heading text-[13px] font-bold uppercase tracking-wide text-white leading-tight">
+                  <p className="font-heading text-[13px] font-bold uppercase tracking-wide text-fg leading-tight">
                     {card.title}
                   </p>
                 </div>
                 <span className="block w-8 h-0.5 rounded-full mb-4" style={{ background: card.color }} />
                 <ul className="space-y-2.5">
                   {card.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-[13px] text-white/65 leading-snug">
+                    <li key={item} className="flex items-start gap-2 text-[13px] text-fg/65 leading-snug">
                       <CheckCircle2 size={15} className="shrink-0 mt-[1px]" style={{ color: card.color }} />
                       {item}
                     </li>
@@ -423,12 +423,12 @@ export default function Hero() {
               style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
               aria-hidden="true"
             >
-              <Plus size={16} className="text-white/50" />
+              <Plus size={16} className="text-fg/50" />
             </div>
           </div>
 
           <div className="rounded-2xl p-6" style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}>
-            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-lime mb-6">
+            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-accent mb-6">
               Automation Pipeline
             </p>
             <div className="flex items-start justify-between mb-7">
@@ -439,12 +439,12 @@ export default function Hero() {
                       className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                       style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
                     >
-                      <step.Icon size={18} strokeWidth={1.75} className="text-white/80" />
+                      <step.Icon size={18} strokeWidth={1.75} className="text-fg/80" />
                     </div>
-                    <p className="text-[10.5px] leading-tight text-white/55">{step.label}</p>
+                    <p className="text-[10.5px] leading-tight text-fg/55">{step.label}</p>
                   </div>
                   {i < automateSteps.length - 1 && (
-                    <ArrowRight size={14} className="text-white/25 shrink-0 mx-0.5 mt-5" />
+                    <ArrowRight size={14} className="text-fg/25 shrink-0 mx-0.5 mt-5" />
                   )}
                 </div>
               ))}
@@ -456,12 +456,12 @@ export default function Hero() {
                     size={22}
                     strokeWidth={1.6}
                     style={{
-                      color: "var(--color-lime)",
-                      filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-lime) 55%, transparent))",
+                      color: "var(--color-accent)",
+                      filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 55%, transparent))",
                     }}
                   />
-                  <p className="font-heading text-[20px] font-bold text-white leading-none">{stat.value}</p>
-                  <p className="text-[10.5px] text-white/55 leading-tight">{stat.label}</p>
+                  <p className="font-heading text-[20px] font-bold text-fg leading-none">{stat.value}</p>
+                  <p className="text-[10.5px] text-fg/55 leading-tight">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -473,11 +473,11 @@ export default function Hero() {
             from the client-delivery/employer logos above. */}
         <div className="mt-12 lg:mt-16">
           <div className="flex items-center gap-4 mb-6">
-            <span className="h-px flex-1" style={{ background: "rgba(255,255,255,0.14)" }} />
-            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-white/45 shrink-0">
+            <span className="h-px flex-1" style={{ background: "var(--color-divider)" }} />
+            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-fg/45 shrink-0">
               Trusted Tools &amp; Platforms
             </p>
-            <span className="h-px flex-1" style={{ background: "rgba(255,255,255,0.14)" }} />
+            <span className="h-px flex-1" style={{ background: "var(--color-divider)" }} />
           </div>
 
           <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-9 gap-3">
@@ -488,10 +488,10 @@ export default function Hero() {
               type="button"
               aria-label="More tools"
               className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 col-span-2 sm:col-span-1 mx-auto w-full"
-              style={{ border: "1px dashed rgba(255,255,255,0.25)", background: "transparent" }}
+              style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
             >
-              <Plus size={22} className="text-white/50" />
-              <span className="font-heading text-[11px] sm:text-[12px] text-white/50">+ More</span>
+              <Plus size={22} className="text-fg/50" />
+              <span className="font-heading text-[11px] sm:text-[12px] text-fg/50">+ More</span>
             </button>
           </div>
         </div>
@@ -526,8 +526,8 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill mb-5"
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
-            <Sparkle size={11} className="text-lime shrink-0" />
-            <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-white/75">
+            <Sparkle size={11} className="text-accent shrink-0" />
+            <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-fg/75">
               Technical Project Manager &bull; Data, Analytics &amp; AI Programs
             </span>
           </motion.div>
@@ -538,9 +538,9 @@ export default function Hero() {
               className="font-heading font-bold leading-[1.2]"
               style={{ fontSize: "clamp(1.35rem, 6.5vw, 1.85rem)" }}
             >
-              <span className="block text-white">Technical Project Manager.</span>
-              <span className="block text-white mt-2">
-                Data, analytics &amp; <span className="text-lime">AI programs</span> at enterprise scale.
+              <span className="block text-fg">Technical Project Manager.</span>
+              <span className="block text-fg mt-2">
+                Data, analytics &amp; <span className="text-accent">AI programs</span> at enterprise scale.
               </span>
             </motion.h1>
 
@@ -554,13 +554,13 @@ export default function Hero() {
 
           <motion.p
             variants={fadeBlurUp}
-            className="leading-[1.6] text-white/65 mt-5 mb-6"
+            className="leading-[1.6] text-fg/65 mt-5 mb-6"
             style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
           >
             Six years in IT delivery, moving from infrastructure change management at British Telecom to data
-            platform, analytics, and AI programs at <span className="text-white font-semibold">phData</span>.
-            Runs <span className="text-lime font-semibold">4–5 concurrent programs</span> for US Fortune 500
-            clients and builds the <span className="text-lime font-semibold">Glean and Claude agents</span> that
+            platform, analytics, and AI programs at <span className="text-fg font-semibold">phData</span>.
+            Runs <span className="text-accent font-semibold">4–5 concurrent programs</span> for US Fortune 500
+            clients and builds the <span className="text-accent font-semibold">Glean and Claude agents</span> that
             run PMO work in the background.
           </motion.p>
 
@@ -573,7 +573,7 @@ export default function Hero() {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
+              className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-fg/25 text-fg font-heading font-bold text-[13px] px-6 py-3.5 hover:border-accent hover:text-accent transition"
             >
               <MessageCircle size={15} /> Let&apos;s Talk
             </a>
@@ -594,7 +594,7 @@ export default function Hero() {
                 >
                   <tile.Icon size={19} strokeWidth={1.75} style={{ color: tile.color }} />
                 </div>
-                <p className="text-[10px] leading-tight text-white/70 font-medium">{tile.label}</p>
+                <p className="text-[10px] leading-tight text-fg/70 font-medium">{tile.label}</p>
               </div>
             ))}
           </motion.div>
@@ -610,14 +610,14 @@ export default function Hero() {
               >
                 <div className="flex items-center gap-2 mb-1.5">
                   <card.Icon size={15} style={{ color: card.color }} />
-                  <p className="font-heading text-[10px] font-bold uppercase tracking-wide text-white leading-tight">
+                  <p className="font-heading text-[10px] font-bold uppercase tracking-wide text-fg leading-tight">
                     {card.title}
                   </p>
                 </div>
                 <span className="block w-6 h-0.5 rounded-full mb-2.5" style={{ background: card.color }} />
                 <ul className="space-y-1.5">
                   {card.items.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5 text-[10.5px] text-white/65 leading-snug">
+                    <li key={item} className="flex items-start gap-1.5 text-[10.5px] text-fg/65 leading-snug">
                       <CheckCircle2 size={12} className="shrink-0 mt-[1.5px]" style={{ color: card.color }} />
                       {item}
                     </li>
@@ -630,7 +630,7 @@ export default function Hero() {
               style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
               aria-hidden="true"
             >
-              <Plus size={13} className="text-white/50" />
+              <Plus size={13} className="text-fg/50" />
             </div>
           </motion.div>
 
@@ -645,13 +645,13 @@ export default function Hero() {
             className="rounded-2xl p-5 mb-6"
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
-            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-lime mb-4">
+            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-accent mb-4">
               Automation Pipeline
             </p>
             <div className="relative mb-2">
               <div
                 className="absolute left-5 right-5 top-5 h-px"
-                style={{ borderTop: "1.5px dashed rgba(255,255,255,0.22)" }}
+                style={{ borderTop: "1.5px dashed var(--color-divider)" }}
                 aria-hidden="true"
               />
               <div className="relative flex items-center justify-between">
@@ -661,14 +661,14 @@ export default function Hero() {
                     className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
                   >
-                    <step.Icon size={15} strokeWidth={1.75} className="text-white/80" />
+                    <step.Icon size={15} strokeWidth={1.75} className="text-fg/80" />
                   </div>
                 ))}
               </div>
             </div>
             <div className="grid grid-cols-5 gap-1">
               {automateSteps.map((step) => (
-                <p key={step.label} className="text-[8.5px] leading-tight text-white/55 text-center">
+                <p key={step.label} className="text-[8.5px] leading-tight text-fg/55 text-center">
                   {step.label}
                 </p>
               ))}
@@ -682,7 +682,7 @@ export default function Hero() {
           >
             <div className="grid grid-cols-4 gap-2">
               {mobileStats.map((stat, i) => (
-                <div key={stat.label} className={i > 0 ? "border-l border-white/10 pl-2" : ""}>
+                <div key={stat.label} className={i > 0 ? "border-l border-fg/10 pl-2" : ""}>
                   <MobileStatIcon stat={stat} />
                 </div>
               ))}
@@ -691,11 +691,11 @@ export default function Hero() {
 
           <motion.div variants={fadeBlurUp} className="mt-2">
             <div className="flex items-center justify-between gap-3 mb-4">
-              <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/60 whitespace-nowrap">
+              <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-fg/60 whitespace-nowrap">
                 Tools &amp; Platforms
               </p>
-              <p className="flex items-center gap-1.5 font-heading text-[10px] text-white/45 whitespace-nowrap">
-                and many more <span className="w-1.5 h-1.5 rounded-full bg-lime shrink-0" />
+              <p className="flex items-center gap-1.5 font-heading text-[10px] text-fg/45 whitespace-nowrap">
+                and many more <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "var(--color-accent)" }} />
               </p>
             </div>
             <div className="flex gap-3 overflow-x-auto -mx-6 px-6 no-scrollbar">
@@ -708,10 +708,10 @@ export default function Hero() {
                 type="button"
                 aria-label="More tools"
                 className="shrink-0 w-[86px] flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4"
-                style={{ border: "1px dashed rgba(255,255,255,0.25)", background: "transparent" }}
+                style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
               >
-                <Plus size={22} className="text-white/50" />
-                <span className="font-heading text-[11px] text-white/50">+ More</span>
+                <Plus size={22} className="text-fg/50" />
+                <span className="font-heading text-[11px] text-fg/50">+ More</span>
               </button>
             </div>
           </motion.div>

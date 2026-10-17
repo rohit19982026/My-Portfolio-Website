@@ -9,12 +9,21 @@ const sizeClamp: Record<string, string> = {
   xl: "clamp(3rem, 7vw, 8.5rem)",
 };
 
+// `tone` forces a section's heading to look like it sits on a light/paper
+// background, or a dark one, REGARDLESS of the site-wide light/dark
+// toggle — e.g. Work.tsx's case-study sections alternate ink/blue/paper
+// backgrounds independent of the global theme. The default ("dark")
+// branch instead uses the semantic `fg`/`accent` tokens, which already
+// track the global toggle on their own via CSS custom properties, so an
+// unforced heading needs no theme-reading logic here at all — it just
+// follows the page.
 function segmentClass(style: HeadlineSegment["style"], tone: "dark" | "light") {
   if (style === "outline") return tone === "light" ? "text-outline-ink" : "text-outline";
-  // Lime fails contrast on the paper background, so light-tone sections
+  // Lime (and its theme-aware equivalent, --color-accent) fails contrast
+  // on a literal paper background, so forced light-tone sections
   // substitute blue for the accent instead.
-  if (style === "lime") return tone === "light" ? "text-blue" : "text-lime";
-  return tone === "light" ? "text-ink" : "text-white";
+  if (style === "lime") return tone === "light" ? "text-blue" : "text-accent";
+  return tone === "light" ? "text-ink" : "text-fg";
 }
 
 export default function SectionHeading({
@@ -32,7 +41,7 @@ export default function SectionHeading({
   align?: "left" | "center";
   className?: string;
 }) {
-  const eyebrowColor = tone === "light" ? "text-blue" : "text-lime";
+  const eyebrowColor = tone === "light" ? "text-blue" : "text-accent";
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

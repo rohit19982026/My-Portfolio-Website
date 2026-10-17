@@ -13,7 +13,7 @@ const roles = [
     title: "Technical Project Manager — Data & AI",
     org: "phData · Snowflake Elite Partner · Bengaluru",
     current: true,
-    color: "white",
+    color: "fg",
     bullets: [
       "Own full project lifecycle — initiation to closure — for 4–5 concurrent Data Platform and AI programs, each with a $250K–$1M budget and 12–15 engineers, held against agreed scope, timeline, budget, and quality KPIs.",
       "Maintain RACI, WBS, decision logs, dependency maps, and risk registers in Jira and Confluence, with milestone tracking dashboards keeping every active program visible from kickoff through delivery close.",
@@ -33,7 +33,7 @@ const roles = [
     title: "Change Manager — IT Infrastructure",
     org: "British Telecom (BT) · Kolkata",
     current: false,
-    color: "lime",
+    color: "accent",
     bullets: [
       "Change governance for critical UK telecom infrastructure — formal review, rollback planning, approval gating for 50+ changes a year. 99.9% uptime.",
       "Owned all stakeholder communication around change events: brief before, live status during, report after.",
@@ -47,7 +47,7 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" className="py-24 bg-ink">
+    <section id="experience" className="py-24 bg-surface">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeading
           eyebrow="01 / EXPERIENCE"
@@ -57,7 +57,7 @@ export default function Trajectory() {
           ]}
           className="mb-5"
         />
-        <p ref={ref} className="text-[16px] text-white/70 max-w-xl leading-relaxed mb-14">
+        <p ref={ref} className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-14">
           Six years in delivery. Three and a half at phData running data and AI programs,
           two and a half before that at British Telecom running change for UK network
           infrastructure.
@@ -66,7 +66,7 @@ export default function Trajectory() {
         <div className="relative">
           <div
             className="absolute left-0 top-2 bottom-2 w-px"
-            style={{ background: `linear-gradient(180deg, var(--color-lime), ${alpha("lime", 10)})` }}
+            style={{ background: `linear-gradient(180deg, var(--color-accent), ${alpha("accent", 10)})` }}
           />
 
           <div className="space-y-12">
@@ -79,25 +79,25 @@ export default function Trajectory() {
                 className="pl-8 relative"
               >
                 <div
-                  className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-ink -translate-x-1/2"
+                  className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-surface -translate-x-1/2"
                   style={{ backgroundColor: `var(--color-${role.color})` }}
                 />
 
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                  <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">
+                  <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/55">
                     {role.period}
                   </p>
                   {role.current && (
                     <span
                       className="px-2 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wide"
-                      style={{ background: alpha("lime", 12), color: "var(--color-lime)", border: `1px solid ${alpha("lime", 30)}` }}
+                      style={{ background: alpha("accent", 12), color: "var(--color-accent)", border: `1px solid ${alpha("accent", 30)}` }}
                     >
                       CURRENT
                     </span>
                   )}
                 </div>
 
-                <h3 className="font-heading text-[19px] font-bold leading-snug text-white mb-1">
+                <h3 className="font-heading text-[19px] font-bold leading-snug text-fg mb-1">
                   {role.title}
                 </h3>
                 <p
@@ -109,7 +109,7 @@ export default function Trajectory() {
 
                 <ul className="space-y-3 mb-5">
                   {role.bullets.map((b, bi) => (
-                    <li key={bi} className="flex gap-3 text-[13.5px] text-white/70 leading-relaxed">
+                    <li key={bi} className="flex gap-3 text-[13.5px] text-fg/70 leading-relaxed">
                       <span
                         className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full"
                         style={{ backgroundColor: `var(--color-${role.color})` }}
