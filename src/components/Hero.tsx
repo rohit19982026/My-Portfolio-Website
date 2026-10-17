@@ -234,7 +234,7 @@ function DesktopPhotoBadge({
 // to be included once per page; it scans the whole DOM for matching
 // data-share-badge-id divs, so this single component instance covers
 // both the desktop and mobile badge placements below.
-function CredlyBadge() {
+function CredlyBadge({ badgeId }: { badgeId: string }) {
   return (
     <div
       className="inline-flex flex-col items-center gap-2 rounded-2xl p-3 shrink-0"
@@ -246,7 +246,7 @@ function CredlyBadge() {
       <div
         data-iframe-width="150"
         data-iframe-height="270"
-        data-share-badge-id="a388e87c-806c-4686-ad52-6b0703386abe"
+        data-share-badge-id={badgeId}
         data-share-badge-host="https://www.credly.com"
       />
     </div>
@@ -337,7 +337,8 @@ export default function Hero() {
               >
                 <MessageCircle size={15} /> Let&apos;s Talk
               </a>
-              <CredlyBadge />
+              <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
+              <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
             </motion.div>
           </div>
 
@@ -577,7 +578,8 @@ export default function Hero() {
             >
               <MessageCircle size={15} /> Let&apos;s Talk
             </a>
-            <CredlyBadge />
+            <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
+            <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
           </motion.div>
 
           {/* 4-tile capability strip — a leaner icon+label restatement of
