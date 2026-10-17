@@ -234,33 +234,21 @@ function DesktopPhotoBadge({
 // to be included once per page; it scans the whole DOM for matching
 // data-share-badge-id divs, so this single component instance covers
 // both the desktop and mobile badge placements below.
-function CredlyBadge({ className = "" }: { className?: string }) {
+function CredlyBadge() {
   return (
     <div
-      className={`inline-flex flex-col items-center gap-2 rounded-2xl p-3 shrink-0 ${className}`}
+      className="inline-flex flex-col items-center gap-2 rounded-2xl p-3 shrink-0"
       style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
       <p className="font-heading text-[9px] font-bold uppercase tracking-[0.14em] text-lime whitespace-nowrap">
         Verified Credential
       </p>
-      {/* Credly's badge widget is designed for a white/light page — its
-          title and issuer text render in dark gray with no background of
-          its own, so against this site's dark card they'd go nearly
-          illegible. Giving the iframe its own white backing (instead of
-          letting the card's dark fill show through) restores the
-          contrast Credly's design assumes. Explicit width/height (matching
-          the badge's own data-iframe-width/height) keep this box its full
-          size even before embed.js has swapped the div for the real
-          iframe, so the badge never collapses down to an invisible sliver
-          while it loads. */}
-      <div className="rounded-lg overflow-hidden" style={{ background: "#ffffff", width: 150, height: 270 }}>
-        <div
-          data-iframe-width="150"
-          data-iframe-height="270"
-          data-share-badge-id="a388e87c-806c-4686-ad52-6b0703386abe"
-          data-share-badge-host="https://www.credly.com"
-        />
-      </div>
+      <div
+        data-iframe-width="150"
+        data-iframe-height="270"
+        data-share-badge-id="a388e87c-806c-4686-ad52-6b0703386abe"
+        data-share-badge-host="https://www.credly.com"
+      />
     </div>
   );
 }
@@ -576,7 +564,7 @@ export default function Hero() {
             run PMO work in the background.
           </motion.p>
 
-          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-6">
+          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-8">
             <a
               href="#experience"
               className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
@@ -589,12 +577,6 @@ export default function Hero() {
             >
               <MessageCircle size={15} /> Let&apos;s Talk
             </a>
-          </motion.div>
-
-          {/* Own centered row rather than wrapping into the buttons above
-              — at this width a lone wrapped badge next to two full-width
-              pills left a lopsided gap of empty card to its right. */}
-          <motion.div variants={fadeBlurUp} className="flex justify-center mb-8">
             <CredlyBadge />
           </motion.div>
 
@@ -736,7 +718,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="afterInteractive" />
+      <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="lazyOnload" />
     </section>
   );
 }
