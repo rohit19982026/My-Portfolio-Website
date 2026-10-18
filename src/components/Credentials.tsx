@@ -1,14 +1,14 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import SwipeCarousel from "./ui/SwipeCarousel";
-import { useRef, type ComponentType, type CSSProperties, type ReactNode } from "react";
+import { useId, useRef, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
 import { SiClaude } from "react-icons/si";
 import {
   BarChart3,
   Bell,
   Calendar,
   CheckCircle2,
+  ChevronDown,
   ClipboardList,
   Database,
   GraduationCap,
@@ -184,6 +184,21 @@ function CertItemRow({ item, variant }: { item: CertItem; variant: "grid" | "lis
   );
 }
 
+function EducationBody() {
+  return (
+    <>
+      <p className="font-heading text-fg text-[17px] font-bold leading-snug mb-1">{education.degree}</p>
+      <p className="text-accent text-[13px] font-semibold mb-3">{education.institution}</p>
+      <div className="flex items-center gap-1.5 text-fg/55 text-[12px]">
+        <Calendar size={13} />
+        <span>
+          {education.year} · {education.grade}
+        </span>
+      </div>
+    </>
+  );
+}
+
 function EducationCard({ inView }: { inView: boolean }) {
   return (
     <motion.div
@@ -197,15 +212,25 @@ function EducationCard({ inView }: { inView: boolean }) {
       <div className="hidden lg:block">
         <RingIconBadge Icon={GraduationCap} />
       </div>
-      <p className="font-heading text-fg text-[17px] font-bold leading-snug mb-1">{education.degree}</p>
-      <p className="text-accent text-[13px] font-semibold mb-3">{education.institution}</p>
-      <div className="flex items-center gap-1.5 text-fg/55 text-[12px]">
-        <Calendar size={13} />
-        <span>
-          {education.year} · {education.grade}
-        </span>
-      </div>
+      <EducationBody />
     </motion.div>
+  );
+}
+
+function CertificationsBody() {
+  return (
+    <>
+      <div className="hidden lg:grid lg:grid-cols-2 gap-3">
+        {certifications.map((c) => (
+          <CertItemRow key={c.name} item={c} variant="grid" />
+        ))}
+      </div>
+      <div className="lg:hidden flex flex-col">
+        {certifications.map((c) => (
+          <CertItemRow key={c.name} item={c} variant="list" />
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -219,17 +244,29 @@ function CertificationsCard({ inView }: { inView: boolean }) {
       style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
       <CardNumberHeader number="02" label="CERTIFICATIONS & COURSES" />
-      <div className="hidden lg:grid lg:grid-cols-2 gap-3">
-        {certifications.map((c) => (
-          <CertItemRow key={c.name} item={c} variant="grid" />
-        ))}
-      </div>
-      <div className="lg:hidden flex flex-col">
-        {certifications.map((c) => (
-          <CertItemRow key={c.name} item={c} variant="list" />
-        ))}
-      </div>
+      <CertificationsBody />
     </motion.div>
+  );
+}
+
+function RecognitionBody() {
+  return (
+    <>
+      <p className="font-heading text-fg text-[16px] font-bold mb-2">{award.title}</p>
+      <p className="text-[13px] text-fg/70 leading-relaxed mb-6">{award.desc}</p>
+      <div className="grid grid-cols-3 gap-2">
+        {award.stats.map((s) => (
+          <div
+            key={s.label}
+            className="flex flex-col items-center gap-1.5 text-center rounded-card p-2.5"
+            style={{ border: `1px solid ${CARD_BORDER}` }}
+          >
+            <s.icon size={16} style={{ color: "var(--color-award)" }} />
+            <span className="text-[9.5px] text-fg/60 leading-tight">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -250,21 +287,64 @@ function RecognitionCard({ inView }: { inView: boolean }) {
       <div className="hidden lg:block">
         <RingIconBadge Icon={Trophy} accentColor="var(--color-award)" sparkle />
       </div>
-      <p className="font-heading text-fg text-[16px] font-bold mb-2">{award.title}</p>
-      <p className="text-[13px] text-fg/70 leading-relaxed mb-6">{award.desc}</p>
-      <div className="grid grid-cols-3 gap-2">
-        {award.stats.map((s) => (
-          <div
-            key={s.label}
-            className="flex flex-col items-center gap-1.5 text-center rounded-card p-2.5"
-            style={{ border: `1px solid ${CARD_BORDER}` }}
-          >
-            <s.icon size={16} style={{ color: "var(--color-award)" }} />
-            <span className="text-[9.5px] text-fg/60 leading-tight">{s.label}</span>
-          </div>
-        ))}
-      </div>
+      <RecognitionBody />
     </motion.div>
+  );
+}
+
+// Phones: each credential is one short row that opens on tap, so the three
+// cards don't turn into a long scroll. Content stays in the DOM (collapsed
+// rows are inert) and the open/close is a height transition that turns off
+// for reduced motion.
+function CredentialAccordion({
+  number,
+  label,
+  summary,
+  icon,
+  borderColor = CARD_BORDER,
+  children,
+}: {
+  number: string;
+  label: string;
+  summary: string;
+  icon: ReactNode;
+  borderColor?: string;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+  return (
+    <div className="rounded-2xl" style={{ background: CARD_BG, border: `1px solid ${borderColor}` }}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full min-h-11 items-center gap-3 px-4 py-3.5 text-left"
+      >
+        {icon}
+        <span className="min-w-0 flex-1">
+          <span className="flex items-baseline gap-2">
+            <span className="font-heading text-[15px] font-bold leading-none text-accent">{number}</span>
+            <span className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-fg/70">{label}</span>
+          </span>
+          <span className="mt-1 block truncate text-[13px] text-fg/60">{summary}</span>
+        </span>
+        <ChevronDown
+          size={18}
+          className={`shrink-0 text-fg/60 transition-transform duration-300 motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        id={panelId}
+        inert={!open}
+        className={`grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-4 pb-5 pt-1">{children}</div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -347,13 +427,32 @@ export default function Credentials() {
           <CertificationsCard inView={inView} />
           <RecognitionCard inView={inView} />
         </div>
-        <div className="lg:hidden flex flex-col gap-6">
-          {/* Education and the course list are context, not the headline:
-              they sit in a side-swipe so the award isn't buried below them. */}
-          <SwipeCarousel ariaLabel="Education and certifications, swipeable">
-            {[<EducationCard key="edu" inView={inView} />, <CertificationsCard key="cert" inView={inView} />]}
-          </SwipeCarousel>
-          <RecognitionCard inView={inView} />
+        <div className="lg:hidden flex flex-col gap-3">
+          <CredentialAccordion
+            number="01"
+            label="Education"
+            summary={education.degree}
+            icon={<CornerIconBadge Icon={GraduationCap} />}
+          >
+            <EducationBody />
+          </CredentialAccordion>
+          <CredentialAccordion
+            number="02"
+            label="Certifications & courses"
+            summary={`${certifications.length} certifications and courses`}
+            icon={<CornerIconBadge Icon={CheckCircle2} />}
+          >
+            <CertificationsBody />
+          </CredentialAccordion>
+          <CredentialAccordion
+            number="03"
+            label="Recognition"
+            summary={award.title}
+            icon={<CornerIconBadge Icon={Trophy} accentColor="var(--color-award)" />}
+            borderColor="color-mix(in srgb, var(--color-award) 30%, transparent)"
+          >
+            <RecognitionBody />
+          </CredentialAccordion>
         </div>
 
         <PullQuote inView={inView} />
