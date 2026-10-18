@@ -26,9 +26,9 @@
   --color-fg:            #0d0d0f;                 /* = ink */
   --color-accent:        #0d22ee;                 /* = blue */
   --color-diagram-card:  #e4e2da;
-  /* Shirt on the Experience zipper reveal: brand blue, deepened with ink. */
-  --color-shirt:         color-mix(in srgb, var(--color-blue) 82%, var(--color-ink));
-  --color-shirt-deep:    color-mix(in srgb, var(--color-blue) 64%, var(--color-ink));
+  /* Shirt on the Experience zipper reveal: brand blue lifted toward white, same in both themes. */
+  --color-shirt:         color-mix(in srgb, var(--color-blue) 74%, white);
+  --color-shirt-deep:    color-mix(in srgb, var(--color-blue) 88%, black);
 
   --radius-card: 4px;
   --radius-pill: 999px;
@@ -86,8 +86,6 @@
   --color-fg:           #ffffff;
   --color-accent:       #d7ff3f;
   --color-diagram-card: #10152b;
-  --color-shirt:        color-mix(in srgb, var(--color-blue) 48%, var(--color-ink));
-  --color-shirt-deep:   color-mix(in srgb, var(--color-blue) 36%, var(--color-ink));
 }
 
 :root[data-theme="light"] {

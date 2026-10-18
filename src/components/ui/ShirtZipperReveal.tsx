@@ -11,17 +11,27 @@ import {
   type AnimationPlaybackControls,
   type MotionStyle,
 } from "framer-motion";
-import { ChevronsDown, ChevronsUp } from "lucide-react";
+import { ChevronsDown, ChevronsUp, Volume2, VolumeX } from "lucide-react";
 import {
   useCallback,
   useEffect,
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
 } from "react";
+import {
+  getSoundPref,
+  primeZipSound,
+  setSoundPref,
+  subscribeSoundPref,
+  zipRest,
+  zipThunk,
+  zipTick,
+} from "@/lib/zipSound";
 
 /*
  * A shirt laid over its own content. One progress value `p` (0 → 1) drives
@@ -48,12 +58,12 @@ const FABRIC_DARK = "var(--color-shirt-deep)";
 const WEAVE = [
   "repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px)",
   "repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 1px, transparent 1px 3px)",
-  "linear-gradient(180deg, rgba(255,255,255,.09), transparent 28%, rgba(0,0,0,.2))",
+  "linear-gradient(180deg, rgba(255,255,255,.1), transparent 28%, rgba(0,0,0,.12))",
 ];
 const SHADE_LEFT =
-  "linear-gradient(90deg, rgba(0,0,0,.32) 0%, transparent 12%, transparent 40%, rgba(0,0,0,.24) 50%)";
+  "linear-gradient(90deg, rgba(0,0,0,.2) 0%, transparent 12%, transparent 40%, rgba(0,0,0,.15) 50%)";
 const SHADE_RIGHT =
-  "linear-gradient(90deg, rgba(0,0,0,.24) 50%, transparent 60%, transparent 88%, rgba(0,0,0,.32) 100%)";
+  "linear-gradient(90deg, rgba(0,0,0,.15) 50%, transparent 60%, transparent 88%, rgba(0,0,0,.2) 100%)";
 const CREASES =
   "linear-gradient(112deg, transparent 18%, rgba(255,255,255,.045) 26%, transparent 34%), linear-gradient(68deg, transparent 52%, rgba(0,0,0,.09) 60%, transparent 68%)";
 
@@ -121,14 +131,18 @@ type PanelProps = {
   tapeLen: ReturnType<typeof useTransform<number, number>>;
   Y: ReturnType<typeof useMotionValue<number>>;
   turn: ReturnType<typeof useTransform<number, number>>;
+  jx: ReturnType<typeof useTransform<number, number>>;
+  jy: ReturnType<typeof useTransform<number, number>>;
 };
 
-function Panel({ side, clip, tapeTop, tapeLen, Y, turn }: PanelProps) {
+function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy }: PanelProps) {
   const left = side === "left";
   return (
     <motion.div
       className="absolute inset-0"
       style={{
+        x: jx,
+        y: jy,
         translate: left ? `calc(var(--b) * (${SLIVER}px - 50%)) 0` : `calc(var(--b) * (50% - ${SLIVER}px)) 0`,
         rotate: left ? "y calc(var(--b) * -17deg)" : "y calc(var(--b) * 17deg)",
         transformOrigin: left ? "0% 50%" : "100% 50%",
@@ -149,7 +163,7 @@ function Panel({ side, clip, tapeTop, tapeLen, Y, turn }: PanelProps) {
         />
         <motion.div
           className="absolute inset-0"
-          style={{ opacity: turn, background: left ? "rgba(255,255,255,.16)" : "rgba(0,0,0,.34)" }}
+          style={{ opacity: turn, background: left ? "rgba(255,255,255,.16)" : "rgba(0,0,0,.24)" }}
         />
         <Collar side={side} />
         <ShirtButton className={left ? "top-[40px] right-[calc(50%+16px)]" : "top-[40px] left-[calc(50%+16px)]"} />
@@ -203,7 +217,7 @@ function Panel({ side, clip, tapeTop, tapeLen, Y, turn }: PanelProps) {
           left: left ? "calc(50% - 40px)" : "50%",
           transformOrigin: left ? "100% 100%" : "0 100%",
           rotate: left ? -THETA : THETA,
-          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,0,.34))`,
+          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,0,.26))`,
         }}
       />
       {/* zipper tape, V-shaped above the slider */}
@@ -257,6 +271,15 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const [dragging, setDragging] = useState(false);
   const [announce, setAnnounce] = useState("");
 
+  const soundPref = useSyncExternalStore(subscribeSoundPref, getSoundPref, () => null);
+  // hydration-safe copy of `reduce` (server renders as false)
+  const reduceSafe = useSyncExternalStore(
+    () => () => {},
+    () => !!reduce,
+    () => false,
+  );
+  const soundOn = soundPref ? soundPref === "on" : !reduceSafe;
+  const soundRef = useRef(soundOn);
   const openRef = useRef(false);
   const anim = useRef<AnimationPlaybackControls | null>(null);
   const suppressClick = useRef(false);
@@ -297,7 +320,10 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const velocity = useSpring(useVelocity(Y), { stiffness: 180, damping: 30 });
   const lag = useTransform(velocity, (v) => clamp(-v / 90, -10, 6));
   // a little side-to-side buzz while the slider is actually moving
-  const wobble = useTransform(velocity, (v) => Math.sin(Y.get() * 0.55) * clamp(Math.abs(v) / 500, 0, 1.4));
+  const wobble = useTransform(velocity, (v) => Math.sin(Y.get() * 0.55) * clamp(Math.abs(v) / 400, 0, 2.2));
+  // fabric shudders while the slider is pulled along
+  const jx = useTransform(velocity, (v) => Math.sin(Y.get() * 0.9) * clamp(Math.abs(v) / 700, 0, 1) * 1.1);
+  const jy = useTransform(velocity, (v) => Math.cos(Y.get() * 1.3) * clamp(Math.abs(v) / 700, 0, 1) * 0.7);
   const tilt = useTransform(velocity, (v) => Math.sin(Y.get() * 0.4) * clamp(Math.abs(v) / 400, 0, 3));
 
   useEffect(() => {
@@ -325,11 +351,76 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     }
   }, [reduce, p]);
 
+  useEffect(() => {
+    soundRef.current = soundOn;
+    if (!soundOn) zipRest();
+  }, [soundOn]);
+
+  // Sound and haptics follow the slider itself, so drag, click and keyboard
+  // all feel the same: one tooth tick per ~10px, a buzz every ~14px.
+  useEffect(() => {
+    if (reduce) return;
+    let last = Y.get();
+    let lastT = performance.now();
+    let acc = 0;
+    let hap = 0;
+    let lastHap = 0;
+    let atEnd = false;
+    let rest: ReturnType<typeof setTimeout> | undefined;
+    const buzz = (ms: number) => {
+      if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(ms);
+    };
+    const unsub = Y.on("change", (y) => {
+      const now = performance.now();
+      const dy = y - last;
+      const dist = Math.abs(dy);
+      const speed = (dist / Math.max(1, now - lastT)) * 1000;
+      last = y;
+      lastT = now;
+
+      const end = y >= Math.max(0, H.get() - BOT) - 0.5 || y <= 0.5;
+      if (end && !atEnd && dist > 0) {
+        atEnd = true;
+        if (soundRef.current) zipThunk();
+        buzz(24);
+      } else if (!end) {
+        atEnd = false;
+      }
+
+      acc += dist;
+      let ticks = 0;
+      while (acc >= 10) {
+        acc -= 10;
+        ticks++;
+      }
+      if (soundRef.current) {
+        for (let i = 0; i < Math.min(ticks, 3); i++) zipTick(speed, dy > 0 ? 1 : -1);
+        clearTimeout(rest);
+        rest = setTimeout(zipRest, 90);
+      }
+
+      hap += dist;
+      if (hap >= 14) {
+        hap = 0;
+        if (now - lastHap > 30) {
+          lastHap = now;
+          buzz(6);
+        }
+      }
+    });
+    return () => {
+      unsub();
+      clearTimeout(rest);
+      zipRest();
+    };
+  }, [Y, H, reduce]);
+
   useEffect(() => () => anim.current?.stop(), []);
 
   const goTo = useCallback(
     (next: boolean) => {
       anim.current?.stop();
+      primeZipSound();
       openRef.current = next;
       setOpen(next);
       setAnnounce(next ? "Shirt unzipped. Experience shown." : "Shirt zipped up.");
@@ -353,6 +444,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     const box = boxRef.current;
     if (!box) return;
     suppressClick.current = false;
+    primeZipSound();
     anim.current?.stop();
     e.currentTarget.setPointerCapture(e.pointerId);
     const rect = box.getBoundingClientRect();
@@ -461,8 +553,8 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           className="zipper-overlay pointer-events-none absolute inset-0"
           style={{ "--b": b, perspective: 1400 } as MotionStyle}
         >
-          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnL} />
-          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnR} />
+          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnL} jx={jx} jy={jy} />
+          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnR} jx={jx} jy={jy} />
 
           <motion.button
             type="button"
@@ -513,6 +605,20 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               {isOpen ? <ChevronsUp size={12} className="text-lime" /> : <ChevronsDown size={12} className="text-lime" />}
             </motion.span>
           </motion.button>
+
+          <button
+            type="button"
+            aria-pressed={soundOn}
+            aria-label="Zip sound"
+            title={soundOn ? "Zip sound on" : "Zip sound off"}
+            onClick={() => {
+              primeZipSound();
+              setSoundPref(soundOn ? "off" : "on");
+            }}
+            className="pointer-events-auto absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/70 text-white transition-colors hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+          >
+            {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
+          </button>
         </motion.div>
       </motion.div>
 
