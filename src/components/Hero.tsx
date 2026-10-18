@@ -534,13 +534,17 @@ export default function Hero() {
           </motion.div>
 
           <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
-            <motion.h1
-              variants={fadeBlurUp}
-              className="font-heading font-bold leading-[1.2]"
-              style={{ fontSize: "clamp(1.35rem, 6.5vw, 1.85rem)" }}
-            >
-              <span className="block text-fg">Technical Project Manager.</span>
-              <span className="block text-fg mt-2">
+            <motion.h1 variants={fadeBlurUp} className="font-heading leading-[1.2]">
+              <span
+                className="block font-bold text-fg"
+                style={{ fontSize: "clamp(1.35rem, 6.5vw, 1.85rem)" }}
+              >
+                Technical Project Manager.
+              </span>
+              <span
+                className="block font-semibold text-fg/75 mt-2"
+                style={{ fontSize: "clamp(1rem, 4.5vw, 1.3rem)" }}
+              >
                 Data, analytics &amp; <span className="text-accent">AI programs</span> at enterprise scale.
               </span>
             </motion.h1>
