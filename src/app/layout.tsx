@@ -76,11 +76,12 @@ export default function RootLayout({
       className={`${anton.variable} ${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
-        {/* Anti-FOUC: applies a stored manual theme choice before first
-            paint. The no-stored-choice case (OS preference) needs no JS at
-            all — it's handled flash-free by the `@media (prefers-color-
-            scheme)` block in globals.css — so this only ever needs to act
-            when localStorage holds an explicit override. */}
+        {/* Anti-FOUC: applies a stored manual theme choice (from the
+            toggle in ui/ThemeToggle.tsx) before first paint. Light is the
+            site's fixed default — the no-stored-choice case needs no JS
+            at all, since the bare `:root` values in globals.css already
+            render light — so this only ever needs to act when localStorage
+            holds an explicit "dark" override. */}
         <script
           dangerouslySetInnerHTML={{
             __html:

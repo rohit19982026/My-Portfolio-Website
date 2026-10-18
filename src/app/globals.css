@@ -15,17 +15,17 @@
      above, which never change with theme (they back self-contained chips
      like lime-fill buttons, where contrast is internal to the chip, not
      page-dependent). These are what responds to the light/dark toggle;
-     default values here are dark mode, i.e. today's only look. Light
-     overrides live in the `:root[data-theme]`/`@media` block below. */
-  --color-surface:       #0d0d0f;                 /* = ink */
-  --color-surface-alt:   #070b18;                 /* = today's hardcoded NAVY */
-  --color-card:          rgba(255, 255, 255, .035);
-  --color-card-border:   rgba(255, 255, 255, .1);
-  --color-card-subtle:   rgba(255, 255, 255, .02);
-  --color-divider:       rgba(255, 255, 255, .14);
-  --color-fg:            #ffffff;                 /* = white */
-  --color-accent:        #d7ff3f;                 /* = lime */
-  --color-diagram-card:  #10152b;
+     default values here are LIGHT mode, the site's default look. Dark
+     overrides live in the `:root[data-theme="dark"]` block below. */
+  --color-surface:       #efeee8;                 /* = paper */
+  --color-surface-alt:   #ffffff;                 /* = white */
+  --color-card:          rgba(13, 13, 15, .035);
+  --color-card-border:   rgba(13, 13, 15, .12);
+  --color-card-subtle:   rgba(13, 13, 15, .02);
+  --color-divider:       rgba(13, 13, 15, .14);
+  --color-fg:            #0d0d0f;                 /* = ink */
+  --color-accent:        #0d22ee;                 /* = blue */
+  --color-diagram-card:  #e4e2da;
 
   --radius-card: 4px;
   --radius-pill: 999px;
@@ -44,25 +44,18 @@
 /* Mix ratios for blending a fixed per-agent/per-category brand accent
    (lime/purple/blue/teal/amber/pink — chosen to pop on dark navy cards)
    toward the theme's own foreground color when that accent is used as
-   small flat text rather than a self-contained chip or an icon. Dark
-   mode's values exactly reproduce what those spots already rendered
-   before this existed (100% = untouched flat accent, 80% = the
-   diagram eyebrow labels' original white-mix recipe), so dark mode is
-   unchanged; only the light-mode overrides below are new, darkening
-   just enough for the same bright accents to stay legible on a light
-   card instead of washing out.
+   small flat text rather than a self-contained chip or an icon. Light
+   mode's values (the default below) darken each bright accent just
+   enough to stay legible as text on a light card; the dark-mode
+   override reproduces the original, unmixed flat-accent look exactly
+   (100%/80%), so switching to dark via the toggle is unchanged from
+   before light became the default.
    --accent-text-mix:    flat "accent as text" spots (tags, badges, the
                           per-agent cadence/built-with text).
    --accent-eyebrow-mix: the diagram SKILL/OUTPUT eyebrow labels. */
 :root {
-  --accent-text-mix: 100%;
-  --accent-eyebrow-mix: 80%;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    --accent-text-mix: 40%;
-    --accent-eyebrow-mix: 35%;
-  }
+  --accent-text-mix: 40%;
+  --accent-eyebrow-mix: 35%;
 }
 :root[data-theme="dark"] {
   --accent-text-mix: 100%;
@@ -73,30 +66,13 @@
   --accent-eyebrow-mix: 35%;
 }
 
-/* Light theme. Three layers so a manual toggle always wins over OS
-   preference, and OS preference always wins over the dark default, with
-   zero flash in every case before any JS runs:
-     1. :root            — dark values (unconditional baseline above)
-     2. @media light      — light values, only when no explicit choice is
-                             stored and the OS/browser prefers light
-     3. :root[data-theme] — light or dark values, forced regardless of OS
-                             preference once the visitor has toggled once
-   (3) has higher selector specificity than the bare `:root` in (2), so it
-   always wins when present. */
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-surface:      #efeee8; /* = paper */
-    --color-surface-alt:  #ffffff; /* = white */
-    --color-card:         rgba(13, 13, 15, .035);
-    --color-card-border:  rgba(13, 13, 15, .12);
-    --color-card-subtle:  rgba(13, 13, 15, .02);
-    --color-divider:      rgba(13, 13, 15, .14);
-    --color-fg:           #0d0d0f; /* = ink */
-    --color-accent:       #0d22ee; /* = blue */
-    --color-diagram-card: #e4e2da;
-  }
-}
-
+/* Theme: light is the unconditional default (the bare `:root` values
+   above and below) — every visitor sees it until they toggle. The
+   `data-theme` attribute, set by the toggle in ui/ThemeToggle.tsx and
+   persisted to localStorage, is the only thing that switches it; there
+   is no OS/browser `prefers-color-scheme` detection, by design, so the
+   default is the same for everyone. `:root[data-theme="light"]` just
+   restates the bare defaults, for a visitor switching back from dark. */
 :root[data-theme="dark"] {
   --color-surface:      #0d0d0f;
   --color-surface-alt:  #070b18;
@@ -217,16 +193,14 @@ body {
 ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-accent) 35%, transparent); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-accent) 55%, transparent); }
 
-::selection { background: color-mix(in srgb, var(--color-accent) 35%, transparent); color: var(--color-ink); }
+/* Blue-on-selection (light mode's default accent) needs white text —
+   blue is dark/saturated enough that ink text on it reads poorly. Dark
+   mode's lime selection needs the opposite, so it gets its own
+   ink-text override below. */
+::selection { background: color-mix(in srgb, var(--color-accent) 35%, transparent); color: var(--color-white); }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
-/* Blue-on-selection (light theme's accent) needs white text, not ink —
-   unlike lime, blue is dark/saturated enough that ink text on it reads
-   poorly. Dark theme's lime selection keeps the ink text set above. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) ::selection { color: var(--color-white); }
-}
-:root[data-theme="light"] ::selection { color: var(--color-white); }
+:root[data-theme="dark"] ::selection { color: var(--color-ink); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

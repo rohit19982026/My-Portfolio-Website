@@ -4,42 +4,33 @@ import { useSyncExternalStore } from "react";
 
 export type Theme = "light" | "dark";
 
-const LIGHT_QUERY = "(prefers-color-scheme: light)";
-
 function resolveTheme(): Theme {
-  if (typeof document === "undefined") return "dark";
+  if (typeof document === "undefined") return "light";
   const attr = document.documentElement.getAttribute("data-theme");
-  if (attr === "light" || attr === "dark") return attr;
-  return window.matchMedia(LIGHT_QUERY).matches ? "light" : "dark";
+  return attr === "dark" ? "dark" : "light";
 }
 
 function subscribe(callback: () => void) {
-  const mql = window.matchMedia(LIGHT_QUERY);
   window.addEventListener("themechange", callback);
-  mql.addEventListener("change", callback);
-  return () => {
-    window.removeEventListener("themechange", callback);
-    mql.removeEventListener("change", callback);
-  };
+  return () => window.removeEventListener("themechange", callback);
 }
 
 function getServerSnapshot(): Theme {
-  // Matches the unconditional dark `:root` values the server renders —
-  // the light-mode CSS only ever applies via a media query or an
-  // explicit data-theme attribute, neither of which SSR can see.
-  return "dark";
+  // Matches the unconditional light `:root` values the server renders —
+  // light is the site's fixed default, so SSR markup and the client's
+  // first hydration pass always agree without checking anything.
+  return "light";
 }
 
-/** Live-reads the resolved theme (manual data-theme override, else OS
- *  preference, else dark) and re-renders on either a toggle click (the
- *  "themechange" event) or an OS preference change. */
+/** Live-reads the resolved theme (the manual data-theme override if one
+ *  was set, else light — the site's fixed default, independent of OS
+ *  preference) and re-renders on a toggle click ("themechange"). */
 export function useTheme(): Theme {
   return useSyncExternalStore(subscribe, resolveTheme, getServerSnapshot);
 }
 
-/** Sets the theme explicitly, persists it, and notifies same-tab
- *  subscribers. Pass null to clear the manual override and fall back to
- *  OS preference. */
+/** Sets the theme explicitly and persists it, notifying same-tab
+ *  subscribers. */
 export function setTheme(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
   try {
