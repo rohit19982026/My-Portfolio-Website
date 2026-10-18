@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "Six years running data and AI delivery programs for enterprise clients. Ten-plus programs, the largest $1.37M. I also build the AI agents that handle my own routine work.",
+      "Six years in IT delivery — infrastructure change management at British Telecom, then data and AI programs at phData. Runs 4–5 concurrent programs for US Fortune 500 clients and builds the Glean and Claude agents that handle the PMO work behind them.",
     type: "website",
     locale: "en_US",
   },
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "Six years running data and AI delivery programs for enterprise clients. Ten-plus programs, the largest $1.37M.",
+      "Six years in IT delivery. Runs 4–5 concurrent data and AI programs for US Fortune 500 clients at phData, and builds the Glean and Claude agents that handle the PMO work behind them.",
   },
 };
 

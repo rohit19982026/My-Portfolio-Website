@@ -324,8 +324,8 @@ function CredentialsHeader() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-[14px] sm:text-[15px] text-fg/70 leading-relaxed lg:max-w-sm lg:text-right"
         >
-          A strong academic foundation, continuous learning and real-world impact that creates value for teams and
-          businesses.
+          Certifications, coursework, and one award — each tied to something actually
+          built or shipped, not just a line on a resume.
         </motion.p>
       </div>
     </div>

@@ -296,7 +296,7 @@ export default function Hero() {
             >
               <Sparkle size={13} className="text-accent shrink-0" />
               <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/75">
-                Technical Project Manager &bull; Data, Analytics &amp; AI Programs
+                Bengaluru, India &bull; Open for Programs
               </span>
             </motion.div>
 
@@ -317,11 +317,11 @@ export default function Hero() {
               className="leading-[1.6] text-fg/65 max-w-[520px] mb-7"
               style={{ fontSize: "clamp(13.5px, 1.6vw, 16px)" }}
             >
-              Six years in IT delivery, moving from infrastructure change management at British Telecom to data
-              platform, analytics, and AI programs at <span className="text-fg font-semibold">phData</span>.
-              Runs <span className="text-accent font-semibold">4–5 concurrent programs</span> for US Fortune 500
-              clients and builds the <span className="text-accent font-semibold">Glean and Claude agents</span> that
-              run PMO work in the background.
+              Runs <span className="text-accent font-semibold">4–5 concurrent data and AI programs</span> for
+              US Fortune 500 clients at <span className="text-fg font-semibold">phData</span>, each with a
+              $250K–$1M budget, and builds the{" "}
+              <span className="text-accent font-semibold">Glean and Claude agents</span> that handle the PMO
+              work behind them.
             </motion.p>
 
             <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3">
@@ -485,15 +485,15 @@ export default function Hero() {
             {tools.map((tool) => (
               <ToolIcon key={tool.name} tool={tool} />
             ))}
-            <button
-              type="button"
-              aria-label="More tools"
-              className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 col-span-2 sm:col-span-1 mx-auto w-full"
+            <a
+              href="#stack"
+              aria-label="See the full tools and platforms list"
+              className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 col-span-2 sm:col-span-1 mx-auto w-full hover:border-accent transition-colors"
               style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
             >
               <Plus size={22} className="text-fg/50" />
               <span className="font-heading text-[11px] sm:text-[12px] text-fg/50">+ More</span>
-            </button>
+            </a>
           </div>
         </div>
       </motion.div>
@@ -517,9 +517,9 @@ export default function Hero() {
           // mobile pulls it back out with a negative margin so the headline
           // sits right under the header instead of ~90px below it.
           //
-          // Badge pill is back (unlike the previous mobile design), because
-          // the headline below leads straight with the role title, so the
-          // two would otherwise restate the same words in a row.
+          // Badge pill carries location + availability, not a restatement
+          // of the role title the headline already leads with directly
+          // below it.
           className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
         >
           <motion.div
@@ -529,7 +529,7 @@ export default function Hero() {
           >
             <Sparkle size={11} className="text-accent shrink-0" />
             <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-fg/75">
-              Technical Project Manager &bull; Data, Analytics &amp; AI Programs
+              Bengaluru, India &bull; Open for Programs
             </span>
           </motion.div>
 
@@ -562,11 +562,11 @@ export default function Hero() {
             className="leading-[1.6] text-fg/65 mt-5 mb-6"
             style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
           >
-            Six years in IT delivery, moving from infrastructure change management at British Telecom to data
-            platform, analytics, and AI programs at <span className="text-fg font-semibold">phData</span>.
-            Runs <span className="text-accent font-semibold">4–5 concurrent programs</span> for US Fortune 500
-            clients and builds the <span className="text-accent font-semibold">Glean and Claude agents</span> that
-            run PMO work in the background.
+            Runs <span className="text-accent font-semibold">4–5 concurrent data and AI programs</span> for
+            US Fortune 500 clients at <span className="text-fg font-semibold">phData</span>, each with a
+            $250K–$1M budget, and builds the{" "}
+            <span className="text-accent font-semibold">Glean and Claude agents</span> that handle the PMO
+            work behind them.
           </motion.p>
 
           <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-8">
@@ -710,15 +710,15 @@ export default function Hero() {
                   <ToolIcon tool={tool} />
                 </div>
               ))}
-              <button
-                type="button"
-                aria-label="More tools"
+              <a
+                href="#stack"
+                aria-label="See the full tools and platforms list"
                 className="shrink-0 w-[86px] flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4"
                 style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
               >
                 <Plus size={22} className="text-fg/50" />
                 <span className="font-heading text-[11px] text-fg/50">+ More</span>
-              </button>
+              </a>
             </div>
           </motion.div>
         </motion.div>
