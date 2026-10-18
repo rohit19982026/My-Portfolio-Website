@@ -1,3 +1,5 @@
+import { navLinks } from "@/lib/content";
+
 export default function Footer() {
   return (
     <footer className="py-12 bg-surface border-t-2 border-fg/10">
@@ -15,13 +17,13 @@ export default function Footer() {
           <div>
             <p className="font-heading font-bold uppercase tracking-widest text-fg/50 mb-3 text-[10px]">EXPLORE</p>
             <ul className="space-y-2">
-              {[["Experience", "#experience"], ["Tools", "#tools"], ["Stack", "#stack"], ["Resume", "#resume"]].map(([label, href]) => (
-                <li key={label}>
+              {navLinks.map((link) => (
+                <li key={link.href}>
                   <a
-                    href={href}
+                    href={link.href}
                     className="font-heading text-[12px] text-fg/50 hover:text-accent transition-colors"
                   >
-                    → {label}
+                    → {link.label}
                   </a>
                 </li>
               ))}

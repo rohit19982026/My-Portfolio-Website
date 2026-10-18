@@ -1,10 +1,12 @@
 export const navLinks = [
   { label: "Experience", href: "#experience" },
+  { label: "Credentials", href: "#credentials" },
   // "Work" (case studies) nav link removed while that section is unmounted
   // — see the comment in src/app/page.tsx.
   { label: "Tools", href: "#tools" },
   { label: "Stack", href: "#stack" },
   { label: "Resume", href: "#resume" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const skillMarqueeItems = [

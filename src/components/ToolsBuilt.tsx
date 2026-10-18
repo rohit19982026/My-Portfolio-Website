@@ -163,8 +163,12 @@ function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (
         })}
       </div>
 
-      {/* Mobile — horizontally-scrolling row, active tab gets its own box */}
-      <div className="flex lg:hidden gap-2.5 overflow-x-auto pb-1 -mx-6 px-6 [scrollbar-width:none]">
+      {/* Mobile — horizontally-scrolling row, active tab gets its own box.
+          The right-edge fade signals there's more to scroll to — without
+          it, "Reports"/"Messages"/"Kickoff" just get silently clipped at
+          the viewport edge with no hint they exist. */}
+      <div className="relative lg:hidden">
+        <div className="flex gap-2.5 overflow-x-auto pb-1 -mx-6 px-6 [scrollbar-width:none]">
         {tabs.map((tab) => {
           const isActive = tab.id === active;
           const Icon = tab.icon;
@@ -190,6 +194,12 @@ function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (
             </button>
           );
         })}
+        </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-8"
+          style={{ background: `linear-gradient(to left, ${NAVY}, transparent)` }}
+        />
       </div>
     </>
   );
