@@ -15,18 +15,16 @@ const roles = [
     current: true,
     color: "fg",
     bullets: [
-      "Own full project lifecycle — initiation to closure — for 4–5 concurrent Data Platform and AI programs, each with a $250K–$1M budget and 12–15 engineers, held against agreed scope, timeline, budget, and quality KPIs.",
-      "Maintain RACI, WBS, decision logs, dependency maps, and risk registers in Jira and Confluence, with milestone tracking dashboards keeping every active program visible from kickoff through delivery close.",
-      "Manage full financial governance — monthly invoicing, budget forecast vs. actuals, burn-rate tracking, and variance reporting to client and internal leadership.",
-      "Run the delivery cadence that keeps programs on track — standups, program syncs, and steering reviews — with focused retrospectives feeding fixes back into how the next sprint runs.",
-      "Turn program data — burn rates, sprint velocity, ticket ages — into the weekly status, risk, and trade-off reporting leadership and clients act on, so problems surface before they're client-visible.",
-      "Primary bridge between engineering delivery, QA, and client C-level/VP stakeholders — own weekly status reporting, quarterly business reviews, and escalation management; issues get root-caused and fixed systemically, not patched over.",
-      "Drive account expansion through QBR-led discovery — grown multiple single-program engagements into multi-year platform relationships.",
-      "Keep client satisfaction high by communicating progress, risk, and trade-offs before they're asked for, not after.",
-      "Design, pilot, and scale AI-integrated PM processes — built AI agents (Glean + Claude + n8n) that generate status and risk reports, run financial reviews, and automate program setup, now standard workflow across the PMO team. Saves 4–8 hours a week; won phData's Innovation Award.",
-      "Manage scope discipline once a program is live — one engagement pushed 14 additions beyond the signed SOW; every one formally logged and resolved so none became free work.",
+      "Run four to five programs at once for US Fortune 500 clients, each with 12–15 engineers and a budget between $250K and $1M.",
+      "Work through requirements and estimates with our Principal Architects before the SOW is signed, then turn the scope into a plan and backlog the team can start on.",
+      "Run the sprint rhythm and keep the risk register and decision log current, with Jira dashboards showing lead time, throughput, and where work is stuck.",
+      "Act as the main contact for client VPs and C-level sponsors across a 10–12 hour time difference, and bring their priorities back to our sales, engineering, and leadership teams.",
+      "Tell clients early when a request won't work as asked, and find the version that will. On one engagement that meant handling 14 requests outside the signed SOW without any of it becoming free work.",
+      "Own invoicing, forecasts, and burn-down for each program. Quarterly reviews with sponsors have turned into follow-on work and larger accounts.",
+      "Built a Jira dependency tracker in Apps Script that shows which tickets block each other and for how long. One engineering team dropped its weekly status meeting because of it.",
+      "Built Glean and Claude agents for project setup, program health reports, and month-end billing audits. They save 4–8 hours of PMO work a week and won phData's Innovation Award.",
     ],
-    tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Account Expansion", "Scrum Master (PSM1)", "AI Agent Builder", "Predictive Risk Reporting"],
+    tags: ["Program Delivery", "Risk & Budget Control", "Stakeholder Management", "Change Orders", "Account Expansion", "Scrum (PSM I)", "AI Agents"],
   },
   {
     period: "AUG 2020 — NOV 2022",
@@ -35,10 +33,11 @@ const roles = [
     current: false,
     color: "accent",
     bullets: [
-      "Change governance for critical UK telecom infrastructure — formal review, rollback planning, approval gating for 50+ changes a year. 99.9% uptime.",
-      "Owned all stakeholder communication around change events: brief before, live status during, report after.",
+      "Managed 50+ infrastructure changes a year across network, systems, and application teams, with 99.9% uptime.",
+      "Took each change through risk assessment and rollback planning, and presented them to senior IT leadership at the Change Advisory Board.",
+      "Kept everyone affected informed before, during, and after each change window.",
     ],
-    tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Cross-functional Communication"],
+    tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Stakeholder Communication"],
   },
 ];
 
@@ -58,9 +57,9 @@ export default function Trajectory() {
           className="mb-5"
         />
         <p ref={ref} className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-14">
-          Six years in delivery. Three and a half at phData running data and AI programs,
-          two and a half before that at British Telecom running change for UK network
-          infrastructure.
+          Six years in delivery. Almost four at phData running data and AI programs, and two
+          before that at British Telecom, making sure UK network changes didn&apos;t take
+          anything down.
         </p>
 
         <div className="relative">

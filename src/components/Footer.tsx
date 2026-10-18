@@ -10,8 +10,8 @@ export default function Footer() {
               Rohit<span className="text-accent">.</span>
             </p>
             <p className="font-heading text-fg/50 leading-relaxed text-[12px]">
-              Technical Project Manager at phData — data and AI delivery for enterprise
-              clients. Six years in delivery. PSM1 · ITIL · phData Innovation Award. Bengaluru.
+              Technical Project Manager at phData. Six years in delivery, Claude Certified
+              Architect, based in Bengaluru.
             </p>
           </div>
           <div>
@@ -58,7 +58,7 @@ export default function Footer() {
                 className="w-2 h-2 rounded-full"
                 style={{ background: "var(--color-accent)", animation: "pulse-dot 2s ease-in-out infinite" }}
               />
-              Open for programs
+              Open to new roles
             </div>
             <p className="font-heading text-[11px] text-fg/50">Bengaluru, India · IST</p>
           </div>

@@ -239,9 +239,9 @@ export default function DeliveryExposure() {
             ]}
           />
           <p className="text-[15px] text-fg/65 max-w-2xl leading-relaxed mt-5">
-            A project manager, not an engineer — this is what gets run on, not a list of
-            things to build with. Enough to scope the work, sequence it, and follow the
-            technical conversation without needing everything translated.
+            The platforms my programs have run on. I don&apos;t engineer on them, but I know
+            them well enough to scope the work and keep up in technical discussions. The last
+            group is different: those are the tools I build with.
           </p>
         </div>
 

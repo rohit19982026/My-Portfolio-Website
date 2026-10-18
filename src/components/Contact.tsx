@@ -4,7 +4,7 @@ import GithubMark from "./icons/GithubMark";
 
 const links = [
   { label: "EMAIL", value: "singhrohit.25119@gmail.com", href: "mailto:singhrohit.25119@gmail.com" },
-  { label: "LINKEDIN", value: "linkedin.com/in/rohit-kumar-singh", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
+  { label: "LINKEDIN", value: "linkedin.com/in/rohit-kumar-singh-a61746156", href: "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/" },
   { label: "GITHUB", value: "github.com/rohit19982026", href: "https://github.com/rohit19982026?tab=repositories" },
   { label: "PHONE", value: "+91 89677 25119", href: "tel:+918967725119" },
 ];
@@ -22,8 +22,8 @@ export default function Contact() {
           className="mb-5"
         />
         <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-14">
-          Email is the most reliable way to reach me — open to fixed-price, time
-          and materials, and managed retainer engagements.
+          I&apos;m looking for my next Technical Project or Program Manager role in data
+          and AI. Email is the quickest way to reach me.
         </p>
 
         {/* Also a builder — GitHub callout */}
@@ -39,11 +39,11 @@ export default function Contact() {
             ALSO A BUILDER
           </p>
           <h3 className="font-heading text-[22px] sm:text-[26px] font-bold leading-snug text-fg mb-3 max-w-lg">
-            The automations and AI agents run alongside the roadmap, not instead of it.
+            I build things outside work too.
           </h3>
           <p className="text-[14.5px] text-fg/70 leading-relaxed mb-6 max-w-lg">
-            This site, and the PMO agents described above, are built and maintained
-            the same way. The code is public, not just the case studies.
+            This site, and an online store running on Vercel and Supabase, both built
+            with Claude Code. The code for this site is on GitHub.
           </p>
           <Button href="https://github.com/rohit19982026?tab=repositories" target="_blank" rel="noopener noreferrer">
             <GithubMark className="w-4 h-4 shrink-0" />
@@ -81,7 +81,7 @@ export default function Contact() {
               />
               <div>
                 <p className="font-heading text-[11px] font-bold uppercase tracking-wider text-accent">
-                  Open for programs
+                  Open to new roles
                 </p>
                 <p className="font-heading text-[10px] text-fg/50 mt-0.5">
                   Bengaluru, India · IST

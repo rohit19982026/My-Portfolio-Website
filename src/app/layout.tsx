@@ -36,7 +36,7 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
   description:
-    "Technical Project Manager at phData. Six years running data and AI delivery programs for enterprise clients — platform migrations, lakehouses, AI deployments. PSM1 and ITIL certified. Based in Bengaluru.",
+    "Technical Project Manager at phData, running data and AI programs for US Fortune 500 clients. Six years in delivery. Claude Certified Architect. Based in Bengaluru.",
   keywords: [
     "Technical Project Manager",
     "Data Delivery",
@@ -45,7 +45,8 @@ export const metadata: Metadata = {
     "Databricks",
     "AI Automation",
     "phData",
-    "PSM1",
+    "PSM I",
+    "Claude Certified Architect",
     "ITIL",
     "Bengaluru",
   ],
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "Six years in IT delivery — infrastructure change management at British Telecom, then data and AI programs at phData. Runs 4–5 concurrent programs for US Fortune 500 clients and builds the Glean and Claude agents that handle the PMO work behind them.",
+      "I run data and AI programs for US Fortune 500 clients at phData, usually four or five at once. Along the way I've built the agents that take the repetitive reporting off my plate.",
     type: "website",
     locale: "en_US",
   },
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "Six years in IT delivery. Runs 4–5 concurrent data and AI programs for US Fortune 500 clients at phData, and builds the Glean and Claude agents that handle the PMO work behind them.",
+      "I run data and AI programs for US Fortune 500 clients at phData, usually four or five at once, and build the agents that take the repetitive reporting off my plate.",
   },
 };
 

@@ -61,7 +61,7 @@ export default function Navbar() {
           </a>
           <ThemeToggle className="ml-1" />
           <Button href="#contact" size="sm" className="ml-3">
-            Start a project
+            Get in touch
           </Button>
         </nav>
 
@@ -126,7 +126,7 @@ export default function Navbar() {
               </a>
               <ThemeToggle />
               <Button href="#contact" onClick={() => setMenuOpen(false)} className="flex-1 justify-center">
-                Start a project
+                Get in touch
               </Button>
             </div>
           </motion.div>

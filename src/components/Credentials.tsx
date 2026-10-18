@@ -6,10 +6,8 @@ import { SiClaude } from "react-icons/si";
 import {
   BarChart3,
   Bell,
-  BookOpen,
   Calendar,
   CheckCircle2,
-  ChevronRight,
   ClipboardList,
   Database,
   GraduationCap,
@@ -62,7 +60,6 @@ const education = {
   institution: "Brainware University, Kolkata",
   year: "Jun 2020",
   grade: "CGPA: 7.5 / 10",
-  quote: "Strong academic foundation in computer applications and problem solving.",
 };
 
 type CertItem = { name: string; issuer: string; icon: IconType; color: string };
@@ -73,17 +70,17 @@ const certifications: CertItem[] = [
   { name: "ITIL Foundation", issuer: "Axelos", icon: ItilBadge, color: "#E6007E" },
   { name: "LandingLens Computer Vision Fundamentals", issuer: "LandingAI", icon: ScanEye, color: "#5B9BF0" },
   { name: "LandingLens on Snowflake", issuer: "LandingAI", icon: ScanEye, color: "#5B9BF0" },
-  { name: "Deeply Practical Project Management", issuer: "PMP-track", icon: ClipboardList, color: "#8B7FF0" },
+  { name: "Deeply Practical Project Management", issuer: "Course", icon: ClipboardList, color: "#8B7FF0" },
   { name: "Data Warehouse Fundamentals", issuer: "Course", icon: Database, color: "#5B9BF0" },
 ];
 
 const award = {
   title: "phData Innovation Award",
-  desc: "Recognised for building production AI agents (Glean + Claude + n8n) that automated project provisioning from signed SOWs, generated weekly program status reports, and sent automated client notifications to email and Slack.",
+  desc: "Given for the agents that set up new projects from signed SOWs and sent weekly status reports to clients by email and Slack.",
   stats: [
-    { label: "Automated Provisioning", icon: Package },
-    { label: "Weekly Program Reports", icon: BarChart3 },
-    { label: "Client Notifications to Email & Slack", icon: Bell },
+    { label: "Project Setup", icon: Package },
+    { label: "Weekly Reports", icon: BarChart3 },
+    { label: "Client Updates", icon: Bell },
   ],
 };
 
@@ -201,15 +198,11 @@ function EducationCard({ inView }: { inView: boolean }) {
       </div>
       <p className="font-heading text-fg text-[17px] font-bold leading-snug mb-1">{education.degree}</p>
       <p className="text-accent text-[13px] font-semibold mb-3">{education.institution}</p>
-      <div className="flex items-center gap-1.5 text-fg/55 text-[12px] mb-6">
+      <div className="flex items-center gap-1.5 text-fg/55 text-[12px]">
         <Calendar size={13} />
         <span>
           {education.year} · {education.grade}
         </span>
-      </div>
-      <div className="pt-5" style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
-        <p className="font-display text-[24px] leading-none text-accent mb-2">&ldquo;</p>
-        <p className="italic text-fg/70 text-[13px] leading-relaxed">{education.quote}</p>
       </div>
     </motion.div>
   );
@@ -225,33 +218,15 @@ function CertificationsCard({ inView }: { inView: boolean }) {
       style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
       <CardNumberHeader number="02" label="CERTIFICATIONS & COURSES" />
-      <div className="hidden lg:grid lg:grid-cols-2 gap-3 mb-6">
+      <div className="hidden lg:grid lg:grid-cols-2 gap-3">
         {certifications.map((c) => (
           <CertItemRow key={c.name} item={c} variant="grid" />
         ))}
       </div>
-      <div className="lg:hidden flex flex-col gap-2.5 mb-6">
+      <div className="lg:hidden flex flex-col gap-2.5">
         {certifications.map((c) => (
           <CertItemRow key={c.name} item={c} variant="list" />
         ))}
-      </div>
-      <div className="hidden lg:flex items-center gap-2 text-fg/60 text-[12.5px]">
-        <BookOpen size={15} className="text-accent shrink-0" />
-        <span>
-          Continuously learning. <span className="text-accent font-semibold">Always building.</span>
-        </span>
-      </div>
-      <div
-        className="lg:hidden flex items-center justify-between rounded-card px-3.5 py-2.5"
-        style={{ border: `1px solid ${CARD_BORDER}` }}
-      >
-        <div className="flex items-center gap-2 text-fg/70 text-[12.5px]">
-          <BookOpen size={15} className="text-accent shrink-0" />
-          <span>
-            Continuously learning. <span className="text-accent font-semibold">Always building.</span>
-          </span>
-        </div>
-        <ChevronRight size={14} className="text-fg/40 shrink-0" />
       </div>
     </motion.div>
   );
@@ -315,7 +290,7 @@ function CredentialsHeader() {
           transition={{ duration: 0.6, delay: 0.05 }}
           className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-fg mb-5 lg:mb-0"
         >
-          Built on learning. <span className="text-accent">Proven by impact.</span>
+          Certifications <span className="text-accent">and recognition.</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -324,8 +299,8 @@ function CredentialsHeader() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-[14px] sm:text-[15px] text-fg/70 leading-relaxed lg:max-w-sm lg:text-right"
         >
-          Certifications, coursework, and one award — each tied to something actually
-          built or shipped, not just a line on a resume.
+          A degree in computer applications, certifications in Claude, Scrum, and ITIL, and an
+          award from phData for the agents in the next section.
         </motion.p>
       </div>
     </div>
@@ -344,15 +319,14 @@ function PullQuote({ inView }: { inView: boolean }) {
       <div className="lg:flex-1">
         <p className="font-display text-[36px] leading-none text-accent mb-2">&ldquo;</p>
         <p className="text-[15px] sm:text-[16px] text-fg/75 italic leading-relaxed max-w-2xl">
-          Learning stays applied — each certification and course has fed directly into a program, a process, or
-          an agent that&apos;s actually in use.
+          I picked up Scrum and ITIL to run programs better, and Claude to stop writing the same reports by
+          hand.
         </p>
       </div>
       <div className="h-px w-full my-6 lg:hidden" style={{ background: "var(--color-divider)" }} />
       <div className="hidden lg:block w-px self-stretch mx-2" style={{ background: "var(--color-divider)" }} />
       <div className="lg:shrink-0 lg:w-56 text-right">
         <p className="font-signature text-[28px] text-accent">Rohit Singh</p>
-        <p className="text-[12px] text-fg/50 mt-1">Always shipping, always learning.</p>
       </div>
     </motion.div>
   );

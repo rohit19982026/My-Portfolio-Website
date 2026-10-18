@@ -79,7 +79,7 @@ const mobileStats = [
   { Icon: Clock, value: "6 Yrs", label: "IT Delivery" },
   { Icon: Target, value: "4–5", label: "Concurrent Programs" },
   { Icon: CheckCircle2, value: "12–15", label: "Engineers / Program" },
-  { Icon: Zap, value: "4–8 Hrs", label: "PMO Time Saved / Wk" },
+  { Icon: Zap, value: "4–8 Hrs", label: "Hours Saved / Week" },
 ] as const;
 
 // Floating icon badges over the mobile photo — 4 now (was 3), matching
@@ -99,25 +99,25 @@ const photoBadges = [
 const capabilityTiles = [
   {
     label: "Own Program Delivery",
-    description: "Scope, budget, and timeline across 4–5 concurrent data and AI programs, SOW to closure.",
+    description: "From signed SOW to final handover, across four or five programs at a time.",
     Icon: Users,
     color: "var(--color-accent)",
   },
   {
     label: "Run Financial Governance",
-    description: "Monthly invoicing, burn-rate tracking, and variance reporting on $250K–$1M program budgets.",
+    description: "Monthly invoicing and burn tracking, so budget problems show up early.",
     Icon: Target,
     color: "#8B7FF0",
   },
   {
     label: "Build PMO Agents",
-    description: "Glean and Claude agents for billing audits, status reporting, and project setup.",
+    description: "Glean and Claude agents that write the reports and run the checks.",
     Icon: Bot,
     color: "#8B7FF0",
   },
   {
     label: "Bridge Client & Engineering",
-    description: "Primary contact for client VPs and directors across a 10–12 hour time gap.",
+    description: "Client VPs in the US, engineers in India, and me keeping them in sync.",
     Icon: Cpu,
     color: "var(--color-accent)",
   },
@@ -296,7 +296,7 @@ export default function Hero() {
             >
               <Sparkle size={13} className="text-accent shrink-0" />
               <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/75">
-                Bengaluru, India &bull; Open for Programs
+                Based in Bengaluru &bull; Open to new roles
               </span>
             </motion.div>
 
@@ -317,11 +317,10 @@ export default function Hero() {
               className="leading-[1.6] text-fg/65 max-w-[520px] mb-7"
               style={{ fontSize: "clamp(13.5px, 1.6vw, 16px)" }}
             >
-              Runs <span className="text-accent font-semibold">4–5 concurrent data and AI programs</span> for
-              US Fortune 500 clients at <span className="text-fg font-semibold">phData</span>, each with a
-              $250K–$1M budget, and builds the{" "}
-              <span className="text-accent font-semibold">Glean and Claude agents</span> that handle the PMO
-              work behind them.
+              I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
+              clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
+              Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
+              take the repetitive reporting off my plate.
             </motion.p>
 
             <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3">
@@ -476,7 +475,7 @@ export default function Hero() {
           <div className="flex items-center gap-4 mb-6">
             <span className="h-px flex-1" style={{ background: "var(--color-divider)" }} />
             <p className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-fg/45 shrink-0">
-              Trusted Tools &amp; Platforms
+              Tools I Use Daily
             </p>
             <span className="h-px flex-1" style={{ background: "var(--color-divider)" }} />
           </div>
@@ -492,7 +491,7 @@ export default function Hero() {
               style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
             >
               <Plus size={22} className="text-fg/50" />
-              <span className="font-heading text-[11px] sm:text-[12px] text-fg/50">+ More</span>
+              <span className="font-heading text-[11px] sm:text-[12px] text-fg/50">See all</span>
             </a>
           </div>
         </div>
@@ -529,7 +528,7 @@ export default function Hero() {
           >
             <Sparkle size={11} className="text-accent shrink-0" />
             <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-fg/75">
-              Bengaluru, India &bull; Open for Programs
+              Based in Bengaluru &bull; Open to new roles
             </span>
           </motion.div>
 
@@ -545,7 +544,7 @@ export default function Hero() {
                 className="block font-semibold text-fg/75 mt-2"
                 style={{ fontSize: "clamp(1rem, 4.5vw, 1.3rem)" }}
               >
-                Data, analytics &amp; <span className="text-accent">AI programs</span> at enterprise scale.
+                Data, analytics, and <span className="text-accent">AI programs</span> for enterprise clients.
               </span>
             </motion.h1>
 
@@ -562,11 +561,10 @@ export default function Hero() {
             className="leading-[1.6] text-fg/65 mt-5 mb-6"
             style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
           >
-            Runs <span className="text-accent font-semibold">4–5 concurrent data and AI programs</span> for
-            US Fortune 500 clients at <span className="text-fg font-semibold">phData</span>, each with a
-            $250K–$1M budget, and builds the{" "}
-            <span className="text-accent font-semibold">Glean and Claude agents</span> that handle the PMO
-            work behind them.
+            I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
+            clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
+            Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
+            take the repetitive reporting off my plate.
           </motion.p>
 
           <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-8">
@@ -698,11 +696,11 @@ export default function Hero() {
           <motion.div variants={fadeBlurUp} className="mt-2">
             <div className="flex items-center justify-between gap-3 mb-4">
               <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-fg/60 whitespace-nowrap">
-                Tools &amp; Platforms
+                Tools I Use Daily
               </p>
-              <p className="flex items-center gap-1.5 font-heading text-[10px] text-fg/45 whitespace-nowrap">
-                and many more <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "var(--color-accent)" }} />
-              </p>
+              <a href="#stack" className="flex items-center gap-1.5 font-heading text-[10px] text-fg/55 hover:text-accent whitespace-nowrap">
+                See all <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "var(--color-accent)" }} />
+              </a>
             </div>
             <div className="flex gap-3 overflow-x-auto -mx-6 px-6 no-scrollbar">
               {tools.map((tool) => (
@@ -717,7 +715,7 @@ export default function Hero() {
                 style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
               >
                 <Plus size={22} className="text-fg/50" />
-                <span className="font-heading text-[11px] text-fg/50">+ More</span>
+                <span className="font-heading text-[11px] text-fg/50">See all</span>
               </a>
             </div>
           </motion.div>

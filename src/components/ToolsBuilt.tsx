@@ -7,6 +7,7 @@ import {
   ChevronDown,
   Clock,
   Compass,
+  GitBranch,
   Cpu,
   LayoutGrid,
   MessageSquare,
@@ -25,6 +26,7 @@ import ProjectSetupDiagram from "./diagrams/ProjectSetupDiagram";
 import StatusBriefDiagram from "./diagrams/StatusBriefDiagram";
 import StakeholderMessageDiagram from "./diagrams/StakeholderMessageDiagram";
 import KickoffDiagram from "./diagrams/KickoffDiagram";
+import DependencyTrackerDiagram from "./diagrams/DependencyTrackerDiagram";
 import SwipeCarousel from "./ui/SwipeCarousel";
 
 // Same dark system Hero.tsx/DeliveryExposure.tsx already established this
@@ -37,7 +39,7 @@ const CARD_BORDER = "var(--color-card-border)";
 const DOT_PATTERN = "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)";
 
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; style?: CSSProperties; className?: string }>;
-type AgentId = "billing" | "standup" | "setup" | "reports" | "messages" | "kickoff";
+type AgentId = "billing" | "standup" | "setup" | "reports" | "messages" | "kickoff" | "tracker";
 
 type Agent = {
   id: AgentId;
@@ -60,7 +62,7 @@ const agents: Agent[] = [
     id: "billing",
     title: "Month-end billing review",
     cardTitle: "Month-end Billing Review Agent",
-    body: "Runs 17 checks against budget vs. spend, billing readiness, and timecard compliance each month, then lists every inconsistency with an action item. A companion rollup agent combines financial status across all active programs into one view.",
+    body: "At month-end it runs 17 checks on budget, billing readiness, and timecards, then lists every mismatch with what needs fixing. A second agent rolls the numbers up across all my programs.",
     cadence: "Monthly",
     builtWith: "Glean + Claude",
     accent: "#d7ff3f",
@@ -71,7 +73,7 @@ const agents: Agent[] = [
     id: "standup",
     title: "Standup brief agent",
     cardTitle: "Standup Brief Agent",
-    body: "Pulls from Jira, Slack, and meeting notes before each standup and compiles what's done, what's blocked, and whether the sprint is on track into a one-page brief.",
+    body: "Reads Jira, Slack, and meeting notes before standup and gives me one page: what moved, what's stuck, and whether the sprint is still on track.",
     cadence: "Daily",
     builtWith: "Claude",
     accent: "#8B7FF0",
@@ -82,7 +84,7 @@ const agents: Agent[] = [
     id: "setup",
     title: "Project setup agent",
     cardTitle: "Project Setup Agent",
-    body: "Takes a signed SOW from Salesforce and provisions the new program end to end — Jira board, sprint cadence, risk log, RACI, and governance templates — then sends status updates to client email and Slack. Part of the work recognized with phData's Innovation Award.",
+    body: "When a SOW is signed in Salesforce, it sets up the program with a Jira board, sprint cadence, risk log, RACI, and templates. It also sends the client their status updates by email and Slack.",
     cadence: "One-time",
     builtWith: "Glean + Claude",
     accent: "#5B9BF0",
@@ -93,7 +95,7 @@ const agents: Agent[] = [
     id: "reports",
     title: "Weekly status brief",
     cardTitle: "Weekly Status Agent",
-    body: "Pulls data from Jira, Slack, and meeting notes across active programs every Monday, scores program health, and drafts the weekly status update for review before it goes out.",
+    body: "Every Monday it pulls from Jira, Slack, and reports, scores each program's health, and drafts the update. I check it before it goes to Slack.",
     cadence: "Weekly",
     builtWith: "Glean + Claude",
     accent: "#2DD4BF",
@@ -104,7 +106,7 @@ const agents: Agent[] = [
     id: "messages",
     title: "Stakeholder message drafter",
     cardTitle: "Stakeholder Message Agent",
-    body: "Drafts a first version of stakeholder messages — escalations, renewal conversations, steering committee openers — from a short brief on what needs to be said and who it's going to.",
+    body: "For the messages that are hard to start, like escalations or renewal talks, I describe the situation and it gives me a first draft to work from.",
     cadence: "On-demand",
     builtWith: "Claude",
     accent: "#f59e0b",
@@ -115,12 +117,23 @@ const agents: Agent[] = [
     id: "kickoff",
     title: "Kickoff planning agent",
     cardTitle: "Kickoff Planning Agent",
-    body: "Turns a kickoff brief into a stakeholder map, interview guide, and discovery plan, so the first sprint starts with structure instead of open questions.",
+    body: "Turns a kickoff brief into a stakeholder map, interview guide, and discovery plan, so the first sprint doesn't start from a blank page.",
     cadence: "Per-kickoff",
     builtWith: "Claude",
     accent: "#F0618B",
     icon: Compass,
     diagram: KickoffDiagram,
+  },
+  {
+    id: "tracker",
+    title: "Jira dependency tracker",
+    cardTitle: "Jira Dependency Tracker",
+    body: "Checks Jira on a schedule, maps which tickets are blocking others, and counts how long they've been stuck. One team replaced its weekly status meeting with its report.",
+    cadence: "Scheduled",
+    builtWith: "Apps Script + Jira API",
+    accent: "#22c55e",
+    icon: GitBranch,
+    diagram: DependencyTrackerDiagram,
   },
 ];
 
@@ -132,6 +145,7 @@ const tabs: { id: "all" | AgentId; label: string; icon: IconType }[] = [
   { id: "reports", label: "Reports", icon: BarChart3 },
   { id: "messages", label: "Messages", icon: Send },
   { id: "kickoff", label: "Kickoff", icon: Compass },
+  { id: "tracker", label: "Tracker", icon: GitBranch },
 ];
 
 function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (id: "all" | AgentId) => void }) {
@@ -312,8 +326,6 @@ function FeaturedAgentCard({ agent, inView }: { agent: Agent; inView: boolean })
         {isBilling && (
           <div className="flex flex-wrap gap-2">
             <Tag icon={<span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />} label="Production" color="#22c55e" />
-            <Tag icon={<Plus size={11} />} label="Used Across Team" color="var(--color-accent)" />
-            <Tag icon={<Sparkle size={11} />} label="High Impact" color="#8B7FF0" />
           </div>
         )}
       </div>
@@ -367,10 +379,10 @@ function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inVi
 // Every figure here is stated on the resume — no rounded-up or
 // estimated numbers standing in for metrics that were never measured.
 const impactStats = [
-  { Icon: Clock, value: "4–8 Hrs", label: "PMO Time Saved / Week", color: "#5B9BF0" },
-  { Icon: Target, value: "17", label: "Billing Checks Automated", color: "var(--color-accent)" },
-  { Icon: Zap, value: "4–5", label: "Concurrent Programs Supported", color: "var(--color-accent)" },
-  { Icon: Users, value: "5", label: "Agents & Tools in Production", color: "#2DD4BF" },
+  { Icon: Clock, value: "4–8 Hrs", label: "Saved / Week", color: "#5B9BF0" },
+  { Icon: Target, value: "17", label: "Billing Checks", color: "var(--color-accent)" },
+  { Icon: Zap, value: "4–5", label: "Programs at Once", color: "var(--color-accent)" },
+  { Icon: Users, value: "7", label: "Agents Built", color: "#2DD4BF" },
 ] as const;
 
 function ImpactStatIcon({ stat, active, delay }: { stat: (typeof impactStats)[number]; active: boolean; delay: number }) {
@@ -454,7 +466,7 @@ export default function ToolsBuilt() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-fg mb-5"
           >
-            AI Agents Built to <span className="text-accent">Automate PM Workflows</span>
+            Small agents <span className="text-accent">for the work that repeats.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -463,9 +475,9 @@ export default function ToolsBuilt() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-[15px] sm:text-[16px] text-fg/70 max-w-2xl leading-relaxed"
           >
-            Built to handle the repetitive parts of running multiple programs at once — financial reviews, status
-            reporting, project setup — saving roughly{" "}
-            <strong className="text-accent font-semibold">4–8 hours</strong> of PMO work a week.
+            Running four or five programs means the same reports, checks, and setup every week. I automated the
+            parts that didn&apos;t need me. Together they save{" "}
+            <strong className="text-accent font-semibold">4–8 hours</strong> a week.
           </motion.p>
         </div>
 
@@ -502,8 +514,7 @@ export default function ToolsBuilt() {
         >
           <p className="font-display text-[36px] leading-none text-accent mb-2">&ldquo;</p>
           <p className="text-[15px] sm:text-[16px] text-fg/75 italic leading-relaxed mb-4 max-w-2xl">
-            Most of these started as a fix for one recurring piece of PMO work. They stayed in use because the
-            rest of the team found them useful too.
+            Every one of these started because I got tired of doing the same thing by hand.
           </p>
           <p className="text-right font-signature text-[28px] text-accent">Rohit Singh</p>
         </motion.div>

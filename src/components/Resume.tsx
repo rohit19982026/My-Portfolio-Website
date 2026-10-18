@@ -15,9 +15,9 @@ const CARD_BG = "var(--color-card)";
 // Same facts already verified against Experience.tsx/Credentials.tsx —
 // a condensed "what's in the PDF" preview, not new claims.
 const highlights = [
-  { Icon: Layers, label: "6 years in IT delivery", sub: "Infra change mgmt → data & AI programs" },
-  { Icon: Award, label: "Claude Certified Architect – Foundations", sub: "Anthropic · PSM I · ITIL Foundation" },
-  { Icon: GraduationCap, label: "phData Innovation Award", sub: "AI agents saving 4–8 hrs/week" },
+  { Icon: Layers, label: "6 years in IT delivery", sub: "BT, then phData" },
+  { Icon: Award, label: "Claude Certified Architect – Foundations", sub: "Plus PSM I and ITIL Foundation" },
+  { Icon: GraduationCap, label: "phData Innovation Award", sub: "For the PMO agents" },
 ];
 
 export default function Resume() {
@@ -36,19 +36,17 @@ export default function Resume() {
           className="mb-5"
         />
         <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
-          Every role, program and certification in one document — built for
-          recruiters and hiring managers who need the full history, not just
-          the highlights.
+          Everything on one page, if you&apos;d rather read it that way.
         </p>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="rounded-card p-7 sm:p-10 lg:flex lg:items-center lg:gap-12"
+          className="rounded-card p-7 sm:p-10"
           style={{ border: `1px solid ${CARD_BORDER}`, background: CARD_BG }}
         >
-          <div className="lg:flex-1">
+          <div>
             <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-accent mb-3">
               PDF · ATS-FRIENDLY · 1 PAGE
             </p>
@@ -82,16 +80,6 @@ export default function Resume() {
             </div>
           </div>
 
-          <div className="hidden lg:block w-px self-stretch mx-2" style={{ background: "var(--color-divider)" }} />
-          <div className="h-px w-full my-8 lg:hidden" style={{ background: "var(--color-divider)" }} />
-
-          <div className="lg:shrink-0 lg:w-56">
-            <p className="text-[13px] text-fg/60 leading-relaxed">
-              Prefer the short version? The <a href="#experience" className="text-accent font-semibold hover:underline">Experience</a> and{" "}
-              <a href="#credentials" className="text-accent font-semibold hover:underline">Credentials</a> sections above cover the
-              same ground, interactively.
-            </p>
-          </div>
         </motion.div>
       </div>
     </section>
