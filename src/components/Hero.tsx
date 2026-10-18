@@ -344,7 +344,7 @@ export default function Hero() {
           {/* Photo column — 4 labeled floating badges replace the old
               AI Enthusiast / "Turning Ideas Into Impact" cards, whose
               messages are now covered by the capability strip below. */}
-          <div className="relative h-[340px] sm:h-[400px] lg:h-auto lg:min-h-[440px]">
+          <div className="relative h-[clamp(300px,54vw,420px)] lg:h-auto lg:min-h-[440px]">
             <HeroPortrait variant="desktop" />
             {desktopPhotoBadges.map((b) => (
               <motion.div
@@ -460,7 +460,7 @@ export default function Hero() {
                       filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 55%, transparent))",
                     }}
                   />
-                  <p className="font-heading text-[20px] font-bold text-fg leading-none">{stat.value}</p>
+                  <p className="font-heading text-[20px] font-bold text-fg leading-none whitespace-nowrap">{stat.value}</p>
                   <p className="text-[10.5px] text-fg/55 leading-tight">{stat.label}</p>
                 </div>
               ))}
@@ -519,7 +519,7 @@ export default function Hero() {
           // Badge pill carries location + availability, not a restatement
           // of the role title the headline already leads with directly
           // below it.
-          className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
+          className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
         >
           <motion.div
             variants={pop}
@@ -548,7 +548,7 @@ export default function Hero() {
               </span>
             </motion.h1>
 
-            <motion.div variants={fadeBlurUp} className="relative h-[240px] sm:h-[320px]">
+            <motion.div variants={fadeBlurUp} className="relative h-[clamp(210px,62vw,340px)]">
               <HeroPortrait variant="mobile" />
               {photoBadges.map((b, i) => (
                 <PhotoBadge key={i} Icon={b.Icon} position={b.position} />
@@ -698,11 +698,11 @@ export default function Hero() {
               <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-fg/60 whitespace-nowrap">
                 Tools I Use Daily
               </p>
-              <a href="#stack" className="flex items-center gap-1.5 font-heading text-[10px] text-fg/55 hover:text-accent whitespace-nowrap">
+              <a href="#stack" className="flex items-center gap-1.5 py-4 -my-4 pl-3 -ml-3 font-heading text-[10px] text-fg/55 hover:text-accent whitespace-nowrap">
                 See all <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "var(--color-accent)" }} />
               </a>
             </div>
-            <div className="flex gap-3 overflow-x-auto -mx-6 px-6 no-scrollbar">
+            <div className="flex gap-3 overflow-x-auto -mx-4 px-4 sm:-mx-6 sm:px-6 no-scrollbar">
               {tools.map((tool) => (
                 <div key={tool.name} className="shrink-0 w-[86px]">
                   <ToolIcon tool={tool} />

@@ -229,7 +229,7 @@ export default function DeliveryExposure() {
 
   return (
     <section id="stack" className="py-24" style={{ background: NAVY }}>
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div ref={ref} className="mb-14">
           <SectionHeading
             eyebrow="04 / STACK"

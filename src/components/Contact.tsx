@@ -12,7 +12,7 @@ const links = [
 export default function Contact() {
   return (
     <section id="contact" className="py-24 bg-surface border-t-2 border-fg/10">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="06 / CONTACT"
           segments={[
@@ -54,7 +54,7 @@ export default function Contact() {
         <div className="max-w-xl">
           {/* Contact info */}
           <div>
-            <div className="space-y-5 mb-10">
+            <div className="space-y-1 mb-10">
               {links.map((link) => (
                 <div key={link.label} className="flex items-center gap-4 group">
                   <span className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/45 w-20 shrink-0">
@@ -62,7 +62,7 @@ export default function Contact() {
                   </span>
                   <a
                     href={link.href}
-                    className="text-[14px] font-semibold text-fg/75 group-hover:text-accent transition-colors"
+                    className="inline-flex min-h-11 items-center break-all text-[14px] font-semibold text-fg/75 group-hover:text-accent transition-colors"
                   >
                     {link.value}
                   </a>

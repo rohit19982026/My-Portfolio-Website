@@ -3,7 +3,7 @@ import { navLinks } from "@/lib/content";
 export default function Footer() {
   return (
     <footer className="py-12 bg-surface border-t-2 border-fg/10">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid sm:grid-cols-4 gap-8 mb-10 text-xs">
           <div>
             <p className="font-display text-fg text-[22px] tracking-tight mb-3">
@@ -16,12 +16,12 @@ export default function Footer() {
           </div>
           <div>
             <p className="font-heading font-bold uppercase tracking-widest text-fg/50 mb-3 text-[10px]">EXPLORE</p>
-            <ul className="space-y-2">
+            <ul>
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="font-heading text-[12px] text-fg/50 hover:text-accent transition-colors"
+                    className="inline-flex min-h-11 items-center font-heading text-[12px] text-fg/50 hover:text-accent transition-colors"
                   >
                     → {link.label}
                   </a>
@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
           <div>
             <p className="font-heading font-bold uppercase tracking-widest text-fg/50 mb-3 text-[10px]">CONNECT</p>
-            <ul className="space-y-2">
+            <ul>
               {[
                 ["Email", "mailto:singhrohit.25119@gmail.com"],
                 ["LinkedIn", "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/"],
@@ -40,7 +40,7 @@ export default function Footer() {
                 <li key={label}>
                   <a
                     href={href}
-                    className="font-heading text-[12px] text-fg/50 hover:text-accent transition-colors"
+                    className="inline-flex min-h-11 min-w-11 items-center font-heading text-[12px] text-fg/50 hover:text-accent transition-colors"
                   >
                     → {label}
                   </a>

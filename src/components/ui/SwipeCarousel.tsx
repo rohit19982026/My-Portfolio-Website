@@ -98,7 +98,7 @@ export default function SwipeCarousel({
         role="region"
         aria-label={ariaLabel}
         tabIndex={0}
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-6 no-scrollbar -mx-6 px-6"
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-4 sm:scroll-pl-6 no-scrollbar -mx-4 px-4 sm:-mx-6 sm:px-6"
       >
         {children.map((child, i) => (
           <div key={i} className="w-[84%] shrink-0 snap-start">

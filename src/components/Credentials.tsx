@@ -338,7 +338,7 @@ export default function Credentials() {
 
   return (
     <section id="credentials" className="py-24" style={{ background: NAVY }}>
-      <div ref={ref} className="max-w-6xl mx-auto px-6">
+      <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6">
         <CredentialsHeader />
 
         <div className="hidden lg:grid lg:grid-cols-[1fr_1.5fr_1.15fr] gap-6">

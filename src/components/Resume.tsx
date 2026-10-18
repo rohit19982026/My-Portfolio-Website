@@ -26,7 +26,7 @@ export default function Resume() {
 
   return (
     <section id="resume" className="py-24 bg-surface border-t-2 border-fg/10">
-      <div ref={ref} className="max-w-6xl mx-auto px-6">
+      <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="05 / RESUME"
           segments={[

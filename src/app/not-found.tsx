@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-surface">
+    <div className="min-h-dvh flex flex-col items-center justify-center text-center px-6 bg-surface">
       <div
         className="mb-6 font-display text-8xl"
         style={{ color: "transparent", WebkitTextStroke: "2px var(--color-accent)" }}

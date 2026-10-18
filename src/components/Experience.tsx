@@ -48,7 +48,7 @@ export default function Trajectory() {
 
   return (
     <section id="experience" className="py-24 bg-surface">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="01 / EXPERIENCE"
           segments={[

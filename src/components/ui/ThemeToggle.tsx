@@ -13,7 +13,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       onClick={() => setTheme(isLight ? "dark" : "light")}
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
       aria-pressed={isLight}
-      className={`p-2 text-fg/70 hover:text-accent transition-colors ${className}`}
+      className={`inline-flex h-11 w-11 items-center justify-center text-fg/70 hover:text-accent transition-colors ${className}`}
     >
       {isLight ? <Moon className="w-[18px] h-[18px]" /> : <Sun className="w-[18px] h-[18px]" />}
     </button>

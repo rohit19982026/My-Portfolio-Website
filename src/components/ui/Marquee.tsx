@@ -35,7 +35,7 @@ export default function Marquee({
     </div>
   );
 
-  return (
+  const band = (
     <div
       className={`relative z-10 overflow-hidden py-4 sm:py-5 ${variantClasses[variant]} ${
         tilt ? "-rotate-2 scale-x-105" : ""
@@ -47,4 +47,8 @@ export default function Marquee({
       </div>
     </div>
   );
+
+  // The tilted band is wider than the screen on purpose; clip it here so it
+  // never becomes page-level horizontal scroll.
+  return tilt ? <div className="overflow-x-clip">{band}</div> : band;
 }

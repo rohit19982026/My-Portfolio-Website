@@ -190,7 +190,7 @@ function CaseStudyRow({ study, index }: { study: typeof caseStudies[0]; index: n
 export default function Work() {
   return (
     <section id="work" className="py-24 bg-blue">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-12">
           <SectionHeading
             eyebrow="02 / WORK"

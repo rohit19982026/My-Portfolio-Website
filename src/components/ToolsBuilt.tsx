@@ -164,7 +164,7 @@ function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (
               key={tab.id}
               type="button"
               onClick={() => onChange(tab.id)}
-              className="flex items-center gap-2 rounded-pill px-4 py-2 font-heading text-[12.5px] font-semibold whitespace-nowrap transition-colors duration-[var(--duration-base)] cursor-pointer"
+              className="flex min-h-11 items-center gap-2 rounded-pill px-4 py-2 font-heading text-[12.5px] font-semibold whitespace-nowrap transition-colors duration-[var(--duration-base)] cursor-pointer"
               style={{
                 background: isActive ? "rgba(215,255,63,0.1)" : "transparent",
                 color: isActive ? "var(--color-accent)" : "color-mix(in srgb, var(--color-fg) 60%, transparent)",
@@ -182,7 +182,7 @@ function FilterTabs({ active, onChange }: { active: "all" | AgentId; onChange: (
           it, "Reports"/"Messages"/"Kickoff" just get silently clipped at
           the viewport edge with no hint they exist. */}
       <div className="relative lg:hidden">
-        <div className="flex gap-2.5 overflow-x-auto pb-1 -mx-6 px-6 [scrollbar-width:none]">
+        <div className="flex gap-2.5 overflow-x-auto pb-1 -mx-4 px-4 sm:-mx-6 sm:px-6 [scrollbar-width:none]">
         {tabs.map((tab) => {
           const isActive = tab.id === active;
           const Icon = tab.icon;
@@ -236,7 +236,7 @@ function DiagramPanel({ label, Diagram }: { label: string; Diagram: ComponentTyp
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          className="w-full flex items-center justify-between gap-3 rounded-card px-3.5 py-2.5 font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/60 cursor-pointer"
+          className="w-full min-h-11 flex items-center justify-between gap-3 rounded-card px-3.5 py-2.5 font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-fg/60 cursor-pointer"
           style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
         >
           {label}
@@ -448,7 +448,7 @@ export default function ToolsBuilt() {
 
   return (
     <section id="tools" className="py-24" style={{ background: NAVY }}>
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div ref={ref} className="mb-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}

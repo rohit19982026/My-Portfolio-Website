@@ -51,8 +51,14 @@ const EDGE = Math.sqrt(1 + TAN * TAN);
 const BOT = 80; // gap between slider rest position and the bottom of the box
 const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
 const SLIVER = 10; // px of fabric left at each side once fully open
-const CLOSED_MOBILE = 480;
-const CLOSED_DESKTOP = 560;
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+// Closed shirt height: grows with the screen width, capped by the screen
+// height (so a landscape phone never gets a shirt taller than itself). The
+// same formula is repeated as CSS on the box so the first paint matches.
+const closedHeight = (width: number, height: number) =>
+  Math.round(Math.min(clamp(width * 1.18, 380, 560), Math.max(320, height * 0.78)));
+const CLOSED_CSS = "h-[min(clamp(380px,118vw,560px),max(320px,78svh))]";
 
 const FABRIC = "var(--color-shirt)";
 const FABRIC_DARK = "var(--color-shirt-deep)";
@@ -70,7 +76,6 @@ const CREASES =
 
 const METAL = "linear-gradient(90deg, #8e97a6, #e8ecf2 45%, #aab2c0)";
 
-const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 function teeth(side: "left" | "right") {
   // Tape with metal teeth along the inner edge; the right half is offset by
@@ -264,7 +269,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const contentRef = useRef<HTMLDivElement>(null);
 
   const p = useMotionValue(0);
-  const closedH = useMotionValue(CLOSED_DESKTOP);
+  const closedH = useMotionValue(560);
   const fullH = useMotionValue(0);
 
   const [ready, setReady] = useState(false);
@@ -332,8 +337,16 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     const box = boxRef.current;
     const content = contentRef.current;
     if (!box || !content) return;
+    // Screen height is only re-read when the width changes (rotation, resize),
+    // so the mobile URL bar collapsing never nudges the shirt mid-scroll.
+    let lastW = -1;
+    let vh = window.innerHeight;
     const measure = () => {
-      closedH.set(window.innerWidth < 768 ? CLOSED_MOBILE : CLOSED_DESKTOP);
+      if (window.innerWidth !== lastW) {
+        lastW = window.innerWidth;
+        vh = window.innerHeight;
+      }
+      closedH.set(closedHeight(lastW, vh));
       fullH.set(content.offsetHeight);
     };
     measure();
@@ -541,7 +554,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
 
       <motion.div
         ref={boxRef}
-        className="zipper-box relative overflow-hidden rounded-2xl h-[480px] md:h-[560px]"
+        className={`zipper-box relative overflow-hidden rounded-2xl ${CLOSED_CSS}`}
         style={ready ? { height: H } : undefined}
       >
         <motion.div
@@ -625,7 +638,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               primeZipSound();
               setSoundPref(soundOn ? "off" : "on");
             }}
-            className="pointer-events-auto absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/70 text-white transition-colors hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+            className="pointer-events-auto absolute right-2 top-2 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-ink/70 text-white transition-colors hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
           >
             {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
           </button>
