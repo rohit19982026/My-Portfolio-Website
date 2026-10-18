@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import SwipeCarousel from "./ui/SwipeCarousel";
 import { useRef, type ComponentType, type CSSProperties, type ReactNode } from "react";
 import { SiClaude } from "react-icons/si";
 import {
@@ -164,9 +165,9 @@ function CertItemRow({ item, variant }: { item: CertItem; variant: "grid" | "lis
       className={
         variant === "grid"
           ? "flex items-start gap-2.5 rounded-card p-3"
-          : "flex items-center gap-3 rounded-card px-3.5 py-3"
+          : "flex items-center gap-2.5 py-2.5 border-b last:border-b-0 border-[var(--color-divider)]"
       }
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
+      style={variant === "grid" ? { border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" } : undefined}
     >
       <span
         className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
@@ -223,7 +224,7 @@ function CertificationsCard({ inView }: { inView: boolean }) {
           <CertItemRow key={c.name} item={c} variant="grid" />
         ))}
       </div>
-      <div className="lg:hidden flex flex-col gap-2.5">
+      <div className="lg:hidden flex flex-col">
         {certifications.map((c) => (
           <CertItemRow key={c.name} item={c} variant="list" />
         ))}
@@ -347,8 +348,11 @@ export default function Credentials() {
           <RecognitionCard inView={inView} />
         </div>
         <div className="lg:hidden flex flex-col gap-6">
-          <EducationCard inView={inView} />
-          <CertificationsCard inView={inView} />
+          {/* Education and the course list are context, not the headline:
+              they sit in a side-swipe so the award isn't buried below them. */}
+          <SwipeCarousel ariaLabel="Education and certifications, swipeable">
+            {[<EducationCard key="edu" inView={inView} />, <CertificationsCard key="cert" inView={inView} />]}
+          </SwipeCarousel>
           <RecognitionCard inView={inView} />
         </div>
 
