@@ -1,3 +1,5 @@
+"use client";
+
 import { Bot, FileText, Send, UserCheck } from "lucide-react";
 import FlowDiagram, { type Step } from "./FlowDiagram";
 

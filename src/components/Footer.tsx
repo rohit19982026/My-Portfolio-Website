@@ -20,7 +20,7 @@ export default function Footer() {
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={`/${link.href}`}
                     className="inline-flex min-h-11 items-center font-heading text-[12px] text-fg/50 hover:text-accent transition-colors"
                   >
                     → {link.label}

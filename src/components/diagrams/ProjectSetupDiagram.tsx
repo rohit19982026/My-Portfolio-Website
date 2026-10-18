@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertTriangle, Bot, Calendar, CheckCircle2, FileText, Users, Zap } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import FlowDiagram, { type Step } from "./FlowDiagram";

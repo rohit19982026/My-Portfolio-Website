@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import Star from "./ui/Star";
 import Button from "./ui/Button";
@@ -25,12 +26,12 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-surface border-b-2 border-fg/10 pt-[env(safe-area-inset-top)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand */}
-        <a href="#" className="flex min-h-11 items-center gap-2.5 group">
+        <Link href="/" className="flex min-h-11 items-center gap-2.5 group">
           <Star className="star-spin w-4 h-4 text-accent" />
           <span className="font-heading text-sm font-bold text-fg tracking-[0.08em] uppercase">
             Rohit.Singh
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
@@ -39,7 +40,7 @@ export default function Navbar() {
             return (
               <a
                 key={link.href}
-                href={link.href}
+                href={`/${link.href}`}
                 aria-current={isActive ? "true" : undefined}
                 className={`relative px-3.5 py-3 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] transition-colors ${
                   isActive ? "text-accent" : "text-fg/70 hover:text-accent"
@@ -67,7 +68,7 @@ export default function Navbar() {
             <GithubMark className="w-[18px] h-[18px]" />
           </a>
           <ThemeToggle className="ml-1" />
-          <Button href="#contact" size="sm" className="ml-3 min-h-11">
+          <Button href="/#contact" size="sm" className="ml-3 min-h-11">
             Get in touch
           </Button>
         </nav>
@@ -106,7 +107,7 @@ export default function Navbar() {
                 return (
                   <motion.a
                     key={link.href}
-                    href={link.href}
+                    href={`/${link.href}`}
                     onClick={() => setMenuOpen(false)}
                     aria-current={isActive ? "true" : undefined}
                     initial={{ opacity: 0, y: 24 }}
@@ -133,7 +134,7 @@ export default function Navbar() {
                 <GithubMark className="w-5 h-5" />
               </a>
               <ThemeToggle />
-              <Button href="#contact" onClick={() => setMenuOpen(false)} className="flex-1 justify-center">
+              <Button href="/#contact" onClick={() => setMenuOpen(false)} className="flex-1 justify-center">
                 Get in touch
               </Button>
             </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Bot, CheckCircle2, FileCheck, FileCheck2, PieChart, UserCheck, Plug, Zap } from "lucide-react";
 import FlowDiagram, { type Step } from "./FlowDiagram";
 

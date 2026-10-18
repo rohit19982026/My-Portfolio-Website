@@ -1,3 +1,5 @@
+"use client";
+
 import { Bot, Clock, FileCheck, Network, Zap } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import FlowDiagram, { type Step } from "./FlowDiagram";

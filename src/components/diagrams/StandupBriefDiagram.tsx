@@ -1,3 +1,5 @@
+"use client";
+
 import { Bot, FileCheck, FileText, Zap } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import SlackMark from "../icons/SlackMark";

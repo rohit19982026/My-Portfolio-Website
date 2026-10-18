@@ -1,3 +1,5 @@
+"use client";
+
 import { BarChart3, Bot, CheckCircle2, PenLine, Zap } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import SlackMark from "../icons/SlackMark";
