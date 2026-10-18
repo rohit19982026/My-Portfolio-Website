@@ -22,9 +22,9 @@ export default function Home() {
       <Marquee items={skillMarqueeItems} variant="lime" tilt />
       <Experience />
       <Credentials />
+      <Resume />
       <ToolsBuilt />
       <DeliveryExposure />
-      <Resume />
       <Contact />
       <Footer />
     </>

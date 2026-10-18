@@ -232,7 +232,7 @@ export default function DeliveryExposure() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div ref={ref} className="mb-14">
           <SectionHeading
-            eyebrow="04 / STACK"
+            eyebrow="05 / STACK"
             segments={[
               { text: "The tools and platforms", style: "fill" },
               { text: "behind the programs.", style: "lime" },

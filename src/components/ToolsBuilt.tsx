@@ -457,7 +457,7 @@ export default function ToolsBuilt() {
             transition={{ duration: 0.5 }}
             className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] mb-5 text-accent"
           >
-            03 / TOOLS BUILT
+            04 / TOOLS BUILT
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
