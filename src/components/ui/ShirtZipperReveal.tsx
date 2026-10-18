@@ -43,8 +43,8 @@ const SLIVER = 10; // px of fabric left at each side once fully open
 const CLOSED_MOBILE = 480;
 const CLOSED_DESKTOP = 560;
 
-const FABRIC = "#2b4068";
-const FABRIC_DARK = "#223457";
+const FABRIC = "var(--color-shirt)";
+const FABRIC_DARK = "var(--color-shirt-deep)";
 const WEAVE = [
   "repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px)",
   "repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 1px, transparent 1px 3px)",
@@ -73,14 +73,14 @@ function teeth(side: "left" | "right") {
     backgroundSize: "5px 100%",
     backgroundRepeat: "no-repeat",
     backgroundPosition: side === "left" ? "right top" : "left top",
-    backgroundColor: "#18253f",
+    backgroundColor: "var(--color-shirt-deep)",
   } as const;
 }
 
 function ShirtButton({ className }: { className: string }) {
   return (
     <svg viewBox="0 0 16 16" width="16" height="16" className={`absolute ${className}`} aria-hidden>
-      <circle cx="8" cy="8" r="7" fill="#e9e4d6" stroke="#b9b2a0" strokeWidth="1" />
+      <circle cx="8" cy="8" r="7" fill="var(--color-paper)" stroke="#b9b2a0" strokeWidth="1" />
       <circle cx="8" cy="8" r="4.6" fill="none" stroke="#b9b2a0" strokeWidth=".8" />
       <circle cx="6.4" cy="6.4" r=".9" fill="#6d675a" />
       <circle cx="9.6" cy="6.4" r=".9" fill="#6d675a" />
@@ -157,7 +157,7 @@ function Panel({ side, clip, tapeTop, tapeLen, Y }: PanelProps) {
         {left ? (
           <div
             className="absolute left-[12%] bottom-[44px] w-[74px] h-[24px] rounded-[2px] flex items-center justify-center font-heading text-[7.5px] font-bold tracking-[0.18em]"
-            style={{ background: "#e9e4d6", color: "#4b463a", boxShadow: "0 1px 2px rgba(0,0,0,.4)", outline: "1px dashed rgba(75,70,58,.45)", outlineOffset: "-3px" }}
+            style={{ background: "var(--color-paper)", color: "#4b463a", boxShadow: "0 1px 2px rgba(0,0,0,.4)", outline: "1px dashed rgba(75,70,58,.45)", outlineOffset: "-3px" }}
           >
             SINCE 2020
           </div>
