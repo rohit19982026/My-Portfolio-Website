@@ -49,6 +49,7 @@ const TAN = 0.42; // V opening: horizontal run per px of slider travel
 const THETA = (Math.atan(TAN) * 180) / Math.PI;
 const EDGE = Math.sqrt(1 + TAN * TAN);
 const BOT = 80; // gap between slider rest position and the bottom of the box
+const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
 const SLIVER = 10; // px of fabric left at each side once fully open
 const CLOSED_MOBILE = 480;
 const CLOSED_DESKTOP = 560;
@@ -319,12 +320,13 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const innerShadow = useTransform(p, [0, 0.7], [1, 0.35]);
   const velocity = useSpring(useVelocity(Y), { stiffness: 180, damping: 30 });
   const lag = useTransform(velocity, (v) => clamp(-v / 90, -10, 6));
-  // a little side-to-side buzz while the slider is actually moving
-  const wobble = useTransform(velocity, (v) => Math.sin(Y.get() * 0.55) * clamp(Math.abs(v) / 400, 0, 2.2));
-  // fabric shudders while the slider is pulled along
-  const jx = useTransform(velocity, (v) => Math.sin(Y.get() * 0.9) * clamp(Math.abs(v) / 700, 0, 1) * 1.1);
-  const jy = useTransform(velocity, (v) => Math.cos(Y.get() * 1.3) * clamp(Math.abs(v) / 700, 0, 1) * 0.7);
-  const tilt = useTransform(velocity, (v) => Math.sin(Y.get() * 0.4) * clamp(Math.abs(v) / 400, 0, 3));
+  // one small shudder per tooth, decaying between teeth
+  const kx = useMotionValue(0);
+  const ky = useMotionValue(0);
+  const jx = useTransform(kx, (v) => v * 1.4);
+  const jy = useTransform(ky, (v) => v * 1.0);
+  const wobble = useTransform(kx, (v) => v * 2.4);
+  const tilt = useTransform(kx, (v) => v * 2.2);
 
   useEffect(() => {
     const box = boxRef.current;
@@ -363,7 +365,8 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     let last = Y.get();
     let lastT = performance.now();
     let acc = 0;
-    let hap = 0;
+    let sign = 1;
+    let kickAnim: AnimationPlaybackControls[] = [];
     let lastHap = 0;
     let atEnd = false;
     let rest: ReturnType<typeof setTimeout> | undefined;
@@ -389,31 +392,36 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
 
       acc += dist;
       let ticks = 0;
-      while (acc >= 10) {
-        acc -= 10;
+      while (acc >= TOOTH) {
+        acc -= TOOTH;
         ticks++;
       }
-      if (soundRef.current) {
-        for (let i = 0; i < Math.min(ticks, 3); i++) zipTick(speed, dy > 0 ? 1 : -1);
-        clearTimeout(rest);
-        rest = setTimeout(zipRest, 90);
-      }
-
-      hap += dist;
-      if (hap >= 14) {
-        hap = 0;
-        if (now - lastHap > 30) {
+      if (ticks > 0) {
+        sign = -sign;
+        kx.set(sign);
+        ky.set(-sign * 0.7);
+        kickAnim.forEach((a) => a.stop());
+        kickAnim = [animate(kx, 0, { duration: 0.09, ease: "easeOut" }), animate(ky, 0, { duration: 0.09, ease: "easeOut" })];
+        if (now - lastHap > 40) {
           lastHap = now;
-          buzz(6);
+          buzz(12);
         }
+        if (soundRef.current) {
+          for (let i = 0; i < Math.min(ticks, 3); i++) zipTick(speed, dy > 0 ? 1 : -1);
+        }
+      }
+      if (soundRef.current) {
+        clearTimeout(rest);
+        rest = setTimeout(zipRest, 120);
       }
     });
     return () => {
       unsub();
+      kickAnim.forEach((a) => a.stop());
       clearTimeout(rest);
       zipRest();
     };
-  }, [Y, H, reduce]);
+  }, [Y, H, kx, ky, reduce]);
 
   useEffect(() => () => anim.current?.stop(), []);
 
@@ -431,12 +439,14 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       }
       const dist = Math.abs(to - p.get());
       if (dist < 0.001) return;
+      // the slider covers its travel in PA of the run; aim for ~300px/s so each tooth lands on its own
+      const secs = clamp((fullH.get() - BOT) / (300 * PA), 2.2, 5.5);
       anim.current = animate(p, to, {
-        duration: Math.max(0.45, (next ? 1.7 : 1.3) * dist),
-        ease: [0.6, 0, 0.3, 1],
+        duration: Math.max(0.5, (next ? secs : secs * 0.75) * dist),
+        ease: [0.4, 0, 0.6, 1],
       });
     },
-    [p, reduce],
+    [p, fullH, reduce],
   );
 
   const onPointerDown = (e: PointerEvent<HTMLButtonElement>) => {

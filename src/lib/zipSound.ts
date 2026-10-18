@@ -65,17 +65,17 @@ export function zipTick(speed: number, dir: 1 | -1) {
   const osc = c.createOscillator();
   osc.type = "square";
   osc.frequency.setValueAtTime((dir > 0 ? 1550 : 1300) + s * 700 + Math.random() * 140, t);
-  osc.frequency.exponentialRampToValueAtTime(620, t + 0.012);
+  osc.frequency.exponentialRampToValueAtTime(560, t + 0.018);
   const og = c.createGain();
   og.gain.setValueAtTime(0.0001, t);
-  og.gain.exponentialRampToValueAtTime(0.28 + s * 0.2, t + 0.001);
-  og.gain.exponentialRampToValueAtTime(0.0001, t + 0.014);
+  og.gain.exponentialRampToValueAtTime(0.5 - s * 0.15, t + 0.001);
+  og.gain.exponentialRampToValueAtTime(0.0001, t + 0.02);
   const hp = c.createBiquadFilter();
   hp.type = "highpass";
   hp.frequency.value = 900;
   osc.connect(og).connect(hp).connect(master);
   osc.start(t);
-  osc.stop(t + 0.02);
+  osc.stop(t + 0.03);
 
   const burst = c.createBufferSource();
   burst.buffer = noise;
@@ -90,7 +90,7 @@ export function zipTick(speed: number, dir: 1 | -1) {
   burst.connect(bp).connect(ng).connect(master);
   burst.start(t, Math.random() * 0.8, 0.02);
 
-  bed.gain.setTargetAtTime(0.035 + s * 0.11, t, 0.02);
+  bed.gain.setTargetAtTime(0.02 + s * 0.09, t, 0.02);
   bedFilter.frequency.setTargetAtTime(1800 + s * 3600, t, 0.03);
 }
 
