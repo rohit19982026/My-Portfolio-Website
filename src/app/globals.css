@@ -41,6 +41,38 @@
   --font-signature: var(--font-caveat);
 }
 
+/* Mix ratios for blending a fixed per-agent/per-category brand accent
+   (lime/purple/blue/teal/amber/pink — chosen to pop on dark navy cards)
+   toward the theme's own foreground color when that accent is used as
+   small flat text rather than a self-contained chip or an icon. Dark
+   mode's values exactly reproduce what those spots already rendered
+   before this existed (100% = untouched flat accent, 80% = the
+   diagram eyebrow labels' original white-mix recipe), so dark mode is
+   unchanged; only the light-mode overrides below are new, darkening
+   just enough for the same bright accents to stay legible on a light
+   card instead of washing out.
+   --accent-text-mix:    flat "accent as text" spots (tags, badges, the
+                          per-agent cadence/built-with text).
+   --accent-eyebrow-mix: the diagram SKILL/OUTPUT eyebrow labels. */
+:root {
+  --accent-text-mix: 100%;
+  --accent-eyebrow-mix: 80%;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --accent-text-mix: 40%;
+    --accent-eyebrow-mix: 35%;
+  }
+}
+:root[data-theme="dark"] {
+  --accent-text-mix: 100%;
+  --accent-eyebrow-mix: 80%;
+}
+:root[data-theme="light"] {
+  --accent-text-mix: 40%;
+  --accent-eyebrow-mix: 35%;
+}
+
 /* Light theme. Three layers so a manual toggle always wins over OS
    preference, and OS preference always wins over the dark default, with
    zero flash in every case before any JS runs:

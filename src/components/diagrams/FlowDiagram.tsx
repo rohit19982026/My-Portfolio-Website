@@ -198,7 +198,7 @@ function BranchItemCard({
         <PulseOutline color={accent} delay={delay + 0.5} active={motionOn} />
         <p
           className="font-heading text-[8.5px] font-bold uppercase tracking-[0.12em] mb-1"
-          style={{ color: `color-mix(in srgb, ${accent} 80%, var(--color-fg))` }}
+          style={{ color: `color-mix(in srgb, ${accent} var(--accent-eyebrow-mix), var(--color-fg))` }}
         >
           {item.eyebrow}
         </p>

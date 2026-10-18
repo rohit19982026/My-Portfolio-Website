@@ -256,10 +256,15 @@ function StatTile({ icon: Icon, color, value, label }: { icon: IconType; color: 
 }
 
 function Tag({ icon, label, color }: { icon: ReactNode; label: string; color: string }) {
+  // `color` is a fixed brand hex chosen to pop on a dark card; mixed
+  // toward the theme foreground so the same hue stays legible as small
+  // text on a light card too, without touching it in dark mode (where
+  // --accent-text-mix is 100%, i.e. the flat color, unchanged).
+  const textColor = `color-mix(in srgb, ${color} var(--accent-text-mix), var(--color-fg))`;
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-pill px-3 py-1.5 font-heading text-[10px] font-semibold whitespace-nowrap"
-      style={{ border: `1px solid color-mix(in srgb, ${color} 40%, transparent)`, color }}
+      style={{ border: `1px solid color-mix(in srgb, ${color} 40%, transparent)`, color: textColor }}
     >
       {icon}
       {label}
@@ -281,7 +286,7 @@ function FeaturedAgentCard({ agent, inView }: { agent: Agent; inView: boolean })
         {isBilling && (
           <span
             className="inline-flex items-center gap-1.5 rounded-pill px-3 py-1 font-heading text-[10px] font-bold uppercase tracking-[0.1em] mb-4"
-            style={{ background: "rgba(139,127,240,0.15)", color: "#8B7FF0" }}
+            style={{ background: "rgba(139,127,240,0.15)", color: "color-mix(in srgb, #8B7FF0 var(--accent-text-mix), var(--color-fg))" }}
           >
             <Plus size={11} /> Featured
           </span>
@@ -328,13 +333,19 @@ function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inVi
         <h3 className="font-heading text-[15px] font-bold text-fg flex-1 leading-snug">{agent.title}</h3>
         <span
           className="rounded-pill px-2.5 py-1 font-heading text-[9.5px] font-bold uppercase tracking-[0.06em] shrink-0"
-          style={{ border: `1px solid color-mix(in srgb, ${agent.accent} 45%, transparent)`, color: agent.accent }}
+          style={{
+            border: `1px solid color-mix(in srgb, ${agent.accent} 45%, transparent)`,
+            color: `color-mix(in srgb, ${agent.accent} var(--accent-text-mix), var(--color-fg))`,
+          }}
         >
           {agent.cadence}
         </span>
       </div>
       <p className="text-[13px] leading-relaxed text-fg/65 mb-4">{agent.body}</p>
-      <div className="flex items-center gap-1.5 mb-5 font-heading text-[11px] font-bold" style={{ color: agent.accent }}>
+      <div
+        className="flex items-center gap-1.5 mb-5 font-heading text-[11px] font-bold"
+        style={{ color: `color-mix(in srgb, ${agent.accent} var(--accent-text-mix), var(--color-fg))` }}
+      >
         <Cpu size={13} />
         <span>{agent.builtWith}</span>
       </div>

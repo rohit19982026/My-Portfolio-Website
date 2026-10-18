@@ -200,7 +200,11 @@ function CategoryCard({ category, index, inView }: { category: StackCategory; in
         <p className="font-heading text-[13px] font-bold uppercase tracking-[0.1em] leading-snug">
           <span className="text-fg">{label[0]} </span>
           <span
-            className="bg-gradient-to-r from-[#8B7FF0] to-[#5B9BF0] bg-clip-text text-transparent"
+            className="bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, color-mix(in srgb, #8B7FF0 var(--accent-text-mix), var(--color-fg)), color-mix(in srgb, #5B9BF0 var(--accent-text-mix), var(--color-fg)))",
+            }}
           >
             {label[1]}
           </span>
