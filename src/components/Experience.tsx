@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionHeading from "./ui/SectionHeading";
+import ShirtZipperReveal from "./ui/ShirtZipperReveal";
 
 const alpha = (token: string, pct: number) =>
   `color-mix(in srgb, var(--color-${token}) ${pct}%, transparent)`;
@@ -62,6 +63,7 @@ export default function Trajectory() {
           anything down.
         </p>
 
+        <ShirtZipperReveal>
         <div className="relative">
           <div
             className="absolute left-0 top-2 bottom-2 w-px"
@@ -137,6 +139,7 @@ export default function Trajectory() {
             ))}
           </div>
         </div>
+        </ShirtZipperReveal>
       </div>
     </section>
   );
