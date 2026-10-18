@@ -120,15 +120,18 @@ type PanelProps = {
   tapeTop: ReturnType<typeof useTransform<number, number>>;
   tapeLen: ReturnType<typeof useTransform<number, number>>;
   Y: ReturnType<typeof useMotionValue<number>>;
+  turn: ReturnType<typeof useTransform<number, number>>;
 };
 
-function Panel({ side, clip, tapeTop, tapeLen, Y }: PanelProps) {
+function Panel({ side, clip, tapeTop, tapeLen, Y, turn }: PanelProps) {
   const left = side === "left";
   return (
     <motion.div
       className="absolute inset-0"
       style={{
         translate: left ? `calc(var(--b) * (${SLIVER}px - 50%)) 0` : `calc(var(--b) * (50% - ${SLIVER}px)) 0`,
+        rotate: left ? "y calc(var(--b) * -17deg)" : "y calc(var(--b) * 17deg)",
+        transformOrigin: left ? "0% 50%" : "100% 50%",
         willChange: "transform",
       }}
     >
@@ -140,6 +143,14 @@ function Panel({ side, clip, tapeTop, tapeLen, Y }: PanelProps) {
           backgroundImage: [left ? SHADE_LEFT : SHADE_RIGHT, CREASES, ...WEAVE].join(","),
         }}
       >
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,.1) 40%, transparent 52%)" }}
+        />
+        <motion.div
+          className="absolute inset-0"
+          style={{ opacity: turn, background: left ? "rgba(255,255,255,.16)" : "rgba(0,0,0,.34)" }}
+        />
         <Collar side={side} />
         <ShirtButton className={left ? "top-[40px] right-[calc(50%+16px)]" : "top-[40px] left-[calc(50%+16px)]"} />
 
@@ -182,6 +193,19 @@ function Panel({ side, clip, tapeTop, tapeLen, Y }: PanelProps) {
         {!left && <ShirtButton className="top-[198px] right-[calc(10%+30px)]" />}
       </motion.div>
 
+      {/* fabric puckering and shadow beside the tape */}
+      <motion.div
+        className="absolute"
+        style={{
+          top: tapeTop,
+          height: tapeLen,
+          width: 40,
+          left: left ? "calc(50% - 40px)" : "50%",
+          transformOrigin: left ? "100% 100%" : "0 100%",
+          rotate: left ? -THETA : THETA,
+          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,0,.34))`,
+        }}
+      />
       {/* zipper tape, V-shaped above the slider */}
       <motion.div
         className="absolute"
@@ -192,7 +216,9 @@ function Panel({ side, clip, tapeTop, tapeLen, Y }: PanelProps) {
           left: left ? "calc(50% - 11px)" : "50%",
           transformOrigin: left ? "100% 100%" : "0 100%",
           rotate: left ? -THETA : THETA,
-          boxShadow: left ? "5px 0 9px rgba(0,0,0,.5)" : "-5px 0 9px rgba(0,0,0,.5)",
+          boxShadow: left
+            ? "6px 0 10px rgba(0,0,0,.45), 16px 0 30px rgba(0,0,0,.28), inset 1px 0 0 rgba(255,255,255,.35)"
+            : "-6px 0 10px rgba(0,0,0,.45), -16px 0 30px rgba(0,0,0,.28), inset -1px 0 0 rgba(255,255,255,.35)",
           ...teeth(side),
         }}
       />
@@ -259,12 +285,20 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     Y,
     (y) => `polygon(calc(50% + ${(y * TAN).toFixed(1)}px) 0, 100% 0, 100% 100%, calc(50% - .5px) 100%, calc(50% - .5px) ${y.toFixed(1)}px)`,
   );
+  const turnL = useTransform(b, (v) => v * 0.9);
+  const turnR = useTransform(b, (v) => v * 0.9);
+  const settle = useTransform(p, [0, PA], [0.985, 1]);
+  const rise = useTransform(p, [0, PA], [10, 0]);
   const tapeLen = useTransform(Y, (y) => y * EDGE);
   const tapeTop = useTransform(Y, (y) => y - y * EDGE);
 
   const labelOpacity = useTransform(p, (v) => (v < 0.05 ? 1 - v / 0.05 : v > 0.95 ? (v - 0.95) / 0.05 : 0));
   const innerShadow = useTransform(p, [0, 0.7], [1, 0.35]);
-  const lag = useTransform(useSpring(useVelocity(Y), { stiffness: 180, damping: 30 }), (v) => clamp(-v / 90, -10, 6));
+  const velocity = useSpring(useVelocity(Y), { stiffness: 180, damping: 30 });
+  const lag = useTransform(velocity, (v) => clamp(-v / 90, -10, 6));
+  // a little side-to-side buzz while the slider is actually moving
+  const wobble = useTransform(velocity, (v) => Math.sin(Y.get() * 0.55) * clamp(Math.abs(v) / 500, 0, 1.4));
+  const tilt = useTransform(velocity, (v) => Math.sin(Y.get() * 0.4) * clamp(Math.abs(v) / 400, 0, 3));
 
   useEffect(() => {
     const box = boxRef.current;
@@ -408,9 +442,14 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         className="zipper-box relative overflow-hidden rounded-2xl h-[480px] md:h-[560px]"
         style={ready ? { height: H } : undefined}
       >
-        <div ref={contentRef} id={contentId} className="px-4 sm:px-6 pt-8 pb-24">
+        <motion.div
+          ref={contentRef}
+          id={contentId}
+          className="px-4 sm:px-6 pt-8 pb-24"
+          style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
+        >
           {children}
-        </div>
+        </motion.div>
 
         <motion.div
           aria-hidden
@@ -420,10 +459,10 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
 
         <motion.div
           className="zipper-overlay pointer-events-none absolute inset-0"
-          style={{ "--b": b } as MotionStyle}
+          style={{ "--b": b, perspective: 1400 } as MotionStyle}
         >
-          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} />
-          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} />
+          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnL} />
+          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnR} />
 
           <motion.button
             type="button"
@@ -437,13 +476,13 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
             onClick={onClick}
             onKeyDown={onKeyDown}
             className="pointer-events-auto absolute left-1/2 -ml-8 h-[96px] w-16 touch-none select-none cursor-grab active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime rounded-lg"
-            style={{ top: Y }}
+            style={{ top: Y, x: wobble, rotate: tilt }}
           >
             <span
               className="relative mx-auto block h-9 w-[30px] rounded-t-[7px] rounded-b-[12px]"
               style={{
-                background: "linear-gradient(135deg, rgba(255,255,255,.6), transparent 42%, rgba(0,0,0,.28)), var(--color-lime)",
-                boxShadow: "0 3px 7px rgba(0,0,0,.5), inset 0 0 0 1px rgba(0,0,0,.18)",
+                background: "radial-gradient(ellipse at 28% 18%, rgba(255,255,255,.85), transparent 45%), linear-gradient(135deg, rgba(255,255,255,.4), transparent 42%, rgba(0,0,0,.35)), var(--color-lime)",
+                boxShadow: "0 5px 10px rgba(0,0,0,.55), 0 14px 18px -6px rgba(0,0,0,.35), inset 0 0 0 1px rgba(0,0,0,.2), inset 0 -3px 5px rgba(0,0,0,.2)",
               }}
             >
               <span className="absolute left-1/2 top-[7px] h-[10px] w-[8px] -translate-x-1/2 rounded-full bg-black/25" />
