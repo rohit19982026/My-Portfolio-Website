@@ -54,7 +54,7 @@ export default function SectionHeading({
         {eyebrow}
       </p>
       <h2
-        className="font-display font-normal uppercase tracking-tight leading-[0.97]"
+        className="heading-display"
         style={{ fontSize: sizeClamp[size] }}
       >
         {segments.map((seg, i) => (

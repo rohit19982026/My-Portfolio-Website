@@ -127,6 +127,17 @@ a, button, [role="button"] { touch-action: manipulation; }
   pointer-events: none;
 }
 
+/* Shared section/page headline spacing (Anton, uppercase): open the letters up
+   a touch, widen word gaps and give lines room so heavy glyphs never touch. */
+.heading-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.014em;
+  word-spacing: 0.04em;
+  line-height: 1.08;
+}
+
 /* Hollow, stroke-only display letterforms — the signature headline treatment */
 .text-outline {
   color: transparent;

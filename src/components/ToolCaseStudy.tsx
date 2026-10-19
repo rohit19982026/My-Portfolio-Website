@@ -213,7 +213,7 @@ export default function ToolCaseStudy({ agent }: { agent: Agent }) {
             Case study {String(i + 1).padStart(2, "0")} of {agents.length}
           </p>
           <h1
-            className="font-display font-normal uppercase leading-[0.97] tracking-tight text-fg"
+            className="heading-display text-fg"
             style={{ fontSize: "clamp(2.25rem, 5vw, 4.5rem)" }}
           >
             {agent.title}
