@@ -33,7 +33,7 @@ const BOTTOM_FADE_MASK = "linear-gradient(to bottom, #000 0%, #000 82%, transpar
 
 const IMAGE_SIZES = {
   desktop: "(min-width: 1280px) 440px, 400px",
-  mobile: "(min-width: 640px) 220px, 190px",
+  mobile: "(min-width: 640px) 420px, 46vw",
 } as const;
 
 const GROUND_SHADOW = {
@@ -81,23 +81,29 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
   // exact dark-fill/accent-stroke marker already used for edge endpoints
   // in FlowDiagram.tsx, reused here instead of inventing a new dot style.
   const mobileBackdrop = (
-    <div className="absolute inset-[-14%] pointer-events-none" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
       <div
-        className="absolute inset-0"
+        className="absolute inset-[-14%]"
         style={{ backgroundImage: DOT_GRID_LIME, backgroundSize: "22px 22px" }}
       />
+      {/* thin outer arch */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-x-[-7%] bottom-0 top-[-3%] rounded-t-[999px] border border-b-0"
         style={{
-          background:
-            "radial-gradient(50% 55% at 50% 42%, rgba(215,255,63,0.22) 0%, rgba(215,255,63,0.08) 55%, transparent 78%)",
+          borderColor: "rgba(190,230,30,0.55)",
+          WebkitMaskImage: "linear-gradient(to bottom, #000 55%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, #000 55%, transparent 100%)",
         }}
       />
-      <div className="absolute rounded-full" style={{ inset: "16%", border: "1px solid rgba(215,255,63,0.18)" }} />
-      <div className="absolute rounded-full" style={{ inset: "7%", border: "1px solid rgba(215,255,63,0.12)" }} />
+      {/* soft filled arch */}
       <div
-        className="absolute rounded-full"
-        style={{ top: "12%", right: "10%", width: 7, height: 7, background: "#0d0d0f", border: "1.5px solid var(--color-lime)" }}
+        className="absolute inset-x-[2%] bottom-0 top-[7%] rounded-t-[999px]"
+        style={{
+          background:
+            "radial-gradient(75% 60% at 62% 38%, rgba(205,245,60,0.55) 0%, rgba(215,255,63,0.22) 55%, rgba(215,255,63,0.06) 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, #000 60%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, #000 60%, transparent 100%)",
+        }}
       />
     </div>
   );

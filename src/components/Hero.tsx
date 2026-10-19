@@ -71,15 +71,6 @@ const mobileStats = [
   { Icon: Zap, value: "4–8 Hrs", label: "Hours Saved / Week" },
 ] as const;
 
-// Floating icon badges over the mobile photo — 4 now (was 3), matching
-// the newest reference design's brain/chart/lightning/network ring.
-const photoBadges = [
-  { Icon: Brain, position: "-left-3 -top-3" },
-  { Icon: BarChart3, position: "-right-3 -top-3" },
-  { Icon: Zap, position: "-left-3 bottom-8" },
-  { Icon: Network, position: "-right-3 bottom-8" },
-] as const;
-
 // 4-tile capability strip — a leaner icon+label restatement of the bio,
 // per feedback that paragraph-heavy sections read as too bulky. Mobile
 // renders label only; desktop has room for the description too. Each
@@ -177,17 +168,6 @@ function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
       />
       <p className="font-heading text-[17px] font-bold text-fg leading-none mt-0.5">{value}</p>
       <p className="text-[10px] text-fg/55 leading-tight">{label}</p>
-    </div>
-  );
-}
-
-function PhotoBadge({ Icon, position }: { Icon: (typeof photoBadges)[number]["Icon"]; position: string }) {
-  return (
-    <div
-      className={`absolute ${position} z-10 flex items-center justify-center w-11 h-11 rounded-xl`}
-      style={{ background: "rgba(8,12,26,0.85)", border: `1px solid ${CARD_BORDER}`, backdropFilter: "blur(6px)" }}
-    >
-      <Icon size={18} strokeWidth={1.75} className="text-white/80" />
     </div>
   );
 }
@@ -499,27 +479,32 @@ export default function Hero() {
           // below it.
           className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-9 pb-14 sm:pb-16 relative z-10"
         >
-                    <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
-            <motion.h1 variants={fadeBlurUp} className="font-heading leading-[1.2]">
+          <div className="grid grid-cols-[1.08fr_1fr] items-center gap-x-[clamp(0.75rem,3vw,2rem)]">
+            <motion.h1 variants={fadeBlurUp} className="font-sans">
               <span
-                className="block font-bold text-fg"
-                style={{ fontSize: "clamp(1.35rem, 6.5vw, 1.85rem)" }}
+                className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
+                style={{ fontSize: "clamp(1.75rem, 8vw, 3.4rem)" }}
               >
-                Technical Project Manager.
+                Technical
+                <br />
+                Project
+                <br />
+                Manager<span className="text-lime">.</span>
               </span>
               <span
-                className="block font-semibold text-fg/75 mt-2"
-                style={{ fontSize: "clamp(1rem, 4.5vw, 1.3rem)" }}
+                className="mt-[1.1em] block font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
+                style={{ fontSize: "clamp(1rem, 4.6vw, 1.9rem)" }}
               >
-                Data, analytics, and <span className="text-accent">AI programs</span> for enterprise clients.
+                Data, analytics, and
+                <br />
+                <span className="font-semibold text-accent">AI programs</span> for
+                <br />
+                enterprise clients.
               </span>
             </motion.h1>
 
-            <motion.div variants={fadeBlurUp} className="relative h-[clamp(210px,62vw,340px)]">
+            <motion.div variants={fadeBlurUp} className="relative h-[clamp(250px,76vw,480px)]">
               <HeroPortrait variant="mobile" />
-              {photoBadges.map((b, i) => (
-                <PhotoBadge key={i} Icon={b.Icon} position={b.position} />
-              ))}
             </motion.div>
           </div>
 
