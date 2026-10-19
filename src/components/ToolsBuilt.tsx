@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import { ArrowUpRight, Clock, Sparkle, Target, Users, Zap } from "lucide-react";
+import SectionHeading from "./ui/SectionHeading";
 import SwipeCarousel from "./ui/SwipeCarousel";
 import { agents, type Agent } from "@/lib/agents";
 
@@ -185,36 +186,20 @@ export default function ToolsBuilt() {
   return (
     <section id="tools" className="py-24" style={{ background: NAVY }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div ref={ref} className="mb-10">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5 }}
-            className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] mb-5 text-accent"
-          >
-            04 / TOOLS BUILT
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-fg mb-5"
-          >
-            Small agents <span className="text-accent">for the work that repeats.</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[15px] sm:text-[16px] text-fg/70 max-w-2xl leading-relaxed"
-          >
+        <div ref={ref} className="mb-12">
+          <SectionHeading
+            eyebrow="04 / TOOLS BUILT"
+            segments={[
+              { text: "Small agents", style: "fill" },
+              { text: "for the work that repeats.", style: "lime" },
+            ]}
+            className="mb-5"
+          />
+          <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed">
             Running four or five programs means the same reports, checks, and setup every week. I automated the
             parts that didn&apos;t need me. Together they save{" "}
             <strong className="text-accent font-semibold">4–8 hours</strong> a week.
-          </motion.p>
+          </p>
         </div>
 
         <div className="hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">

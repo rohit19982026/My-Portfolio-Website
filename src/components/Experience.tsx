@@ -57,7 +57,7 @@ export default function Trajectory() {
           ]}
           className="mb-5"
         />
-        <p ref={ref} className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-14">
+        <p ref={ref} className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
           Six years in delivery. Almost four at phData running data and AI programs, and two
           before that at British Telecom, making sure UK network changes didn&apos;t take
           anything down.

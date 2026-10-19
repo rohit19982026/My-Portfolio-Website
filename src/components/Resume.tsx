@@ -217,7 +217,7 @@ export default function Resume() {
           ]}
           className="mb-5"
         />
-        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-10">
+        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
           Everything on one page if you&apos;d rather read it that way, and where my code lives on GitHub.
         </p>
 

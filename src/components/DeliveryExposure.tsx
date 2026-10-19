@@ -230,15 +230,16 @@ export default function DeliveryExposure() {
   return (
     <section id="stack" className="py-24" style={{ background: NAVY }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div ref={ref} className="mb-14">
+        <div ref={ref} className="mb-12">
           <SectionHeading
             eyebrow="05 / STACK"
             segments={[
               { text: "The tools and platforms", style: "fill" },
               { text: "behind the programs.", style: "lime" },
             ]}
+            className="mb-5"
           />
-          <p className="text-[15px] text-fg/65 max-w-2xl leading-relaxed mt-5">
+          <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed">
             The platforms my programs have run on. I don&apos;t engineer on them, but I know
             them well enough to scope the work and keep up in technical discussions. The last
             group is different: those are the tools I build with.

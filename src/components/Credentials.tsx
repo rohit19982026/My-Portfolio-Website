@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import SectionHeading from "./ui/SectionHeading";
 import { useId, useRef, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
 import { SiClaude } from "react-icons/si";
 import {
@@ -350,40 +351,19 @@ function CredentialAccordion({
 
 function CredentialsHeader() {
   return (
-    <div className="relative mb-14">
-      <svg className="hidden lg:block absolute top-0 right-0 w-40 h-16 opacity-[0.15]" aria-hidden="true" viewBox="0 0 160 64">
-        <path d="M0,30 Q40,0 80,30 T160,30" stroke="var(--color-accent)" strokeWidth="1.5" fill="none" strokeDasharray="1 6" />
-      </svg>
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5 }}
-        className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-5"
-      >
-        02 / CREDENTIALS &amp; RECOGNITION
-      </motion.p>
-      <div className="lg:flex lg:items-end lg:justify-between lg:gap-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-          className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-fg mb-5 lg:mb-0"
-        >
-          Certifications <span className="text-accent">and recognition.</span>
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-[14px] sm:text-[15px] text-fg/70 leading-relaxed lg:max-w-sm lg:text-right"
-        >
-          A degree in computer applications, certifications in Claude, Scrum, and ITIL, and an
-          award from phData for the agents in the next section.
-        </motion.p>
-      </div>
+    <div className="mb-12">
+      <SectionHeading
+        eyebrow="02 / CREDENTIALS & RECOGNITION"
+        segments={[
+          { text: "Certifications", style: "fill" },
+          { text: "and recognition.", style: "lime" },
+        ]}
+        className="mb-5"
+      />
+      <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed">
+        A degree in computer applications, certifications in Claude, Scrum, and ITIL, and an
+        award from phData for the agents in the next section.
+      </p>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function Contact() {
           ]}
           className="mb-5"
         />
-        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-10">
+        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
           I&apos;m looking for my next Technical Project or Program Manager role in data
           and AI. Email is the quickest way to reach me.
         </p>

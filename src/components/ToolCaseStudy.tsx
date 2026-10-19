@@ -153,10 +153,10 @@ function ResultCard({ agent }: { agent: Agent }) {
         <Sparkles size={22} />
       </IconBubble>
       <div className="min-w-0">
-        <h2 id="case-04" className="font-heading text-[10.5px] font-bold uppercase tracking-[0.18em]" style={{ color: accentText(agent.accent) }}>
+        <h2 id="case-04" className="font-heading text-[18px] font-bold leading-snug text-fg sm:text-[20px]">
           What changed?
         </h2>
-        <p className="mt-1 font-heading text-[18px] font-bold leading-snug text-fg sm:text-[22px]">{agent.result}</p>
+        <p className="mt-1.5 text-[15.5px] leading-relaxed text-fg/80">{agent.result}</p>
       </div>
     </section>
   );
@@ -212,7 +212,12 @@ export default function ToolCaseStudy({ agent }: { agent: Agent }) {
           <p className="mb-3 font-heading text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color }}>
             Case study {String(i + 1).padStart(2, "0")} of {agents.length}
           </p>
-          <h1 className="font-heading text-[30px] font-bold leading-tight text-fg sm:text-[40px]">{agent.title}</h1>
+          <h1
+            className="font-display font-normal uppercase leading-[0.97] tracking-tight text-fg"
+            style={{ fontSize: "clamp(2.25rem, 5vw, 4.5rem)" }}
+          >
+            {agent.title}
+          </h1>
           <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-fg/70">{agent.summary}</p>
           <SpecStrip agent={agent} />
         </header>
