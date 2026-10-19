@@ -6,7 +6,6 @@ import { useId, useRef, useState, type ComponentType, type CSSProperties, type R
 import { SiClaude } from "react-icons/si";
 import {
   Calendar,
-  CheckCircle2,
   ChevronDown,
   ClipboardList,
   Database,
@@ -78,8 +77,9 @@ const award = {
   desc: "Given for the agents that set up new projects from signed SOWs and sent weekly status reports to clients by email and Slack.",
 };
 
-const keyCerts = certifications.slice(0, 3);
-const moreCourses = certifications.slice(3);
+// Claude and PSM I are already shown as verified Credly badges in the hero, so
+// only the rest (ITIL and the courses) live behind the toggle here.
+const moreCourses = certifications.slice(2);
 
 const BOX = { background: CARD_BG, border: `1px solid ${CARD_BORDER}` } as const;
 
@@ -91,22 +91,6 @@ function IconDisc({ color, children }: { color: string; children: ReactNode }) {
     >
       {children}
     </span>
-  );
-}
-
-function CertChip({ item }: { item: CertItem }) {
-  const { icon: Icon, color, name, issuer } = item;
-  return (
-    <li className="flex items-center gap-3 rounded-2xl px-4 py-3" style={BOX}>
-      <IconDisc color={color}>
-        <Icon size={18} style={{ color }} />
-      </IconDisc>
-      <div className="min-w-0 flex-1">
-        <p className="font-heading text-[13px] font-bold leading-snug text-fg">{name}</p>
-        <p className="mt-0.5 text-[11px] text-fg/50">{issuer}</p>
-      </div>
-      <CheckCircle2 size={15} className="shrink-0 text-accent" />
-    </li>
   );
 }
 
@@ -122,7 +106,7 @@ function MoreCourses() {
         onClick={() => setOpen((o) => !o)}
         className="inline-flex min-h-11 items-center gap-2 font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/60 transition-colors hover:text-accent"
       >
-        More courses ({moreCourses.length})
+        Other certifications and courses ({moreCourses.length})
         <ChevronDown
           size={15}
           className={`transition-transform duration-300 motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
@@ -159,15 +143,15 @@ export default function Credentials() {
     <section id="credentials" className="py-14 sm:py-24" style={{ background: NAVY }}>
       <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
-          eyebrow="03 / CREDENTIALS & RECOGNITION"
+          eyebrow="03 / RECOGNITION & EDUCATION"
           segments={[
-            { text: "Certifications", style: "fill" },
-            { text: "and recognition.", style: "lime" },
+            { text: "Recognition", style: "fill" },
+            { text: "and education.", style: "lime" },
           ]}
           className="mb-5"
         />
         <p className="mb-8 max-w-xl text-[16px] leading-relaxed text-fg/70 sm:mb-12">
-          Certifications, an award from phData, and my degree.
+          An award from phData and my degree.
         </p>
 
         <motion.div
@@ -176,12 +160,6 @@ export default function Credentials() {
           transition={{ duration: 0.5 }}
           className="space-y-3"
         >
-          <ul className="grid gap-3 sm:grid-cols-3">
-            {keyCerts.map((c) => (
-              <CertChip key={c.name} item={c} />
-            ))}
-          </ul>
-
           <div className="grid gap-3 sm:grid-cols-2">
             <div
               className="flex items-start gap-3 rounded-2xl p-4"
