@@ -151,15 +151,15 @@ export default function Resume() {
     <section id="resume" className="relative overflow-hidden py-14 bg-surface border-t-2 border-fg/10 sm:py-24">
       <div ref={ref} className="relative max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
-          eyebrow="01 / RESUME & CODE"
+          eyebrow="01 / RESUME & GITHUB"
           segments={[
-            { text: "The resume.", style: "fill" },
-            { text: "The code.", style: "lime" },
+            { text: "Resume", style: "fill" },
+            { text: "and GitHub.", style: "lime" },
           ]}
           className="mb-5"
         />
         <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-8 sm:mb-12">
-          Everything on one page if you&apos;d rather read it that way, and where my code lives on GitHub.
+          Download my resume, or look through my code on GitHub.
         </p>
 
         <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:gap-6">
