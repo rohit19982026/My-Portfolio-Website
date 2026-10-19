@@ -30,6 +30,10 @@ import { useEffect, useState } from "react";
  * resolves two effects stacked on a single element.
  */
 const BOTTOM_FADE_MASK = "linear-gradient(to bottom, #000 0%, #000 82%, transparent 97%)";
+// Phone/tablet: a longer, eased fade so the jacket melts into the arch glow
+// instead of turning into a grey-white band.
+const MOBILE_FADE_MASK =
+  "linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,0.78) 70%, rgba(0,0,0,0.48) 82%, rgba(0,0,0,0.18) 92%, transparent 100%)";
 
 const IMAGE_SIZES = {
   desktop: "(min-width: 1280px) 440px, 400px",
@@ -38,7 +42,6 @@ const IMAGE_SIZES = {
 
 const GROUND_SHADOW = {
   desktop: "drop-shadow(0 18px 22px rgba(0,0,0,0.5))",
-  mobile: "drop-shadow(0 10px 14px rgba(0,0,0,0.5))",
 } as const;
 
 const DOT_GRID = "radial-gradient(circle, rgba(147,181,255,0.4) 1px, transparent 1.6px)";
@@ -118,8 +121,12 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
     >
       {backdrop}
       <div
-        className="relative h-full w-full"
-        style={{ maskImage: BOTTOM_FADE_MASK, WebkitMaskImage: BOTTOM_FADE_MASK }}
+        // mobile: keep the whole figure inside the arch instead of cropping the shoulders at the box edge
+        className={variant === "mobile" ? "absolute inset-x-[7%] bottom-0 top-[5%]" : "relative h-full w-full"}
+        style={{
+          maskImage: variant === "mobile" ? MOBILE_FADE_MASK : BOTTOM_FADE_MASK,
+          WebkitMaskImage: variant === "mobile" ? MOBILE_FADE_MASK : BOTTOM_FADE_MASK,
+        }}
       >
         <Image
           src="/hero/rohit-portrait-cutout.png"
@@ -128,7 +135,7 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
           priority
           sizes={IMAGE_SIZES[variant]}
           className={variant === "mobile" ? "object-cover object-top" : "object-contain object-bottom"}
-          style={{ filter: GROUND_SHADOW[variant] }}
+          style={variant === "mobile" ? undefined : { filter: GROUND_SHADOW[variant] }}
         />
       </div>
     </motion.div>
