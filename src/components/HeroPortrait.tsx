@@ -86,23 +86,23 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
         className="absolute inset-[-14%]"
         style={{ backgroundImage: DOT_GRID_LIME, backgroundSize: "22px 22px" }}
       />
-      {/* thin outer arch */}
+      {/* thin outer arch, concentric with the filled one */}
       <div
-        className="absolute inset-x-[-7%] bottom-0 top-[-3%] rounded-t-[999px] border border-b-0"
+        className="absolute inset-0 rounded-t-[999px] border border-b-0"
         style={{
-          borderColor: "rgba(190,230,30,0.55)",
-          WebkitMaskImage: "linear-gradient(to bottom, #000 55%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, #000 55%, transparent 100%)",
-        }}
-      />
-      {/* soft filled arch */}
-      <div
-        className="absolute inset-x-[2%] bottom-0 top-[7%] rounded-t-[999px]"
-        style={{
-          background:
-            "radial-gradient(75% 60% at 62% 38%, rgba(205,245,60,0.55) 0%, rgba(215,255,63,0.22) 55%, rgba(215,255,63,0.06) 100%)",
+          borderColor: "rgba(170,215,20,0.6)",
           WebkitMaskImage: "linear-gradient(to bottom, #000 60%, transparent 100%)",
           maskImage: "linear-gradient(to bottom, #000 60%, transparent 100%)",
+        }}
+      />
+      {/* soft filled arch the portrait stands in */}
+      <div
+        className="absolute inset-x-[5%] bottom-0 top-[5%] rounded-t-[999px]"
+        style={{
+          background:
+            "radial-gradient(80% 65% at 50% 32%, rgba(205,245,60,0.6) 0%, rgba(215,255,63,0.26) 55%, rgba(215,255,63,0.05) 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)",
         }}
       />
     </div>
@@ -127,7 +127,7 @@ export default function HeroPortrait({ variant }: { variant: "desktop" | "mobile
           fill
           priority
           sizes={IMAGE_SIZES[variant]}
-          className="object-contain object-bottom"
+          className={variant === "mobile" ? "object-cover object-top" : "object-contain object-bottom"}
           style={{ filter: GROUND_SHADOW[variant] }}
         />
       </div>

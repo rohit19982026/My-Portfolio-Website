@@ -479,7 +479,7 @@ export default function Hero() {
           // below it.
           className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-9 pb-14 sm:pb-16 relative z-10"
         >
-          <div className="grid grid-cols-[1.08fr_1fr] items-center gap-x-[clamp(0.75rem,3vw,2rem)]">
+          <div className="grid grid-cols-[1fr_1.1fr] items-center gap-x-[clamp(0.75rem,3vw,2rem)]">
             <motion.h1 variants={fadeBlurUp} className="font-sans">
               <span
                 className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
@@ -492,8 +492,8 @@ export default function Hero() {
                 Manager<span className="text-lime">.</span>
               </span>
               <span
-                className="mt-[1.1em] block font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
-                style={{ fontSize: "clamp(1rem, 4.6vw, 1.9rem)" }}
+                className="mt-[1.1em] block whitespace-nowrap font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
+                style={{ fontSize: "clamp(0.8rem, 4vw, 1.9rem)" }}
               >
                 Data, analytics, and
                 <br />
@@ -503,7 +503,7 @@ export default function Hero() {
               </span>
             </motion.h1>
 
-            <motion.div variants={fadeBlurUp} className="relative h-[clamp(250px,76vw,480px)]">
+            <motion.div variants={fadeBlurUp} className="relative aspect-[5/7] w-full">
               <HeroPortrait variant="mobile" />
             </motion.div>
           </div>
