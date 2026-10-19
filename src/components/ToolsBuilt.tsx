@@ -3,7 +3,8 @@
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
-import { ArrowRight, Clock, Sparkle, Target, Users, Zap } from "lucide-react";
+import { ArrowUpRight, Clock, Sparkle, Target, Users, Zap } from "lucide-react";
+import SwipeCarousel from "./ui/SwipeCarousel";
 import { agents, type Agent } from "@/lib/agents";
 
 const NAVY = "var(--color-surface-alt)";
@@ -11,49 +12,107 @@ const CARD_BG = "var(--color-card)";
 const CARD_BORDER = "var(--color-card-border)";
 const DOT_PATTERN = "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)";
 
-// Short card: the full story (problem, what I solved, the flow) lives on
-// /tools/<slug>, so the home page only has to say what each tool is.
-function AgentCard({ agent, index, inView }: { agent: Agent; index: number; inView: boolean }) {
-  const Icon = agent.icon;
-  const color = `color-mix(in srgb, ${agent.accent} var(--accent-text-mix), var(--color-fg))`;
+// Pick a readable icon color for a tile filled with the tool's accent.
+function onAccent(hex: string) {
+  const n = parseInt(hex.slice(1), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#0d0d0f" : "#ffffff";
+}
+
+// Tiny picture of the tool's own flow: one dot per step on a line.
+function FlowDots({ steps, accent }: { steps: number; accent: string }) {
   return (
-    <motion.li
+    <span aria-hidden className="flex items-center gap-2">
+      <span className="flex items-center">
+        {Array.from({ length: steps }).map((_, i) => (
+          <span key={i} className="flex items-center">
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{
+                background: i === 0 || i === steps - 1 ? accent : "transparent",
+                border: `1.5px solid ${accent}`,
+              }}
+            />
+            {i < steps - 1 && <span className="h-px w-3.5" style={{ background: `color-mix(in srgb, ${accent} 55%, transparent)` }} />}
+          </span>
+        ))}
+      </span>
+      <span className="font-heading text-[10px] font-bold uppercase tracking-[0.12em] text-fg/45">{steps} steps</span>
+    </span>
+  );
+}
+
+// Card: the full story (problem, what I solved, the flow) lives on
+// /tools/<slug>, so the home page only has to say what each tool is.
+function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; index: number; inView: boolean; className?: string }) {
+  const Icon = agent.icon;
+  const text = `color-mix(in srgb, ${agent.accent} var(--accent-text-mix), var(--color-fg))`;
+  return (
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.45, delay: 0.05 + index * 0.05 }}
+      className={`h-full ${className}`}
     >
       <Link
         href={`/tools/${agent.slug}`}
-        className="group flex h-full min-h-11 items-center gap-4 rounded-2xl p-4 transition-colors hover:border-accent sm:flex-col sm:items-start sm:gap-3 sm:p-5"
-        style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderTop: `3px solid ${agent.accent}` }}
+        className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl p-5 transition-all duration-300 motion-safe:hover:-translate-y-0.5 hover:border-[var(--tool)] hover:shadow-[0_22px_44px_-24px_var(--tool)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--tool)] sm:p-6"
+        style={
+          {
+            "--tool": agent.accent,
+            background: `radial-gradient(110% 80% at 0% 0%, color-mix(in srgb, ${agent.accent} 14%, transparent), transparent 60%), var(--color-card)`,
+            border: `1px solid ${CARD_BORDER}`,
+            boxShadow: `0 18px 40px -28px color-mix(in srgb, ${agent.accent} 60%, transparent)`,
+          } as React.CSSProperties
+        }
       >
-        <span
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-          style={{ background: `color-mix(in srgb, ${agent.accent} 18%, transparent)` }}
-        >
-          <Icon size={18} strokeWidth={2} style={{ color: agent.accent }} />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <span className="font-heading text-[15px] font-bold leading-snug text-fg">{agent.title}</span>
+        <div className="flex items-start justify-between">
+          <span
+            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl"
+            style={{
+              background: `linear-gradient(145deg, color-mix(in srgb, ${agent.accent} 100%, white 25%), ${agent.accent} 55%, color-mix(in srgb, ${agent.accent} 80%, black))`,
+              boxShadow: `0 10px 22px -8px ${agent.accent}, inset 0 1px 0 rgba(255,255,255,.45)`,
+              color: onAccent(agent.accent),
+            }}
+          >
+            <Icon size={24} strokeWidth={2} />
+          </span>
+          <span
+            aria-hidden
+            className="font-display text-[44px] leading-none"
+            style={{ color: "transparent", WebkitTextStroke: "1.5px color-mix(in srgb, var(--color-fg) 22%, transparent)" }}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="min-w-0">
+          <h3 className="font-heading text-[19px] font-bold leading-snug text-fg">{agent.title}</h3>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-fg/65">{agent.summary}</p>
+        </div>
+
+        <FlowDots steps={agent.flow.length} accent={agent.accent} />
+
+        <div className="mt-auto flex items-center justify-between gap-3 pt-1">
+          <span
+            className="inline-flex items-center gap-2 rounded-pill px-3 py-1.5 font-heading text-[10.5px] font-bold uppercase tracking-[0.08em]"
+            style={{ background: `color-mix(in srgb, ${agent.accent} 12%, transparent)`, color: text }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: agent.accent }} />
+            {agent.cadence}
+          </span>
+          <span className="flex items-center gap-2.5 font-heading text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: text }}>
+            <span className="hidden sm:inline">Case study</span>
             <span
-              className="shrink-0 rounded-pill px-2 py-0.5 font-heading text-[9.5px] font-bold uppercase tracking-[0.06em]"
-              style={{ border: `1px solid color-mix(in srgb, ${agent.accent} 45%, transparent)`, color }}
+              className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 group-hover:bg-[var(--tool)] group-hover:text-[var(--on)]"
+              style={{ borderColor: `color-mix(in srgb, ${agent.accent} 55%, transparent)`, "--on": onAccent(agent.accent) } as React.CSSProperties}
             >
-              {agent.cadence}
+              <ArrowUpRight size={17} className="transition-transform duration-300 motion-safe:group-hover:rotate-45" />
             </span>
           </span>
-          <span className="mt-1 block text-[13px] leading-snug text-fg/65">{agent.summary}</span>
-          <span
-            className="mt-3 hidden items-center gap-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.12em] transition-transform group-hover:translate-x-0.5 sm:inline-flex"
-            style={{ color }}
-          >
-            Read case study <ArrowRight size={13} />
-          </span>
-        </span>
-        <ArrowRight size={18} className="shrink-0 text-fg/40 sm:hidden" aria-hidden />
+        </div>
       </Link>
-    </motion.li>
+    </motion.div>
   );
 }
 
@@ -158,11 +217,23 @@ export default function ToolsBuilt() {
           </motion.p>
         </div>
 
-        <ul className="grid gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        <div className="hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+          {agents.map((agent, i) => (
+            <AgentCard
+              key={agent.slug}
+              agent={agent}
+              index={i}
+              inView={inView}
+              // seven cards: centre the last one instead of leaving it orphaned
+              className={i === agents.length - 1 ? "sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.625rem)] lg:col-span-1 lg:col-start-2 lg:w-full" : ""}
+            />
+          ))}
+        </div>
+        <SwipeCarousel ariaLabel="Tool case studies, swipeable" className="sm:hidden">
           {agents.map((agent, i) => (
             <AgentCard key={agent.slug} agent={agent} index={i} inView={inView} />
           ))}
-        </ul>
+        </SwipeCarousel>
 
         <BusinessImpactPanel inView={inView} />
 
