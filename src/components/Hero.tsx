@@ -8,7 +8,6 @@ import {
   Briefcase,
   Plus,
   MessageCircle,
-  Sparkle,
   Cpu,
   Users,
   Brain,
@@ -44,16 +43,6 @@ const fadeBlurUp = {
     y: 0,
     filter: "blur(0px)",
     transition: { duration: 0.65, ease: EASE },
-  },
-} as const;
-
-const pop = {
-  hidden: { opacity: 0, y: 10, scale: 0.94 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: "spring", stiffness: 260, damping: 22 },
   },
 } as const;
 
@@ -289,18 +278,7 @@ export default function Hero() {
         <div className="grid grid-cols-[1.3fr_1fr] lg:grid-cols-[1.15fr_440px] gap-x-6 sm:gap-x-10 gap-y-8 items-start lg:items-stretch">
           {/* Text column */}
           <div>
-            <motion.div
-              variants={pop}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-pill mb-6 whitespace-nowrap"
-              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-            >
-              <Sparkle size={13} className="text-accent shrink-0" />
-              <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/75">
-                Based in Bengaluru &bull; Open to new roles
-              </span>
-            </motion.div>
-
-            <motion.h1
+                        <motion.h1
               variants={fadeBlurUp}
               className="font-heading font-bold leading-[1.18] mb-5"
               style={{ fontSize: "clamp(1.9rem, 3.4vw, 2.85rem)" }}
@@ -519,20 +497,9 @@ export default function Hero() {
           // Badge pill carries location + availability, not a restatement
           // of the role title the headline already leads with directly
           // below it.
-          className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
+          className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-9 pb-14 sm:pb-16 relative z-10"
         >
-          <motion.div
-            variants={pop}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill mb-5"
-            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-          >
-            <Sparkle size={11} className="text-accent shrink-0" />
-            <span className="font-heading text-[9.5px] font-bold uppercase tracking-[0.1em] text-fg/75">
-              Based in Bengaluru &bull; Open to new roles
-            </span>
-          </motion.div>
-
-          <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
+                    <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
             <motion.h1 variants={fadeBlurUp} className="font-heading leading-[1.2]">
               <span
                 className="block font-bold text-fg"
