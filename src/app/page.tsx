@@ -20,9 +20,9 @@ export default function Home() {
     <>
       <Hero />
       <Marquee items={skillMarqueeItems} variant="lime" tilt />
+      <Resume />
       <Experience />
       <Credentials />
-      <Resume />
       <ToolsBuilt />
       <DeliveryExposure />
       <Contact />

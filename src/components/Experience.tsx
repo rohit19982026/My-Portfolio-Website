@@ -47,10 +47,10 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" className="py-24 bg-surface">
+    <section id="experience" className="py-24 bg-surface border-t-2 border-fg/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
-          eyebrow="01 / EXPERIENCE"
+          eyebrow="02 / EXPERIENCE"
           segments={[
             { text: "Role history.", style: "fill" },
             { text: "What shipped.", style: "lime" },

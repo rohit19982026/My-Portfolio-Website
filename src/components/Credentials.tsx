@@ -353,7 +353,7 @@ function CredentialsHeader() {
   return (
     <div className="mb-12">
       <SectionHeading
-        eyebrow="02 / CREDENTIALS & RECOGNITION"
+        eyebrow="03 / CREDENTIALS & RECOGNITION"
         segments={[
           { text: "Certifications", style: "fill" },
           { text: "and recognition.", style: "lime" },
