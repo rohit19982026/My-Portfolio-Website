@@ -294,6 +294,9 @@ export default function Hero() {
               >
                 <MessageCircle size={15} /> Let&apos;s Talk
               </a>
+              <p className="basis-full pt-2 font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/55">
+                My certification credentials via Credly
+              </p>
               <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
               <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
             </motion.div>
@@ -532,6 +535,9 @@ export default function Hero() {
             >
               <MessageCircle size={15} /> Let&apos;s Talk
             </a>
+            <p className="basis-full pt-2 font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/55">
+              My certification credentials via Credly
+            </p>
             <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
             <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
           </motion.div>
