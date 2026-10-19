@@ -1,38 +1,192 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, Clock, Cpu, Sparkles } from "lucide-react";
+import type { CSSProperties, ReactNode } from "react";
+import { ArrowDown, ArrowLeft, ArrowRight, CircleAlert, CircleCheck, Clock, Cpu, Sparkles, Workflow } from "lucide-react";
 import { agents, type Agent } from "@/lib/agents";
 import { diagrams } from "./diagrams/registry";
 import CaseNav from "./CaseNav";
 
-const CARD_BG = "var(--color-card)";
-const CARD_BORDER = "var(--color-card-border)";
+const BORDER = "var(--color-card-border)";
+const DOTS = "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)";
 
 const accentText = (accent: string) => `color-mix(in srgb, ${accent} var(--accent-text-mix), var(--color-fg))`;
+const mix = (accent: string, pct: number) => `color-mix(in srgb, ${accent} ${pct}%, transparent)`;
 
-function Block({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
+// Shared card recipe: soft accent wash in the top corner, hairline border,
+// a long low shadow tinted by the tool's own color.
+function cardStyle(accent: string, wash = 10): CSSProperties {
+  return {
+    background: `radial-gradient(120% 90% at 0% 0%, ${mix(accent, wash)}, transparent 60%), var(--color-card)`,
+    border: `1px solid ${BORDER}`,
+    boxShadow: `0 18px 40px -26px ${mix(accent, 60)}`,
+  };
+}
+
+function IconBubble({ accent, children, size = 40 }: { accent: string; children: ReactNode; size?: number }) {
   return (
-    <section aria-labelledby={`case-${n}`} className="mt-10 sm:mt-12">
-      <p className="mb-2 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent">{n}</p>
-      <h2 id={`case-${n}`} className="mb-3 font-heading text-[22px] font-bold leading-snug text-fg sm:text-[26px]">
-        {title}
-      </h2>
+    <span
+      className="flex shrink-0 items-center justify-center rounded-full"
+      style={{ width: size, height: size, background: mix(accent, 16), color: accentText(accent) }}
+    >
       {children}
+    </span>
+  );
+}
+
+function SpecStrip({ agent }: { agent: Agent }) {
+  const items = [
+    { Icon: Clock, label: "Runs", value: agent.cadence },
+    { Icon: Cpu, label: "Built with", value: agent.builtWith },
+    { Icon: CircleCheck, label: "Status", value: agent.status, dot: agent.status === "In production" },
+  ];
+  return (
+    <dl className="mt-6 grid grid-cols-3 divide-x overflow-hidden rounded-3xl" style={{ ...cardStyle(agent.accent, 8), borderColor: BORDER }}>
+      {items.map(({ Icon, label, value, dot }) => (
+        <div key={label} className="flex min-w-0 flex-col gap-2 px-3 py-4 sm:flex-row sm:items-center sm:gap-3 sm:px-6" style={{ borderColor: BORDER }}>
+          <IconBubble accent={agent.accent} size={36}>
+            <Icon size={16} />
+          </IconBubble>
+          <div className="min-w-0">
+            <dt className="font-heading text-[9.5px] font-bold uppercase tracking-[0.14em] text-fg/50">{label}</dt>
+            <dd className="mt-0.5 flex items-start gap-1.5 font-heading text-[13px] font-bold leading-snug text-fg">
+              {dot && <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "#22c55e" }} />}
+              {value}
+            </dd>
+          </div>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function StoryCard({
+  n,
+  title,
+  text,
+  accent,
+  tone,
+}: {
+  n: string;
+  title: string;
+  text: string;
+  accent: string;
+  tone: "problem" | "solved";
+}) {
+  const solved = tone === "solved";
+  const Icon = solved ? CircleCheck : CircleAlert;
+  return (
+    <section
+      aria-labelledby={`case-${n}`}
+      className="relative flex flex-col gap-3 rounded-3xl p-5 sm:p-7"
+      style={
+        solved
+          ? { ...cardStyle(accent, 18), border: `1px solid ${mix(accent, 45)}` }
+          : { background: "var(--color-card-subtle)", border: `1px solid ${BORDER}` }
+      }
+    >
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex items-center gap-2.5">
+          {solved ? (
+            <IconBubble accent={accent} size={34}>
+              <Icon size={17} />
+            </IconBubble>
+          ) : (
+            <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-fg/10 text-fg/60">
+              <Icon size={17} />
+            </span>
+          )}
+          <h2 id={`case-${n}`} className="font-heading text-[18px] font-bold leading-snug text-fg sm:text-[20px]">
+            {title}
+          </h2>
+        </span>
+        <span className="font-heading text-[11px] font-bold tracking-[0.18em] text-fg/35">{n}</span>
+      </div>
+      <p className="text-[15.5px] leading-relaxed text-fg/80">{text}</p>
     </section>
   );
 }
 
-function Fact({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string; color: string }) {
+function FlowCard({ agent, children }: { agent: Agent; children: ReactNode }) {
   return (
-    <div
-      className="flex min-w-0 items-center gap-3 rounded-card px-4 py-3"
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
+    <section aria-labelledby="case-03" className="relative mt-5 overflow-hidden rounded-3xl p-4 sm:p-7" style={cardStyle(agent.accent, 12)}>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-8 top-0 h-px"
+        style={{ background: `linear-gradient(90deg, transparent, ${agent.accent}, transparent)` }}
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute right-5 top-5 h-12 w-16 opacity-60"
+        style={{ backgroundImage: DOTS, backgroundSize: "8px 8px" }}
+      />
+      <div className="mb-5 flex items-center gap-3">
+        <IconBubble accent={agent.accent} size={34}>
+          <Workflow size={16} />
+        </IconBubble>
+        <div className="min-w-0">
+          <h2 id="case-03" className="font-heading text-[18px] font-bold leading-snug text-fg sm:text-[20px]">
+            What was the flow?
+          </h2>
+          <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/45">
+            {agent.flow.length} steps
+          </p>
+        </div>
+        <span className="ml-auto mr-12 hidden font-heading text-[11px] font-bold tracking-[0.18em] text-fg/35 sm:block">03</span>
+      </div>
+      {children}
+      <ol className="sr-only">
+        {agent.flow.map((s) => (
+          <li key={s}>{s}</li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+function ResultCard({ agent }: { agent: Agent }) {
+  return (
+    <section
+      aria-labelledby="case-04"
+      className="mt-5 flex items-start gap-4 rounded-3xl p-5 sm:items-center sm:gap-5 sm:p-7"
+      style={{ ...cardStyle(agent.accent, 22), border: `1px solid ${mix(agent.accent, 45)}` }}
     >
-      <span style={{ color }}>{icon}</span>
-      <span className="min-w-0">
-        <span className="block font-heading text-[9.5px] font-bold uppercase tracking-[0.14em] text-fg/50">{label}</span>
-        <span className="block truncate font-heading text-[13px] font-bold text-fg">{value}</span>
+      <IconBubble accent={agent.accent} size={48}>
+        <Sparkles size={22} />
+      </IconBubble>
+      <div className="min-w-0">
+        <h2 id="case-04" className="font-heading text-[10.5px] font-bold uppercase tracking-[0.18em]" style={{ color: accentText(agent.accent) }}>
+          What changed?
+        </h2>
+        <p className="mt-1 font-heading text-[18px] font-bold leading-snug text-fg sm:text-[22px]">{agent.result}</p>
+      </div>
+    </section>
+  );
+}
+
+function NeighborCard({ agent, direction }: { agent: Agent; direction: "prev" | "next" }) {
+  const next = direction === "next";
+  const Icon = agent.icon;
+  return (
+    <Link
+      href={`/tools/${agent.slug}`}
+      className="group flex min-h-16 items-center gap-4 rounded-3xl p-4 transition-all motion-safe:hover:-translate-y-0.5 hover:border-accent sm:p-5"
+      style={cardStyle(agent.accent, 8)}
+    >
+      {!next && (
+        <ArrowLeft size={18} className="shrink-0 text-fg/40 transition-transform motion-safe:group-hover:-translate-x-1" />
+      )}
+      <IconBubble accent={agent.accent} size={44}>
+        <Icon size={19} />
+      </IconBubble>
+      <span className="min-w-0 flex-1">
+        <span className="block font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/50">
+          {next ? "Next case study" : "Previous case study"}
+        </span>
+        <span className="mt-0.5 block truncate font-heading text-[15px] font-bold text-fg group-hover:text-accent">{agent.title}</span>
       </span>
-    </div>
+      {next && (
+        <ArrowRight size={18} className="shrink-0 text-fg/40 transition-transform motion-safe:group-hover:translate-x-1" />
+      )}
+    </Link>
   );
 }
 
@@ -60,66 +214,33 @@ export default function ToolCaseStudy({ agent }: { agent: Agent }) {
           </p>
           <h1 className="font-heading text-[30px] font-bold leading-tight text-fg sm:text-[40px]">{agent.title}</h1>
           <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-fg/70">{agent.summary}</p>
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            <Fact icon={<Clock size={18} />} label="Runs" value={agent.cadence} color={color} />
-            <Fact icon={<Cpu size={18} />} label="Built with" value={agent.builtWith} color={color} />
-            <Fact icon={<Check size={18} />} label="Status" value={agent.status} color={color} />
-          </div>
+          <SpecStrip agent={agent} />
         </header>
 
-        <Block n="01" title="What was the problem?">
-          <p className="max-w-2xl text-[16px] leading-relaxed text-fg/75">{agent.problem}</p>
-        </Block>
-
-        <Block n="02" title="What did I solve?">
-          <p className="max-w-2xl text-[16px] leading-relaxed text-fg/75">{agent.solved}</p>
-        </Block>
-
-        <Block n="03" title="What was the flow?">
-          <div
-            className="rounded-2xl p-4 sm:p-6"
-            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderTop: `3px solid ${agent.accent}` }}
+        <div className="mt-8 grid items-stretch gap-3 sm:mt-10 sm:grid-cols-[1fr_auto_1fr] sm:gap-4">
+          <StoryCard n="01" title="What was the problem?" text={agent.problem} accent={agent.accent} tone="problem" />
+          <span
+            aria-hidden
+            className="mx-auto -my-1 flex h-9 w-9 items-center justify-center self-center rounded-full sm:my-0"
+            style={{ background: mix(agent.accent, 18), color: color, border: `1px solid ${mix(agent.accent, 40)}` }}
           >
+            <ArrowDown size={16} className="sm:hidden" />
+            <ArrowRight size={16} className="hidden sm:block" />
+          </span>
+          <StoryCard n="02" title="What did I solve?" text={agent.solved} accent={agent.accent} tone="solved" />
+        </div>
+
+        <FlowCard agent={agent}>
+          <div className="mx-auto max-w-xl">
             <Diagram />
           </div>
-          <ol className="sr-only">
-            {agent.flow.map((s) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ol>
-        </Block>
+        </FlowCard>
 
-        {agent.result && (
-          <Block n="04" title="What changed?">
-            <p
-              className="flex max-w-2xl items-start gap-3 rounded-card p-4 text-[16px] leading-relaxed text-fg"
-              style={{ border: `1px solid color-mix(in srgb, ${agent.accent} 40%, transparent)`, background: `color-mix(in srgb, ${agent.accent} 8%, transparent)` }}
-            >
-              <Sparkles size={18} className="mt-1 shrink-0" style={{ color }} />
-              {agent.result}
-            </p>
-          </Block>
-        )}
+        {agent.result && <ResultCard agent={agent} />}
 
-        <nav aria-label="More case studies" className="mt-14 grid gap-3 sm:grid-cols-2">
-          {[
-            { a: prev, label: "Previous", Icon: ArrowLeft, align: "text-left" },
-            { a: next, label: "Next", Icon: ArrowRight, align: "sm:text-right" },
-          ].map(({ a, label, Icon, align }) => (
-            <Link
-              key={label}
-              href={`/tools/${a.slug}`}
-              className={`group flex min-h-11 flex-col gap-1 rounded-card p-4 transition-colors hover:border-accent ${align}`}
-              style={{ border: `1px solid ${CARD_BORDER}`, background: CARD_BG }}
-            >
-              <span className={`flex items-center gap-1.5 font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/50 ${label === "Next" ? "sm:justify-end" : ""}`}>
-                {label === "Previous" && <Icon size={13} />}
-                {label}
-                {label === "Next" && <Icon size={13} />}
-              </span>
-              <span className="font-heading text-[15px] font-bold text-fg group-hover:text-accent">{a.title}</span>
-            </Link>
-          ))}
+        <nav aria-label="More case studies" className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4">
+          <NeighborCard agent={prev} direction="prev" />
+          <NeighborCard agent={next} direction="next" />
         </nav>
       </div>
     </article>
