@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid sm:grid-cols-4 gap-8 mb-10 text-xs">
           <div>
-            <p className="font-display text-fg text-[22px] tracking-tight mb-3">
+            <p className="font-display text-fg text-[22px] tracking-[0.014em] mb-3">
               Rohit<span className="text-accent">.</span>
             </p>
             <p className="font-heading text-fg/50 leading-relaxed text-[12px]">

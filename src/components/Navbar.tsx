@@ -113,7 +113,7 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.05 + i * 0.06 }}
-                    className={`flex items-center gap-4 py-1.5 font-display text-[clamp(1.875rem,9vw,2.5rem)] uppercase transition-colors ${
+                    className={`flex items-center gap-4 py-1.5 font-display text-[clamp(1.875rem,9vw,2.5rem)] uppercase tracking-[0.014em] transition-colors ${
                       isActive ? "text-accent" : "text-fg hover:text-accent"
                     }`}
                   >

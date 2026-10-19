@@ -127,6 +127,9 @@ a, button, [role="button"] { touch-action: manipulation; }
   pointer-events: none;
 }
 
+/* Balanced line breaks for every heading, so no heading ends on a lone word. */
+h1, h2, h3, h4 { text-wrap: balance; }
+
 /* Shared section/page headline spacing (Anton, uppercase): open the letters up
    a touch, widen word gaps and give lines room so heavy glyphs never touch. */
 .heading-display {
