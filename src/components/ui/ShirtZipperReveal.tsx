@@ -58,7 +58,8 @@ const THETA1 = (Math.atan(T1) * 180) / Math.PI;
 const EDGE1 = Math.sqrt(1 + T1 * T1);
 const BOT = 150; // gap between slider rest position and the bottom of the box (pull is ~126px tall)
 const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
-const SLIVER = 12; // px of fabric left at each side once fully open
+const SLIVER = 12;
+const SCOOP = 110; // px depth of the hem's scoop once fully open // px of fabric left at each side once fully open
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 // A hand-pulled zip is never a smooth ramp: a tug, a little slack, then pulls
@@ -212,6 +213,7 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
         x: jx,
         y: jy,
         willChange: "transform",
+        filter: "drop-shadow(0 8px 10px rgba(0,0,40,.4))",
       }}
     >
       <motion.div
@@ -324,22 +326,34 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     jy: Math.max(0, y - L1),
     jo: Math.min(y, L1) * T1,
   });
-  // Phase B: the V straightens into plain vertical bands at the screen edges
-  // (the shirt hanging open), instead of sliding the triangles off-screen.
-  // Every V corner eases toward x = SLIVER from its own side as `b` goes 0 to 1.
-  const clipLeft = useTransform([Y, b], (v: number[]) => {
-    const [y, bb] = v;
-    const e = edge(y);
+  // Phase B: the V eases into a "scoop": plain bands at the screen edges that
+  // curve in at the bottom and meet under the pull, so the opened shirt keeps a
+  // hem with the zip attached to it. Samples run from the top of the V (g = 1)
+  // to the apex (g = 0); at b = 0 they sit exactly on the V, at b = 1 on the scoop.
+  const scoopPoints = (y: number, bb: number, sign: 1 | -1) => {
+    const gk = y > 0 ? Math.min(1, L1 / y) : 1;
+    const gs = [1, 1 - (1 - gk) * 0.33, 1 - (1 - gk) * 0.66, gk, gk * 0.55, 0];
     const k = 1 - bb;
-    const to = `${bb.toFixed(3)} * (50% - ${SLIVER}px)`;
-    return `polygon(0 0, calc(50% - ${(e.top * k).toFixed(1)}px - ${to}) 0, calc(50% - ${(e.jo * k).toFixed(1)}px - ${to}) ${e.jy.toFixed(1)}px, calc(50% + ${(0.5 * k).toFixed(2)}px - ${to}) ${y.toFixed(1)}px, calc(50% + ${(0.5 * k).toFixed(2)}px - ${to}) 100%, 0 100%)`;
+    const sc = Math.min(SCOOP, y);
+    const pts = gs.map((g) => {
+      const d = g * y;
+      const offV = d <= L1 ? d * T1 : L1 * T1 + (d - L1) * TAN;
+      const yy = (y - d) * k + (y - sc * g) * bb;
+      const share = (bb * (2 * g - g * g)).toFixed(4);
+      const x = `calc(50% ${sign > 0 ? "+" : "-"} ${(offV * k).toFixed(1)}px ${sign > 0 ? "+" : "-"} ${share} * (50% - ${SLIVER}px))`;
+      return { x, y: `${yy.toFixed(1)}px` };
+    });
+    const e = edge(y);
+    const topX = `calc(50% ${sign > 0 ? "+" : "-"} ${(e.top * k).toFixed(1)}px ${sign > 0 ? "+" : "-"} ${bb.toFixed(4)} * (50% - ${SLIVER}px))`;
+    return { pts, topX };
+  };
+  const clipLeft = useTransform([Y, b], (v: number[]) => {
+    const { pts, topX } = scoopPoints(v[0], v[1], -1);
+    return `polygon(0 0, ${topX} 0, ${pts.map((q) => `${q.x} ${q.y}`).join(", ")}, 50% 100%, 0 100%)`;
   });
   const clipRight = useTransform([Y, b], (v: number[]) => {
-    const [y, bb] = v;
-    const e = edge(y);
-    const k = 1 - bb;
-    const to = `${bb.toFixed(3)} * (50% - ${SLIVER}px)`;
-    return `polygon(calc(50% + ${(e.top * k).toFixed(1)}px + ${to}) 0, 100% 0, 100% 100%, calc(50% - ${(0.5 * k).toFixed(2)}px + ${to}) 100%, calc(50% - ${(0.5 * k).toFixed(2)}px + ${to}) ${y.toFixed(1)}px, calc(50% + ${(e.jo * k).toFixed(1)}px + ${to}) ${e.jy.toFixed(1)}px)`;
+    const { pts, topX } = scoopPoints(v[0], v[1], 1);
+    return `polygon(${topX} 0, 100% 0, 100% 100%, 50% 100%, ${[...pts].reverse().map((q) => `${q.x} ${q.y}`).join(", ")})`;
   });
   const hardware = useTransform(b, (v) => Math.max(0, 1 - v * 2.2)); // zip pieces fade as the halves part
   const sweep = useTransform(p, [0, 1], ["-35%", "35%"]);
@@ -606,7 +620,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         <motion.div
           ref={contentRef}
           id={contentId}
-          className="px-4 sm:px-6 pt-8 pb-52"
+          className="px-4 sm:px-6 pt-8 pb-72"
           style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
         >
           {children}
@@ -655,7 +669,6 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               height: 210,
               x: "-50%",
               y: -44,
-              opacity: hardware,
               background: "radial-gradient(ellipse 50% 46% at 50% 38%, rgba(0,0,50,.5), transparent 100%)",
             }}
           />
