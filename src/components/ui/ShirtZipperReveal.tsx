@@ -167,7 +167,7 @@ function Segment({
           left: xPucker,
           transformOrigin: left ? "100% 100%" : "0 100%",
           rotate: rot,
-          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,30,.42))`,
+          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(40,60,160,.28))`,
         }}
       />
       <motion.div
@@ -213,19 +213,19 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
         x: jx,
         y: jy,
         willChange: "transform",
-        filter: "drop-shadow(0 8px 10px rgba(0,0,40,.4))",
+        filter: "drop-shadow(0 8px 10px rgba(40,60,160,.3))",
       }}
     >
       <motion.div
         className="absolute inset-0"
         style={{
           clipPath: clip,
-          backgroundColor: "#0d22ee",
+          backgroundColor: "#7f95f2",
           backgroundImage: [
             left
-              ? "linear-gradient(90deg, rgba(0,0,0,.28) 0%, transparent 14%, transparent 38%, rgba(0,0,20,.45) 50%)"
-              : "linear-gradient(90deg, rgba(0,0,20,.45) 50%, transparent 62%, transparent 86%, rgba(0,0,0,.28) 100%)",
-            "linear-gradient(180deg, rgba(255,255,255,.1), transparent 22%, rgba(0,0,20,.22))",
+              ? "linear-gradient(90deg, rgba(30,45,140,.2) 0%, transparent 14%, transparent 38%, rgba(30,45,140,.3) 50%)"
+              : "linear-gradient(90deg, rgba(30,45,140,.3) 50%, transparent 62%, transparent 86%, rgba(30,45,140,.2) 100%)",
+            "linear-gradient(180deg, rgba(255,255,255,.14), transparent 22%, rgba(30,45,140,.14))",
             FABRIC_IMG,
           ].join(","),
           backgroundSize: "auto, auto, 168px 600px",
@@ -241,7 +241,7 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
         />
         <motion.div
           className="absolute inset-0"
-          style={{ opacity: turn, background: left ? "rgba(255,255,255,.12)" : "rgba(0,0,30,.28)" }}
+          style={{ opacity: turn, background: left ? "rgba(255,255,255,.12)" : "rgba(30,45,140,.2)" }}
         />
         {left ? (
           <Image
@@ -672,7 +672,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               backgroundImage: ZIP_CLOSED,
               backgroundSize: "30px 33.3px",
               backgroundRepeat: "repeat-y",
-              boxShadow: "0 0 12px rgba(0,0,40,.45)",
+              boxShadow: "0 0 12px rgba(40,60,160,.35)",
             }}
           />
           <div
@@ -689,7 +689,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               height: 210,
               x: "-50%",
               y: -44,
-              background: "radial-gradient(ellipse 50% 46% at 50% 38%, rgba(0,0,50,.5), transparent 100%)",
+              background: "radial-gradient(ellipse 50% 46% at 50% 38%, rgba(40,60,160,.35), transparent 100%)",
             }}
           />
           <motion.button
