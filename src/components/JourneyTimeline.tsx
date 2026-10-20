@@ -67,32 +67,32 @@ type Milestone = {
 const milestones: Milestone[] = [
   {
     year: 2014,
-    bubble: { cx: 123, cy: 301, w: 90, h: 90, bg: "linear-gradient(145deg,#ffd3de,#ffb9ca)", fg: "#d4204f", glow: "255,120,150", size: 22 },
-    card: { x: 80, y: 320, w: 175, h: 128, tint: "255,214,224", border: "255,170,190", textTop: 28 },
+    bubble: { cx: 123, cy: 301, w: 90, h: 90, bg: "linear-gradient(145deg,#c9f2ea,#9fe3d6)", fg: "#0b7d70", glow: "20,184,166", size: 22 },
+    card: { x: 80, y: 320, w: 175, h: 128, tint: "190,240,230", border: "120,215,200", textTop: 28 },
     title: ["Class 10"],
     sub: ["Completed", "Class 10"],
     art: { src: "/journey/books-pink.png", x: 50, y: 440, w: 215, h: 122 },
-    node: { x: 123, y: 622, color: "#ff5e8a" },
+    node: { x: 123, y: 622, color: "#14b8a6" },
     float: 0,
   },
   {
     year: 2016,
-    bubble: { cx: 357, cy: 298, w: 82, h: 82, bg: "linear-gradient(145deg,#e4d9ff,#cdbcff)", fg: "#6a3fd9", glow: "140,100,255", size: 21 },
-    card: { x: 305, y: 315, w: 170, h: 113, tint: "224,214,255", border: "190,170,255", textTop: 26 },
+    bubble: { cx: 357, cy: 298, w: 82, h: 82, bg: "linear-gradient(145deg,#eefbb8,#dcf26a)", fg: "#4d6200", glow: "170,210,20", size: 21 },
+    card: { x: 305, y: 315, w: 170, h: 113, tint: "238,250,170", border: "205,230,90", textTop: 26 },
     title: ["Class 12"],
     sub: ["Completed", "Class 12"],
     art: { src: "/journey/books-cap.png", x: 283, y: 420, w: 212, h: 125 },
-    node: { x: 360, y: 570, color: "#7c4dff" },
+    node: { x: 360, y: 570, color: "#a8d400" },
     float: 1,
   },
   {
     year: 2020,
-    bubble: { cx: 557, cy: 240, w: 82, h: 64, bg: "linear-gradient(145deg,#d9e7ff,#bcd4ff)", fg: "#2a5fd6", glow: "70,130,255", size: 21 },
-    card: { x: 512, y: 255, w: 208, h: 148, tint: "214,228,255", border: "170,200,255", textTop: 31 },
+    bubble: { cx: 557, cy: 240, w: 82, h: 64, bg: "linear-gradient(145deg,#dbe3ff,#b9c9ff)", fg: "#0d22ee", glow: "13,34,238", size: 21 },
+    card: { x: 512, y: 255, w: 208, h: 148, tint: "205,216,255", border: "150,170,255", textTop: 31 },
     title: ["Bachelor of", "Computer Application"],
     sub: ["Brainware University,", "Kolkata"],
     art: { src: "/journey/laptop.png", x: 503, y: 395, w: 222, h: 130 },
-    node: { x: 585, y: 555, color: "#1677ff" },
+    node: { x: 585, y: 555, color: "#0d22ee" },
     float: 2,
   },
   {
@@ -108,12 +108,12 @@ const milestones: Milestone[] = [
   {
     year: 2022,
     prefix: "Dec ",
-    bubble: { cx: 1038, cy: 249, w: 105, h: 66, bg: "linear-gradient(145deg,#d9f6d9,#bdeebd)", fg: "#2a8a3a", glow: "80,200,100", size: 19 },
-    card: { x: 982, y: 268, w: 181, h: 138, tint: "218,246,218", border: "170,230,175", textTop: 32 },
+    bubble: { cx: 1038, cy: 249, w: 105, h: 66, bg: "linear-gradient(145deg,#d6f5dc,#b3e8c0)", fg: "#17703a", glow: "40,170,90", size: 19 },
+    card: { x: 982, y: 268, w: 181, h: 138, tint: "205,243,215", border: "140,215,160", textTop: 32 },
     title: ["Joined phData"],
     sub: ["Moved to phData", "in December 2022"],
     art: { src: "/journey/phdata-building.png", x: 965, y: 398, w: 215, h: 150 },
-    node: { x: 1065, y: 594, color: "#4cd04c" },
+    node: { x: 1065, y: 594, color: "#22c55e" },
     float: 4,
   },
 ];
@@ -166,9 +166,9 @@ function Motes() {
             top: m.y,
             width: m.s,
             height: m.s,
-            background: "rgba(150,125,255,0.55)",
+            background: "rgba(13,34,238,0.35)",
             filter: "blur(1.5px)",
-            boxShadow: "0 0 12px 3px rgba(150,125,255,0.35)",
+            boxShadow: "0 0 12px 3px rgba(13,34,238,0.35)",
           }}
           animate={{ y: [0, -22, 0], x: [0, i % 2 ? 10 : -10, 0], opacity: [0.2, 0.7, 0.2] }}
           transition={{ duration: m.d, repeat: Infinity, ease: "easeInOut", delay: i * 0.8 }}
@@ -394,6 +394,22 @@ function DesktopColumn({
         </motion.div>
       </motion.div>
 
+      {/* node dot in this milestone's own colour, drawn over the artwork's node */}
+      <motion.span
+        aria-hidden
+        className="pointer-events-none absolute rounded-full"
+        style={{
+          left: pctX(n.x - 15),
+          top: pctY(n.y - 15),
+          width: pctW(30),
+          height: pctH(30),
+          opacity: bubOpacity,
+          scale: rPop,
+          background: n.color,
+          boxShadow: `0 0 0 ${cq(5)} #fff, 0 0 ${cq(16)} ${cq(3)} ${n.color}88`,
+        }}
+      />
+
       {/* node burst ring */}
       <motion.span
         aria-hidden
@@ -467,14 +483,14 @@ function Desktop({ reduce }: { reduce: boolean }) {
       style={{
         aspectRatio: `${W} / ${H}`,
         containerType: "inline-size",
-        border: "1px solid rgba(120,100,220,0.14)",
-        boxShadow: "0 30px 60px -40px rgba(110,90,200,0.45)",
+        border: "1px solid rgba(13,34,238,0.12)",
+        boxShadow: "0 30px 60px -40px rgba(13,34,238,0.22)",
         background:
-          "radial-gradient(55% 40% at 88% 10%, rgba(230,224,255,0.45), transparent 70%), radial-gradient(45% 35% at 6% 14%, rgba(222,232,255,0.4), transparent 70%), linear-gradient(180deg,#fcfbff 0%,#f9f7ff 100%)",
+          "radial-gradient(55% 40% at 88% 10%, rgba(215,255,63,0.16), transparent 70%), radial-gradient(45% 35% at 6% 14%, rgba(13,34,238,0.06), transparent 70%), linear-gradient(180deg,#fefefd 0%,#f6f7f4 100%)",
       }}
     >
-      <span aria-hidden className="pointer-events-none absolute" style={{ left: "-6%", top: pctY(500), width: "36%", height: pctH(240), borderRadius: "50%", background: "radial-gradient(closest-side, rgba(226,220,255,0.4), transparent)" }} />
-      <span aria-hidden className="pointer-events-none absolute" style={{ right: "-8%", top: pctY(540), width: "34%", height: pctH(240), borderRadius: "50%", background: "radial-gradient(closest-side, rgba(220,226,255,0.4), transparent)" }} />
+      <span aria-hidden className="pointer-events-none absolute" style={{ left: "-6%", top: pctY(500), width: "36%", height: pctH(240), borderRadius: "50%", background: "radial-gradient(closest-side, rgba(13,34,238,0.05), transparent)" }} />
+      <span aria-hidden className="pointer-events-none absolute" style={{ right: "-8%", top: pctY(540), width: "34%", height: pctH(240), borderRadius: "50%", background: "radial-gradient(closest-side, rgba(215,255,63,0.12), transparent)" }} />
       {!reduce && <Motes />}
 
       {/* small label + subtitle (the section heading above carries the title) */}
@@ -485,7 +501,7 @@ function Desktop({ reduce }: { reduce: boolean }) {
         >
           <span
             className="flex items-center justify-center rounded-full"
-            style={{ width: cq(64), height: cq(64), background: "#e4e9ff", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.8)" }}
+            style={{ width: cq(64), height: cq(64), background: "#e3e8ff", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.8)" }}
           >
             <GraduationCap style={{ width: cq(32), height: cq(32), color: "#2a2f9a" }} strokeWidth={2} />
           </span>
@@ -541,7 +557,7 @@ function Desktop({ reduce }: { reduce: boolean }) {
                 x: "-50%",
                 y: "-50%",
                 opacity: t.o,
-                background: "rgba(150,120,255,0.9)",
+                background: "rgba(13,34,238,0.9)",
                 filter: "blur(1px)",
               }}
             />
@@ -558,7 +574,7 @@ function Desktop({ reduce }: { reduce: boolean }) {
               y: "-50%",
               opacity: cometOpacity,
               background: "#fff",
-              boxShadow: "0 0 0 4px rgba(150,120,255,0.35), 0 0 26px 10px rgba(150,120,255,0.6)",
+              boxShadow: "0 0 0 4px rgba(13,34,238,0.35), 0 0 26px 10px rgba(13,34,238,0.6)",
             }}
           />
           <motion.span
@@ -572,7 +588,7 @@ function Desktop({ reduce }: { reduce: boolean }) {
               x: "-50%",
               y: "-50%",
               opacity: flare,
-              background: "radial-gradient(closest-side, rgba(170,140,255,0.7), transparent)",
+              background: "radial-gradient(closest-side, rgba(13,34,238,0.45), transparent)",
             }}
           />
         </>
@@ -707,15 +723,15 @@ function Vertical({ reduce }: { reduce: boolean }) {
     <div
       className="relative mx-auto max-w-[34rem] overflow-hidden rounded-[1.75rem] p-4 lg:hidden"
       style={{
-        border: "1px solid rgba(120,100,220,0.14)",
-        boxShadow: "0 30px 60px -40px rgba(110,90,200,0.45)",
+        border: "1px solid rgba(13,34,238,0.12)",
+        boxShadow: "0 30px 60px -40px rgba(13,34,238,0.22)",
         background:
-          "radial-gradient(70% 30% at 90% 4%, rgba(230,224,255,0.55), transparent 70%), linear-gradient(180deg,#fcfbff 0%,#f7f5ff 100%)",
+          "radial-gradient(70% 30% at 90% 4%, rgba(215,255,63,0.18), transparent 70%), linear-gradient(180deg,#fefefd 0%,#f6f7f4 100%)",
       }}
     >
       {!reduce && <Motes />}
       <div className="relative mb-5 flex items-center gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: "#e4e9ff", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.8)" }}>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: "#e3e8ff", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.8)" }}>
           <GraduationCap className="h-5 w-5" style={{ color: "#2a2f9a" }} strokeWidth={2} />
         </span>
         <div>
@@ -730,14 +746,14 @@ function Vertical({ reduce }: { reduce: boolean }) {
 
       <ol ref={listRef} className="relative m-0 list-none p-0 pl-10" aria-label="Timeline">
         {/* line: faint track plus the gradient that draws with scroll */}
-        <span aria-hidden className="absolute bottom-0 left-[12px] top-3 w-[3px] rounded-full" style={{ background: "rgba(150,125,255,0.18)" }} />
+        <span aria-hidden className="absolute bottom-0 left-[12px] top-3 w-[3px] rounded-full" style={{ background: "rgba(13,34,238,0.18)" }} />
         <motion.span
           aria-hidden
           className="absolute bottom-0 left-[12px] top-3 w-[3px] origin-top rounded-full"
           style={{
             scaleY: prog,
-            background: "linear-gradient(180deg,#ff5e8a 0%,#7c4dff 28%,#1677ff 52%,#ffb020 76%,#4cd04c 100%)",
-            boxShadow: "0 0 12px rgba(150,125,255,0.6)",
+            background: "linear-gradient(180deg,#14b8a6 0%,#a8d400 28%,#0d22ee 52%,#ffb020 76%,#22c55e 100%)",
+            boxShadow: "0 0 12px rgba(13,34,238,0.6)",
           }}
         />
         {!reduce && (
@@ -750,7 +766,7 @@ function Vertical({ reduce }: { reduce: boolean }) {
               y: "-50%",
               opacity: dotOpacity,
               background: "#fff",
-              boxShadow: "0 0 0 4px rgba(150,120,255,0.35), 0 0 22px 8px rgba(150,120,255,0.6)",
+              boxShadow: "0 0 0 4px rgba(13,34,238,0.35), 0 0 22px 8px rgba(13,34,238,0.6)",
             }}
           />
         )}
