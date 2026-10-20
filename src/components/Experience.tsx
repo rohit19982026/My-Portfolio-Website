@@ -83,7 +83,7 @@ export default function Trajectory() {
         </p>
 
         <ShirtZipperReveal>
-          <div className="space-y-14">
+          <div className="space-y-20">
             {roles.map((role) => (
               <div key={role.titleMain}>
                 <div className="flex flex-wrap items-center gap-3">
@@ -115,7 +115,7 @@ export default function Trajectory() {
                   {role.org}
                 </p>
 
-                <ol className="mt-6 grid gap-3 lg:grid-cols-2">
+                <ol className="mt-7 grid gap-4 sm:gap-5 lg:grid-cols-2 lg:gap-6">
                   {role.points.map((p, i) => {
                     const [tint, border, pillBg, pillFg] = PALETTES[i % PALETTES.length];
                     return (
@@ -125,7 +125,7 @@ export default function Trajectory() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-30px" }}
                         transition={{ duration: 0.45, delay: (i % 4) * 0.06 }}
-                        className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3.5 rounded-[1.6rem] p-4 sm:gap-x-5 sm:p-5"
+                        className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3.5 rounded-[1.6rem] p-4 sm:gap-x-5 sm:p-6"
                         style={{
                           background: `linear-gradient(135deg, ${tint}, #ffffff 85%)`,
                           border: `1px solid ${border}`,

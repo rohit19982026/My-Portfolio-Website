@@ -58,7 +58,7 @@ const THETA1 = (Math.atan(T1) * 180) / Math.PI;
 const EDGE1 = Math.sqrt(1 + T1 * T1);
 const BOT = 150; // gap between slider rest position and the bottom of the box (pull is ~126px tall)
 const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
-const SLIVER = 12;
+const SLIVER = 0;
 const SCOOP = 110; // px depth of the hem's scoop once fully open // px of fabric left at each side once fully open
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -631,7 +631,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         <motion.div
           ref={contentRef}
           id={contentId}
-          className="px-4 sm:px-6 pt-8 pb-72"
+          className="px-3 pt-8 pb-72 sm:px-8"
           style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
         >
           {children}
