@@ -619,7 +619,7 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
   const blur = useTransform(r, [0, 1], [8, 0]);
   const filter = useMotionTemplate`blur(${blur}px)`;
   const { scrollYProgress: full } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const artY = useTransform(full, [0, 1], [14, -14]);
+  const artY = useTransform(full, [0, 1], [8, -8]);
   const year = useYear(rPop, m.year);
   const ringOpacity = useTransform(rRaw, [0.5, 0.75, 1], [0, 0.85, 0]);
   const ringScale = useTransform(rRaw, [0.5, 1], [0.6, 2.8]);
@@ -627,9 +627,9 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
   const live = !reduce;
 
   return (
-    <li ref={ref} className="relative pb-6 last:pb-0">
+    <li ref={ref} className="relative pb-3 last:pb-0">
       {/* node on the line */}
-      <span className="absolute -left-[38px] top-6 flex h-5 w-5 items-center justify-center" aria-hidden>
+      <span className="absolute -left-[38px] top-5 flex h-5 w-5 items-center justify-center" aria-hidden>
         {live && (
           <motion.span
             className="absolute h-5 w-5 rounded-full"
@@ -647,7 +647,7 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
       </span>
 
       <motion.div
-        className="relative overflow-hidden rounded-3xl p-4"
+        className="relative overflow-hidden rounded-3xl p-3.5"
         style={{
           x: live ? x : 0,
           rotate: live ? rot : 0,
@@ -658,53 +658,53 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
           boxShadow: `0 22px 40px -28px rgba(${b.glow},0.6)`,
         }}
       >
-        <div className="flex items-start gap-3">
-          <motion.span
-            className="inline-flex h-9 shrink-0 items-center justify-center rounded-full px-3.5 font-sans text-[15px] font-bold tabular-nums"
-            style={{
-              background: b.bg,
-              color: b.fg,
-              boxShadow: `0 8px 18px -8px rgba(${b.glow},0.7), inset 0 2px 0 rgba(255,255,255,0.85)`,
-              scale: live ? rPop : 1,
-            }}
-          >
-            <span className="sr-only">Year: {m.prefix ?? ""}{m.year}</span>
-            <span aria-hidden>
-              {m.prefix}
-              <motion.span>{reduce ? String(m.year) : year}</motion.span>
-            </span>
-          </motion.span>
-          <div className="min-w-0">
-            <h4 className="font-sans text-[17px] font-bold leading-snug" style={{ color: "#14122b" }}>
+        <div className="flex items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <motion.span
+              className="inline-flex h-8 items-center justify-center rounded-full px-3 font-sans text-[14px] font-bold tabular-nums"
+              style={{
+                background: b.bg,
+                color: b.fg,
+                boxShadow: `0 8px 18px -8px rgba(${b.glow},0.7), inset 0 2px 0 rgba(255,255,255,0.85)`,
+                scale: live ? rPop : 1,
+              }}
+            >
+              <span className="sr-only">Year: {m.prefix ?? ""}{m.year}</span>
+              <span aria-hidden>
+                {m.prefix}
+                <motion.span>{reduce ? String(m.year) : year}</motion.span>
+              </span>
+            </motion.span>
+            <h4 className="mt-2 font-sans text-[15.5px] font-bold leading-snug" style={{ color: "#14122b" }}>
               {m.title.join(" ")}
             </h4>
             {m.sub.length > 0 && (
-              <p className="mt-0.5 font-sans text-[14px] leading-snug" style={{ color: "#7d7a95" }}>
+              <p className="mt-0.5 font-sans text-[13px] leading-snug" style={{ color: "#7d7a95" }}>
                 {m.sub.join(" ")}
               </p>
             )}
+            {index === 3 && (
+              <Image src="/journey/bt-logo.png" alt="" width={73} height={68} className="mt-2 h-8 w-auto select-none" style={{ mixBlendMode: "multiply" }} />
+            )}
           </div>
-          {index === 3 && (
-            <Image src="/journey/bt-logo.png" alt="" width={73} height={68} className="ml-auto h-11 w-auto shrink-0 select-none" style={{ mixBlendMode: "multiply" }} />
-          )}
-        </div>
 
-        <motion.div className="pointer-events-none -mx-4 -mb-4 mt-2" style={{ y: live ? artY : 0 }}>
-          <motion.div
-            animate={live ? { y: [0, -4, 0] } : { y: 0 }}
-            transition={live ? { duration: 5.5 + m.float * 0.6, repeat: Infinity, ease: "easeInOut", delay: m.float * 0.3 } : { duration: 0 }}
-          >
-            <Image
-              src={a.src}
-              alt=""
-              width={a.w}
-              height={a.h}
-              sizes="(min-width: 640px) 420px, 92vw"
-              className="mx-auto h-auto w-full max-w-[360px] select-none"
-              style={blendStyle}
-            />
+          <motion.div className="pointer-events-none -my-2 -mr-2 w-[42%] shrink-0" style={{ y: live ? artY : 0 }}>
+            <motion.div
+              animate={live ? { y: [0, -3, 0] } : { y: 0 }}
+              transition={live ? { duration: 5.5 + m.float * 0.6, repeat: Infinity, ease: "easeInOut", delay: m.float * 0.3 } : { duration: 0 }}
+            >
+              <Image
+                src={a.src}
+                alt=""
+                width={a.w}
+                height={a.h}
+                sizes="(min-width: 640px) 220px, 42vw"
+                className="h-auto w-full select-none"
+                style={blendStyle}
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     </li>
   );
@@ -730,7 +730,7 @@ function Vertical({ reduce }: { reduce: boolean }) {
       }}
     >
       {!reduce && <Motes />}
-      <div className="relative mb-5 flex items-center gap-3">
+      <div className="relative mb-4 flex items-center gap-3">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: "#e3e8ff", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.8)" }}>
           <GraduationCap className="h-5 w-5" style={{ color: "#2a2f9a" }} strokeWidth={2} />
         </span>
