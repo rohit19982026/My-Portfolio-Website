@@ -2,6 +2,7 @@
 
 import {
   animate,
+  useInView,
   motion,
   useMotionValue,
   useReducedMotion,
@@ -9,6 +10,7 @@ import {
   useTransform,
   useVelocity,
   type AnimationPlaybackControls,
+  type MotionValue,
   type MotionStyle,
 } from "framer-motion";
 import Image from "next/image";
@@ -49,10 +51,47 @@ const PA = 0.78;
 const TAN = 0.52; // V opening: horizontal run per px of slider travel
 const THETA = (Math.atan(TAN) * 180) / Math.PI;
 const EDGE = Math.sqrt(1 + TAN * TAN);
+const L1 = 64; // px of the V's narrow throat just behind the pull
+const T1 = 0.16; // the throat's slope: the two rows are still closing up here
+const THETA1 = (Math.atan(T1) * 180) / Math.PI;
+const EDGE1 = Math.sqrt(1 + T1 * T1);
 const BOT = 150; // gap between slider rest position and the bottom of the box (pull is ~126px tall)
 const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
 const SLIVER = 10; // px of fabric left at each side once fully open
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+// A hand-pulled zip is never a smooth ramp: a tug, a little slack, then pulls
+// with short stalls, and the end stop. These curves (time, progress) are joined
+// with a cardinal spline so the motion stays smooth but irregular.
+function curve(points: [number, number][]) {
+  const n = points.length;
+  const m = points.map((pt, i) => {
+    if (i === 0 || i === n - 1) return 0;
+    return ((points[i + 1][1] - points[i - 1][1]) / (points[i + 1][0] - points[i - 1][0])) * 0.85;
+  });
+  return (t: number) => {
+    if (t <= 0) return 0;
+    if (t >= 1) return 1;
+    let i = 0;
+    while (i < n - 2 && t > points[i + 1][0]) i++;
+    const [t0, p0] = points[i];
+    const [t1, p1] = points[i + 1];
+    const h = t1 - t0;
+    const u = (t - t0) / h;
+    const u2 = u * u;
+    const u3 = u2 * u;
+    const v = (2 * u3 - 3 * u2 + 1) * p0 + (u3 - 2 * u2 + u) * h * m[i] + (-2 * u3 + 3 * u2) * p1 + (u3 - u2) * h * m[i + 1];
+    return clamp(v, 0, 1);
+  };
+}
+const OPEN_EASE = curve([
+  [0, 0], [0.05, 0.018], [0.09, 0.01], [0.2, 0.13], [0.25, 0.14], [0.4, 0.33], [0.45, 0.345],
+  [0.58, 0.55], [0.63, 0.565], [0.74, 0.76], [0.78, 0.78], [0.86, 0.87], [0.93, 0.975], [1, 1],
+]);
+const CLOSE_EASE = curve([
+  [0, 0], [0.14, 0.22], [0.2, 0.28], [0.35, 0.4], [0.4, 0.42], [0.58, 0.62], [0.64, 0.64],
+  [0.8, 0.86], [0.86, 0.9], [0.95, 0.985], [1, 1],
+]);
 
 // Closed shirt height: grows with the screen width, capped by the screen
 // height (so a landscape phone never gets a shirt taller than itself). The
@@ -64,8 +103,8 @@ const CLOSED_CSS = "h-[min(clamp(380px,118vw,560px),max(320px,78svh))]";
 // Everything below is cut from the supplied design (public/shirt/): fabric
 // tile, zipper strips, the pull, the patch and the pocket.
 const FABRIC_IMG = "url(/shirt/fabric.jpg)";
-const ZIP_EDGE = "url(/shirt/zip-edge.png)";
-const ZIP_CLOSED = "url(/shirt/zip-closed.png)";
+const ZIP_EDGE = "url(/shirt/zip-edge.svg)";
+const ZIP_CLOSED = "url(/shirt/zip-closed.svg)";
 const EDGE_W = 44; // px, width of the open-zip strip
 const EDGE_FADE = "linear-gradient(to right, #000 0, #000 62%, transparent 100%)";
 const PATCH_MASK =
@@ -74,8 +113,6 @@ const PATCH_MASK =
 type PanelProps = {
   side: "left" | "right";
   clip: ReturnType<typeof useTransform<number, string>>;
-  tapeTop: ReturnType<typeof useTransform<number, number>>;
-  tapeLen: ReturnType<typeof useTransform<number, number>>;
   Y: ReturnType<typeof useMotionValue<number>>;
   turn: ReturnType<typeof useTransform<number, number>>;
   jx: ReturnType<typeof useTransform<number, number>>;
@@ -83,8 +120,89 @@ type PanelProps = {
   sweep: ReturnType<typeof useTransform<number, string>>;
 };
 
-function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy, sweep }: PanelProps) {
+// One straight run of the V edge: stitching, the fabric bulge, and the zipper
+// teeth, all anchored at the run's lower end and rotated up along it.
+function Segment({
+  side,
+  anchorX,
+  anchorY,
+  len,
+  angle,
+}: {
+  side: "left" | "right";
+  anchorX: MotionValue<number>;
+  anchorY: MotionValue<number>;
+  len: MotionValue<number>;
+  angle: number;
+}) {
   const left = side === "left";
+  const top = useTransform([anchorY, len], (v: number[]) => v[0] - v[1]);
+  const xStitch = useTransform(anchorX, (v) => (left ? `calc(50% - ${v + 30}px)` : `calc(50% + ${v + 28.5}px)`));
+  const xPucker = useTransform(anchorX, (v) => (left ? `calc(50% - ${v + 46}px)` : `calc(50% + ${v}px)`));
+  const xTeeth = useTransform(anchorX, (v) => (left ? `calc(50% - ${v}px)` : `calc(50% - ${v + EDGE_W}px)`));
+  const rot = left ? -angle : angle;
+  return (
+    <>
+      <motion.div
+        className="absolute"
+        style={{
+          top,
+          height: len,
+          width: 1.5,
+          left: xStitch,
+          transformOrigin: left ? "100% 100%" : "0 100%",
+          rotate: rot,
+          backgroundImage: "repeating-linear-gradient(180deg, rgba(235,238,255,.85) 0 6px, transparent 6px 11px)",
+        }}
+      />
+      <motion.div
+        className="absolute"
+        style={{
+          top,
+          height: len,
+          width: 46,
+          left: xPucker,
+          transformOrigin: left ? "100% 100%" : "0 100%",
+          rotate: rot,
+          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,30,.42))`,
+        }}
+      />
+      <motion.div
+        className="absolute"
+        style={{
+          top,
+          height: len,
+          width: EDGE_W,
+          left: xTeeth,
+          transformOrigin: left ? "0 100%" : "100% 100%",
+          rotate: rot,
+          filter: "drop-shadow(0 5px 6px rgba(10,10,60,.4))",
+        }}
+      >
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage: ZIP_EDGE,
+            backgroundSize: `${EDGE_W}px ${EDGE_W * (40 / 48)}px`,
+            backgroundRepeat: "repeat-y",
+            backgroundPosition: "0 100%",
+            transform: left ? undefined : "scaleX(-1)",
+            WebkitMaskImage: EDGE_FADE,
+            maskImage: EDGE_FADE,
+          }}
+        />
+      </motion.div>
+    </>
+  );
+}
+
+function Panel({ side, clip, Y, turn, jx, jy, sweep }: PanelProps) {
+  const left = side === "left";
+  const zero = useMotionValue(0);
+  const lenA = useTransform(Y, (y) => Math.min(y, L1) * EDGE1);
+  const lenB = useTransform(Y, (y) => Math.max(0, y - L1) * EDGE);
+  const jointOff = useTransform(Y, (y) => Math.min(y, L1) * T1);
+  const jointY = useTransform(Y, (y) => Math.max(0, y - L1));
   return (
     <motion.div
       className="absolute inset-0"
@@ -145,57 +263,9 @@ function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy, sweep }: PanelPr
         )}
       </motion.div>
 
-      {/* white stitching parallel to the zip, as on the real shirt */}
-      <motion.div
-        className="absolute"
-        style={{
-          top: tapeTop,
-          height: tapeLen,
-          width: 1.5,
-          left: left ? "calc(50% - 30px)" : "calc(50% + 28.5px)",
-          transformOrigin: left ? "100% 100%" : "0 100%",
-          rotate: left ? -THETA : THETA,
-          backgroundImage: "repeating-linear-gradient(180deg, rgba(235,238,255,.85) 0 6px, transparent 6px 11px)",
-        }}
-      />
-      {/* fabric puckering and shadow beside the tape */}
-      <motion.div
-        className="absolute"
-        style={{
-          top: tapeTop,
-          height: tapeLen,
-          width: 46,
-          left: left ? "calc(50% - 46px)" : "50%",
-          transformOrigin: left ? "100% 100%" : "0 100%",
-          rotate: left ? -THETA : THETA,
-          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,30,.4))`,
-        }}
-      />
-      {/* open zipper: teeth hang over the edge into the opening */}
-      <motion.div
-        className="absolute"
-        style={{
-          top: tapeTop,
-          height: tapeLen,
-          width: EDGE_W,
-          left: left ? "50%" : `calc(50% - ${EDGE_W}px)`,
-          transformOrigin: left ? "0 100%" : "100% 100%",
-          rotate: left ? -THETA : THETA,
-          filter: "drop-shadow(0 6px 8px rgba(20,20,60,.35))",
-        }}
-      >
-        <div
-          className="h-full w-full"
-          style={{
-            backgroundImage: ZIP_EDGE,
-            backgroundSize: `${EDGE_W}px ${EDGE_W * (228 / 132)}px`,
-            backgroundRepeat: "repeat-y",
-            transform: left ? undefined : "scaleX(-1)",
-            WebkitMaskImage: EDGE_FADE,
-            maskImage: EDGE_FADE,
-          }}
-        />
-      </motion.div>
+      {/* the two straight runs of the V edge (see `edge` in the parent) */}
+      <Segment side={side} anchorX={zero} anchorY={Y} len={lenA} angle={THETA1} />
+      <Segment side={side} anchorX={jointOff} anchorY={jointY} len={lenB} angle={THETA} />
       {/* closed zipper below the pull (drawn once, with the left panel) */}
       {left && (
         <motion.div
@@ -203,12 +273,13 @@ function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy, sweep }: PanelPr
           style={{
             top: Y,
             bottom: 12,
-            width: 26,
-            left: "calc(50% - 13px)",
+            width: 30,
+            left: "calc(50% - 15px)",
+            marginTop: 8,
             backgroundImage: ZIP_CLOSED,
-            backgroundSize: "26px 79px",
+            backgroundSize: "30px 33.3px",
             backgroundRepeat: "repeat-y",
-            boxShadow: "0 0 10px rgba(0,0,30,.5)",
+            boxShadow: "0 0 12px rgba(0,0,40,.55)",
           }}
         />
       )}
@@ -244,6 +315,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const openRef = useRef(false);
   const anim = useRef<AnimationPlaybackControls | null>(null);
   const suppressClick = useRef(false);
+  const touched = useRef(false);
   const drag = useRef<{
     id: number;
     startY: number;
@@ -261,21 +333,26 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   });
   const Y = useTransform([p, H], (v: number[]) => Math.min(v[0] / PA, 1) * Math.max(0, v[1] - BOT));
 
-  const clipLeft = useTransform(
-    Y,
-    (y) => `polygon(0 0, calc(50% - ${(y * TAN).toFixed(1)}px) 0, calc(50% + .5px) ${y.toFixed(1)}px, calc(50% + .5px) 100%, 0 100%)`,
-  );
-  const clipRight = useTransform(
-    Y,
-    (y) => `polygon(calc(50% + ${(y * TAN).toFixed(1)}px) 0, 100% 0, 100% 100%, calc(50% - .5px) 100%, calc(50% - .5px) ${y.toFixed(1)}px)`,
-  );
+  // The V has a narrow throat right behind the pull (the rows are still
+  // closing up there) and then opens at the main angle.
+  const edge = (y: number) => ({
+    top: y <= L1 ? y * T1 : L1 * T1 + (y - L1) * TAN,
+    jy: Math.max(0, y - L1),
+    jo: Math.min(y, L1) * T1,
+  });
+  const clipLeft = useTransform(Y, (y) => {
+    const e = edge(y);
+    return `polygon(0 0, calc(50% - ${e.top.toFixed(1)}px) 0, calc(50% - ${e.jo.toFixed(1)}px) ${e.jy.toFixed(1)}px, calc(50% + .5px) ${y.toFixed(1)}px, calc(50% + .5px) 100%, 0 100%)`;
+  });
+  const clipRight = useTransform(Y, (y) => {
+    const e = edge(y);
+    return `polygon(calc(50% + ${e.top.toFixed(1)}px) 0, 100% 0, 100% 100%, calc(50% - .5px) 100%, calc(50% - .5px) ${y.toFixed(1)}px, calc(50% + ${e.jo.toFixed(1)}px) ${e.jy.toFixed(1)}px)`;
+  });
   const sweep = useTransform(p, [0, 1], ["-35%", "35%"]);
   const turnL = useTransform(b, (v) => v * 0.9);
   const turnR = useTransform(b, (v) => v * 0.9);
   const settle = useTransform(p, [0, PA], [0.985, 1]);
   const rise = useTransform(p, [0, PA], [10, 0]);
-  const tapeLen = useTransform(Y, (y) => y * EDGE);
-  const tapeTop = useTransform(Y, (y) => y - y * EDGE);
 
   const labelOpacity = useTransform(p, (v) => (v < 0.05 ? 1 - v / 0.05 : v > 0.95 ? (v - 0.95) / 0.05 : 0));
   const innerShadow = useTransform(p, [0, 0.7], [1, 0.35]);
@@ -409,16 +486,28 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       const dist = Math.abs(to - p.get());
       if (dist < 0.001) return;
       // the slider covers its travel in PA of the run; aim for ~300px/s so each tooth lands on its own
-      const secs = clamp((fullH.get() - BOT) / (300 * PA), 2.2, 5.5);
+      const secs = clamp((fullH.get() - BOT) / (300 * PA), 3.2, 5.5);
       anim.current = animate(p, to, {
-        duration: Math.max(0.5, (next ? secs : secs * 0.75) * dist),
-        ease: [0.4, 0, 0.6, 1],
+        duration: Math.max(0.6, (next ? secs : secs * 0.75) * dist),
+        ease: next ? OPEN_EASE : CLOSE_EASE,
       });
     },
     [p, fullH, reduce],
   );
 
+  // The shirt unzips by itself the first time it scrolls into view (the
+  // visitor can still grab the pull at any point, or close it again).
+  const seen = useInView(boxRef, { once: true, amount: 0.35 });
+  useEffect(() => {
+    if (!seen || reduce || !ready) return;
+    const id = setTimeout(() => {
+      if (!touched.current && !openRef.current) goTo(true);
+    }, 450);
+    return () => clearTimeout(id);
+  }, [seen, reduce, ready, goTo]);
+
   const onPointerDown = (e: PointerEvent<HTMLButtonElement>) => {
+    touched.current = true;
     if (e.pointerType === "mouse" && e.button !== 0) return;
     const box = boxRef.current;
     if (!box) return;
@@ -490,6 +579,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    touched.current = true;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       goTo(true);
@@ -536,9 +626,21 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           className="zipper-overlay pointer-events-none absolute inset-0"
           style={{ "--b": b, perspective: 1400 } as MotionStyle}
         >
-          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnL} jx={jx} jy={jy} sweep={sweep} />
-          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnR} jx={jx} jy={jy} sweep={sweep} />
+          <Panel side="left" clip={clipLeft} Y={Y} turn={turnL} jx={jx} jy={jy} sweep={sweep} />
+          <Panel side="right" clip={clipRight} Y={Y} turn={turnR} jx={jx} jy={jy} sweep={sweep} />
 
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2"
+            style={{
+              top: Y,
+              width: 150,
+              height: 210,
+              x: "-50%",
+              y: -44,
+              background: "radial-gradient(ellipse 50% 46% at 50% 38%, rgba(0,0,50,.5), transparent 100%)",
+            }}
+          />
           <motion.button
             type="button"
             aria-expanded={isOpen}
@@ -554,19 +656,19 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
             style={{ top: Y, x: wobble, rotate: tilt }}
           >
             <motion.span
-              className="relative mx-auto block w-[56px] origin-top"
+              className="relative mx-auto -mt-[22px] block w-[56px] origin-[50%_14%]"
               style={{ rotate: swing }}
               animate={idle ? { y: [0, 5, 0] } : { y: 0 }}
               transition={idle ? { duration: 1.8, repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0.2 }}
             >
               <Image
-                src="/shirt/slider.png"
+                src="/shirt/slider.svg"
                 alt=""
-                width={192}
-                height={432}
+                width={100}
+                height={236}
                 priority
+                unoptimized
                 className="h-auto w-full select-none"
-                style={{ filter: "drop-shadow(0 8px 8px rgba(0,0,30,.55)) drop-shadow(0 0 14px rgba(215,255,63,.35))" }}
               />
             </motion.span>
 
