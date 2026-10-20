@@ -288,6 +288,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const [open, setOpen] = useState<boolean | null>(null);
   const [dragging, setDragging] = useState(false);
   const [announce, setAnnounce] = useState("");
+  const [needTap, setNeedTap] = useState(false);
 
   const soundPref = useSyncExternalStore(subscribeSoundPref, getSoundPref, () => null);
   // hydration-safe copy of `reduce` (server renders as false)
@@ -511,6 +512,16 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   useEffect(() => {
     if (!seen || reduce || !ready) return;
     const id = setTimeout(() => {
+      // Browsers keep sound and vibration off until the visitor has tapped the
+      // page once; scrolling alone doesn't count. Say so, so it isn't a mystery.
+      const ua = (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation;
+      if (ua && !ua.hasBeenActive && soundRef.current) {
+        setNeedTap(true);
+        const clear = () => setNeedTap(false);
+        window.addEventListener("pointerdown", clear, { once: true, capture: true });
+        window.addEventListener("keydown", clear, { once: true, capture: true });
+        setTimeout(clear, 7000);
+      }
       if (!touched.current && !openRef.current) goTo(true);
     }, 450);
     return () => clearTimeout(id);
@@ -638,6 +649,15 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         >
           <Panel side="left" clip={clipLeft} Y={Y} turn={turnL} jx={jx} jy={jy} sweep={sweep} hardware={hardware} />
           <Panel side="right" clip={clipRight} Y={Y} turn={turnR} jx={jx} jy={jy} sweep={sweep} hardware={hardware} />
+
+          {needTap && (
+            <div
+              role="status"
+              className="pointer-events-none absolute left-1/2 top-3 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/25 bg-ink/85 px-3.5 py-2 font-heading text-[10.5px] font-bold uppercase tracking-wider text-white"
+            >
+              Tap anywhere for zip sound
+            </div>
+          )}
 
           {/* closed chain below the pull, ending in a metal stop */}
           <motion.div
