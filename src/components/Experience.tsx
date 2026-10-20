@@ -100,8 +100,8 @@ export default function Trajectory() {
                   )}
                 </div>
                 <h3
-                  className="mt-3 font-sans font-extrabold leading-[1.05] tracking-[-0.035em]"
-                  style={{ fontSize: "clamp(1.9rem, 6.4vw, 3.1rem)", color: INK }}
+                  className="mt-2.5 font-sans font-extrabold leading-[1.12] tracking-[-0.03em]"
+                  style={{ fontSize: "clamp(1.35rem, 4.6vw, 1.9rem)", color: INK }}
                 >
                   {role.titleMain}
                   {role.titleSub && (
