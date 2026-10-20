@@ -28,6 +28,7 @@ import {
 } from "react";
 import {
   getSoundPref,
+  installAudioUnlock,
   primeZipSound,
   setSoundPref,
   subscribeSoundPref,
@@ -57,7 +58,7 @@ const THETA1 = (Math.atan(T1) * 180) / Math.PI;
 const EDGE1 = Math.sqrt(1 + T1 * T1);
 const BOT = 150; // gap between slider rest position and the bottom of the box (pull is ~126px tall)
 const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
-const SLIVER = 10; // px of fabric left at each side once fully open
+const SLIVER = 12; // px of fabric left at each side once fully open
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 // A hand-pulled zip is never a smooth ramp: a tug, a little slack, then pulls
@@ -118,6 +119,7 @@ type PanelProps = {
   jx: ReturnType<typeof useTransform<number, number>>;
   jy: ReturnType<typeof useTransform<number, number>>;
   sweep: ReturnType<typeof useTransform<number, string>>;
+  hardware: MotionValue<number>;
 };
 
 // One straight run of the V edge: stitching, the fabric bulge, and the zipper
@@ -196,7 +198,7 @@ function Segment({
   );
 }
 
-function Panel({ side, clip, Y, turn, jx, jy, sweep }: PanelProps) {
+function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
   const left = side === "left";
   const zero = useMotionValue(0);
   const lenA = useTransform(Y, (y) => Math.min(y, L1) * EDGE1);
@@ -209,9 +211,6 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep }: PanelProps) {
       style={{
         x: jx,
         y: jy,
-        translate: left ? `calc(var(--b) * (${SLIVER}px - 50%)) 0` : `calc(var(--b) * (50% - ${SLIVER}px)) 0`,
-        rotate: left ? "y calc(var(--b) * -17deg)" : "y calc(var(--b) * 17deg)",
-        transformOrigin: left ? "0% 50%" : "100% 50%",
         willChange: "transform",
       }}
     >
@@ -263,26 +262,11 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep }: PanelProps) {
         )}
       </motion.div>
 
+      <motion.div className="absolute inset-0" style={{ opacity: hardware }}>
       {/* the two straight runs of the V edge (see `edge` in the parent) */}
       <Segment side={side} anchorX={zero} anchorY={Y} len={lenA} angle={THETA1} />
       <Segment side={side} anchorX={jointOff} anchorY={jointY} len={lenB} angle={THETA} />
-      {/* closed zipper below the pull (drawn once, with the left panel) */}
-      {left && (
-        <motion.div
-          className="absolute"
-          style={{
-            top: Y,
-            bottom: 12,
-            width: 30,
-            left: "calc(50% - 15px)",
-            marginTop: 8,
-            backgroundImage: ZIP_CLOSED,
-            backgroundSize: "30px 33.3px",
-            backgroundRepeat: "repeat-y",
-            boxShadow: "0 0 12px rgba(0,0,40,.55)",
-          }}
-        />
-      )}
+      </motion.div>
     </motion.div>
   );
 }
@@ -340,14 +324,24 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     jy: Math.max(0, y - L1),
     jo: Math.min(y, L1) * T1,
   });
-  const clipLeft = useTransform(Y, (y) => {
+  // Phase B: the V straightens into plain vertical bands at the screen edges
+  // (the shirt hanging open), instead of sliding the triangles off-screen.
+  // Every V corner eases toward x = SLIVER from its own side as `b` goes 0 to 1.
+  const clipLeft = useTransform([Y, b], (v: number[]) => {
+    const [y, bb] = v;
     const e = edge(y);
-    return `polygon(0 0, calc(50% - ${e.top.toFixed(1)}px) 0, calc(50% - ${e.jo.toFixed(1)}px) ${e.jy.toFixed(1)}px, calc(50% + .5px) ${y.toFixed(1)}px, calc(50% + .5px) 100%, 0 100%)`;
+    const k = 1 - bb;
+    const to = `${bb.toFixed(3)} * (50% - ${SLIVER}px)`;
+    return `polygon(0 0, calc(50% - ${(e.top * k).toFixed(1)}px - ${to}) 0, calc(50% - ${(e.jo * k).toFixed(1)}px - ${to}) ${e.jy.toFixed(1)}px, calc(50% + ${(0.5 * k).toFixed(2)}px - ${to}) ${y.toFixed(1)}px, calc(50% + ${(0.5 * k).toFixed(2)}px - ${to}) 100%, 0 100%)`;
   });
-  const clipRight = useTransform(Y, (y) => {
+  const clipRight = useTransform([Y, b], (v: number[]) => {
+    const [y, bb] = v;
     const e = edge(y);
-    return `polygon(calc(50% + ${e.top.toFixed(1)}px) 0, 100% 0, 100% 100%, calc(50% - .5px) 100%, calc(50% - .5px) ${y.toFixed(1)}px, calc(50% + ${e.jo.toFixed(1)}px) ${e.jy.toFixed(1)}px)`;
+    const k = 1 - bb;
+    const to = `${bb.toFixed(3)} * (50% - ${SLIVER}px)`;
+    return `polygon(calc(50% + ${(e.top * k).toFixed(1)}px + ${to}) 0, 100% 0, 100% 100%, calc(50% - ${(0.5 * k).toFixed(2)}px + ${to}) 100%, calc(50% - ${(0.5 * k).toFixed(2)}px + ${to}) ${y.toFixed(1)}px, calc(50% + ${(e.jo * k).toFixed(1)}px + ${to}) ${e.jy.toFixed(1)}px)`;
   });
+  const hardware = useTransform(b, (v) => Math.max(0, 1 - v * 2.2)); // zip pieces fade as the halves part
   const sweep = useTransform(p, [0, 1], ["-35%", "35%"]);
   const turnL = useTransform(b, (v) => v * 0.9);
   const turnR = useTransform(b, (v) => v * 0.9);
@@ -468,6 +462,8 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       zipRest();
     };
   }, [Y, H, kx, ky, reduce]);
+
+  useEffect(() => installAudioUnlock(), []);
 
   useEffect(() => () => anim.current?.stop(), []);
 
@@ -610,7 +606,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         <motion.div
           ref={contentRef}
           id={contentId}
-          className="px-4 sm:px-6 pt-8 pb-40"
+          className="px-4 sm:px-6 pt-8 pb-52"
           style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
         >
           {children}
@@ -626,9 +622,30 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           className="zipper-overlay pointer-events-none absolute inset-0"
           style={{ "--b": b, perspective: 1400 } as MotionStyle}
         >
-          <Panel side="left" clip={clipLeft} Y={Y} turn={turnL} jx={jx} jy={jy} sweep={sweep} />
-          <Panel side="right" clip={clipRight} Y={Y} turn={turnR} jx={jx} jy={jy} sweep={sweep} />
+          <Panel side="left" clip={clipLeft} Y={Y} turn={turnL} jx={jx} jy={jy} sweep={sweep} hardware={hardware} />
+          <Panel side="right" clip={clipRight} Y={Y} turn={turnR} jx={jx} jy={jy} sweep={sweep} hardware={hardware} />
 
+          {/* closed chain below the pull, ending in a metal stop */}
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute"
+            style={{
+              top: Y,
+              bottom: 12,
+              width: 30,
+              left: "calc(50% - 15px)",
+              marginTop: 8,
+              backgroundImage: ZIP_CLOSED,
+              backgroundSize: "30px 33.3px",
+              backgroundRepeat: "repeat-y",
+              boxShadow: "0 0 12px rgba(0,0,40,.45)",
+            }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-[6px] left-[calc(50%-12px)] h-[9px] w-6 rounded-[3px]"
+            style={{ background: "linear-gradient(180deg,#fff,#b4bac6 60%,#7f8696)", boxShadow: "0 1px 3px rgba(0,0,40,.5)" }}
+          />
           <motion.div
             aria-hidden
             className="pointer-events-none absolute left-1/2"
@@ -638,6 +655,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               height: 210,
               x: "-50%",
               y: -44,
+              opacity: hardware,
               background: "radial-gradient(ellipse 50% 46% at 50% 38%, rgba(0,0,50,.5), transparent 100%)",
             }}
           />

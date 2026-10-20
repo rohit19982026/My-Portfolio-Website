@@ -51,6 +51,23 @@ function ensure(): AudioContext | null {
   return ctx;
 }
 
+/**
+ * Browsers only allow audio (and vibration) after the visitor has touched the
+ * page. Listen once for any tap, click or key press anywhere and unlock then,
+ * so a zip that opens by itself later is audible and can buzz.
+ */
+export function installAudioUnlock() {
+  if (typeof window === "undefined") return () => {};
+  const unlock = () => {
+    ensure();
+    if (ctx && ctx.state === "running") off();
+  };
+  const events = ["pointerup", "touchend", "click", "keydown"] as const;
+  const off = () => events.forEach((e) => window.removeEventListener(e, unlock, true));
+  events.forEach((e) => window.addEventListener(e, unlock, { capture: true, passive: true }));
+  return off;
+}
+
 /** Call from a user gesture so the browser lets the audio start. */
 export function primeZipSound() {
   ensure();
