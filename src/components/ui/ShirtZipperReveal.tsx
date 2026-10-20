@@ -625,7 +625,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         style={{
           ...(ready ? { height: H } : {}),
           background:
-            "radial-gradient(70% 38% at 85% 2%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 70%), radial-gradient(60% 30% at 15% 40%, color-mix(in srgb, #ffb020 8%, transparent), transparent 70%), var(--color-surface-alt)",
+            "radial-gradient(70% 38% at 85% 2%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 70%), radial-gradient(60% 30% at 15% 40%, color-mix(in srgb, #ffb020 8%, transparent), transparent 70%), #fcfbf9",
         }}
       >
         <motion.div
