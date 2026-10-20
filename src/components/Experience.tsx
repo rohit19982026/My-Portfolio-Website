@@ -33,7 +33,7 @@ const roles: {
     current: true,
     titleMain: "Technical Project Manager",
     titleSub: "Data & AI",
-    org: "phData · Snowflake Elite Partner · Bengaluru",
+    org: "phData · Bengaluru",
     points: [
       { title: "Program Delivery", icon: 1, text: "Run four to five programs at once for US Fortune 500 clients, each with 12–15 engineers and a budget between $250K and $1M." },
       { title: "Requirements and Planning", icon: 2, text: "Work through requirements and estimates with our Principal Architects before the SOW is signed, then turn the scope into a plan and backlog the team can start on." },
