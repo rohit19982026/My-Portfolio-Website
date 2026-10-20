@@ -2,9 +2,7 @@
 
 import { motion } from "framer-motion";
 import Script from "next/script";
-import { SiJira, SiClaude, SiCursor } from "react-icons/si";
 import {
-  Terminal,
   Briefcase,
   Plus,
   MessageCircle,
@@ -23,11 +21,8 @@ import {
   Bell,
   ArrowRight,
 } from "lucide-react";
+import ToolsPanel from "./ToolsPanel";
 import HeroPortrait from "./HeroPortrait";
-import GithubMark from "./icons/GithubMark";
-import SalesforceMark from "./icons/SalesforceMark";
-import SlackMark from "./icons/SlackMark";
-import GleanMark from "./icons/GleanMark";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -49,17 +44,6 @@ const fadeBlurUp = {
 const NAVY = "var(--color-surface-alt)";
 const CARD_BG = "var(--color-card)";
 const CARD_BORDER = "var(--color-card-border)";
-
-const tools = [
-  { name: "Jira", Icon: SiJira, color: "#2684FF" },
-  { name: "GitHub", Icon: GithubMark, color: "var(--color-fg)" },
-  { name: "Salesforce", Icon: SalesforceMark, color: "#00A1E0" },
-  { name: "Claude", Icon: SiClaude, color: "#D97757" },
-  { name: "Claude Code", Icon: Terminal, color: "#D97757", accentBorder: true },
-  { name: "Cursor", Icon: SiCursor, color: "var(--color-fg)" },
-  { name: "Glean", Icon: GleanMark, color: "#8B7FF0" },
-  { name: "Slack", Icon: SlackMark, color: null },
-] as const;
 
 // Impact stats — shared by both breakpoints. Every value is a figure
 // stated on the resume (years in delivery, program count, team size,
@@ -139,23 +123,6 @@ const automateSteps = [
   { label: "Reporting & Updates", Icon: BarChart3 },
   { label: "Notifications & Briefs", Icon: Bell },
 ] as const;
-
-function ToolIcon({ tool }: { tool: (typeof tools)[number] }) {
-  const { Icon, color, name } = tool;
-  const accentBorder = "accentBorder" in tool && tool.accentBorder;
-  return (
-    <div
-      className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 text-center"
-      style={{
-        background: CARD_BG,
-        border: `1px solid ${accentBorder ? "color-mix(in srgb, #D97757 45%, transparent)" : CARD_BORDER}`,
-      }}
-    >
-      <Icon size={26} color={color ?? undefined} style={{ color: color ?? undefined }} />
-      <span className="font-heading text-[11px] sm:text-[12px] text-fg/70">{name}</span>
-    </div>
-  );
-}
 
 function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
   const { Icon, value, label } = stat;
@@ -430,31 +397,8 @@ export default function Hero() {
         </motion.div>
 
 
-        {/* Tools & platforms — my own personal AI tool stack, distinct
-            from the client-delivery/employer logos above. */}
         <div className="mt-12 lg:mt-16">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="h-px flex-1" style={{ background: "var(--color-divider)" }} />
-            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-fg/45 shrink-0">
-              Tools I Use Daily
-            </p>
-            <span className="h-px flex-1" style={{ background: "var(--color-divider)" }} />
-          </div>
-
-          <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-9 gap-3">
-            {tools.map((tool) => (
-              <ToolIcon key={tool.name} tool={tool} />
-            ))}
-            <a
-              href="#stack"
-              aria-label="See the full tools and platforms list"
-              className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 col-span-2 sm:col-span-1 mx-auto w-full hover:border-accent transition-colors"
-              style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
-            >
-              <Plus size={22} className="text-fg/50" />
-              <span className="font-heading text-[11px] sm:text-[12px] text-fg/50">See all</span>
-            </a>
-          </div>
+          <ToolsPanel />
         </div>
       </motion.div>
 
@@ -652,30 +596,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div variants={fadeBlurUp} className="mt-2">
-            <div className="flex items-center justify-between gap-3 mb-4">
-              <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-fg/60 whitespace-nowrap">
-                Tools I Use Daily
-              </p>
-              <a href="#stack" className="flex items-center gap-1.5 py-4 -my-4 pl-3 -ml-3 font-heading text-[10px] text-fg/55 hover:text-accent whitespace-nowrap">
-                See all <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "var(--color-accent)" }} />
-              </a>
-            </div>
-            <div className="flex gap-3 overflow-x-auto -mx-4 px-4 sm:-mx-6 sm:px-6 no-scrollbar">
-              {tools.map((tool) => (
-                <div key={tool.name} className="shrink-0 w-[86px]">
-                  <ToolIcon tool={tool} />
-                </div>
-              ))}
-              <a
-                href="#stack"
-                aria-label="See the full tools and platforms list"
-                className="shrink-0 w-[86px] flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4"
-                style={{ border: "1px dashed var(--color-divider)", background: "transparent" }}
-              >
-                <Plus size={22} className="text-fg/50" />
-                <span className="font-heading text-[11px] text-fg/50">See all</span>
-              </a>
-            </div>
+            <ToolsPanel />
           </motion.div>
         </motion.div>
       </div>
