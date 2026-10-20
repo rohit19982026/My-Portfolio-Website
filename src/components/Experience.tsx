@@ -36,14 +36,15 @@ const roles: {
     titleSub: "Data & AI",
     org: "phData · Bengaluru",
     points: [
-      { title: "Program Delivery", icon: 1, text: "Run four to five programs at once for US Fortune 500 clients, each with 12–15 engineers and a budget between $250K and $1M." },
-      { title: "Requirements and Planning", icon: 2, text: "Work through requirements and estimates with our Principal Architects before the SOW is signed, then turn the scope into a plan and backlog the team can start on." },
-      { title: "Sprint and Risk Management", icon: 3, text: "Run the sprint rhythm and keep the risk register and decision log current, with Jira dashboards showing lead time, throughput, and where work is stuck." },
-      { title: "Client and Stakeholder Management", icon: 4, text: "Act as the main contact for client VPs and C-level sponsors across a 10–12 hour time difference, and bring their priorities back to our sales, engineering, and leadership teams." },
-      { title: "Expectations and Scope Control", icon: 5, text: "Tell clients early when a request won't work as asked, and find the version that will. On one engagement that meant handling 14 requests outside the signed SOW without any of it becoming free work." },
-      { title: "Commercial and Reporting", icon: 6, text: "Own invoicing, forecasts, and burn-down for each program. Quarterly reviews with sponsors have turned into follow-on work and larger accounts." },
-      { title: "Process Automation", icon: 7, text: "Built a Jira dependency tracker in Apps Script that shows which tickets block each other and for how long. One engineering team dropped its weekly status meeting because of it." },
-      { title: "AI Agents", icon: 1, text: "Built Glean and Claude agents for project setup, program health reports, and month-end billing audits. They save 4–8 hours of PMO work a week and won phData's Innovation Award." },
+      { title: "Program Delivery", icon: 1, text: "Run four to five data platform migration, analytics and agentic AI programs at once for US Fortune 500 clients. Each has a dedicated team of 12–15 engineers and a $250K to $1M budget." },
+      { title: "Requirements and Planning", icon: 2, text: "Review client requirements and effort estimates with our Principal Architects before the SOW is signed. Then break the agreed scope into a WBS, RACI and Jira backlog for the engineering team." },
+      { title: "Sprint and Risk Management", icon: 3, text: "Run sprint planning, stand-ups and retrospectives for each program, with capacity planned from velocity. Keep the risk register and decision log current, and track lead time, throughput and blocked time in Jira dashboards and cross-project JQL." },
+      { title: "Dependency Management", icon: 2, text: "Chase client-side dependencies such as system access, data and approvals from kickoff onward." },
+      { title: "Client and Stakeholder Management", icon: 4, text: "Main contact for client VPs, directors and C-level sponsors, with weekly status updates and executive dashboards across a 10–12 hour India–US time gap. Represent client priorities inside phData and align sales, engineering, architects, managed services and leadership on goals, status and open risks." },
+      { title: "Scope and Expectations", icon: 5, text: "Set expectations on scope, timelines and trade-offs, and work out a middle ground with engineering when a request isn't feasible as asked. Assess mid-project changes against the SOW and raise change orders for out-of-scope work. On one engagement that meant handling 14 out-of-scope requests without any becoming free work." },
+      { title: "Commercial and Reporting", icon: 6, text: "Run monthly invoicing, forecast vs actuals and burn-down for each program, and flag budget variance early. Use QBRs to review challenges with sponsors and find follow-on work, which has led to account expansion." },
+      { title: "Process Automation", icon: 7, text: "Built a Jira dependency tracker with Google Apps Script and the Jira REST API. It pulls active stories on a schedule, maps which tickets block each other and counts days blocked. Its reports replaced one engineering team's weekly status meetings." },
+      { title: "AI Agents", icon: 1, text: "Built three PMO agents with Glean and Claude. One sets up new projects from signed SOWs in Salesforce and sends client status updates by email and Slack, one posts a weekly program-health summary to Slack, and one runs 17 month-end billing checks and lists each inconsistency with an action item. Together they save 4–8 hours of PMO work a week and earned phData's Innovation Award." },
     ],
     tags: ["Program Delivery", "Risk & Budget Control", "Stakeholder Management", "Change Orders", "Account Expansion", "Scrum (PSM I)", "AI Agents"],
   },
@@ -54,9 +55,9 @@ const roles: {
     titleSub: "IT Infrastructure",
     org: "British Telecom (BT) · Kolkata",
     points: [
-      { title: "Change Delivery", icon: 3, text: "Managed 50+ infrastructure changes a year across network, systems, and application teams, with 99.9% uptime." },
-      { title: "Risk and Rollback", icon: 2, text: "Took each change through risk assessment and rollback planning, and presented them to senior IT leadership at the Change Advisory Board." },
-      { title: "Communication", icon: 5, text: "Kept everyone affected informed before, during, and after each change window." },
+      { title: "Change Delivery", icon: 3, text: "Managed 50+ infrastructure changes a year across network, systems and application teams under ITIL, with 99.9% uptime maintained." },
+      { title: "Risk and Rollback", icon: 2, text: "Took each change from intake through risk assessment, rollback planning and post-implementation review." },
+      { title: "CAB and Communication", icon: 5, text: "Presented changes at Change Advisory Board sessions to senior IT leadership, and ran stakeholder communication for each change window." },
     ],
     tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Stakeholder Communication"],
   },
@@ -110,9 +111,8 @@ export default function Trajectory() {
           className="mb-5"
         />
         <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
-          Six years in delivery. Almost four at phData running data and AI programs, and two
-          before that at British Telecom, making sure UK network changes didn&apos;t take
-          anything down.
+          Six years in IT delivery: almost four at phData running data and AI programs, and two
+          before that managing infrastructure changes at British Telecom.
         </p>
 
         <ShirtZipperReveal>
