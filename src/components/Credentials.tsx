@@ -90,18 +90,21 @@ function MoreCourses() {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   return (
-    <div>
+    <div style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
       <button
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex min-h-11 items-center gap-2 font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-fg/60 transition-colors hover:text-accent"
+        className="flex min-h-14 w-full items-center justify-between gap-3 px-5 text-left transition-colors hover:bg-fg/[0.03] sm:px-6"
       >
-        Other certifications and courses ({moreCourses.length})
+        <span className="font-heading text-[12px] font-bold text-fg/75">
+          Other certifications and courses
+          <span className="ml-2 rounded-full bg-fg/10 px-2 py-0.5 text-[10.5px] font-bold text-fg/65">{moreCourses.length}</span>
+        </span>
         <ChevronDown
-          size={15}
-          className={`transition-transform duration-300 motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+          size={17}
+          className={`shrink-0 text-fg/55 transition-transform duration-300 motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
         />
       </button>
       <div
@@ -110,7 +113,7 @@ function MoreCourses() {
         className={`grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       >
         <div className="overflow-hidden">
-          <ul className="grid gap-2 pt-2 sm:grid-cols-2">
+          <ul className="grid gap-2 px-5 pb-5 sm:grid-cols-2 sm:px-6">
             {moreCourses.map((c) => (
               <li key={c.name} className="flex items-center gap-3 rounded-xl px-3.5 py-2.5" style={BOX}>
                 <c.icon size={15} style={{ color: c.color }} />
@@ -135,41 +138,45 @@ export default function Credentials() {
     <section id="credentials" className="py-14 sm:py-24" style={{ background: NAVY }}>
       <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
-          eyebrow="03 / EDUCATION & RECOGNITION"
+          eyebrow="03 / MY JOURNEY"
           segments={[
-            { text: "Education", style: "fill" },
-            { text: "and recognition.", style: "lime" },
+            { text: "My", style: "fill" },
+            { text: "journey.", style: "lime" },
           ]}
           className="mb-5"
         />
         <p className="mb-8 max-w-xl text-[16px] leading-relaxed text-fg/70 sm:mb-12">
-          How I got here, and an award from phData.
+          Education and career, from 2014 to today.
         </p>
 
-        <motion.div
+        <JourneyTimeline />
+
+        <motion.section
+          aria-labelledby="recognition-title"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="space-y-3"
+          className="mx-auto mt-6 max-w-[34rem] overflow-hidden rounded-3xl lg:mt-8 lg:max-w-none"
+          style={{
+            background:
+              "radial-gradient(90% 120% at 0% 0%, color-mix(in srgb, var(--color-award) 12%, transparent), transparent 60%), var(--color-card)",
+            border: "1px solid color-mix(in srgb, var(--color-award) 32%, transparent)",
+          }}
         >
-          <JourneyTimeline />
-
-          <div
-            className="flex items-start gap-3 rounded-2xl p-4"
-              style={{ background: CARD_BG, border: "1px solid color-mix(in srgb, var(--color-award) 30%, transparent)" }}
-            >
-              <IconDisc color="var(--color-award)">
-                <Trophy size={18} style={{ color: "var(--color-award)" }} />
-              </IconDisc>
-              <div className="min-w-0">
-                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-fg/50">Recognition</p>
-                <p className="mt-0.5 font-heading text-[14px] font-bold text-fg">{award.title}</p>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-fg/65">{award.desc}</p>
-              </div>
+          <div className="flex items-start gap-4 p-5 sm:p-6">
+            <IconDisc color="var(--color-award)">
+              <Trophy size={19} style={{ color: "var(--color-award)" }} />
+            </IconDisc>
+            <div className="min-w-0">
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-fg/50">Recognition</p>
+              <h3 id="recognition-title" className="mt-1 font-heading text-[18px] font-bold leading-snug text-fg">
+                {award.title}
+              </h3>
+              <p className="mt-1.5 max-w-2xl text-[13.5px] leading-relaxed text-fg/65">{award.desc}</p>
             </div>
-
+          </div>
           <MoreCourses />
-        </motion.div>
+        </motion.section>
       </div>
     </section>
   );
