@@ -2,14 +2,13 @@
 
 import { motion, useInView } from "framer-motion";
 import SectionHeading from "./ui/SectionHeading";
+import JourneyTimeline from "./JourneyTimeline";
 import { useId, useRef, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
 import { SiClaude } from "react-icons/si";
 import {
-  Calendar,
   ChevronDown,
   ClipboardList,
   Database,
-  GraduationCap,
   RefreshCcw,
   ScanEye,
   Trophy,
@@ -52,13 +51,6 @@ function ItilBadge({ size = 15, style }: { size?: number; style?: CSSProperties 
     </span>
   );
 }
-
-const education = {
-  degree: "Bachelor of Computer Application",
-  institution: "Brainware University, Kolkata",
-  year: "Jun 2020",
-  grade: "CGPA: 7.5 / 10",
-};
 
 type CertItem = { name: string; issuer: string; icon: IconType; color: string };
 
@@ -143,15 +135,15 @@ export default function Credentials() {
     <section id="credentials" className="py-14 sm:py-24" style={{ background: NAVY }}>
       <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
-          eyebrow="03 / RECOGNITION & EDUCATION"
+          eyebrow="03 / EDUCATION & RECOGNITION"
           segments={[
-            { text: "Recognition", style: "fill" },
-            { text: "and education.", style: "lime" },
+            { text: "Education", style: "fill" },
+            { text: "and recognition.", style: "lime" },
           ]}
           className="mb-5"
         />
         <p className="mb-8 max-w-xl text-[16px] leading-relaxed text-fg/70 sm:mb-12">
-          An award from phData and my degree.
+          How I got here, and an award from phData.
         </p>
 
         <motion.div
@@ -160,9 +152,10 @@ export default function Credentials() {
           transition={{ duration: 0.5 }}
           className="space-y-3"
         >
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div
-              className="flex items-start gap-3 rounded-2xl p-4"
+          <JourneyTimeline />
+
+          <div
+            className="flex items-start gap-3 rounded-2xl p-4"
               style={{ background: CARD_BG, border: "1px solid color-mix(in srgb, var(--color-award) 30%, transparent)" }}
             >
               <IconDisc color="var(--color-award)">
@@ -174,21 +167,6 @@ export default function Credentials() {
                 <p className="mt-1 text-[12.5px] leading-relaxed text-fg/65">{award.desc}</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 rounded-2xl p-4" style={BOX}>
-              <IconDisc color="var(--color-accent)">
-                <GraduationCap size={18} style={{ color: "var(--color-accent)" }} />
-              </IconDisc>
-              <div className="min-w-0">
-                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-fg/50">Education</p>
-                <p className="mt-0.5 font-heading text-[14px] font-bold text-fg">{education.degree}</p>
-                <p className="text-[12.5px] font-semibold text-accent">{education.institution}</p>
-                <p className="mt-1 flex items-center gap-1.5 text-[12px] text-fg/55">
-                  <Calendar size={12} />
-                  {education.year} · {education.grade}
-                </p>
-              </div>
-            </div>
-          </div>
 
           <MoreCourses />
         </motion.div>
