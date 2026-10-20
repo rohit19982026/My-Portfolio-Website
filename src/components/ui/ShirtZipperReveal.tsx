@@ -11,6 +11,7 @@ import {
   type AnimationPlaybackControls,
   type MotionStyle,
 } from "framer-motion";
+import Image from "next/image";
 import { ChevronsDown, ChevronsUp, Volume2, VolumeX } from "lucide-react";
 import {
   useCallback,
@@ -45,10 +46,10 @@ import {
  */
 
 const PA = 0.78;
-const TAN = 0.42; // V opening: horizontal run per px of slider travel
+const TAN = 0.52; // V opening: horizontal run per px of slider travel
 const THETA = (Math.atan(TAN) * 180) / Math.PI;
 const EDGE = Math.sqrt(1 + TAN * TAN);
-const BOT = 80; // gap between slider rest position and the bottom of the box
+const BOT = 150; // gap between slider rest position and the bottom of the box (pull is ~126px tall)
 const TOOTH = 20; // px of slider travel per tooth (sound, buzz, shudder)
 const SLIVER = 10; // px of fabric left at each side once fully open
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
@@ -60,75 +61,15 @@ const closedHeight = (width: number, height: number) =>
   Math.round(Math.min(clamp(width * 1.18, 380, 560), Math.max(320, height * 0.78)));
 const CLOSED_CSS = "h-[min(clamp(380px,118vw,560px),max(320px,78svh))]";
 
-const FABRIC = "var(--color-shirt)";
-const FABRIC_DARK = "var(--color-shirt-deep)";
-const WEAVE = [
-  "repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px)",
-  "repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 1px, transparent 1px 3px)",
-  "linear-gradient(180deg, rgba(255,255,255,.1), transparent 28%, rgba(0,0,0,.12))",
-];
-const SHADE_LEFT =
-  "linear-gradient(90deg, rgba(0,0,0,.2) 0%, transparent 12%, transparent 40%, rgba(0,0,0,.15) 50%)";
-const SHADE_RIGHT =
-  "linear-gradient(90deg, rgba(0,0,0,.15) 50%, transparent 60%, transparent 88%, rgba(0,0,0,.2) 100%)";
-const CREASES =
-  "linear-gradient(112deg, transparent 18%, rgba(255,255,255,.045) 26%, transparent 34%), linear-gradient(68deg, transparent 52%, rgba(0,0,0,.09) 60%, transparent 68%)";
-
-const METAL = "linear-gradient(90deg, #8e97a6, #e8ecf2 45%, #aab2c0)";
-
-
-function teeth(side: "left" | "right") {
-  // Tape with metal teeth along the inner edge; the right half is offset by
-  // half a tooth so a closed zipper looks interlocked.
-  const pattern =
-    side === "left"
-      ? "repeating-linear-gradient(180deg, #d9dee7 0 4px, transparent 4px 8px)"
-      : "repeating-linear-gradient(180deg, transparent 0 4px, #d9dee7 4px 8px)";
-  return {
-    backgroundImage: pattern,
-    backgroundSize: "5px 100%",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: side === "left" ? "right top" : "left top",
-    backgroundColor: "var(--color-shirt-deep)",
-  } as const;
-}
-
-function ShirtButton({ className }: { className: string }) {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" className={`absolute ${className}`} aria-hidden>
-      <circle cx="8" cy="8" r="7" fill="var(--color-paper)" stroke="#b9b2a0" strokeWidth="1" />
-      <circle cx="8" cy="8" r="4.6" fill="none" stroke="#b9b2a0" strokeWidth=".8" />
-      <circle cx="6.4" cy="6.4" r=".9" fill="#6d675a" />
-      <circle cx="9.6" cy="6.4" r=".9" fill="#6d675a" />
-      <circle cx="6.4" cy="9.6" r=".9" fill="#6d675a" />
-      <circle cx="9.6" cy="9.6" r=".9" fill="#6d675a" />
-    </svg>
-  );
-}
-
-function Collar({ side }: { side: "left" | "right" }) {
-  const left = side === "left";
-  const pts = left ? "0,0 128,0 126,64 64,30" : "0,0 128,0 64,30 2,64";
-  const stitch = left ? "8,5 122,5 120,50 66,26" : "6,5 120,5 62,26 8,50";
-  return (
-    <svg
-      viewBox="0 0 128 66"
-      width="128"
-      height="66"
-      className={`absolute top-0 ${left ? "right-1/2" : "left-1/2"}`}
-      aria-hidden
-    >
-      <polygon points={pts} fill={FABRIC_DARK} stroke="rgba(0,0,0,.35)" strokeWidth="1" />
-      <polygon
-        points={stitch}
-        fill="none"
-        stroke="rgba(255,255,255,.4)"
-        strokeWidth="1"
-        strokeDasharray="3 3"
-      />
-    </svg>
-  );
-}
+// Everything below is cut from the supplied design (public/shirt/): fabric
+// tile, zipper strips, the pull, the patch and the pocket.
+const FABRIC_IMG = "url(/shirt/fabric.jpg)";
+const ZIP_EDGE = "url(/shirt/zip-edge.png)";
+const ZIP_CLOSED = "url(/shirt/zip-closed.png)";
+const EDGE_W = 44; // px, width of the open-zip strip
+const EDGE_FADE = "linear-gradient(to right, #000 0, #000 62%, transparent 100%)";
+const PATCH_MASK =
+  "linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%)";
 
 type PanelProps = {
   side: "left" | "right";
@@ -139,9 +80,10 @@ type PanelProps = {
   turn: ReturnType<typeof useTransform<number, number>>;
   jx: ReturnType<typeof useTransform<number, number>>;
   jy: ReturnType<typeof useTransform<number, number>>;
+  sweep: ReturnType<typeof useTransform<number, string>>;
 };
 
-function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy }: PanelProps) {
+function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy, sweep }: PanelProps) {
   const left = side === "left";
   return (
     <motion.div
@@ -159,104 +101,117 @@ function Panel({ side, clip, tapeTop, tapeLen, Y, turn, jx, jy }: PanelProps) {
         className="absolute inset-0"
         style={{
           clipPath: clip,
-          backgroundColor: FABRIC,
-          backgroundImage: [left ? SHADE_LEFT : SHADE_RIGHT, CREASES, ...WEAVE].join(","),
+          backgroundColor: "#0d22ee",
+          backgroundImage: [
+            left
+              ? "linear-gradient(90deg, rgba(0,0,0,.28) 0%, transparent 14%, transparent 38%, rgba(0,0,20,.45) 50%)"
+              : "linear-gradient(90deg, rgba(0,0,20,.45) 50%, transparent 62%, transparent 86%, rgba(0,0,0,.28) 100%)",
+            "linear-gradient(180deg, rgba(255,255,255,.1), transparent 22%, rgba(0,0,20,.22))",
+            FABRIC_IMG,
+          ].join(","),
+          backgroundSize: "auto, auto, 168px 600px",
         }}
       >
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,.1) 40%, transparent 52%)" }}
+        {/* light that sweeps across the cloth as the pull travels */}
+        <motion.div
+          className="absolute inset-y-0 -inset-x-1/2"
+          style={{
+            x: sweep,
+            background: "linear-gradient(105deg, transparent 38%, rgba(255,255,255,.16) 50%, transparent 62%)",
+          }}
         />
         <motion.div
           className="absolute inset-0"
-          style={{ opacity: turn, background: left ? "rgba(255,255,255,.16)" : "rgba(0,0,0,.24)" }}
+          style={{ opacity: turn, background: left ? "rgba(255,255,255,.12)" : "rgba(0,0,30,.28)" }}
         />
-        <Collar side={side} />
-        <ShirtButton className={left ? "top-[40px] right-[calc(50%+16px)]" : "top-[40px] left-[calc(50%+16px)]"} />
-
-        {/* placket stitching either side of the zip */}
-        <div
-          className={`absolute top-0 bottom-0 w-px ${left ? "right-[calc(50%+26px)]" : "left-[calc(50%+26px)]"}`}
-          style={{ backgroundImage: "repeating-linear-gradient(180deg, rgba(255,255,255,.34) 0 4px, transparent 4px 8px)" }}
-        />
-        {/* hem */}
-        <div
-          className="absolute left-0 right-0 bottom-[14px] h-px"
-          style={{ backgroundImage: "repeating-linear-gradient(90deg, rgba(255,255,255,.32) 0 4px, transparent 4px 8px)" }}
-        />
-
         {left ? (
-          <div
-            className="absolute left-[12%] bottom-[44px] w-[74px] h-[24px] rounded-[2px] flex items-center justify-center font-heading text-[7.5px] font-bold tracking-[0.18em]"
-            style={{ background: "var(--color-paper)", color: "#4b463a", boxShadow: "0 1px 2px rgba(0,0,0,.4)", outline: "1px dashed rgba(75,70,58,.45)", outlineOffset: "-3px" }}
-          >
-            SINCE 2020
-          </div>
+          <Image
+            src="/shirt/patch-raw.png"
+            alt=""
+            width={500}
+            height={420}
+            className="pointer-events-none absolute select-none"
+            style={{ left: "-1%", bottom: "6%", width: "clamp(100px, 25%, 250px)", height: "auto", WebkitMaskImage: PATCH_MASK, maskImage: PATCH_MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
+          />
         ) : (
-          <svg
-            viewBox="0 0 76 90"
-            width="76"
-            height="90"
-            className="absolute top-[132px] right-[10%]"
-            aria-hidden
-          >
-            <path d="M1 1 H75 V70 L38 89 L1 70 Z" fill={FABRIC_DARK} fillOpacity=".55" stroke="rgba(0,0,0,.4)" />
-            <path
-              d="M6 6 H70 V67 L38 83 L6 67 Z"
-              fill="none"
-              stroke="rgba(255,255,255,.38)"
-              strokeWidth="1"
-              strokeDasharray="3 3"
-            />
-          </svg>
+          <Image
+            src="/shirt/pocket-raw.png"
+            alt=""
+            width={350}
+            height={480}
+            className="pointer-events-none absolute select-none"
+            style={{ right: 0, bottom: "8%", width: "clamp(78px, 17.5%, 175px)", height: "auto", WebkitMaskImage: PATCH_MASK, maskImage: PATCH_MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
+          />
         )}
-        {!left && <ShirtButton className="top-[198px] right-[calc(10%+30px)]" />}
       </motion.div>
 
+      {/* white stitching parallel to the zip, as on the real shirt */}
+      <motion.div
+        className="absolute"
+        style={{
+          top: tapeTop,
+          height: tapeLen,
+          width: 1.5,
+          left: left ? "calc(50% - 30px)" : "calc(50% + 28.5px)",
+          transformOrigin: left ? "100% 100%" : "0 100%",
+          rotate: left ? -THETA : THETA,
+          backgroundImage: "repeating-linear-gradient(180deg, rgba(235,238,255,.85) 0 6px, transparent 6px 11px)",
+        }}
+      />
       {/* fabric puckering and shadow beside the tape */}
       <motion.div
         className="absolute"
         style={{
           top: tapeTop,
           height: tapeLen,
-          width: 40,
-          left: left ? "calc(50% - 40px)" : "50%",
+          width: 46,
+          left: left ? "calc(50% - 46px)" : "50%",
           transformOrigin: left ? "100% 100%" : "0 100%",
           rotate: left ? -THETA : THETA,
-          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,0,.26))`,
+          background: `linear-gradient(${left ? 90 : 270}deg, transparent, rgba(0,0,30,.4))`,
         }}
       />
-      {/* zipper tape, V-shaped above the slider */}
+      {/* open zipper: teeth hang over the edge into the opening */}
       <motion.div
         className="absolute"
         style={{
           top: tapeTop,
           height: tapeLen,
-          width: 11,
-          left: left ? "calc(50% - 11px)" : "50%",
-          transformOrigin: left ? "100% 100%" : "0 100%",
+          width: EDGE_W,
+          left: left ? "50%" : `calc(50% - ${EDGE_W}px)`,
+          transformOrigin: left ? "0 100%" : "100% 100%",
           rotate: left ? -THETA : THETA,
-          boxShadow: left
-            ? "6px 0 10px rgba(0,0,0,.45), 16px 0 30px rgba(0,0,0,.28), inset 1px 0 0 rgba(255,255,255,.35)"
-            : "-6px 0 10px rgba(0,0,0,.45), -16px 0 30px rgba(0,0,0,.28), inset -1px 0 0 rgba(255,255,255,.35)",
-          ...teeth(side),
+          filter: "drop-shadow(0 6px 8px rgba(20,20,60,.35))",
         }}
-      />
-      {/* closed zipper below the slider */}
-      <motion.div
-        className="absolute"
-        style={{
-          top: Y,
-          bottom: 44,
-          width: 8,
-          left: left ? "calc(50% - 8px)" : "50%",
-          ...teeth(side),
-        }}
-      />
-      <div
-        className="absolute bottom-[34px] h-[12px] w-[9px]"
-        style={{ left: left ? "calc(50% - 9px)" : "50%", background: METAL, borderRadius: left ? "3px 0 0 3px" : "0 3px 3px 0" }}
-      />
+      >
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage: ZIP_EDGE,
+            backgroundSize: `${EDGE_W}px ${EDGE_W * (228 / 132)}px`,
+            backgroundRepeat: "repeat-y",
+            transform: left ? undefined : "scaleX(-1)",
+            WebkitMaskImage: EDGE_FADE,
+            maskImage: EDGE_FADE,
+          }}
+        />
+      </motion.div>
+      {/* closed zipper below the pull (drawn once, with the left panel) */}
+      {left && (
+        <motion.div
+          className="absolute"
+          style={{
+            top: Y,
+            bottom: 12,
+            width: 26,
+            left: "calc(50% - 13px)",
+            backgroundImage: ZIP_CLOSED,
+            backgroundSize: "26px 79px",
+            backgroundRepeat: "repeat-y",
+            boxShadow: "0 0 10px rgba(0,0,30,.5)",
+          }}
+        />
+      )}
     </motion.div>
   );
 }
@@ -314,6 +269,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     Y,
     (y) => `polygon(calc(50% + ${(y * TAN).toFixed(1)}px) 0, 100% 0, 100% 100%, calc(50% - .5px) 100%, calc(50% - .5px) ${y.toFixed(1)}px)`,
   );
+  const sweep = useTransform(p, [0, 1], ["-35%", "35%"]);
   const turnL = useTransform(b, (v) => v * 0.9);
   const turnR = useTransform(b, (v) => v * 0.9);
   const settle = useTransform(p, [0, PA], [0.985, 1]);
@@ -324,7 +280,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const labelOpacity = useTransform(p, (v) => (v < 0.05 ? 1 - v / 0.05 : v > 0.95 ? (v - 0.95) / 0.05 : 0));
   const innerShadow = useTransform(p, [0, 0.7], [1, 0.35]);
   const velocity = useSpring(useVelocity(Y), { stiffness: 180, damping: 30 });
-  const lag = useTransform(velocity, (v) => clamp(-v / 90, -10, 6));
+  const swing = useSpring(useTransform(velocity, (v) => clamp(-v / 70, -14, 14)), { stiffness: 140, damping: 7 });
   // one small shudder per tooth, decaying between teeth
   const kx = useMotionValue(0);
   const ky = useMotionValue(0);
@@ -555,12 +511,16 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       <motion.div
         ref={boxRef}
         className={`zipper-box relative overflow-hidden rounded-2xl ${CLOSED_CSS}`}
-        style={ready ? { height: H } : undefined}
+        style={{
+          ...(ready ? { height: H } : {}),
+          background:
+            "radial-gradient(70% 38% at 85% 2%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 70%), radial-gradient(60% 30% at 15% 40%, color-mix(in srgb, #ffb020 8%, transparent), transparent 70%), var(--color-surface-alt)",
+        }}
       >
         <motion.div
           ref={contentRef}
           id={contentId}
-          className="px-4 sm:px-6 pt-8 pb-24"
+          className="px-4 sm:px-6 pt-8 pb-40"
           style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
         >
           {children}
@@ -576,8 +536,8 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           className="zipper-overlay pointer-events-none absolute inset-0"
           style={{ "--b": b, perspective: 1400 } as MotionStyle}
         >
-          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnL} jx={jx} jy={jy} />
-          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnR} jx={jx} jy={jy} />
+          <Panel side="left" clip={clipLeft} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnL} jx={jx} jy={jy} sweep={sweep} />
+          <Panel side="right" clip={clipRight} tapeTop={tapeTop} tapeLen={tapeLen} Y={Y} turn={turnR} jx={jx} jy={jy} sweep={sweep} />
 
           <motion.button
             type="button"
@@ -590,37 +550,28 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
             onPointerCancel={endDrag}
             onClick={onClick}
             onKeyDown={onKeyDown}
-            className="pointer-events-auto absolute left-1/2 -ml-8 h-[96px] w-16 touch-none select-none cursor-grab active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime rounded-lg"
+            className="pointer-events-auto absolute left-1/2 -ml-8 h-[134px] w-16 touch-none select-none cursor-grab active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime rounded-lg"
             style={{ top: Y, x: wobble, rotate: tilt }}
           >
-            <span
-              className="relative mx-auto block h-9 w-[30px] rounded-t-[7px] rounded-b-[12px]"
-              style={{
-                background: "radial-gradient(ellipse at 28% 18%, rgba(255,255,255,.85), transparent 45%), linear-gradient(135deg, rgba(255,255,255,.4), transparent 42%, rgba(0,0,0,.35)), var(--color-lime)",
-                boxShadow: "0 5px 10px rgba(0,0,0,.55), 0 14px 18px -6px rgba(0,0,0,.35), inset 0 0 0 1px rgba(0,0,0,.2), inset 0 -3px 5px rgba(0,0,0,.2)",
-              }}
-            >
-              <span className="absolute left-1/2 top-[7px] h-[10px] w-[8px] -translate-x-1/2 rounded-full bg-black/25" />
-            </span>
             <motion.span
-              className="relative -mt-0.5 mx-auto block h-[38px] w-[20px] origin-top"
-              animate={idle ? { y: [0, 6, 0] } : { y: 0 }}
-              transition={idle ? { duration: 1.7, repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0.2 }}
+              className="relative mx-auto block w-[56px] origin-top"
+              style={{ rotate: swing }}
+              animate={idle ? { y: [0, 5, 0] } : { y: 0 }}
+              transition={idle ? { duration: 1.8, repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0.2 }}
             >
-              <motion.span
-                className="block h-full w-full rounded-b-[10px] rounded-t-[3px]"
-                style={{
-                  y: lag,
-                  background: "linear-gradient(100deg, rgba(255,255,255,.55), transparent 45%, rgba(0,0,0,.3)), var(--color-lime)",
-                  boxShadow: "0 4px 8px rgba(0,0,0,.5), inset 0 0 0 1px rgba(0,0,0,.18)",
-                }}
-              >
-                <span className="absolute left-1/2 top-[8px] h-[8px] w-[8px] -translate-x-1/2 rounded-full bg-black/30" />
-              </motion.span>
+              <Image
+                src="/shirt/slider.png"
+                alt=""
+                width={192}
+                height={432}
+                priority
+                className="h-auto w-full select-none"
+                style={{ filter: "drop-shadow(0 8px 8px rgba(0,0,30,.55)) drop-shadow(0 0 14px rgba(215,255,63,.35))" }}
+              />
             </motion.span>
 
             <motion.span
-              className="absolute left-[calc(50%+24px)] top-[34px] flex items-center gap-1 whitespace-nowrap rounded-full border border-white/20 bg-ink/85 px-2.5 py-1 font-heading text-[10px] font-bold uppercase tracking-wider text-white"
+              className="absolute left-[calc(50%+34px)] top-[48px] flex items-center gap-1 whitespace-nowrap rounded-full border border-white/20 bg-ink/85 px-2.5 py-1 font-heading text-[10px] font-bold uppercase tracking-wider text-white"
               style={{ opacity: labelOpacity }}
               suppressHydrationWarning
             >

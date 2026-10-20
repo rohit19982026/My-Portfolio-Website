@@ -47,7 +47,7 @@ export default function Trajectory() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" className="py-24 bg-surface border-t-2 border-fg/10">
+    <section ref={ref} id="experience" className="py-24 bg-surface border-t-2 border-fg/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="02 / EXPERIENCE"
@@ -57,7 +57,7 @@ export default function Trajectory() {
           ]}
           className="mb-5"
         />
-        <p ref={ref} className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
+        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-12">
           Six years in delivery. Almost four at phData running data and AI programs, and two
           before that at British Telecom, making sure UK network changes didn&apos;t take
           anything down.
