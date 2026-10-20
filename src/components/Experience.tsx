@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import Image from "next/image";
 import SectionHeading from "./ui/SectionHeading";
-import ShirtZipperReveal from "./ui/ShirtZipperReveal";
+import { useContext, useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import ShirtZipperReveal, { ZipRevealContext } from "./ui/ShirtZipperReveal";
 
 // Card palettes from the supplied design: [tint, border, number-pill bg, number colour]
 const PALETTES = [
@@ -60,6 +61,38 @@ const roles: {
     tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Stakeholder Communication"],
   },
 ];
+
+
+// A card that appears when the zipper's opening reaches it, not when it
+// scrolls into view: each card turns the shared apex position into its own
+// 0..1 progress from its distance below the top of the shirt.
+function RevealCard({ className, style, children }: { className: string; style: CSSProperties; children: ReactNode }) {
+  const ctx = useContext(ZipRevealContext);
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLLIElement>(null);
+  const top = useMotionValue(0);
+  const fallback = useMotionValue(1);
+  useEffect(() => {
+    const el = ref.current;
+    const box = ctx?.box.current;
+    if (!el || !box) return;
+    const measure = () => top.set(el.getBoundingClientRect().top - box.getBoundingClientRect().top);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    return () => ro.disconnect();
+  }, [ctx, top]);
+  const apex = ctx?.apex ?? fallback;
+  const r = useTransform([apex, top], (v: number[]) => (ctx && !reduce ? Math.min(1, Math.max(0, (v[0] - v[1] + 40) / 200)) : 1));
+  const y = useTransform(r, [0, 1], [26, 0]);
+  const scale = useTransform(r, [0, 1], [0.97, 1]);
+  const filter = useTransform(r, (v) => `blur(${(1 - v) * 6}px)`);
+  return (
+    <motion.li ref={ref} className={className} style={{ ...style, opacity: r, y, scale, filter }}>
+      {children}
+    </motion.li>
+  );
+}
 
 const INK = "#0d0d1f";
 const ACCENT = "#6d3fe0";
@@ -119,12 +152,8 @@ export default function Trajectory() {
                   {role.points.map((p, i) => {
                     const [tint, border, pillBg, pillFg] = PALETTES[i % PALETTES.length];
                     return (
-                      <motion.li
+                      <RevealCard
                         key={p.title}
-                        initial={{ opacity: 0, y: 14 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-30px" }}
-                        transition={{ duration: 0.45, delay: (i % 4) * 0.06 }}
                         className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3.5 rounded-[1.6rem] p-4 sm:gap-x-5 sm:p-6"
                         style={{
                           background: `linear-gradient(135deg, ${tint}, #ffffff 85%)`,
@@ -153,7 +182,7 @@ export default function Trajectory() {
                           className="h-12 w-12 select-none rounded-2xl sm:h-[68px] sm:w-[68px]"
                           style={{ mixBlendMode: "multiply" }}
                         />
-                      </motion.li>
+                      </RevealCard>
                     );
                   })}
                 </ol>

@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { ChevronsDown, ChevronsUp, Volume2, VolumeX } from "lucide-react";
 import {
+  createContext,
   useCallback,
   useEffect,
   useId,
@@ -144,8 +145,36 @@ function Segment({
   const xPucker = useTransform(anchorX, (v) => (left ? `calc(50% - ${v + 46}px)` : `calc(50% + ${v}px)`));
   const xTeeth = useTransform(anchorX, (v) => (left ? `calc(50% - ${v}px)` : `calc(50% - ${v + EDGE_W}px)`));
   const rot = left ? -angle : angle;
+  const xRim = useTransform(anchorX, (v) => (left ? `calc(50% - ${v + 48}px)` : `calc(50% + ${v + 46}px)`));
+  const xShade = useTransform(anchorX, (v) => (left ? `calc(50% - ${v}px + ${EDGE_W - 4}px)` : `calc(50% - ${v}px - ${EDGE_W + 40}px)`));
   return (
     <>
+      {/* soft shadow the lifted edge casts onto the content */}
+      <motion.div
+        className="absolute"
+        style={{
+          top,
+          height: len,
+          width: 44,
+          left: xShade,
+          transformOrigin: left ? "0 100%" : "100% 100%",
+          rotate: rot,
+          background: `linear-gradient(${left ? 90 : 270}deg, rgba(25,35,120,.34), transparent)`,
+        }}
+      />
+      {/* light catching the raised lip of the cloth */}
+      <motion.div
+        className="absolute"
+        style={{
+          top,
+          height: len,
+          width: 2,
+          left: xRim,
+          transformOrigin: left ? "100% 100%" : "0 100%",
+          rotate: rot,
+          background: "linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.5) 30%, rgba(255,255,255,.18))",
+        }}
+      />
       <motion.div
         className="absolute"
         style={{
@@ -273,6 +302,10 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
   );
 }
 
+/** Where the opening currently reaches (px from the top of the shirt). Cards
+ *  inside read it so each one is revealed as the zip passes it. */
+export const ZipRevealContext = createContext<{ apex: MotionValue<number>; box: React.RefObject<HTMLDivElement | null> } | null>(null);
+
 export default function ShirtZipperReveal({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
   const uid = useId();
@@ -311,9 +344,15 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     settling: boolean;
     startedOpen: boolean;
     t: number;
+    lastY: number;
+    lastT: number;
+    vy: number;
   } | null>(null);
 
-  const b = useTransform(p, (v) => Math.max(0, (v - PA) / (1 - PA)));
+  const bRaw = useTransform(p, (v) => Math.max(0, (v - PA) / (1 - PA)));
+  // the halves swing out and settle with a little overshoot instead of stopping dead
+  const b = useSpring(bRaw, { stiffness: 95, damping: 11, mass: 0.9 });
+  const apex = useMotionValue(0);
   const H = useTransform([p, closedH, fullH], (v: number[]) => {
     const [pv, c, f] = v;
     return c + Math.max(0, f - c) * Math.min(pv / PA, 1);
@@ -357,6 +396,13 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     return `polygon(${topX} 0, 100% 0, 100% 100%, 50% 100%, ${[...pts].reverse().map((q) => `${q.x} ${q.y}`).join(", ")})`;
   });
   const hardware = useTransform(b, (v) => Math.max(0, 1 - v * 2.2)); // zip pieces fade as the halves part
+  const velAbs = useTransform(useVelocity(Y), (v) => clamp(Math.abs(v) / 900, 0, 1));
+  const bloom = useSpring(velAbs, { stiffness: 70, damping: 18 });
+  const bloomOpacity = useTransform([bloom, p], (v: number[]) => v[0] * 0.55 * (v[1] < 0.98 ? 1 : 0));
+  const bloomY = useTransform(Y, (y) => y - 60);
+  const creaseOpacity = useTransform(bloom, (v) => Math.min(1, v * 1.4));
+  const pullScale = useMotionValue(1);
+  const glint = useMotionValue(-120);
   const sweep = useTransform(p, [0, 1], ["-35%", "35%"]);
   const turnL = useTransform(b, (v) => v * 0.9);
   const turnR = useTransform(b, (v) => v * 0.9);
@@ -364,6 +410,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const rise = useTransform(p, [0, PA], [10, 0]);
 
   const labelOpacity = useTransform(p, (v) => (v < 0.05 ? 1 - v / 0.05 : v > 0.95 ? (v - 0.95) / 0.05 : 0));
+  useEffect(() => Y.on("change", (v) => apex.set(v)), [Y, apex]);
   const innerShadow = useTransform(p, [0, 0.7], [1, 0.35]);
   const velocity = useSpring(useVelocity(Y), { stiffness: 180, damping: 30 });
   const swing = useSpring(useTransform(velocity, (v) => clamp(-v / 70, -14, 14)), { stiffness: 140, damping: 7 });
@@ -498,12 +545,16 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       if (dist < 0.001) return;
       // the slider covers its travel in PA of the run; aim for ~300px/s so each tooth lands on its own
       const secs = clamp((fullH.get() - BOT) / (300 * PA), 3.2, 5.5);
+      // anticipation: the pull squeezes and springs before the cloth moves
+      animate(pullScale, [1, 0.93, 1.05, 1], { duration: 0.42, ease: "easeOut" });
+      animate(glint, [-120, 140], { duration: 0.7, ease: "easeInOut" });
       anim.current = animate(p, to, {
+        delay: 0.26,
         duration: Math.max(0.6, (next ? secs : secs * 0.75) * dist),
         ease: next ? OPEN_EASE : CLOSE_EASE,
       });
     },
-    [p, fullH, reduce],
+    [p, fullH, pullScale, glint, reduce],
   );
 
   // The shirt unzips by itself the first time it scrolls into view (the
@@ -545,6 +596,9 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       settling: false,
       startedOpen: openRef.current,
       t: Math.min(p.get() / PA, 1),
+      lastY: e.clientY,
+      lastT: performance.now(),
+      vy: 0,
     };
   };
 
@@ -568,6 +622,10 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         });
       }
     }
+    const nowT = performance.now();
+    d.vy = d.vy * 0.6 + (((e.clientY - d.lastY) / Math.max(1, nowT - d.lastT)) * 1000) * 0.4;
+    d.lastY = e.clientY;
+    d.lastT = nowT;
     if (d.settling) return;
     const rect = box.getBoundingClientRect();
     const y = Math.max(0, e.clientY - rect.top - d.grab);
@@ -588,7 +646,10 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     if (!d.moved) return; // a tap; onClick handles it
     suppressClick.current = true;
     anim.current?.stop();
-    goTo(d.startedOpen ? d.t > 0.8 : d.t > 0.25);
+    // a flick decides it; otherwise how far it was pulled
+    if (d.vy > 600) goTo(true);
+    else if (d.vy < -600) goTo(false);
+    else goTo(d.startedOpen ? d.t > 0.8 : d.t > 0.25);
   };
 
   const onClick = () => {
@@ -616,7 +677,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   return (
     <div className="relative">
       <noscript>
-        <style>{".zipper-box{height:auto!important}.zipper-overlay{display:none!important}"}</style>
+        <style>{".zipper-box{height:auto!important}.zipper-overlay{display:none!important}.zipper-box li{opacity:1!important;transform:none!important;filter:none!important}"}</style>
       </noscript>
 
       <motion.div
@@ -634,7 +695,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           className="px-3 pt-8 pb-72 sm:px-8"
           style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
         >
-          {children}
+          <ZipRevealContext.Provider value={{ apex, box: boxRef }}>{children}</ZipRevealContext.Provider>
         </motion.div>
 
         <motion.div
@@ -658,6 +719,41 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
               Tap anywhere for zip sound
             </div>
           )}
+
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2"
+            style={{
+              top: bloomY,
+              width: 340,
+              height: 340,
+              x: "-50%",
+              opacity: bloomOpacity,
+              background: "radial-gradient(closest-side, rgba(255,255,255,.55), rgba(215,255,63,.12) 55%, transparent)",
+              mixBlendMode: "screen",
+            }}
+          />
+
+          {/* tension creases fanning out of the slider while it moves */}
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 overflow-hidden"
+            style={{ top: Y, width: 360, height: 260, x: "-50%", y: 40, opacity: creaseOpacity }}
+          >
+            {[-1, 1].flatMap((sd) =>
+              [16, 30, 46].map((deg, i) => (
+                <span
+                  key={`${sd}-${i}`}
+                  className="absolute left-1/2 top-0 block h-[240px] w-[14px] origin-top"
+                  style={{
+                    transform: `rotate(${sd * deg}deg)`,
+                    background: `linear-gradient(180deg, rgba(20,30,110,${0.3 - i * 0.07}), transparent)`,
+                    filter: "blur(5px)",
+                  }}
+                />
+              )),
+            )}
+          </motion.div>
 
           {/* closed chain below the pull, ending in a metal stop */}
           <motion.div
@@ -708,7 +804,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           >
             <motion.span
               className="relative mx-auto -mt-[22px] block w-[56px] origin-[50%_14%]"
-              style={{ rotate: swing }}
+              style={{ rotate: swing, scale: pullScale }}
               animate={idle ? { y: [0, 5, 0] } : { y: 0 }}
               transition={idle ? { duration: 1.8, repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0.2 }}
             >
@@ -721,6 +817,16 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
                 unoptimized
                 className="h-auto w-full select-none"
               />
+              <motion.span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 overflow-hidden"
+                style={{ WebkitMaskImage: "url(/shirt/slider.svg)", maskImage: "url(/shirt/slider.svg)", WebkitMaskSize: "100% 100%", maskSize: "100% 100%" }}
+              >
+                <motion.span
+                  className="absolute inset-y-0 w-1/2"
+                  style={{ x: glint, background: "linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent)" }}
+                />
+              </motion.span>
             </motion.span>
 
             <motion.span
