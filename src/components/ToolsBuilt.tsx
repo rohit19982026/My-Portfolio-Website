@@ -2,10 +2,10 @@
 
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { ArrowUpRight, Clock, Sparkle, Target, Users, Zap } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
-import SwipeCarousel from "./ui/SwipeCarousel";
+import CardDeck, { DeckFrontContext } from "./ui/CardDeck";
 import { agents, type Agent } from "@/lib/agents";
 
 const NAVY = "var(--color-surface-alt)";
@@ -20,21 +20,40 @@ function onAccent(hex: string) {
   return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#0d0d0f" : "#ffffff";
 }
 
-// Tiny picture of the tool's own flow: one dot per step on a line.
-function FlowDots({ steps, accent }: { steps: number; accent: string }) {
+// Tiny picture of the tool's own flow: one dot per step on a line. In the
+// deck the dots draw in one after another when the card comes to the front.
+function FlowDots({ steps, accent, front }: { steps: number; accent: string; front: boolean | null }) {
+  const state = front === null ? undefined : front ? "front" : "rest";
   return (
     <span aria-hidden className="flex items-center gap-2">
       <span className="flex items-center">
         {Array.from({ length: steps }).map((_, i) => (
           <span key={i} className="flex items-center">
-            <span
+            <motion.span
               className="h-2 w-2 rounded-full"
+              initial={false}
+              animate={state}
+              variants={{
+                rest: { scale: 0, transition: { duration: 0.15 } },
+                front: { scale: 1, transition: { type: "spring", stiffness: 420, damping: 15, delay: 0.5 + i * 0.09 } },
+              }}
               style={{
                 background: i === 0 || i === steps - 1 ? accent : "transparent",
                 border: `1.5px solid ${accent}`,
               }}
             />
-            {i < steps - 1 && <span className="h-px w-3.5" style={{ background: `color-mix(in srgb, ${accent} 55%, transparent)` }} />}
+            {i < steps - 1 && (
+              <motion.span
+                className="h-px w-3.5 origin-left"
+                initial={false}
+                animate={state}
+                variants={{
+                  rest: { scaleX: 0, transition: { duration: 0.15 } },
+                  front: { scaleX: 1, transition: { duration: 0.2, delay: 0.58 + i * 0.09 } },
+                }}
+                style={{ background: `color-mix(in srgb, ${accent} 55%, transparent)` }}
+              />
+            )}
           </span>
         ))}
       </span>
@@ -47,6 +66,8 @@ function FlowDots({ steps, accent }: { steps: number; accent: string }) {
 // /tools/<slug>, so the home page only has to say what each tool is.
 function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; index: number; inView: boolean; className?: string }) {
   const Icon = agent.icon;
+  const front = useContext(DeckFrontContext);
+  const state = front === null ? undefined : front ? "front" : "rest";
   const text = `color-mix(in srgb, ${agent.accent} var(--accent-text-mix), var(--color-fg))`;
   return (
     <motion.div
@@ -68,36 +89,63 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
         }
       >
         <div className="flex items-start justify-between">
-          <span
+          <motion.span
             className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl"
+            initial={false}
+            animate={state}
+            variants={{
+              rest: { scale: 0.8, rotate: -14, transition: { duration: 0.2 } },
+              front: { scale: 1, rotate: 0, transition: { type: "spring", stiffness: 300, damping: 11, delay: 0.3 } },
+            }}
             style={{
-              transform: "translateX(calc(var(--p, 0) * -16px)) scale(calc(1 - var(--a, 0) * 0.18)) rotate(calc(var(--p, 0) * -10deg))",
               background: `linear-gradient(145deg, color-mix(in srgb, ${agent.accent} 100%, white 25%), ${agent.accent} 55%, color-mix(in srgb, ${agent.accent} 80%, black))`,
               boxShadow: `0 10px 22px -8px ${agent.accent}, inset 0 1px 0 rgba(255,255,255,.45)`,
               color: onAccent(agent.accent),
             }}
           >
             <Icon size={24} strokeWidth={2} />
-          </span>
-          <span
+          </motion.span>
+          <motion.span
             aria-hidden
             className="font-display text-[44px] leading-none"
-            style={{ color: "transparent", WebkitTextStroke: "1.5px color-mix(in srgb, var(--color-fg) 22%, transparent)", transform: "translateX(calc(var(--p, 0) * -22px))" }}
+            initial={false}
+            animate={state}
+            variants={{
+              rest: { x: 14, opacity: 0, transition: { duration: 0.15 } },
+              front: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1], delay: 0.35 } },
+            }}
+            style={{ color: "transparent", WebkitTextStroke: "1.5px color-mix(in srgb, var(--color-fg) 22%, transparent)" }}
           >
             {String(index + 1).padStart(2, "0")}
-          </span>
+          </motion.span>
         </div>
 
         <div className="min-w-0">
-          <h3 className="font-heading text-[19px] font-bold leading-snug text-fg"
-            style={{ transform: "translate(calc(var(--p, 0) * -8px), calc(var(--a, 0) * 10px))", opacity: "calc(1 - var(--a, 0) * 0.85)" }}>{agent.title}</h3>
-          <p className="mt-1.5 text-[14px] leading-relaxed text-fg/65"
-            style={{ transform: "translate(calc(var(--p, 0) * -14px), calc(var(--a, 0) * 12px))", opacity: "calc(1 - var(--a, 0) * 0.9)" }}>{agent.summary}</p>
+          <motion.h3
+            className="font-heading text-[19px] font-bold leading-snug text-fg"
+            initial={false}
+            animate={state}
+            variants={{
+              rest: { y: 10, opacity: 0.35, transition: { duration: 0.2 } },
+              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.36 } },
+            }}
+          >
+            {agent.title}
+          </motion.h3>
+          <motion.p
+            className="mt-1.5 text-[14px] leading-relaxed text-fg/65"
+            initial={false}
+            animate={state}
+            variants={{
+              rest: { y: 12, opacity: 0.2, transition: { duration: 0.2 } },
+              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.44 } },
+            }}
+          >
+            {agent.summary}
+          </motion.p>
         </div>
 
-        <div className="origin-left" style={{ transform: "translateX(calc(var(--p, 0) * -20px)) scaleX(calc(1 - var(--a, 0) * 0.5))", opacity: "calc(1 - var(--a, 0))" }}>
-          <FlowDots steps={agent.flow.length} accent={agent.accent} />
-        </div>
+        <FlowDots steps={agent.flow.length} accent={agent.accent} front={front} />
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-1">
           <span
@@ -219,11 +267,11 @@ export default function ToolsBuilt() {
             />
           ))}
         </div>
-        <SwipeCarousel ariaLabel="Tool case studies, swipeable" className="sm:hidden" autoPlay accents={agents.map((a) => a.accent)}>
+        <CardDeck ariaLabel="Tool case studies" className="sm:hidden" accents={agents.map((a) => a.accent)}>
           {agents.map((agent, i) => (
             <AgentCard key={agent.slug} agent={agent} index={i} inView={inView} />
           ))}
-        </SwipeCarousel>
+        </CardDeck>
 
         <BusinessImpactPanel inView={inView} />
 
