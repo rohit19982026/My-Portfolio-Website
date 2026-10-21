@@ -5,7 +5,6 @@ import Credentials from "@/components/Credentials";
 import ToolsBuilt from "@/components/ToolsBuilt";
 import DeliveryExposure from "@/components/DeliveryExposure";
 import Resume from "@/components/Resume";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { skillMarqueeItems } from "@/lib/content";
 
@@ -25,7 +24,6 @@ export default function Home() {
       <Credentials />
       <ToolsBuilt />
       <DeliveryExposure />
-      <Contact />
       <Footer />
     </>
   );

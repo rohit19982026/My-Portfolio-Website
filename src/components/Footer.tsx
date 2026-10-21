@@ -23,7 +23,7 @@ const maskOf = (m: string) => ({ WebkitMaskImage: m, maskImage: m, WebkitMaskCom
 // (public/footer/); text, lines and small glyphs are real elements.
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t-2 border-fg/10" style={{ background: "#fefdfb", color: INK }}>
+    <footer id="contact" className="relative overflow-hidden border-t-2 border-fg/10" style={{ background: "#fefdfb", color: INK }}>
       <Image
         src="/footer/blob-top-right.png"
         alt=""
