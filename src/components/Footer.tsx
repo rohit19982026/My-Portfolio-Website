@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUp, Mail, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 
 const EMAIL = "mailto:singhrohit.25119@gmail.com";
+const PHONE = "tel:+918967725119";
 const LINKEDIN = "https://www.linkedin.com/in/rohit-kumar-singh-a61746156/";
 const GITHUB = "https://github.com/rohit19982026?tab=repositories";
 
@@ -73,6 +74,23 @@ export default function Footer() {
             >
               <Mail size={24} strokeWidth={1.8} />
               <span className="flex-1">Get in touch</span>
+              <span
+                className="flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:translate-x-0.5 sm:h-[52px] sm:w-[52px]"
+                style={{ background: "#e8e5fd" }}
+              >
+                <ArrowRight size={22} />
+              </span>
+            </a>
+            <a
+              href={PHONE}
+              className="group mt-4 inline-flex h-16 w-full max-w-[28rem] items-center gap-5 rounded-full border bg-white/60 pl-7 pr-2.5 font-sans text-[18px] font-medium transition-shadow hover:shadow-[0_14px_30px_-18px_rgba(60,50,160,.45)] sm:h-[68px]"
+              style={{ borderColor: LINE }}
+            >
+              <Phone size={24} strokeWidth={1.8} />
+              <span className="flex flex-1 flex-col leading-tight sm:flex-row sm:items-baseline">
+                Call me
+                <span className="text-[14px] font-normal sm:ml-3 sm:text-[15px]" style={{ color: MUTED }}>+91 89677 25119</span>
+              </span>
               <span
                 className="flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:translate-x-0.5 sm:h-[52px] sm:w-[52px]"
                 style={{ background: "#e8e5fd" }}
