@@ -143,6 +143,23 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
           >
             {agent.summary}
           </motion.p>
+          <motion.div
+            className="mt-3.5 border-t border-fg/10 pt-3"
+            initial={false}
+            animate={state}
+            variants={{
+              rest: { y: 12, opacity: 0.2, transition: { duration: 0.2 } },
+              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.38 } },
+            }}
+          >
+            <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.12em]" style={{ color: text }}>
+              Why I built it
+            </p>
+            <p className="mt-1 text-[13.5px] leading-relaxed text-fg/65">{agent.problem}</p>
+            <p className="mt-2 text-[12.5px] leading-snug text-fg/55">
+              Built by Rohit · {agent.builtWith}{agent.status !== "Built" ? ` · ${agent.status}` : ""}
+            </p>
+          </motion.div>
         </div>
 
         <FlowDots steps={agent.flow.length} accent={agent.accent} front={front} />
