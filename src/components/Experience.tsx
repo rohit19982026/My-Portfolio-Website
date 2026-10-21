@@ -73,23 +73,32 @@ function RevealCard({ className, style, children }: { className: string; style: 
   const ref = useRef<HTMLLIElement>(null);
   const top = useMotionValue(0);
   const fallback = useMotionValue(1);
+  // measured once per layout change (not per frame): the card's offset from the top of the shirt
   useEffect(() => {
     const el = ref.current;
     const box = ctx?.box.current;
-    if (!el || !box) return;
-    const measure = () => top.set(el.getBoundingClientRect().top - box.getBoundingClientRect().top);
+    const content = ctx?.content.current;
+    if (!el || !box || !content) return;
+    const measure = () => {
+      let t = 0;
+      let n: HTMLElement | null = el;
+      while (n && n !== box) {
+        t += n.offsetTop;
+        n = n.offsetParent as HTMLElement | null;
+      }
+      top.set(t);
+    };
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(box);
+    ro.observe(content);
     return () => ro.disconnect();
   }, [ctx, top]);
   const apex = ctx?.apex ?? fallback;
   const r = useTransform([apex, top], (v: number[]) => (ctx && !reduce ? Math.min(1, Math.max(0, (v[0] - v[1] + 40) / 200)) : 1));
   const y = useTransform(r, [0, 1], [26, 0]);
   const scale = useTransform(r, [0, 1], [0.97, 1]);
-  const filter = useTransform(r, (v) => `blur(${(1 - v) * 6}px)`);
   return (
-    <motion.li ref={ref} className={className} style={{ ...style, opacity: r, y, scale, filter }}>
+    <motion.li ref={ref} className={className} style={{ ...style, opacity: r, y, scale }}>
       {children}
     </motion.li>
   );

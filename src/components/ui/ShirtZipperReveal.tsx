@@ -2,7 +2,8 @@
 
 import {
   animate,
-  useInView,
+  cancelFrame,
+  frame,
   motion,
   useMotionValue,
   useReducedMotion,
@@ -20,6 +21,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
@@ -88,8 +90,8 @@ function curve(points: [number, number][]) {
   };
 }
 const OPEN_EASE = curve([
-  [0, 0], [0.05, 0.018], [0.09, 0.01], [0.2, 0.13], [0.25, 0.14], [0.4, 0.33], [0.45, 0.345],
-  [0.58, 0.55], [0.63, 0.565], [0.74, 0.76], [0.78, 0.78], [0.86, 0.87], [0.93, 0.975], [1, 1],
+  [0, 0], [0.05, 0.018], [0.09, 0.012], [0.22, 0.16], [0.27, 0.175], [0.5, 0.5], [0.55, 0.515],
+  [0.76, 0.78], [0.8, 0.795], [0.9, 0.935], [1, 1],
 ]);
 const CLOSE_EASE = curve([
   [0, 0], [0.14, 0.22], [0.2, 0.28], [0.35, 0.4], [0.4, 0.42], [0.58, 0.62], [0.64, 0.64],
@@ -242,7 +244,6 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
         x: jx,
         y: jy,
         willChange: "transform",
-        filter: "drop-shadow(0 8px 10px rgba(0,0,40,.4))",
       }}
     >
       <motion.div
@@ -304,7 +305,11 @@ function Panel({ side, clip, Y, turn, jx, jy, sweep, hardware }: PanelProps) {
 
 /** Where the opening currently reaches (px from the top of the shirt). Cards
  *  inside read it so each one is revealed as the zip passes it. */
-export const ZipRevealContext = createContext<{ apex: MotionValue<number>; box: React.RefObject<HTMLDivElement | null> } | null>(null);
+export const ZipRevealContext = createContext<{
+  apex: MotionValue<number>;
+  box: React.RefObject<HTMLDivElement | null>;
+  content: React.RefObject<HTMLDivElement | null>;
+} | null>(null);
 
 export default function ShirtZipperReveal({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
@@ -336,6 +341,9 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const anim = useRef<AnimationPlaybackControls | null>(null);
   const suppressClick = useRef(false);
   const touched = useRef(false);
+  const quietRef = useRef(false); // auto/tap runs buzz at the ends only, not every tooth
+  const autoDone = useRef(false);
+  const followRef = useRef<{ stop: (why: "user" | "drag" | "done") => void } | null>(null);
   const drag = useRef<{
     id: number;
     startY: number;
@@ -353,6 +361,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   // the halves swing out and settle with a little overshoot instead of stopping dead
   const b = useSpring(bRaw, { stiffness: 95, damping: 11, mass: 0.9 });
   const apex = useMotionValue(0);
+  const ctxValue = useMemo(() => ({ apex, box: boxRef, content: contentRef }), [apex]);
   const H = useTransform([p, closedH, fullH], (v: number[]) => {
     const [pv, c, f] = v;
     return c + Math.max(0, f - c) * Math.min(pv / PA, 1);
@@ -406,8 +415,6 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
   const sweep = useTransform(p, [0, 1], ["-35%", "35%"]);
   const turnL = useTransform(b, (v) => v * 0.9);
   const turnR = useTransform(b, (v) => v * 0.9);
-  const settle = useTransform(p, [0, PA], [0.985, 1]);
-  const rise = useTransform(p, [0, PA], [10, 0]);
 
   const labelOpacity = useTransform(p, (v) => (v < 0.05 ? 1 - v / 0.05 : v > 0.95 ? (v - 0.95) / 0.05 : 0));
   useEffect(() => Y.on("change", (v) => apex.set(v)), [Y, apex]);
@@ -441,9 +448,12 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     measure();
     setReady(true);
     const ro = new ResizeObserver(measure);
-    ro.observe(box);
     ro.observe(content);
-    return () => ro.disconnect();
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, [closedH, fullH]);
 
   // Reduced motion: no unzipping to do, so show the content straight away.
@@ -504,7 +514,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         ky.set(-sign * 0.7);
         kickAnim.forEach((a) => a.stop());
         kickAnim = [animate(kx, 0, { duration: 0.09, ease: "easeOut" }), animate(ky, 0, { duration: 0.09, ease: "easeOut" })];
-        if (now - lastHap > 40) {
+        if (!quietRef.current && now - lastHap > 40) {
           lastHap = now;
           buzz(12);
         }
@@ -529,6 +539,87 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
 
   useEffect(() => () => anim.current?.stop(), []);
 
+  // While the zip travels the page height changes with it. Instead of letting
+  // that push the page around, the scroll position follows the pull: opening
+  // eases the pull towards the middle of the screen, closing keeps it exactly
+  // where it is on screen while the page shrinks beneath it. Any wheel, touch,
+  // key press or drag hands control straight back to the visitor.
+  const startFollow = useCallback(
+    (mode: "open" | "close", startAt: number, scrollAnim: AnimationPlaybackControls | null) => {
+      followRef.current?.stop("done");
+      const box = boxRef.current;
+      if (!box) return;
+      const PULL = 60; // the pull's centre sits this far below Y
+      let topDoc = 0;
+      let hold = 0;
+      let armed = false;
+      let last = window.scrollY;
+      let lastY = Y.get();
+      let lastT = performance.now();
+      const finish = () => {
+        const left = 1 - p.get();
+        quietRef.current = false;
+        anim.current?.stop();
+        anim.current = animate(p, 1, { duration: Math.max(0.45, 0.8 * left), ease: [0.2, 0.7, 0.2, 1] });
+      };
+      const tick = () => {
+        const now = performance.now();
+        const dt = Math.min(64, now - lastT);
+        lastT = now;
+        if (now < startAt) return;
+        if (!armed) {
+          armed = true;
+          topDoc = box.getBoundingClientRect().top + window.scrollY;
+          hold = topDoc + Y.get() + PULL - window.scrollY;
+          last = window.scrollY;
+        }
+        // open: scroll moved by something other than us (scrollbar drag, momentum)
+        if (mode === "open" && Math.abs(window.scrollY - last) > 2) return stop("user");
+        const y = Y.get();
+        const dY = y - lastY;
+        lastY = y;
+        const pullScreen = topDoc + y + PULL - window.scrollY;
+        let next = window.scrollY;
+        if (mode === "open") {
+          // once the pull has reached the middle of the screen the page moves with it exactly
+          // (the slider speeds up as the page grows, so chasing it would lag); any gap left from
+          // before is closed gently
+          const line = window.innerHeight * 0.5;
+          const ride = pullScreen - dY > line - 4 ? Math.max(0, dY) : 0;
+          const excess = pullScreen - ride - line;
+          next += ride + (excess > 0 ? excess * (1 - Math.exp(-dt / 120)) : 0);
+        } else {
+          next = topDoc + Y.get() + PULL - hold;
+        }
+        next = Math.max(0, next);
+        if (Math.abs(next - window.scrollY) >= 0.5) window.scrollTo(0, next);
+        last = window.scrollY;
+      };
+      const onInput = (e: Event) => {
+        if (e.type === "pointerdown" && (e.target as Element | null)?.closest?.("[data-zip-pull]")) return;
+        if (e.type === "keydown") {
+          const k = (e as globalThis.KeyboardEvent).key;
+          if (!["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"].includes(k)) return;
+        }
+        stop("user");
+      };
+      const events = ["wheel", "touchstart", "touchmove", "keydown", "pointerdown"] as const;
+      function stop(why: "user" | "drag" | "done") {
+        cancelFrame(tick);
+        events.forEach((n) => window.removeEventListener(n, onInput, true));
+        scrollAnim?.stop();
+        if (followRef.current === handle) followRef.current = null;
+        // the visitor took over mid-opening: let it settle quickly instead of crawling on
+        if (why === "user" && mode === "open" && !drag.current && p.get() < 0.995 && openRef.current) finish();
+      }
+      const handle = { stop };
+      followRef.current = handle;
+      events.forEach((n) => window.addEventListener(n, onInput, { capture: true, passive: true }));
+      frame.postRender(tick, true);
+    },
+    [Y, p],
+  );
+
   const goTo = useCallback(
     (next: boolean) => {
       anim.current?.stop();
@@ -543,26 +634,58 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
       }
       const dist = Math.abs(to - p.get());
       if (dist < 0.001) return;
-      // the slider covers its travel in PA of the run; aim for ~300px/s so each tooth lands on its own
-      const secs = clamp((fullH.get() - BOT) / (300 * PA), 3.2, 5.5);
+      // ~520px/s of slider travel: long enough for each tooth to land, short enough not to drag
+      const secs = clamp((fullH.get() - BOT) / (520 * PA), 2.4, 3.4);
+      // closing from far down the page: bring the pull into view first
+      let extra = 0;
+      let scrollAnim: AnimationPlaybackControls | null = null;
+      const box = boxRef.current;
+      if (!next && box && !drag.current) {
+        const vh = window.innerHeight;
+        const pullScreen = box.getBoundingClientRect().top + Y.get() + 60;
+        if (pullScreen < vh * 0.12 || pullScreen > vh * 0.88) {
+          extra = 0.45;
+          const from = window.scrollY;
+          const target = Math.max(0, from + pullScreen - vh * 0.5);
+          scrollAnim = animate(from, target, { duration: extra, ease: [0.3, 0.7, 0.2, 1], onUpdate: (v) => window.scrollTo(0, v) });
+        }
+      }
+      const delay = 0.26 + extra;
+      quietRef.current = true;
+      if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(18);
       // anticipation: the pull squeezes and springs before the cloth moves
-      animate(pullScale, [1, 0.93, 1.05, 1], { duration: 0.42, ease: "easeOut" });
-      animate(glint, [-120, 140], { duration: 0.7, ease: "easeInOut" });
+      animate(pullScale, [1, 0.93, 1.05, 1], { delay: extra, duration: 0.42, ease: "easeOut" });
+      animate(glint, [-120, 140], { delay: extra, duration: 0.7, ease: "easeInOut" });
       anim.current = animate(p, to, {
-        delay: 0.26,
+        delay,
         duration: Math.max(0.6, (next ? secs : secs * 0.75) * dist),
         ease: next ? OPEN_EASE : CLOSE_EASE,
+        onComplete: () => {
+          quietRef.current = false;
+          followRef.current?.stop("done");
+        },
       });
+      startFollow(next ? "open" : "close", performance.now() + delay * 1000, scrollAnim);
     },
-    [p, fullH, pullScale, glint, reduce],
+    [p, Y, fullH, pullScale, glint, reduce, startFollow],
   );
 
-  // The shirt unzips by itself the first time it scrolls into view (the
-  // visitor can still grab the pull at any point, or close it again).
-  const seen = useInView(boxRef, { once: true, amount: 0.35 });
+  useEffect(() => () => followRef.current?.stop("done"), []);
+
+  // The shirt unzips by itself the first time it sits in the upper part of the
+  // screen and scrolling has been still for a moment (the visitor can still grab
+  // the pull at any point, or close it again).
   useEffect(() => {
-    if (!seen || reduce || !ready) return;
-    const id = setTimeout(() => {
+    if (reduce || !ready) return;
+    const box = boxRef.current;
+    if (!box) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const check = () => {
+      if (autoDone.current || touched.current || openRef.current) return;
+      const r = box.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (!(r.top < vh * 0.62 && r.bottom > vh * 0.38)) return;
+      autoDone.current = true;
       // Browsers keep sound and vibration off until the visitor has tapped the
       // page once; scrolling alone doesn't count. Say so, so it isn't a mystery.
       const ua = (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation;
@@ -573,13 +696,26 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         window.addEventListener("keydown", clear, { once: true, capture: true });
         setTimeout(clear, 7000);
       }
-      if (!touched.current && !openRef.current) goTo(true);
-    }, 450);
-    return () => clearTimeout(id);
-  }, [seen, reduce, ready, goTo]);
+      goTo(true);
+    };
+    const onScroll = () => {
+      clearTimeout(timer);
+      timer = setTimeout(check, 250);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    timer = setTimeout(check, 250);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [reduce, ready, goTo]);
 
   const onPointerDown = (e: PointerEvent<HTMLButtonElement>) => {
     touched.current = true;
+    quietRef.current = false;
+    followRef.current?.stop("drag");
     if (e.pointerType === "mouse" && e.button !== 0) return;
     const box = boxRef.current;
     if (!box) return;
@@ -671,7 +807,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
     }
   };
 
-  const isOpen = open ?? !!reduce;
+  const isOpen = open ?? reduceSafe;
   const idle = ready && !isOpen && !dragging && !reduce;
 
   return (
@@ -685,6 +821,8 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
         className={`zipper-box relative overflow-hidden rounded-2xl ${CLOSED_CSS}`}
         style={{
           ...(ready ? { height: H } : {}),
+          contain: "layout paint",
+          overflowAnchor: "none",
           background:
             "radial-gradient(70% 38% at 85% 2%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 70%), radial-gradient(60% 30% at 15% 40%, color-mix(in srgb, #ffb020 8%, transparent), transparent 70%), #fcfbf9",
         }}
@@ -693,9 +831,8 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           ref={contentRef}
           id={contentId}
           className="px-3 pt-8 pb-72 sm:px-8"
-          style={{ scale: settle, y: rise, transformOrigin: "50% 0%" }}
         >
-          <ZipRevealContext.Provider value={{ apex, box: boxRef }}>{children}</ZipRevealContext.Provider>
+          <ZipRevealContext.Provider value={ctxValue}>{children}</ZipRevealContext.Provider>
         </motion.div>
 
         <motion.div
@@ -790,6 +927,7 @@ export default function ShirtZipperReveal({ children }: { children: ReactNode })
           />
           <motion.button
             type="button"
+            data-zip-pull=""
             aria-expanded={isOpen}
             aria-controls={contentId}
             aria-label={isOpen ? "Zip the shirt back up and hide the experience" : "Unzip the shirt to reveal the experience"}

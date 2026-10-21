@@ -115,6 +115,8 @@ body {
 
 html { -webkit-text-size-adjust: 100%; }
 a, button, [role="button"] { touch-action: manipulation; }
+/* the zipper pull is dragged with a finger, so the page must not claim that touch for scrolling */
+[data-zip-pull] { touch-action: none; }
 
 /* Scroll progress bar */
 .scroll-progress {
