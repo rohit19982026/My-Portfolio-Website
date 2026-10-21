@@ -42,7 +42,7 @@ export default function Navbar() {
                 key={link.href}
                 href={`/${link.href}`}
                 aria-current={isActive ? "true" : undefined}
-                className={`relative px-3.5 py-3 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] transition-colors ${
+                className={`relative whitespace-nowrap px-2.5 py-3 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] transition-colors xl:px-3.5 ${
                   isActive ? "text-accent" : "text-fg/70 hover:text-accent"
                 }`}
               >
@@ -63,12 +63,12 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="ml-1 inline-flex h-11 w-11 items-center justify-center text-fg/70 hover:text-accent transition-colors"
+            className="ml-1 hidden h-11 w-11 items-center justify-center text-fg/70 hover:text-accent transition-colors xl:inline-flex"
           >
             <GithubMark className="w-[18px] h-[18px]" />
           </a>
           <ThemeToggle className="ml-1" />
-          <Button href="/#contact" size="sm" className="ml-3 min-h-11">
+          <Button href="/#contact" size="sm" className="ml-3 min-h-11 whitespace-nowrap">
             Get in touch
           </Button>
         </nav>
