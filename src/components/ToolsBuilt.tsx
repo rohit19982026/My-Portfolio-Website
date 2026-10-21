@@ -157,7 +157,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
             </p>
             <p className="mt-1 text-[13.5px] leading-relaxed text-fg/65">{agent.problem}</p>
             <p className="mt-2 text-[12.5px] leading-snug text-fg/55">
-              Built by Rohit · {agent.builtWith}{agent.status !== "Built" ? ` · ${agent.status}` : ""}
+              Built with {agent.builtWith}{agent.status !== "Built" ? ` · ${agent.status}` : ""}
             </p>
           </motion.div>
         </div>
