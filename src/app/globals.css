@@ -246,3 +246,16 @@ h1, h2, h3, h4 { text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) {
   @keyframes carouselFill { from { width: 100%; } to { width: 100%; } }
 }
+
+/* foil seal on the case studies */
+@keyframes foilSheen {
+  0% { transform: translateX(-130%); }
+  55%, 100% { transform: translateX(260%); }
+}
+@keyframes foilHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[foilSheen_7s_ease-in-out_infinite\] { animation: none; }
+}

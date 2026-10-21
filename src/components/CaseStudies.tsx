@@ -2,8 +2,10 @@
 
 import { AnimatePresence, motion, MotionConfig, type Variants } from "framer-motion";
 import { ArrowRight, Building2, Check, UserRound, Users, Wrench } from "lucide-react";
-import { useCallback, useRef, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
 import CaseDiagram from "./CaseDiagram";
+import ScratchSeal, { type FoilPalette } from "./ScratchSeal";
+import { getSoundPref, setSoundPref, subscribeSoundPref } from "@/lib/zipSound";
 import { caseStudies, type CaseStudy, type OwnerKind } from "@/lib/caseStudies";
 
 /*
@@ -17,6 +19,16 @@ const INK = "#0d0d1f";
 const MUTED = "#5f6477";
 const BLUE = "#3d36f5";
 const EASE = [0.2, 0.7, 0.2, 1] as const;
+
+// three tones of foil per case, from the case colours
+const FOIL: Record<string, FoilPalette> = {
+  "platform-build": ["#d9ccff", "#b9a6f2", "#f0c6e6"],
+  migration: ["#fbe3b6", "#e9b66a", "#f0c0a0"],
+  scope: ["#c9efd2", "#9fcfae", "#c4dfd6"],
+  escalation: ["#cfe1ff", "#a7bdf0", "#d6dcee"],
+};
+const OPENED_KEY = "case-opened";
+const subscribeNever = () => () => {};
 
 // accents are tuned for fills; text uses a darker mix so it stays readable
 const textOf = (accent: string) => `color-mix(in srgb, ${accent} 72%, ${INK})`;
@@ -34,7 +46,7 @@ const rise: Variants = {
 };
 const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } } };
 
-function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
+function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sealed: boolean }) {
   const accentText = textOf(c.accent);
   return (
     <motion.div
@@ -56,7 +68,9 @@ function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
         </motion.p>
         <motion.h3
           variants={rise}
-          className="mt-3 font-sans font-extrabold leading-[1.12] tracking-[-0.025em]"
+          id="case-title"
+          tabIndex={-1}
+          className="mt-3 font-sans font-extrabold leading-[1.12] tracking-[-0.025em] outline-none"
           style={{ fontSize: "clamp(1.55rem, 5.6vw, 2.2rem)", color: INK }}
         >
           {c.title}
@@ -188,6 +202,7 @@ function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
           </motion.p>
         )}
 
+        {!sealed && (
         <motion.div variants={rise} className="mt-8 flex justify-end">
           <button
             type="button"
@@ -199,6 +214,7 @@ function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
           </button>
         </motion.div>
+        )}
       </div>
     </motion.div>
   );
@@ -212,6 +228,105 @@ export default function CaseStudies() {
   const ro = useRef<ResizeObserver | null>(null);
   const c = caseStudies[active];
   const n = caseStudies.length;
+
+  // Scratch seals. `opened` flips the moment a case is opened (so it can grow);
+  // `gone` flips when its foil has finished peeling and been removed. Cases
+  // opened earlier in this visit come back from sessionStorage already open.
+  // read once: cases opened earlier this visit start open, with no foil to peel
+  const [saved] = useState<boolean[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const v = JSON.parse(sessionStorage.getItem(OPENED_KEY) ?? "[]");
+      return Array.isArray(v) ? (v as boolean[]) : [];
+    } catch {
+      return [];
+    }
+  });
+  const hintSeen = useSyncExternalStore(
+    subscribeNever,
+    () => {
+      try {
+        return sessionStorage.getItem("scratch-hint") === "1";
+      } catch {
+        return false;
+      }
+    },
+    () => true,
+  );
+  const ready = useSyncExternalStore(subscribeNever, () => true, () => false);
+  const canvasOk = useSyncExternalStore(
+    subscribeNever,
+    () => !!document.createElement("canvas").getContext?.("2d"),
+    () => false,
+  );
+  const coarse = useSyncExternalStore(subscribeNever, () => window.matchMedia("(pointer: coarse)").matches, () => false);
+  const sealedH = useSyncExternalStore(
+    (cb) => {
+      window.addEventListener("resize", cb);
+      return () => window.removeEventListener("resize", cb);
+    },
+    () => Math.round(Math.min(560, Math.max(380, window.innerHeight * 0.62))),
+    () => 520,
+  );
+  const [openedNow, setOpenedNow] = useState<boolean[]>(() => caseStudies.map(() => false));
+  const [goneNow, setGoneNow] = useState<boolean[]>(() => caseStudies.map(() => false));
+  const [hintDone, setHintDone] = useState(false);
+  const opened = caseStudies.map((_, i) => saved[i] === true || openedNow[i]);
+  const gone = caseStudies.map((_, i) => saved[i] === true || goneNow[i]);
+  const hint = !hintSeen && !hintDone;
+  const focusTitle = useRef(false);
+
+  const prefersReduced = useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      mq.addEventListener("change", cb);
+      return () => mq.removeEventListener("change", cb);
+    },
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false,
+  );
+  const soundPref = useSyncExternalStore(subscribeSoundPref, getSoundPref, () => null);
+  const soundOn = soundPref ? soundPref === "on" : !prefersReduced;
+
+  const foilEnabled = ready && canvasOk && !prefersReduced;
+  const sealed = foilEnabled && !opened[active];
+  const anySealed = foilEnabled && opened.some((o) => !o);
+
+  const markOpened = useCallback((idx: number[]) => {
+    setOpenedNow((prev) => {
+      const next = prev.map((o, i) => o || idx.includes(i));
+      try {
+        const old: boolean[] = JSON.parse(sessionStorage.getItem(OPENED_KEY) ?? "[]");
+        sessionStorage.setItem(OPENED_KEY, JSON.stringify(next.map((o, i) => o || old[i] === true)));
+      } catch {}
+      return next;
+    });
+  }, []);
+
+  const onReveal = (viaButton: boolean) => {
+    markOpened([active]);
+    try {
+      sessionStorage.setItem("scratch-hint", "1");
+    } catch {}
+    setHintDone(true);
+    focusTitle.current = viaButton;
+  };
+
+  const revealAll = () => {
+    markOpened(caseStudies.map((_, i) => i));
+    // the cases that aren't on screen have no foil to peel
+    setGoneNow((g) => g.map((x, i) => (i === active ? x : true)));
+  };
+
+  // keyboard users land on the case once it has opened
+  const activeOpen = opened[active];
+  useEffect(() => {
+    if (activeOpen && focusTitle.current) {
+      focusTitle.current = false;
+      const t = setTimeout(() => document.getElementById("case-title")?.focus({ preventScroll: true }), 600);
+      return () => clearTimeout(t);
+    }
+  }, [activeOpen, active]);
 
   // the open case decides the card's height; it eases between cases instead of jumping
   const measure = useCallback((el: HTMLDivElement | null) => {
@@ -317,7 +432,15 @@ export default function CaseStudies() {
                       />
                     )}
                     <span className="relative flex items-center gap-1.5 text-[13px] font-bold tabular-nums sm:text-[14px]">
-                      <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: cs.accent }} />
+                      <span
+                        aria-hidden
+                        className="h-1.5 w-1.5 rounded-full transition-all"
+                        style={
+                          foilEnabled && !opened[i]
+                            ? { background: "transparent", boxShadow: `inset 0 0 0 1.5px ${cs.accent}` }
+                            : { background: cs.accent }
+                        }
+                      />
                       {cs.number}
                     </span>
                     <span className="relative text-[11.5px] font-semibold leading-tight sm:text-[14px]" style={{ color: on ? INK : MUTED }}>
@@ -328,13 +451,29 @@ export default function CaseStudies() {
               })}
             </div>
 
+            {anySealed && (
+              <div className="mt-3 flex justify-end">
+                <button
+                  type="button"
+                  onClick={revealAll}
+                  className="inline-flex min-h-11 items-center rounded-full px-3 font-sans text-[13.5px] font-semibold underline decoration-[#3d36f5]/40 underline-offset-4 transition-colors hover:text-[#3d36f5]"
+                  style={{ color: MUTED }}
+                >
+                  Reveal all four
+                </button>
+              </div>
+            )}
+
             {/* the open case */}
             <motion.div
               id="case-panel"
               role="tabpanel"
               aria-labelledby={`case-tab-${c.id}`}
-              className="mt-4 overflow-hidden rounded-[1.8rem] bg-white"
-              animate={{ height, borderColor: `color-mix(in srgb, ${c.accent} 22%, #ffffff)` }}
+              className="relative mt-4 overflow-hidden rounded-[1.8rem] bg-white"
+              animate={{
+                height: sealed ? (typeof height === "number" ? Math.min(height, sealedH) : sealedH) : height,
+                borderColor: `color-mix(in srgb, ${c.accent} 22%, #ffffff)`,
+              }}
               transition={{ height: { duration: 0.45, ease: EASE }, borderColor: { duration: 0.4 } }}
               style={{ borderWidth: 1, borderStyle: "solid", boxShadow: "0 30px 60px -44px rgba(40,30,120,.45)" }}
             >
@@ -347,9 +486,25 @@ export default function CaseStudies() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.28, ease: EASE }}
                 >
-                  <CaseFile c={c} onNext={next} />
+                  <CaseFile c={c} onNext={next} sealed={sealed} />
                 </motion.div>
               </AnimatePresence>
+              {foilEnabled && !gone[active] && (
+                <ScratchSeal
+                  key={c.id}
+                  caseId={c.id}
+                  number={c.number}
+                  label={c.tab}
+                  palette={FOIL[c.id]}
+                  open={opened[active]}
+                  onReveal={onReveal}
+                  onGone={() => setGoneNow((g) => g.map((x, i) => x || i === active))}
+                  soundOn={soundOn}
+                  onToggleSound={() => setSoundPref(soundOn ? "off" : "on")}
+                  coarse={coarse}
+                  hint={hint && active === 0}
+                />
+              )}
             </motion.div>
           </motion.div>
         </div>
