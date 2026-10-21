@@ -7,8 +7,8 @@ import { createContext, useCallback, useEffect, useMemo, useRef, useState, type 
 /** true on the card at the front of the deck, false behind it, null outside a deck */
 export const DeckFrontContext = createContext<boolean | null>(null);
 
-const INTERVAL_MS = 2000; // between deals
-const DEAL_S = 0.95;
+const INTERVAL_MS = 1300; // between deals
+const DEAL_S = 0.75;
 const RESUME_MS = 3000;
 const PEEK = 3; // cards that show behind the front one
 const OFFSET_Y = 15;
@@ -284,7 +284,7 @@ function DeckSlide({
 
   const pose = rest(r, n);
   // cards behind rise on a staggered spring once the front card has cleared
-  const spring = { type: "spring" as const, stiffness: 150, damping: 19, mass: 0.9, delay: alive ? 0.1 + r * 0.045 : 0 };
+  const spring = { type: "spring" as const, stiffness: 150, damping: 19, mass: 0.9, delay: alive ? 0.07 + r * 0.035 : 0 };
   const target = flight ? flight.animate : pose;
   const transition = flight ? flight.transition : alive ? { ...spring, zIndex: { duration: 0 } } : { duration: 0.2 };
 

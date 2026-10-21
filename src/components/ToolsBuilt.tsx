@@ -35,7 +35,7 @@ function FlowDots({ steps, accent, front }: { steps: number; accent: string; fro
               animate={state}
               variants={{
                 rest: { scale: 0, transition: { duration: 0.15 } },
-                front: { scale: 1, transition: { type: "spring", stiffness: 420, damping: 15, delay: 0.5 + i * 0.09 } },
+                front: { scale: 1, transition: { type: "spring", stiffness: 420, damping: 15, delay: 0.34 + i * 0.07 } },
               }}
               style={{
                 background: i === 0 || i === steps - 1 ? accent : "transparent",
@@ -49,7 +49,7 @@ function FlowDots({ steps, accent, front }: { steps: number; accent: string; fro
                 animate={state}
                 variants={{
                   rest: { scaleX: 0, transition: { duration: 0.15 } },
-                  front: { scaleX: 1, transition: { duration: 0.2, delay: 0.58 + i * 0.09 } },
+                  front: { scaleX: 1, transition: { duration: 0.2, delay: 0.4 + i * 0.07 } },
                 }}
                 style={{ background: `color-mix(in srgb, ${accent} 55%, transparent)` }}
               />
@@ -95,7 +95,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
             animate={state}
             variants={{
               rest: { scale: 0.8, rotate: -14, transition: { duration: 0.2 } },
-              front: { scale: 1, rotate: 0, transition: { type: "spring", stiffness: 300, damping: 11, delay: 0.3 } },
+              front: { scale: 1, rotate: 0, transition: { type: "spring", stiffness: 300, damping: 11, delay: 0.2 } },
             }}
             style={{
               background: `linear-gradient(145deg, color-mix(in srgb, ${agent.accent} 100%, white 25%), ${agent.accent} 55%, color-mix(in srgb, ${agent.accent} 80%, black))`,
@@ -112,7 +112,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
             animate={state}
             variants={{
               rest: { x: 14, opacity: 0, transition: { duration: 0.15 } },
-              front: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1], delay: 0.35 } },
+              front: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1], delay: 0.24 } },
             }}
             style={{ color: "transparent", WebkitTextStroke: "1.5px color-mix(in srgb, var(--color-fg) 22%, transparent)" }}
           >
@@ -127,7 +127,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
             animate={state}
             variants={{
               rest: { y: 10, opacity: 0.35, transition: { duration: 0.2 } },
-              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.36 } },
+              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.26 } },
             }}
           >
             {agent.title}
@@ -138,7 +138,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
             animate={state}
             variants={{
               rest: { y: 12, opacity: 0.2, transition: { duration: 0.2 } },
-              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.44 } },
+              front: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay: 0.32 } },
             }}
           >
             {agent.summary}
