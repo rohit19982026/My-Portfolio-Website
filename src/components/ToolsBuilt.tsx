@@ -69,7 +69,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
       >
         <div className="flex items-start justify-between">
           <span
-            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl"
+            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl transition-transform duration-[400ms] ease-out group-data-[active=false]/slide:scale-[0.8] group-data-[active=false]/slide:-rotate-12 group-data-[active=true]/slide:scale-100"
             style={{
               background: `linear-gradient(145deg, color-mix(in srgb, ${agent.accent} 100%, white 25%), ${agent.accent} 55%, color-mix(in srgb, ${agent.accent} 80%, black))`,
               boxShadow: `0 10px 22px -8px ${agent.accent}, inset 0 1px 0 rgba(255,255,255,.45)`,
@@ -81,18 +81,20 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
           <span
             aria-hidden
             className="font-display text-[44px] leading-none"
-            style={{ color: "transparent", WebkitTextStroke: "1.5px color-mix(in srgb, var(--color-fg) 22%, transparent)" }}
+            style={{ color: "transparent", WebkitTextStroke: "1.5px color-mix(in srgb, var(--color-fg) 22%, transparent)", transform: "translateX(calc(var(--p, 0) * -22px))" }}
           >
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
 
         <div className="min-w-0">
-          <h3 className="font-heading text-[19px] font-bold leading-snug text-fg">{agent.title}</h3>
-          <p className="mt-1.5 text-[14px] leading-relaxed text-fg/65">{agent.summary}</p>
+          <h3 className="font-heading text-[19px] font-bold leading-snug text-fg transition-all duration-[350ms] delay-[40ms] ease-out group-data-[active=false]/slide:translate-y-2 group-data-[active=false]/slide:opacity-0">{agent.title}</h3>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-fg/65 transition-all duration-[350ms] delay-[80ms] ease-out group-data-[active=false]/slide:translate-y-2 group-data-[active=false]/slide:opacity-0">{agent.summary}</p>
         </div>
 
-        <FlowDots steps={agent.flow.length} accent={agent.accent} />
+        <div className="origin-left transition-all duration-[400ms] delay-[120ms] ease-out group-data-[active=false]/slide:scale-x-50 group-data-[active=false]/slide:opacity-0">
+          <FlowDots steps={agent.flow.length} accent={agent.accent} />
+        </div>
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-1">
           <span
@@ -214,7 +216,7 @@ export default function ToolsBuilt() {
             />
           ))}
         </div>
-        <SwipeCarousel ariaLabel="Tool case studies, swipeable" className="sm:hidden">
+        <SwipeCarousel ariaLabel="Tool case studies, swipeable" className="sm:hidden" autoPlay accents={agents.map((a) => a.accent)}>
           {agents.map((agent, i) => (
             <AgentCard key={agent.slug} agent={agent} index={i} inView={inView} />
           ))}

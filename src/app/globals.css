@@ -231,3 +231,16 @@ h1, h2, h3, h4 { text-wrap: balance; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Auto carousel: progress fill for the active pill and the counter digit roll */
+@keyframes carouselFill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+@keyframes carouselDigit {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes carouselFill { from { width: 100%; } to { width: 100%; } }
+}
