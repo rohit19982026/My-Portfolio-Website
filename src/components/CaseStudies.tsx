@@ -8,7 +8,8 @@ import { caseStudies, type CaseStudy, type OwnerKind } from "@/lib/caseStudies";
 
 /*
  * Case studies as "case files": a tab per case, and the open case shows an
- * opening line, a small diagram, who did what, the steps taken and how it
+ * opening line, what made it hard, a small diagram, who did what, the steps
+ * taken and how it
  * ended. A fixed light section in both themes, like the Stack section.
  */
 
@@ -71,9 +72,19 @@ function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
             </li>
           ))}
         </motion.ul>
-        <motion.p variants={rise} className="mt-5 font-sans text-[16px] leading-relaxed sm:text-[17px]" style={{ color: MUTED }}>
+        <motion.p variants={rise} className="mt-5 font-sans text-[16px] leading-relaxed sm:text-[17px]" style={{ color: "#3c3f52" }}>
           {c.opening}
         </motion.p>
+        {c.challenge && (
+          <motion.div variants={rise} className="mt-4 border-l-2 pl-4" style={{ borderColor: `color-mix(in srgb, ${c.accent} 45%, #ffffff)` }}>
+            <p className="font-sans text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: accentText }}>
+              What made it hard
+            </p>
+            <p className="mt-1 font-sans text-[15.5px] leading-relaxed sm:text-[16px]" style={{ color: MUTED }}>
+              {c.challenge}
+            </p>
+          </motion.div>
+        )}
         <motion.div
           variants={rise}
           className="mt-6 rounded-2xl bg-white p-4 sm:p-5"
@@ -122,7 +133,7 @@ function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
         </motion.ul>
 
         <motion.p variants={rise} className="mt-8 font-sans text-[11.5px] font-bold uppercase tracking-[0.18em]" style={{ color: MUTED }}>
-          What I did
+          {c.stepsLabel ?? "What I did"}
         </motion.p>
         <motion.ol variants={stagger} className="relative mt-4 grid gap-5">
           <motion.span
@@ -157,7 +168,7 @@ function CaseFile({ c, onNext }: { c: CaseStudy; onNext: () => void }) {
             </span>
             <div>
               <p className="font-sans text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: "#4d6a00" }}>
-                How it ended
+                {c.endingLabel ?? "How it ended"}
               </p>
               <p className="mt-1 font-sans text-[15px] font-medium leading-snug" style={{ color: INK }}>
                 {c.ending}
@@ -260,7 +271,7 @@ export default function CaseStudies() {
               A few <span style={{ color: BLUE }}>programs</span>{" "}I&apos;ve run
             </motion.h2>
             <motion.p variants={rise} className="mt-3 font-sans text-[15px] sm:text-[17px]" style={{ color: MUTED }}>
-              Real phData work. Client names are left out.
+              From my work at phData, a data and AI consulting firm, where I run client programs. Client names are left out.
             </motion.p>
           </motion.div>
 
