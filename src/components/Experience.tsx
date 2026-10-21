@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import Image from "next/image";
 import SectionHeading from "./ui/SectionHeading";
-import { useContext, useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { useContext, useEffect, useRef, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
 import ShirtZipperReveal, { ZipRevealContext } from "./ui/ShirtZipperReveal";
 
 // Card palettes from the supplied design: [tint, border, number-pill bg, number colour]
@@ -69,7 +69,13 @@ const roles: {
 // 0..1 progress from its distance below the top of the shirt.
 function RevealCard({ className, style, children }: { className: string; style: CSSProperties; children: ReactNode }) {
   const ctx = useContext(ZipRevealContext);
-  const reduce = useReducedMotion();
+  const prefersReduced = useReducedMotion();
+  // hydration-safe: the server always renders the animated state
+  const reduce = useSyncExternalStore(
+    () => () => {},
+    () => !!prefersReduced,
+    () => false,
+  );
   const ref = useRef<HTMLLIElement>(null);
   const top = useMotionValue(0);
   const fallback = useMotionValue(1);

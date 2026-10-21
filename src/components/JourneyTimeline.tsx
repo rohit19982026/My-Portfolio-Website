@@ -11,7 +11,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import Image from "next/image";
-import { useRef, type PointerEvent } from "react";
+import { useRef, useSyncExternalStore, type PointerEvent } from "react";
 import { GraduationCap } from "lucide-react";
 
 /*
@@ -779,7 +779,13 @@ function Vertical({ reduce }: { reduce: boolean }) {
 }
 
 export default function JourneyTimeline() {
-  const reduce = !!useReducedMotion();
+  const prefersReduced = useReducedMotion();
+  // hydration-safe: the server always renders the animated version
+  const reduce = useSyncExternalStore(
+    () => () => {},
+    () => !!prefersReduced,
+    () => false,
+  );
   return (
     <>
       <Desktop reduce={reduce} />
