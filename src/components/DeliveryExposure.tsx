@@ -1,50 +1,14 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, type ComponentType, type CSSProperties } from "react";
-import {
-  Database,
-  Cog,
-  Laptop,
-  Zap,
-  Server,
-  Sigma,
-  Cloud,
-  Infinity as InfinityIcon,
-  GanttChart,
-  Workflow,
-  ScanEye,
-  Braces,
-} from "lucide-react";
-import {
-  SiSnowflake,
-  SiDatabricks,
-  SiApachehadoop,
-  SiApacheairflow,
-  SiQlik,
-  SiApachespark,
-  SiJira,
-  SiConfluence,
-  SiAsana,
-  SiClaude,
-  SiN8N,
-  SiGoogleappsscript,
-  SiGoogledrive,
-} from "react-icons/si";
+import { useRef, type ComponentType, type CSSProperties, type ReactNode } from "react";
+import { Database, Cog, Laptop, Zap } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
-import SalesforceMark from "./icons/SalesforceMark";
-import SlackMark from "./icons/SlackMark";
-import GleanMark from "./icons/GleanMark";
-import SwipeCarousel from "./ui/SwipeCarousel";
 
 /**
- * Dark-navy treatment matching Hero.tsx's reference-driven redesign this
- * session — same NAVY/CARD_BG/CARD_BORDER literals and the same #8B7FF0/
- * #5B9BF0 accent pair Hero's stat icons use, so the two dark sections share
- * one visual system instead of introducing a second one. (This does mean
- * the page has no light-background section left between Hero and Footer
- * while Work.tsx stays unmounted — a real, visible consequence of this
- * change, not a silent side effect.)
+ * Dark-navy treatment matching Hero.tsx's reference-driven redesign — same
+ * NAVY/CARD_BG/CARD_BORDER literals and the same #8B7FF0/#5B9BF0 accent pair
+ * Hero's stat icons use, so the two sections share one visual system.
  */
 const NAVY = "var(--color-surface-alt)";
 const CARD_BG = "var(--color-card)";
@@ -59,121 +23,64 @@ type IconComponent = ComponentType<{
   style?: CSSProperties;
 }>;
 
-// `wordmark: true` items ARE their own label (e.g. the styled "aws" text
-// below already reads as the name) — ItemChip skips the separate label in
-// that case instead of showing the name twice.
-type StackItem = { name: string; Icon: IconComponent; color: string | null; wordmark?: boolean };
-type StackCategory = { label: [string, string]; HeaderIcon: IconComponent; items: StackItem[] };
-
-// AWS's real mark is essentially a wordmark, not a glyph — styled text
-// reads truer to the actual logo than an invented icon shape. Marked
-// wordmark: true below so ItemChip doesn't also render a separate "AWS"
-// label next to it.
-function AwsText({ size = 16, style }: { size?: number; style?: CSSProperties }) {
-  return (
-    <span style={{ fontSize: size, fontWeight: 800, color: "#FF9900", lineHeight: 1, ...style }}>
-      aws
-    </span>
-  );
-}
-// No public brand mark for this one — a clean initial badge instead of
-// guessing at an unofficial logo.
-function KantataBadge({ size = 16, style }: { size?: number; style?: CSSProperties }) {
-  return (
-    <span
-      style={{
-        width: size,
-        height: size,
-        fontSize: size * 0.62,
-        fontWeight: 800,
-        color: "#8B7FF0",
-        border: "1.5px solid currentColor",
-        borderRadius: 4,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        lineHeight: 1,
-        ...style,
-      }}
-    >
-      K
-    </span>
-  );
+// Tool names inside a sentence: medium weight so they still scan.
+function T({ children }: { children: ReactNode }) {
+  return <span className="font-semibold text-fg">{children}</span>;
 }
 
+type StackCategory = { label: [string, string]; HeaderIcon: IconComponent; blurb: ReactNode };
+
+// Only things the rest of the site already says: which platforms and tools
+// were involved and what my part in them was. No program types, outcomes
+// or numbers.
 const stacks: StackCategory[] = [
   {
     label: ["DATA PLATFORMS", "DELIVERED ON"],
     HeaderIcon: Database,
-    items: [
-      { name: "Snowflake", Icon: SiSnowflake, color: "#29B5E8" },
-      { name: "Databricks", Icon: SiDatabricks, color: "#FF3621" },
-      { name: "Amazon Redshift", Icon: Server, color: "#8C4FFF" },
-      { name: "SQL Server", Icon: Database, color: "#CC2927" },
-      { name: "Hadoop / HDFS", Icon: SiApachehadoop, color: "#66CCFF" },
-      { name: "Sigma", Icon: Sigma, color: "var(--color-fg)" },
-    ],
+    blurb: (
+      <>
+        The data programs I&apos;ve managed ran on <T>Snowflake</T> and <T>Databricks</T>, along with <T>Redshift</T>,{" "}
+        <T>SQL Server</T>, <T>Hadoop</T> and <T>Sigma</T>. I scope the work and follow the technical discussion; the
+        engineers build it.
+      </>
+    ),
   },
   {
     label: ["ENGINEERING TOOLING", "ON THOSE PROGRAMS"],
     HeaderIcon: Cog,
-    items: [
-      { name: "dbt", Icon: Braces, color: "#FF694A" },
-      { name: "Airflow / MWAA", Icon: SiApacheairflow, color: "#017CEE" },
-      { name: "ETL / ELT Pipelines", Icon: Workflow, color: "#5B9BF0" },
-      { name: "Qlik Replicate", Icon: SiQlik, color: "#009845" },
-      { name: "Spark SQL", Icon: SiApachespark, color: "#E25A1C" },
-      { name: "LandingAI / Computer Vision", Icon: ScanEye, color: "#5B9BF0" },
-      { name: "AWS", Icon: AwsText, color: "#FF9900", wordmark: true },
-      { name: "Azure", Icon: Cloud, color: "#0078D4" },
-    ],
+    blurb: (
+      <>
+        The engineering teams built the pipelines with <T>dbt</T>, <T>Airflow</T>, <T>Spark SQL</T> and{" "}
+        <T>Qlik Replicate</T>, on <T>AWS</T> and <T>Azure</T>. I plan and track that work rather than write it.
+      </>
+    ),
   },
   {
     label: ["PMO & DELIVERY", "TOOLS USED DAILY"],
     HeaderIcon: Laptop,
-    items: [
-      { name: "Jira", Icon: SiJira, color: "#2684FF" },
-      { name: "Confluence", Icon: SiConfluence, color: "#2684FF" },
-      { name: "Kantata (PSA)", Icon: KantataBadge, color: "#8B7FF0" },
-      { name: "MS Project", Icon: GanttChart, color: "#31752F" },
-      { name: "Azure DevOps", Icon: InfinityIcon, color: "#0078D4" },
-      { name: "Asana", Icon: SiAsana, color: "#F06A6A" },
-      { name: "Salesforce", Icon: SalesforceMark, color: "#00A1E0" },
-      { name: "Slack / Teams", Icon: SlackMark, color: null },
-    ],
+    blurb: (
+      <>
+        My everyday delivery stack: <T>Jira</T> and <T>Confluence</T> for backlog and documentation, <T>Kantata</T> as
+        our PSA tool, and <T>Salesforce</T> for client and SOW records. <T>MS Project</T>, <T>Azure DevOps</T> or{" "}
+        <T>Asana</T> when a client works in them, and <T>Slack</T> or <T>Teams</T> to stay in touch.
+      </>
+    ),
   },
   {
     label: ["AI & AUTOMATION", "BUILT & RUN"],
     HeaderIcon: Zap,
-    items: [
-      { name: "Glean Agent Builder", Icon: GleanMark, color: "#8B7FF0" },
-      { name: "Claude (Anthropic)", Icon: SiClaude, color: "#D97757" },
-      { name: "n8n (workflow automation)", Icon: SiN8N, color: "#EA4B71" },
-      { name: "Google Apps Script", Icon: SiGoogleappsscript, color: "#4285F4" },
-      { name: "Salesforce MCP", Icon: SalesforceMark, color: "#00A1E0" },
-      { name: "Slack MCP", Icon: SlackMark, color: null },
-      { name: "Google Drive MCP", Icon: SiGoogledrive, color: "#4285F4" },
-    ],
+    blurb: (
+      <>
+        What I build with: <T>Glean Agent Builder</T> and <T>Claude</T> for the PMO agents, <T>Google Apps Script</T> and
+        the <T>Jira REST API</T> for the dependency tracker, and <T>n8n</T> for workflow automation. MCP connections
+        link them to <T>Salesforce</T>, <T>Slack</T> and <T>Google Drive</T>.
+      </>
+    ),
   },
 ];
 
-function ItemChip({ item }: { item: StackItem }) {
-  const { Icon, color, name, wordmark } = item;
-  return (
-    <div
-      className="inline-flex items-center gap-2 px-3 py-2 rounded-card"
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "var(--color-card-subtle)" }}
-    >
-      <Icon size={16} color={color ?? undefined} style={{ color: color ?? undefined }} />
-      {!wordmark && (
-        <span className="font-heading text-[12.5px] text-fg/80 whitespace-nowrap">{name}</span>
-      )}
-    </div>
-  );
-}
-
 function CategoryCard({ category, index, inView }: { category: StackCategory; index: number; inView: boolean }) {
-  const { label, HeaderIcon, items } = category;
+  const { label, HeaderIcon, blurb } = category;
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -189,7 +96,7 @@ function CategoryCard({ category, index, inView }: { category: StackCategory; in
         aria-hidden="true"
       />
 
-      <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center gap-3 mb-3 pr-8">
         <HeaderIcon
           size={28}
           style={{
@@ -214,11 +121,7 @@ function CategoryCard({ category, index, inView }: { category: StackCategory; in
       <div className="w-10 h-[3px] rounded-full mb-4" style={{ background: "var(--color-accent)" }} />
       <div className="h-px w-full mb-5" style={{ background: "var(--color-divider)" }} />
 
-      <div className="flex flex-wrap gap-2">
-        {items.map((item) => (
-          <ItemChip key={item.name} item={item} />
-        ))}
-      </div>
+      <p className="text-[15px] leading-relaxed text-fg/70">{blurb}</p>
     </motion.div>
   );
 }
@@ -246,16 +149,11 @@ export default function DeliveryExposure() {
           </p>
         </div>
 
-        <div className="hidden sm:grid sm:grid-cols-2 gap-5">
+        <div className="grid gap-5 sm:grid-cols-2">
           {stacks.map((category, i) => (
             <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
           ))}
         </div>
-        <SwipeCarousel ariaLabel="Tools and platforms delivered on, swipeable carousel" className="sm:hidden">
-          {stacks.map((category, i) => (
-            <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
-          ))}
-        </SwipeCarousel>
       </div>
     </section>
   );
