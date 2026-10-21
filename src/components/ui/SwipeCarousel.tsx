@@ -10,8 +10,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProp
 const NAVY = "var(--color-surface-alt)";
 const GAP_PX = 16; // must stay in sync with the track's gap-4 class
 const INTERVAL_MS = 2000; // time between card changes
-const HOP_MS = INTERVAL_MS - 250; // the timer restarts mid-glide, so shave the glide off
-const MOVE_S = 0.55;
+const HOP_MS = INTERVAL_MS - 200; // the timer restarts mid-glide, so shave the glide off
 const RESUME_MS = 3000;
 
 function DotRow({ count, activeIndex }: { count: number; activeIndex: number }) {
@@ -82,12 +81,16 @@ export default function SwipeCarousel({
       if (!s) return;
       const w = s.offsetWidth + GAP_PX;
       const d = (s.offsetLeft + s.offsetWidth / 2 - mid) / w; // 0 = centred
-      const a = Math.min(1, Math.abs(d));
+      const raw = Math.min(1, Math.abs(d));
+      const a = raw * raw * (3 - 2 * raw); // smoothstep: calm near focus, quicker at the edges
       const sign = d === 0 ? 0 : d > 0 ? 1 : -1;
-      s.style.transform = `perspective(1000px) translateY(${(-6 * (1 - a)).toFixed(2)}px) scale(${(1 - 0.08 * a).toFixed(3)}) rotateY(${(-sign * 7 * a).toFixed(2)}deg)`;
-      s.style.opacity = String(1 - 0.45 * a);
-      s.style.filter = a > 0.02 ? `blur(${(1.5 * a).toFixed(2)}px)` : "none";
+      // neighbours tuck slightly under the focused card for a layered feel
+      s.style.transform = `perspective(1100px) translateX(${(-sign * 12 * a).toFixed(2)}px) translateY(${(-8 * (1 - a)).toFixed(2)}px) scale(${(1 - 0.09 * a).toFixed(3)}) rotateY(${(-sign * 9 * a).toFixed(2)}deg)`;
+      s.style.opacity = String(1 - 0.5 * a);
+      s.style.filter = a > 0.02 ? `blur(${(1.8 * a).toFixed(2)}px)` : "none";
+      s.style.zIndex = String(Math.round((1 - raw) * 10));
       s.style.setProperty("--p", d.toFixed(3));
+      s.style.setProperty("--a", a.toFixed(3));
     });
   }, []);
 
@@ -166,13 +169,19 @@ export default function SwipeCarousel({
       moveAnim.current?.stop();
       const from = el.scrollLeft;
       el.style.scrollSnapType = "none"; // our own glide, snap restored after
+      // a real spring: it eases out of rest, carries a little momentum into the
+      // landing and settles, so no two hops feel like a canned tween
       moveAnim.current = animate(0, 1, {
-        duration: MOVE_S,
-        ease: [0.65, 0, 0.2, 1],
+        type: "spring",
+        stiffness: 95,
+        damping: 17,
+        mass: 0.95,
+        restDelta: 0.0005,
         onUpdate: (v) => {
           el.scrollLeft = from + (target - from) * v;
         },
         onComplete: () => {
+          el.scrollLeft = target;
           el.style.scrollSnapType = "";
         },
       });

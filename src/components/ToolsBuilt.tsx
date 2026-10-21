@@ -69,8 +69,9 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
       >
         <div className="flex items-start justify-between">
           <span
-            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl transition-transform duration-[400ms] ease-out group-data-[active=false]/slide:scale-[0.8] group-data-[active=false]/slide:-rotate-12 group-data-[active=true]/slide:scale-100"
+            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl"
             style={{
+              transform: "translateX(calc(var(--p, 0) * -16px)) scale(calc(1 - var(--a, 0) * 0.18)) rotate(calc(var(--p, 0) * -10deg))",
               background: `linear-gradient(145deg, color-mix(in srgb, ${agent.accent} 100%, white 25%), ${agent.accent} 55%, color-mix(in srgb, ${agent.accent} 80%, black))`,
               boxShadow: `0 10px 22px -8px ${agent.accent}, inset 0 1px 0 rgba(255,255,255,.45)`,
               color: onAccent(agent.accent),
@@ -88,11 +89,13 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
         </div>
 
         <div className="min-w-0">
-          <h3 className="font-heading text-[19px] font-bold leading-snug text-fg transition-all duration-[350ms] delay-[40ms] ease-out group-data-[active=false]/slide:translate-y-2 group-data-[active=false]/slide:opacity-0">{agent.title}</h3>
-          <p className="mt-1.5 text-[14px] leading-relaxed text-fg/65 transition-all duration-[350ms] delay-[80ms] ease-out group-data-[active=false]/slide:translate-y-2 group-data-[active=false]/slide:opacity-0">{agent.summary}</p>
+          <h3 className="font-heading text-[19px] font-bold leading-snug text-fg"
+            style={{ transform: "translate(calc(var(--p, 0) * -8px), calc(var(--a, 0) * 10px))", opacity: "calc(1 - var(--a, 0) * 0.85)" }}>{agent.title}</h3>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-fg/65"
+            style={{ transform: "translate(calc(var(--p, 0) * -14px), calc(var(--a, 0) * 12px))", opacity: "calc(1 - var(--a, 0) * 0.9)" }}>{agent.summary}</p>
         </div>
 
-        <div className="origin-left transition-all duration-[400ms] delay-[120ms] ease-out group-data-[active=false]/slide:scale-x-50 group-data-[active=false]/slide:opacity-0">
+        <div className="origin-left" style={{ transform: "translateX(calc(var(--p, 0) * -20px)) scaleX(calc(1 - var(--a, 0) * 0.5))", opacity: "calc(1 - var(--a, 0))" }}>
           <FlowDots steps={agent.flow.length} accent={agent.accent} />
         </div>
 
