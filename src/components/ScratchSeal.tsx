@@ -28,7 +28,7 @@ type Props = {
   number: string;
   label: string;
   palette: FoilPalette;
-  /** the parent has opened this case (by scratching, the button, or Reveal all) */
+  /** the parent has opened this case (by scratching, or with the keyboard-only button) */
   open: boolean;
   /** the seal wants to open: `viaButton` is true for keyboard / button reveals */
   onReveal: (viaButton: boolean) => void;
@@ -703,7 +703,7 @@ export default function ScratchSeal({
     };
   }, [sizeAndPaint, endStroke]);
 
-  // the parent opened this case some other way (Reveal all): peel the seal off
+  // the parent opened this case some other way: peel the seal off
   useEffect(() => {
     if (open) startReveal(false, true);
   }, [open, startReveal]);
@@ -836,7 +836,9 @@ export default function ScratchSeal({
       <button
         type="button"
         onClick={() => startReveal(true)}
-        className="absolute bottom-3 right-3 inline-flex min-h-11 items-center gap-2 rounded-full px-4 font-sans text-[13.5px] font-semibold transition-colors hover:bg-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3d36f5]"
+        // Only for keyboard and screen-reader users: invisible and unclickable
+        // for mouse and touch (those scratch), and it appears when focused.
+        className="pointer-events-none absolute bottom-3 right-3 inline-flex min-h-11 items-center gap-2 rounded-full px-4 font-sans text-[13.5px] font-semibold opacity-0 transition-opacity focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3d36f5]"
         style={{
           background: "rgba(255,255,255,.55)",
           color: "#2a2250",
@@ -846,7 +848,7 @@ export default function ScratchSeal({
         }}
       >
         <Eye size={16} />
-        Reveal
+        Reveal this case
       </button>
     </div>
   );

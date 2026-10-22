@@ -290,7 +290,6 @@ export default function CaseStudies() {
 
   const foilEnabled = ready && canvasOk && !prefersReduced;
   const sealed = foilEnabled && !opened[active];
-  const anySealed = foilEnabled && opened.some((o) => !o);
 
   const markOpened = useCallback((idx: number[]) => {
     setOpenedNow((prev) => {
@@ -310,12 +309,6 @@ export default function CaseStudies() {
     } catch {}
     setHintDone(true);
     focusTitle.current = viaButton;
-  };
-
-  const revealAll = () => {
-    markOpened(caseStudies.map((_, i) => i));
-    // the cases that aren't on screen have no foil to peel
-    setGoneNow((g) => g.map((x, i) => (i === active ? x : true)));
   };
 
   // keyboard users land on the case once it has opened
@@ -450,19 +443,6 @@ export default function CaseStudies() {
                 );
               })}
             </div>
-
-            {anySealed && (
-              <div className="mt-3 flex justify-end">
-                <button
-                  type="button"
-                  onClick={revealAll}
-                  className="inline-flex min-h-11 items-center rounded-full px-3 font-sans text-[13.5px] font-semibold underline decoration-[#3d36f5]/40 underline-offset-4 transition-colors hover:text-[#3d36f5]"
-                  style={{ color: MUTED }}
-                >
-                  Reveal all four
-                </button>
-              </div>
-            )}
 
             {/* the open case */}
             <motion.div
