@@ -8,7 +8,6 @@ import {
   MessageCircle,
   Cpu,
   Users,
-  Brain,
   BarChart3,
   Network,
   Zap,
@@ -87,15 +86,6 @@ const capabilityTiles = [
   },
 ] as const;
 
-// Labeled floating badges over the desktop photo — same 4 themes as the
-// mobile icon-only badges, with room for a text label at this width.
-const desktopPhotoBadges = [
-  { label: "Program Delivery", Icon: Brain, position: "-left-5 top-8" },
-  { label: "Financial Governance", Icon: BarChart3, position: "-right-5 top-8" },
-  { label: "PMO Agents (Glean + Claude)", Icon: Zap, position: "-left-5 bottom-12" },
-  { label: "C-Level Stakeholder Mgmt", Icon: Network, position: "-right-5 bottom-12" },
-] as const;
-
 // Two capability cards — condensed checklists standing in for a
 // paragraph description. Items are the resume's own Skills lines
 // (Core Skills / AI & Automation), not a restatement.
@@ -139,32 +129,6 @@ function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
   );
 }
 
-function DesktopPhotoBadge({
-  Icon,
-  label,
-  position,
-}: {
-  Icon: (typeof desktopPhotoBadges)[number]["Icon"];
-  label: string;
-  position: string;
-}) {
-  return (
-    <div
-      className={`absolute ${position} z-10 flex flex-col items-center gap-2 w-[112px] rounded-2xl px-3 py-3.5 text-center`}
-      style={{ background: "rgba(8,12,26,0.85)", border: `1px solid ${CARD_BORDER}`, backdropFilter: "blur(6px)" }}
-    >
-      <div
-        className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-        style={{ background: "color-mix(in srgb, var(--color-lime) 14%, transparent)" }}
-      >
-        <Icon size={18} strokeWidth={1.75} className="text-white/85" />
-      </div>
-      <p className="font-heading text-[10.5px] font-semibold text-white/80 leading-tight">{label}</p>
-    </div>
-  );
-}
-
-
 // Credly's public badge-sharing embed — a fixed-size (150x270) iframe
 // that embed.js swaps the div for once it loads. The script only needs
 // to be included once per page; it scans the whole DOM for matching
@@ -202,45 +166,49 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Desktop/tablet hero. The new mobile-only hero below has genuinely
-          different content (headline, bio, stats, AI card), not just
-          different styling, so it's a full sibling block rather than
-          threaded through this one via props.
-
-          Like the mobile block, this pulls back the section's own
-          pt-[64px] — sized long ago to clear a fixed navbar, but Navbar is
-          `sticky`, not `fixed`, so it already occupies its own space in
-          normal flow and that padding was pure dead space stacked on top
-          of it. -mt-16 cancels it back out, pt-10 restores real breathing
-          room (this block only ever renders at lg:+, since it's
-          `hidden lg:block`, so the old py-14/sm:py-16 steps below that
-          were dead weight — lg:py-20 was the only value that ever actually
-          applied). */}
+      {/* Desktop hero (lg and up). Its top part is the same design as the
+          phone and tablet hero below (headline, subtitle, arch portrait),
+          just scaled up; underneath it keeps a roomier layout for the
+          capability strip, cards, pipeline and tools. The block pulls back
+          the section's pt-[64px] with -mt-16 because the navbar is sticky,
+          not fixed, and already takes its own space. */}
       <motion.div
         initial="hidden"
         animate="show"
         variants={container}
         className="hidden lg:block max-w-6xl mx-auto px-6 -mt-16 pt-10 pb-20 relative z-10"
       >
-        <div className="grid grid-cols-[1.3fr_1fr] lg:grid-cols-[1.15fr_440px] gap-x-6 sm:gap-x-10 gap-y-8 items-start lg:items-stretch">
-          {/* Text column */}
+        <div className="grid grid-cols-[1.15fr_1fr] items-start gap-x-12 xl:gap-x-20">
+          {/* Same hero as the phone and tablet layout: tight Inter headline
+              with the lime full stop, the quieter two-tone line under it,
+              and the arch portrait. Only the scale changes here. */}
           <div>
-                        <motion.h1
-              variants={fadeBlurUp}
-              className="font-heading font-bold leading-[1.18] mb-5"
-              style={{ fontSize: "clamp(1.9rem, 3.4vw, 2.85rem)" }}
-            >
-              <span className="block text-fg">Technical Project Manager</span>
-              <span className="block text-fg">
-                running data, analytics &amp; <span className="text-accent">AI programs</span>
+            <motion.h1 variants={fadeBlurUp} className="font-sans">
+              <span
+                className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
+                style={{ fontSize: "clamp(3.4rem, 5.8vw, 5.6rem)" }}
+              >
+                Technical
+                <br />
+                Project
+                <br />
+                Manager<span className="text-lime">.</span>
               </span>
-              <span className="block text-fg">for enterprise clients.</span>
+              <span
+                className="mt-[1.1em] block font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
+                style={{ fontSize: "clamp(1.4rem, 2.3vw, 2.1rem)" }}
+              >
+                Data, analytics, and
+                <br />
+                <span className="font-semibold text-accent">AI programs</span> for
+                <br />
+                enterprise clients.
+              </span>
             </motion.h1>
 
             <motion.p
               variants={fadeBlurUp}
-              className="leading-[1.6] text-fg/65 max-w-[520px] mb-7"
-              style={{ fontSize: "clamp(13.5px, 1.6vw, 16px)" }}
+              className="mt-8 mb-7 max-w-[540px] text-[17px] leading-[1.6] text-fg/65"
             >
               I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
               clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
@@ -269,23 +237,9 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Photo column — 4 labeled floating badges replace the old
-              AI Enthusiast / "Turning Ideas Into Impact" cards, whose
-              messages are now covered by the capability strip below. */}
-          <div className="relative h-[clamp(300px,54vw,420px)] lg:h-auto lg:min-h-[440px]">
-            <HeroPortrait variant="desktop" />
-            {desktopPhotoBadges.map((b) => (
-              <motion.div
-                key={b.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="hidden lg:block"
-              >
-                <DesktopPhotoBadge Icon={b.Icon} label={b.label} position={b.position} />
-              </motion.div>
-            ))}
-          </div>
+          <motion.div variants={fadeBlurUp} className="relative aspect-[5/7] w-full max-w-[460px] justify-self-end">
+            <HeroPortrait variant="mobile" />
+          </motion.div>
         </div>
 
         {/* 4-tile capability strip — icon + title + description, standing
