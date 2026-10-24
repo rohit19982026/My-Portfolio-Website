@@ -5,7 +5,7 @@ import { ArrowRight, Building2, Check, UserRound, Users, Wrench } from "lucide-r
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
 import CaseDiagram from "./CaseDiagram";
 import ScratchSeal, { type FoilPalette } from "./ScratchSeal";
-import { getSoundPref, setSoundPref, subscribeSoundPref } from "@/lib/zipSound";
+import { getSoundPref, setSoundPref, subscribeSoundPref } from "@/lib/soundPref";
 import { caseStudies, type CaseStudy, type OwnerKind } from "@/lib/caseStudies";
 
 /*

@@ -26,9 +26,6 @@
   --color-fg:            #0d0d0f;                 /* = ink */
   --color-accent:        #0d22ee;                 /* = blue */
   --color-diagram-card:  #e4e2da;
-  /* Shirt on the Experience zipper reveal: brand blue lifted toward white, same in both themes. */
-  --color-shirt:         color-mix(in srgb, var(--color-blue) 74%, white);
-  --color-shirt-deep:    color-mix(in srgb, var(--color-blue) 88%, black);
 
   --radius-card: 4px;
   --radius-pill: 999px;
@@ -115,8 +112,6 @@ body {
 
 html { -webkit-text-size-adjust: 100%; }
 a, button, [role="button"] { touch-action: manipulation; }
-/* the zipper pull is dragged with a finger, so the page must not claim that touch for scrolling */
-[data-zip-pull] { touch-action: none; }
 
 /* Scroll progress bar */
 .scroll-progress {
