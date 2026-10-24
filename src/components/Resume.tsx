@@ -1,14 +1,16 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useRef, type ReactNode } from "react";
-import { ArrowRight, Download, ExternalLink, FileText } from "lucide-react";
+import { useRef, useState, type ReactNode } from "react";
+import { ArrowRight, Download, ExternalLink, Eye, FileText } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
 import GithubMark from "./icons/GithubMark";
+import ResumePreview from "./ResumePreview";
 
 const RESUME_PATH = "/resume/Rohit-Kumar-Singh-Resume.pdf";
 const RESUME_FILENAME = "Rohit-Kumar-Singh-Resume.pdf";
+const PREVIEW_PATH = "/resume/preview.webp";
 const GITHUB_URL = "https://github.com/rohit19982026?tab=repositories";
 
 // The two cards are a fixed light "paper" design in both themes, built from
@@ -39,6 +41,7 @@ function Card({
   buttonLabel,
   buttonShort,
   ariaLabel,
+  onPreview,
 }: {
   delay: number;
   inView: boolean;
@@ -56,6 +59,7 @@ function Card({
   buttonLabel: string;
   buttonShort: string;
   ariaLabel: string;
+  onPreview?: () => void;
 }) {
   return (
     <motion.article
@@ -120,6 +124,24 @@ function Card({
         />
       </div>
 
+      {onPreview && (
+        <button
+          type="button"
+          onClick={onPreview}
+          aria-haspopup="dialog"
+          aria-label="Preview my resume"
+          className="group relative mb-2 flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 font-sans text-[10.5px] font-bold uppercase tracking-[0.04em] transition-[transform,box-shadow,border-color] duration-200 motion-safe:hover:-translate-y-0.5 hover:border-[#bdb3ee] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3d36f5] sm:mb-3 sm:h-14 sm:gap-3 sm:text-[13.5px] sm:tracking-[0.06em]"
+          style={{
+            background: "rgba(255,255,255,0.85)",
+            border: "1.5px solid #dcd5f3",
+            boxShadow: "0 10px 22px -16px rgba(110,90,200,0.55)",
+            color: INK,
+          }}
+        >
+          <Eye className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" style={{ color: "#4a2fc4" }} />
+          Preview
+        </button>
+      )}
       <a
         href={href}
         aria-label={ariaLabel}
@@ -146,6 +168,7 @@ function Card({
 export default function Resume() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   return (
     <section id="resume" className="relative overflow-hidden py-14 bg-surface border-t-2 border-fg/10 sm:py-24">
@@ -179,6 +202,7 @@ export default function Resume() {
             buttonLabel="Download resume"
             buttonShort="Download"
             ariaLabel="Download my resume as a PDF"
+            onPreview={() => setPreviewOpen(true)}
           />
           <Card
             delay={0.12}
@@ -198,6 +222,17 @@ export default function Resume() {
           />
         </div>
       </div>
+
+      <AnimatePresence>
+        {previewOpen && (
+          <ResumePreview
+            onClose={() => setPreviewOpen(false)}
+            previewSrc={PREVIEW_PATH}
+            pdfHref={RESUME_PATH}
+            downloadName={RESUME_FILENAME}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
