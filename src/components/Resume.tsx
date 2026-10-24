@@ -7,6 +7,7 @@ import { ArrowRight, Download, ExternalLink, Eye, FileText } from "lucide-react"
 import SectionHeading from "./ui/SectionHeading";
 import GithubMark from "./icons/GithubMark";
 import ResumePreview from "./ResumePreview";
+import GitHubPreview from "./GitHubPreview";
 
 const RESUME_PATH = "/resume/Rohit-Kumar-Singh-Resume.pdf";
 const RESUME_FILENAME = "Rohit-Kumar-Singh-Resume.pdf";
@@ -42,6 +43,7 @@ function Card({
   buttonShort,
   ariaLabel,
   onPreview,
+  previewLabel,
 }: {
   delay: number;
   inView: boolean;
@@ -60,6 +62,7 @@ function Card({
   buttonShort: string;
   ariaLabel: string;
   onPreview?: () => void;
+  previewLabel?: string;
 }) {
   return (
     <motion.article
@@ -129,7 +132,7 @@ function Card({
           type="button"
           onClick={onPreview}
           aria-haspopup="dialog"
-          aria-label="Preview my resume"
+          aria-label={previewLabel ?? "Preview"}
           className="group relative mb-2 flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 font-sans text-[10.5px] font-bold uppercase tracking-[0.04em] transition-[transform,box-shadow,border-color] duration-200 motion-safe:hover:-translate-y-0.5 hover:border-[#bdb3ee] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3d36f5] sm:mb-3 sm:h-14 sm:gap-3 sm:text-[13.5px] sm:tracking-[0.06em]"
           style={{
             background: "rgba(255,255,255,0.85)",
@@ -169,6 +172,7 @@ export default function Resume() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [githubOpen, setGithubOpen] = useState(false);
 
   return (
     <section id="resume" className="relative overflow-hidden py-14 bg-surface border-t-2 border-fg/10 sm:py-24">
@@ -203,6 +207,7 @@ export default function Resume() {
             buttonShort="Download"
             ariaLabel="Download my resume as a PDF"
             onPreview={() => setPreviewOpen(true)}
+            previewLabel="Preview my resume"
           />
           <Card
             delay={0.12}
@@ -219,6 +224,8 @@ export default function Resume() {
             buttonLabel="View my GitHub"
             buttonShort="GitHub"
             ariaLabel="View my GitHub repositories (opens in a new tab)"
+            onPreview={() => setGithubOpen(true)}
+            previewLabel="Preview my GitHub profile"
           />
         </div>
       </div>
@@ -233,6 +240,7 @@ export default function Resume() {
           />
         )}
       </AnimatePresence>
+      <AnimatePresence>{githubOpen && <GitHubPreview onClose={() => setGithubOpen(false)} />}</AnimatePresence>
     </section>
   );
 }
