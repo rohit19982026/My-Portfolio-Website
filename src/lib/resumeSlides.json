@@ -1,0 +1,26 @@
+[
+  {
+    "src": "/resume/slide-1.webp",
+    "w": 1800,
+    "h": 572,
+    "label": "Summary"
+  },
+  {
+    "src": "/resume/slide-2.webp",
+    "w": 1800,
+    "h": 570,
+    "label": "phData · Program delivery"
+  },
+  {
+    "src": "/resume/slide-3.webp",
+    "w": 1800,
+    "h": 536,
+    "label": "phData · Clients, commercial and AI"
+  },
+  {
+    "src": "/resume/slide-4.webp",
+    "w": 1800,
+    "h": 953,
+    "label": "British Telecom, skills and certifications"
+  }
+]

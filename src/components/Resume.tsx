@@ -11,7 +11,6 @@ import GitHubPreview from "./GitHubPreview";
 
 const RESUME_PATH = "/resume/Rohit-Kumar-Singh-Resume.pdf";
 const RESUME_FILENAME = "Rohit-Kumar-Singh-Resume.pdf";
-const PREVIEW_PATH = "/resume/preview.webp";
 const GITHUB_URL = "https://github.com/rohit19982026?tab=repositories";
 
 // The two cards are a fixed light "paper" design in both themes, built from
@@ -234,7 +233,6 @@ export default function Resume() {
         {previewOpen && (
           <ResumePreview
             onClose={() => setPreviewOpen(false)}
-            previewSrc={PREVIEW_PATH}
             pdfHref={RESUME_PATH}
             downloadName={RESUME_FILENAME}
           />

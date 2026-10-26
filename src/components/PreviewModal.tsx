@@ -32,10 +32,15 @@ type Props = {
   actions?: ReactNode;
   /** panel width on large screens */
   maxWidth?: number;
+  /** "full": as large as the screen allows on every device */
+  size?: "default" | "full";
+  /** false when the content brings its own scroller (the resume viewer) */
+  scroll?: boolean;
   children: ReactNode;
 };
 
-export default function PreviewModal({ onClose, title, subtitle, subtitleDesktopOnly, actions, maxWidth = 760, children }: Props) {
+export default function PreviewModal({ onClose, title, subtitle, subtitleDesktopOnly, actions, maxWidth = 760, size = "default", scroll = true, children }: Props) {
+  const full = size === "full";
   const reduce = useReducedMotion();
   const mobile = useSyncExternalStore(subscribeMobile, () => window.matchMedia("(max-width: 639px)").matches, () => false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -103,7 +108,7 @@ export default function PreviewModal({ onClose, title, subtitle, subtitleDesktop
         };
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6" onKeyDown={onKeyDown}>
+    <div className={`fixed inset-0 z-[100] flex items-end justify-center sm:items-center ${full ? "sm:p-4" : "sm:p-6"}`} onKeyDown={onKeyDown}>
       <motion.div
         aria-hidden
         className="absolute inset-0 backdrop-blur-[6px]"
@@ -120,7 +125,9 @@ export default function PreviewModal({ onClose, title, subtitle, subtitleDesktop
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative flex h-[92dvh] w-full flex-col overflow-hidden rounded-t-[1.75rem] sm:h-[min(90vh,980px)] sm:w-[min(94vw,var(--pm-w))] sm:rounded-[1.75rem]"
+        className={`relative flex w-full flex-col overflow-hidden rounded-t-[1.75rem] sm:rounded-[1.75rem] ${
+          full ? "h-[97dvh] sm:h-[calc(100dvh-2rem)] sm:w-[min(calc(100vw-2rem),var(--pm-w))]" : "h-[92dvh] sm:h-[min(90vh,980px)] sm:w-[min(94vw,var(--pm-w))]"
+        }`}
         style={{
           ["--pm-w" as string]: `${maxWidth}px`,
           background: "#fbfaff",
@@ -171,7 +178,10 @@ export default function PreviewModal({ onClose, title, subtitle, subtitleDesktop
           </button>
         </motion.div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" style={{ background: "#efecf8" }}>
+        <div
+          className={`min-h-0 flex-1 ${scroll ? "overflow-y-auto overscroll-contain" : "relative overflow-hidden"}`}
+          style={{ background: "#efecf8" }}
+        >
           {children}
         </div>
       </motion.div>
