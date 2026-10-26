@@ -5,13 +5,13 @@ import {
   motion,
   MotionConfig,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
-  type Variants,
 } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import Image from "next/image";
+import SectionHeading from "./ui/SectionHeading";
 import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 // Each icon image has its own colour; the card's wash and icon tile take that colour, so they match.
@@ -73,19 +73,6 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-const rise: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
-};
-const cardV: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE, staggerChildren: 0.07, delayChildren: 0.08 } },
-};
-const partV: Variants = {
-  hidden: { opacity: 0, y: 8 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-};
-
 /** A number on the rail. Its fill comes from the same progress value as the line, at the node's own position. */
 function Node({ n, t, fill }: { n: number; t: number; fill: MotionValue<number> }) {
   // opacity only, so the fill never repaints
@@ -131,14 +118,7 @@ function Card({
     e.currentTarget.style.setProperty("--sy", `${e.clientY - r.top}px`);
   };
   return (
-    <motion.li
-      ref={liRef}
-      variants={cardV}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2, margin: "0px 0px -48px 0px" }}
-      className="relative pl-[3.4rem] sm:pl-[4.2rem]"
-    >
+    <li ref={liRef} data-flow="dev" className="relative pl-[3.4rem] sm:pl-[4.2rem]">
       <Node n={i + 1} t={t} fill={fill} />
       <div
         onPointerMove={onMove}
@@ -166,15 +146,14 @@ function Card({
         />
         <div className="relative grid grid-cols-[1fr_auto] items-start gap-x-4 sm:gap-x-6">
           <div className="min-w-0">
-            <motion.h4 variants={partV} className="font-sans text-[16.5px] font-bold leading-snug tracking-[-0.02em] sm:text-[19px]">
+            <h4 className="font-sans text-[16.5px] font-bold leading-snug tracking-[-0.02em] sm:text-[19px]">
               {point.title}
-            </motion.h4>
-            <motion.p variants={partV} className="mt-1.5 font-sans text-[14px] leading-relaxed sm:text-[15px]" style={{ color: MUTED }}>
+            </h4>
+            <p className="mt-1.5 font-sans text-[14px] leading-relaxed sm:text-[15px]" style={{ color: MUTED }}>
               {point.text}
-            </motion.p>
+            </p>
           </div>
-          <motion.span
-            variants={partV}
+          <span
             className="block h-10 w-10 shrink-0 overflow-hidden rounded-xl transition-transform duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] sm:h-16 sm:w-16 sm:rounded-2xl"
             style={{ border: `1px solid color-mix(in srgb, ${hue} 16%, #ffffff)` }}
           >
@@ -185,10 +164,10 @@ function Card({
               height={106}
               className="h-full w-full select-none object-cover"
             />
-          </motion.span>
+          </span>
         </div>
       </div>
-    </motion.li>
+    </li>
   );
 }
 
@@ -228,14 +207,8 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
 
   return (
     <article className="grid gap-9 lg:grid-cols-[minmax(0,330px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
-      <motion.header
-        variants={stagger}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.4 }}
-        className="lg:sticky lg:top-28 lg:self-start"
-      >
-        <motion.div variants={rise} className="flex flex-wrap items-center gap-3">
+      <header data-flow="ink" className="lg:sticky lg:top-28 lg:self-start">
+        <div className="flex flex-wrap items-center gap-3">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: "#5b5878" }}>
             {role.period}
           </p>
@@ -258,12 +231,11 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
               Current
             </span>
           )}
-        </motion.div>
-        <motion.p variants={rise} className="mt-1.5 font-sans text-[13px]" style={{ color: MUTED }}>
+        </div>
+        <p className="mt-1.5 font-sans text-[13px]" style={{ color: MUTED }}>
           {TENURE[index]}
-        </motion.p>
-        <motion.h3
-          variants={rise}
+        </p>
+        <h3
           className="mt-4 font-sans font-extrabold leading-[1.1] tracking-[-0.03em]"
           style={{ fontSize: "clamp(1.6rem, 5vw, 2.1rem)", color: INK }}
         >
@@ -274,12 +246,12 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
               <span style={{ color: ACCENT }}>{role.titleSub}</span>
             </>
           )}
-        </motion.h3>
-        <motion.p variants={rise} className="mt-3 font-sans text-[11.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: "#6b6880" }}>
+        </h3>
+        <p className="mt-3 font-sans text-[11.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: "#6b6880" }}>
           {role.org}
-        </motion.p>
+        </p>
 
-        <motion.ul variants={rise} className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap gap-2">
           {role.tags.map((tag) => (
             <li
               key={tag}
@@ -289,10 +261,10 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
               {tag}
             </li>
           ))}
-        </motion.ul>
+        </ul>
 
         {/* where you are in the list, following the scroll */}
-        <motion.div variants={rise} className="mt-7 hidden items-baseline gap-2 lg:flex" aria-hidden>
+        <div className="mt-7 hidden items-baseline gap-2 lg:flex" aria-hidden>
           <span className="relative inline-block h-[1.4em] w-[1.6em] overflow-hidden font-sans text-[20px] font-bold tabular-nums" style={{ color: INK }}>
             <AnimatePresence initial={false} mode="popLayout">
               <motion.span
@@ -310,8 +282,8 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
           <span className="font-sans text-[13px] font-medium tabular-nums" style={{ color: "#9a96b3" }}>
             / {String(role.points.length).padStart(2, "0")}
           </span>
-        </motion.div>
-      </motion.header>
+        </div>
+      </header>
 
       <ol ref={listRef} className="relative grid gap-4 sm:gap-5">
         {/* the rail: a hairline, and a line in the brand colour that follows the scroll exactly */}
@@ -339,16 +311,13 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
   );
 }
 
-const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.07 } } };
-
-const WORDS_A = ["Role", "history."];
-const WORDS_B = ["What", "shipped."];
 
 export default function Trajectory() {
   return (
     <MotionConfig reducedMotion="user">
       <section
         id="experience"
+        data-flow="sheet" data-sheet="corners"
         className="relative overflow-x-clip py-20 sm:py-24"
         style={{
           background: "radial-gradient(60% 38% at 92% 0%, rgba(109,63,224,.055), transparent 70%), #fefdfd",
@@ -356,49 +325,24 @@ export default function Trajectory() {
           borderTop: "2px solid rgba(13,13,31,0.06)",
         }}
       >
-        <noscript>
-          <style>{"#experience li,#experience header,#experience h2 span,#experience .reveal{opacity:1!important;transform:none!important}"}</style>
-        </noscript>
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.5 }}
-            className="mb-12 sm:mb-16"
-          >
-            <p className="flex items-center gap-4 font-sans text-[12px] font-semibold uppercase tracking-[0.24em] sm:text-[13px]" style={{ color: "#6b7083" }}>
-              <motion.span
-                aria-hidden
-                className="h-[2px] w-9 origin-left"
-                style={{ background: BLUE }}
-                variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.7, ease: EASE } } }}
-              />
-              <motion.span className="reveal" variants={rise}>
-                02 / Experience
-              </motion.span>
-            </p>
-            <h2 className="mt-4 font-sans font-extrabold leading-[1.05] tracking-[-0.035em]" style={{ fontSize: "clamp(2.1rem, 8.5vw, 3.5rem)" }}>
-              {[...WORDS_A.map((w) => ({ w, c: INK })), ...WORDS_B.map((w) => ({ w, c: BLUE }))].map(({ w, c }, i) => (
-                <span key={w} className="mr-[0.25em] inline-block overflow-hidden pb-[0.12em] align-bottom">
-                  <motion.span
-                    className="inline-block"
-                    style={{ color: c }}
-                    variants={{
-                      hidden: { y: "110%" },
-                      show: { y: 0, transition: { duration: 0.8, ease: EASE, delay: 0.06 * i } },
-                    }}
-                  >
-                    {w}
-                  </motion.span>
-                </span>
-              ))}
-            </h2>
-            <motion.p variants={rise} className="mt-4 max-w-xl font-sans text-[16px] leading-relaxed" style={{ color: MUTED }}>
+          <div className="mb-12 sm:mb-16">
+            <SectionHeading
+              variant="sans"
+              eyebrow="02 / Experience"
+              segments={[
+                { text: "Role history.", style: "fill" },
+                { text: "What shipped.", style: "lime" },
+              ]}
+              ink={INK}
+              accent={BLUE}
+              fontSize="clamp(2.1rem, 8.5vw, 3.5rem)"
+            />
+            <p data-flow="ink" className="mt-4 max-w-xl font-sans text-[16px] leading-relaxed" style={{ color: MUTED }}>
               Six years in IT delivery: almost four at phData running data and AI programs, and two
               before that managing infrastructure changes at British Telecom.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           {roles.map((role, i) => (
             <div key={role.titleMain}>

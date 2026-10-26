@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { Download, ExternalLink, ZoomIn, ZoomOut } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";

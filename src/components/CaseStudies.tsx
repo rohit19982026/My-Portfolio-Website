@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion, MotionConfig, type Variants } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import { ArrowRight, Building2, Check, UserRound, Users, Wrench } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
 import CaseDiagram from "./CaseDiagram";
+import SectionHeading from "./ui/SectionHeading";
 import ScratchSeal, { type FoilPalette } from "./ScratchSeal";
 import { getSoundPref, setSoundPref, subscribeSoundPref } from "@/lib/soundPref";
 import { caseStudies, type CaseStudy, type OwnerKind } from "@/lib/caseStudies";
@@ -40,42 +41,34 @@ const OWNER_ICON: Record<OwnerKind, typeof UserRound> = {
   lead: Users,
 };
 
-const rise: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
-};
-const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } } };
-
 function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sealed: boolean }) {
   const accentText = textOf(c.accent);
   return (
-    <motion.div
-      variants={stagger}
-      initial="hidden"
-      animate="show"
+    <div
+     
       className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:p-10"
       style={{ background: `linear-gradient(160deg, ${c.tint}, #ffffff 62%)` }}
     >
       {/* left: what it was */}
       <div className="min-w-0">
-        <motion.p
-          variants={rise}
+        <p
+          data-intro="wipe" data-d="0"
           aria-hidden
           className="font-display text-[54px] leading-none sm:text-[68px]"
           style={{ color: "transparent", WebkitTextStroke: `1.5px color-mix(in srgb, ${c.accent} 55%, transparent)` }}
         >
           {c.number}
-        </motion.p>
-        <motion.h3
-          variants={rise}
+        </p>
+        <h3
+          data-intro="wipe" data-d="1"
           id="case-title"
           tabIndex={-1}
           className="mt-3 font-sans font-extrabold leading-[1.12] tracking-[-0.025em] outline-none"
           style={{ fontSize: "clamp(1.55rem, 5.6vw, 2.2rem)", color: INK }}
         >
           {c.title}
-        </motion.h3>
-        <motion.ul variants={rise} className="mt-4 flex flex-wrap gap-2">
+        </h3>
+        <ul data-intro="wipe" data-d="2" className="mt-4 flex flex-wrap gap-2">
           {c.chips.map((chip) => (
             <li
               key={chip}
@@ -85,42 +78,42 @@ function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sea
               {chip}
             </li>
           ))}
-        </motion.ul>
-        <motion.p variants={rise} className="mt-5 font-sans text-[16px] leading-relaxed sm:text-[17px]" style={{ color: "#3c3f52" }}>
+        </ul>
+        <p data-intro="wipe" data-d="3" className="mt-5 font-sans text-[16px] leading-relaxed sm:text-[17px]" style={{ color: "#3c3f52" }}>
           {c.opening}
-        </motion.p>
+        </p>
         {c.challenge && (
-          <motion.div variants={rise} className="mt-4 border-l-2 pl-4" style={{ borderColor: `color-mix(in srgb, ${c.accent} 45%, #ffffff)` }}>
+          <div data-intro="wipe" data-d="4" className="mt-4 border-l-2 pl-4" style={{ borderColor: `color-mix(in srgb, ${c.accent} 45%, #ffffff)` }}>
             <p className="font-sans text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: accentText }}>
               What made it hard
             </p>
             <p className="mt-1 font-sans text-[15.5px] leading-relaxed sm:text-[16px]" style={{ color: MUTED }}>
               {c.challenge}
             </p>
-          </motion.div>
+          </div>
         )}
-        <motion.div
-          variants={rise}
+        <div
+          data-intro="wipe" data-d="5"
           className="mt-6 rounded-2xl bg-white p-4 sm:p-5"
           style={{ border: "1px solid rgba(13,13,31,0.08)", boxShadow: `0 18px 36px -30px ${c.accent}` }}
         >
           <CaseDiagram kind={c.diagram} accent={c.accent} />
-        </motion.div>
+        </div>
       </div>
 
       {/* right: who did what, what I did, how it ended */}
       <div className="min-w-0">
-        <motion.p variants={rise} className="font-sans text-[11.5px] font-bold uppercase tracking-[0.18em]" style={{ color: MUTED }}>
+        <p data-intro="wipe" data-d="6" className="font-sans text-[11.5px] font-bold uppercase tracking-[0.18em]" style={{ color: MUTED }}>
           Who did what
-        </motion.p>
-        <motion.ul variants={stagger} className="mt-3 grid gap-2">
+        </p>
+        <ul className="mt-3 grid gap-2">
           {c.owners.map((o) => {
             const Icon = OWNER_ICON[o.kind];
             const me = o.kind === "me";
             return (
-              <motion.li
+              <li
                 key={o.who}
-                variants={rise}
+                data-intro="wipe" data-d="7"
                 className="flex items-start gap-3 rounded-2xl px-3.5 py-3"
                 style={{
                   background: me ? `color-mix(in srgb, ${c.accent} 9%, #ffffff)` : "rgba(255,255,255,0.7)",
@@ -141,23 +134,24 @@ function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sea
                     {o.items.join(" · ")}
                   </p>
                 </div>
-              </motion.li>
+              </li>
             );
           })}
-        </motion.ul>
+        </ul>
 
-        <motion.p variants={rise} className="mt-8 font-sans text-[11.5px] font-bold uppercase tracking-[0.18em]" style={{ color: MUTED }}>
+        <p data-intro="wipe" data-d="8" className="mt-8 font-sans text-[11.5px] font-bold uppercase tracking-[0.18em]" style={{ color: MUTED }}>
           {c.stepsLabel ?? "What I did"}
-        </motion.p>
-        <motion.ol variants={stagger} className="relative mt-4 grid gap-5">
-          <motion.span
+        </p>
+        <ol className="relative mt-4 grid gap-5">
+          <span
             aria-hidden
+            data-intro="grow"
+            data-d="6"
             className="absolute bottom-3 left-[15px] top-3 w-px origin-top"
             style={{ background: `color-mix(in srgb, ${c.accent} 30%, transparent)` }}
-            variants={{ hidden: { scaleY: 0 }, show: { scaleY: 1, transition: { duration: 0.8, ease: EASE } } }}
           />
           {c.steps.map((step, i) => (
-            <motion.li key={i} variants={rise} className="relative flex gap-4">
+            <li key={i} data-intro="wipe" data-d="9" className="relative flex gap-4">
               <span
                 className="relative z-[1] flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white font-sans text-[13px] font-bold"
                 style={{ border: `2px solid ${c.accent}`, color: accentText }}
@@ -167,13 +161,13 @@ function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sea
               <p className="pt-1 font-sans text-[15px] leading-relaxed sm:text-[15.5px]" style={{ color: "#2b2b3d" }}>
                 {step}
               </p>
-            </motion.li>
+            </li>
           ))}
-        </motion.ol>
+        </ol>
 
         {c.ending && (
-          <motion.div
-            variants={rise}
+          <div
+            data-intro="wipe" data-d="10"
             className="mt-8 flex items-start gap-3 rounded-2xl px-4 py-3.5"
             style={{ background: "#f5ffd9", border: "1px solid #e1f5a3" }}
           >
@@ -188,22 +182,22 @@ function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sea
                 {c.ending}
               </p>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {c.keep && (
-          <motion.p variants={rise} className="mt-5 flex items-baseline gap-3">
+          <p data-intro="wipe" data-d="11" className="mt-5 flex items-baseline gap-3">
             <span className="font-sans text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: MUTED }}>
               What I&apos;d keep
             </span>
             <span className="font-signature text-[26px] leading-none" style={{ color: accentText }}>
               {c.keep}
             </span>
-          </motion.p>
+          </p>
         )}
 
         {!sealed && (
-        <motion.div variants={rise} className="mt-8 flex justify-end">
+        <div data-intro="wipe" data-d="12" className="mt-8 flex justify-end">
           <button
             type="button"
             onClick={onNext}
@@ -213,10 +207,10 @@ function CaseFile({ c, onNext, sealed }: { c: CaseStudy; onNext: () => void; sea
             Next case
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
           </button>
-        </motion.div>
+        </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -352,43 +346,30 @@ export default function CaseStudies() {
     <MotionConfig reducedMotion="user">
       <section
         id="case-studies"
+        data-flow="sheet"
         className="relative overflow-hidden py-20 sm:py-24"
         style={{ background: "#fefdfd", color: INK, borderTop: "2px solid rgba(13,13,31,0.06)" }}
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={stagger}
-            className="mb-9 sm:mb-12"
-          >
-            <motion.p
-              variants={rise}
-              className="flex items-center gap-4 font-sans text-[12px] font-semibold uppercase tracking-[0.24em] sm:text-[13px]"
-              style={{ color: "#6b7083" }}
-            >
-              <span aria-hidden className="h-[2px] w-9" style={{ background: BLUE }} />
-              Case studies
-            </motion.p>
-            <motion.h2
-              variants={rise}
-              className="mt-4 font-sans font-extrabold leading-[1.05] tracking-[-0.035em]"
-              style={{ fontSize: "clamp(2.1rem, 8.5vw, 3.5rem)" }}
-            >
-              A few <span style={{ color: BLUE }}>programs</span>{" "}I&apos;ve run
-            </motion.h2>
-            <motion.p variants={rise} className="mt-3 font-sans text-[15px] sm:text-[17px]" style={{ color: MUTED }}>
+          <div className="mb-9 sm:mb-12">
+            <SectionHeading
+              variant="sans"
+              eyebrow="Case studies"
+              segments={[
+                { text: "A few", style: "fill" },
+                { text: "programs", style: "lime" },
+                { text: "I\u2019ve run", style: "fill" },
+              ]}
+              ink={INK}
+              accent={BLUE}
+              fontSize="clamp(2.1rem, 8.5vw, 3.5rem)"
+            />
+            <p data-flow="ink" className="mt-3 font-sans text-[15px] sm:text-[17px]" style={{ color: MUTED }}>
               From my work at phData, a data and AI consulting firm, where I run client programs. Client names are left out.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
+          <div data-flow="dev">
             {/* tabs */}
             <div
               ref={tabsRef}
@@ -457,18 +438,10 @@ export default function CaseStudies() {
               transition={{ height: { duration: 0.45, ease: EASE }, borderColor: { duration: 0.4 } }}
               style={{ borderWidth: 1, borderStyle: "solid", boxShadow: "0 30px 60px -44px rgba(40,30,120,.45)" }}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={c.id}
-                  ref={measure}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.28, ease: EASE }}
-                >
-                  <CaseFile c={c} onNext={next} sealed={sealed} />
-                </motion.div>
-              </AnimatePresence>
+              {/* switching cases remounts the file, which prints on again (data-intro) */}
+              <div key={`file-${c.id}`} ref={measure}>
+                <CaseFile c={c} onNext={next} sealed={sealed} />
+              </div>
               {foilEnabled && !gone[active] && (
                 <ScratchSeal
                   key={c.id}
@@ -486,7 +459,7 @@ export default function CaseStudies() {
                 />
               )}
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </MotionConfig>

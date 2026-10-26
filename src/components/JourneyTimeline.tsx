@@ -4,12 +4,12 @@ import {
   motion,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
   type MotionValue,
 } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import Image from "next/image";
 import { useRef, useSyncExternalStore, type PointerEvent } from "react";
 import { GraduationCap } from "lucide-react";
@@ -142,40 +142,6 @@ const fractionAt = (x: number) => Math.min(1, (x - WAVE_IMG.x) / WAVE_IMG.w);
 // Odometer-style year: counts up from 2000 as `r` goes 0 to 1.
 function useYear(r: MotionValue<number>, year: number) {
   return useTransform(r, (v) => String(Math.round(2000 + (year - 2000) * clamp01(v))));
-}
-
-function Motes() {
-  const motes = [
-    { x: "12%", y: "30%", s: 7, d: 9 },
-    { x: "28%", y: "62%", s: 5, d: 11 },
-    { x: "47%", y: "22%", s: 6, d: 10 },
-    { x: "63%", y: "70%", s: 8, d: 12 },
-    { x: "78%", y: "34%", s: 5, d: 9.5 },
-    { x: "90%", y: "58%", s: 6, d: 13 },
-    { x: "38%", y: "46%", s: 4, d: 8.5 },
-  ];
-  return (
-    <>
-      {motes.map((m, i) => (
-        <motion.span
-          key={i}
-          aria-hidden
-          className="pointer-events-none absolute rounded-full"
-          style={{
-            left: m.x,
-            top: m.y,
-            width: m.s,
-            height: m.s,
-            background: "rgba(13,34,238,0.35)",
-            filter: "blur(1.5px)",
-            boxShadow: "0 0 12px 3px rgba(13,34,238,0.35)",
-          }}
-          animate={{ y: [0, -22, 0], x: [0, i % 2 ? 10 : -10, 0], opacity: [0.2, 0.7, 0.2] }}
-          transition={{ duration: m.d, repeat: Infinity, ease: "easeInOut", delay: i * 0.8 }}
-        />
-      ))}
-    </>
-  );
 }
 
 /* ---------- desktop: scroll-scrubbed canvas ---------- */
@@ -337,10 +303,7 @@ function DesktopColumn({
         }}
       >
         <motion.div style={{ opacity: r, y: artRise, scale: artScale, filter: artFilter, transformOrigin: "50% 100%" }}>
-          <motion.div
-            animate={live ? { y: [0, -5, 0] } : { y: 0 }}
-            transition={live ? { duration: 5.5 + m.float * 0.7, repeat: Infinity, ease: "easeInOut", delay: m.float * 0.4 } : { duration: 0 }}
-          >
+          <div>
             <Image
               src={a.src}
               alt=""
@@ -350,7 +313,7 @@ function DesktopColumn({
               className="h-auto w-full select-none"
               style={blendStyle}
             />
-          </motion.div>
+          </div>
         </motion.div>
       </motion.div>
 
@@ -491,7 +454,6 @@ function Desktop({ reduce }: { reduce: boolean }) {
     >
       <span aria-hidden className="pointer-events-none absolute" style={{ left: "-6%", top: pctY(500), width: "36%", height: pctH(240), borderRadius: "50%", background: "radial-gradient(closest-side, rgba(13,34,238,0.05), transparent)" }} />
       <span aria-hidden className="pointer-events-none absolute" style={{ right: "-8%", top: pctY(540), width: "34%", height: pctH(240), borderRadius: "50%", background: "radial-gradient(closest-side, rgba(215,255,63,0.12), transparent)" }} />
-      {!reduce && <Motes />}
 
       {/* small label + subtitle (the section heading above carries the title) */}
       <div>
@@ -613,11 +575,8 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
   const r = useSpring(reduce ? one : rRaw, { stiffness: 120, damping: 20, mass: 0.7 });
   const rPop = useSpring(useTransform(reduce ? one : rRaw, [0.35, 1], [0, 1]), { stiffness: 260, damping: 14 });
 
-  const side = index % 2 === 0 ? 1 : -1;
-  const x = useTransform(r, [0, 1], [34 * side, 0]);
-  const rot = useTransform(r, [0, 1], [1.8 * side, 0]);
-  const blur = useTransform(r, [0, 1], [8, 0]);
-  const filter = useMotionTemplate`blur(${blur}px)`;
+  // the card settles in place (no sideways slide): it just comes up to full strength
+  const cardScale = useTransform(r, [0, 1], [0.96, 1]);
   const { scrollYProgress: full } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const artY = useTransform(full, [0, 1], [8, -8]);
   const year = useYear(rPop, m.year);
@@ -649,10 +608,8 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
       <motion.div
         className="relative overflow-hidden rounded-3xl p-3.5"
         style={{
-          x: live ? x : 0,
-          rotate: live ? rot : 0,
           opacity: live ? r : 1,
-          filter: live ? filter : undefined,
+          scale: live ? cardScale : 1,
           background: `linear-gradient(180deg, rgba(${m.card.tint},0.45), rgba(255,255,255,0.7))`,
           border: `1px solid rgba(${m.card.border},0.55)`,
           boxShadow: `0 22px 40px -28px rgba(${b.glow},0.6)`,
@@ -689,10 +646,7 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
           </div>
 
           <motion.div className="pointer-events-none -my-2 -mr-2 w-[42%] shrink-0" style={{ y: live ? artY : 0 }}>
-            <motion.div
-              animate={live ? { y: [0, -3, 0] } : { y: 0 }}
-              transition={live ? { duration: 5.5 + m.float * 0.6, repeat: Infinity, ease: "easeInOut", delay: m.float * 0.3 } : { duration: 0 }}
-            >
+            <div>
               <Image
                 src={a.src}
                 alt=""
@@ -702,7 +656,7 @@ function MobileItem({ m, index, reduce }: { m: Milestone; index: number; reduce:
                 className="h-auto w-full select-none"
                 style={blendStyle}
               />
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -729,7 +683,6 @@ function Vertical({ reduce }: { reduce: boolean }) {
           "radial-gradient(70% 30% at 90% 4%, rgba(215,255,63,0.18), transparent 70%), linear-gradient(180deg,#fefefd 0%,#f6f7f4 100%)",
       }}
     >
-      {!reduce && <Motes />}
       <div className="relative mb-4 flex items-center gap-3">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: "#e3e8ff", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.8)" }}>
           <GraduationCap className="h-5 w-5" style={{ color: "#2a2f9a" }} strokeWidth={2} />

@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, MotionConfig, useScroll, useTransform, type Variants } from "framer-motion";
 import Image from "next/image";
-import { useRef } from "react";
+import SectionHeading from "./ui/SectionHeading";
 
 /*
  * Section 05 follows the supplied design: three tinted cards (number, 3D
@@ -100,40 +99,10 @@ const cards: Card[] = [
   },
 ];
 
-const EASE = [0.2, 0.7, 0.2, 1] as const;
-const rise: Variants = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-};
-const cardV: Variants = {
-  hidden: { opacity: 0, y: 44, scale: 0.98 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.75, ease: EASE, staggerChildren: 0.09, delayChildren: 0.12 } },
-};
-const artV: Variants = {
-  hidden: { opacity: 0, scale: 0.55, rotate: -9 },
-  show: { opacity: 1, scale: 1, rotate: 0, transition: { type: "spring", stiffness: 110, damping: 11, mass: 0.9 } },
-};
-const lineV: Variants = {
-  hidden: { scaleX: 0 },
-  show: { scaleX: 1, transition: { duration: 0.6, ease: EASE, delay: 0.1 } },
-};
-const chipsV: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } } };
-const chipV: Variants = {
-  hidden: { opacity: 0, y: 12, scale: 0.85 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 380, damping: 18 } },
-};
-const iconV: Variants = {
-  hidden: { rotate: -80, scale: 0.4 },
-  show: { rotate: 0, scale: 1, transition: { type: "spring", stiffness: 260, damping: 12, delay: 0.08 } },
-};
-
 function StackCard({ card, index }: { card: Card; index: number }) {
   return (
-    <motion.li
-      variants={cardV}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.25, margin: "0px 0px -40px 0px" }}
+    <li
+      data-flow="dev"
       className="grid grid-cols-[clamp(78px,22%,200px)_1fr] gap-x-4 rounded-[1.7rem] p-4 transition-shadow duration-500 hover:shadow-[0_30px_60px_-34px_var(--glow)] sm:gap-x-7 sm:p-7"
       style={
         {
@@ -145,17 +114,14 @@ function StackCard({ card, index }: { card: Card; index: number }) {
       }
     >
       <div className="flex flex-col border-r pr-3 sm:pr-6" style={{ borderColor: `color-mix(in srgb, ${card.accent} 16%, #ffffff)` }}>
-        <motion.p variants={rise} className="flex items-center gap-2.5 font-sans text-[22px] font-extrabold leading-none sm:text-[32px]" style={{ color: card.numColor }}>
+        <p className="flex items-center gap-2.5 font-sans text-[22px] font-extrabold leading-none sm:text-[32px]" style={{ color: card.numColor }}>
           {card.n}
-          <motion.span variants={lineV} aria-hidden className="h-px w-7 origin-left sm:w-11" style={{ background: card.numColor }} />
-        </motion.p>
-        <motion.div variants={artV} className="flex flex-1 items-center justify-center pt-2 sm:pt-3">
-          {/* idle drift, offset per card so the three never move together */}
-          <motion.div
-            animate={{ y: [0, -6, 0], rotate: [0, index % 2 ? -1.5 : 1.5, 0] }}
-            transition={{ duration: 5 + index * 0.9, repeat: Infinity, ease: "easeInOut" }}
-            className="w-full"
-          >
+          <span aria-hidden className="h-px w-7 origin-left sm:w-11" style={{ background: card.numColor }} />
+        </p>
+        <div className="flex flex-1 items-center justify-center pt-2 sm:pt-3">
+          {/* the illustration sits on its own plane: it travels a little
+              against the card as the card crosses the screen (see .art-drift) */}
+          <div data-flow="drift" className="art-drift w-full" style={{ "--tilt": index % 2 ? -1 : 1 } as React.CSSProperties}>
             <Image
               src={card.art.src}
               alt=""
@@ -164,127 +130,76 @@ function StackCard({ card, index }: { card: Card; index: number }) {
               className="pointer-events-none -mr-2 h-auto w-[150%] max-w-none select-none sm:mr-0 sm:w-full sm:max-w-[190px]"
               style={{ mixBlendMode: "multiply", WebkitMaskImage: MASK, maskImage: MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
             />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       <div className="min-w-0">
-        <motion.p variants={rise} className="font-sans text-[11px] font-bold uppercase tracking-[0.2em] sm:text-[13px]" style={{ color: card.accent }}>
+        <p className="font-sans text-[11px] font-bold uppercase tracking-[0.2em] sm:text-[13px]" style={{ color: card.accent }}>
           {card.kicker}
-        </motion.p>
-        <motion.h3 variants={rise} className="mt-1.5 font-sans font-bold leading-tight tracking-[-0.02em]" style={{ fontSize: "clamp(1.2rem, 5.2vw, 1.75rem)", color: INK }}>
+        </p>
+        <h3 className="mt-1.5 font-sans font-bold leading-tight tracking-[-0.02em]" style={{ fontSize: "clamp(1.2rem, 5.2vw, 1.75rem)", color: INK }}>
           {card.title}
-        </motion.h3>
-        <motion.p variants={rise} className="mt-2 font-sans text-[13.5px] leading-relaxed sm:text-[15.5px]" style={{ color: MUTED }}>
+        </h3>
+        <p className="mt-2 font-sans text-[13.5px] leading-relaxed sm:text-[15.5px]" style={{ color: MUTED }}>
           {card.blurb}
-        </motion.p>
-        <motion.ul variants={chipsV} className="mt-4 flex flex-wrap gap-2">
+        </p>
+        <ul className="mt-4 flex flex-wrap gap-2">
           {card.chips.map((c) => (
-            <motion.li
+            <li
               key={c.name}
-              variants={chipV}
-              whileHover={{ y: -3, transition: { type: "spring", stiffness: 400, damping: 15 } }}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 font-sans text-[12.5px] font-medium sm:px-3.5 sm:py-2 sm:text-[14px]"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 transition-transform duration-200 motion-safe:hover:-translate-y-[3px]  font-sans text-[12.5px] font-medium sm:px-3.5 sm:py-2 sm:text-[14px]"
               style={{ color: INK, border: "1px solid rgba(110,100,180,.13)", boxShadow: "0 6px 14px -9px rgba(80,70,160,.35)" }}
             >
-              <motion.span variants={iconV} className="inline-flex">
-                <Image src={`/stack/i-${c.icon}.png`} alt="" width={20} height={20} className="h-[18px] w-[18px] select-none sm:h-5 sm:w-5" />
-              </motion.span>
+              <Image src={`/stack/i-${c.icon}.png`} alt="" width={20} height={20} className="h-[18px] w-[18px] select-none sm:h-5 sm:w-5" />
               {c.name}
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
       </div>
-    </motion.li>
+    </li>
   );
 }
 
-const WORDS = ["Behind", "the", "Programs"];
-
 export default function DeliveryExposure() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const swooshY = useTransform(scrollYProgress, [0, 1], [-24, 70]);
-  const swooshX = useTransform(scrollYProgress, [0, 1], [20, -14]);
-
   return (
-    <MotionConfig reducedMotion="user">
-      <section ref={sectionRef} id="stack" className="relative overflow-hidden py-20 sm:py-24" style={{ background: "#fefdfd", color: INK }}>
-        <motion.div aria-hidden className="pointer-events-none absolute right-0 top-0 w-[clamp(200px,38vw,380px)]" style={{ y: swooshY, x: swooshX }}>
-          <Image
-            src="/stack/swoosh.png"
-            alt=""
-            width={344}
-            height={270}
-            className="w-full select-none"
-            style={{ mixBlendMode: "multiply", WebkitMaskImage: SWOOSH_MASK, maskImage: SWOOSH_MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
+    <section id="stack" data-flow="sheet" className="relative overflow-hidden py-20 sm:py-24" style={{ background: "#fefdfd", color: INK }}>
+      <div aria-hidden data-flow="drift" className="swoosh-drift pointer-events-none absolute right-0 top-0 w-[clamp(200px,38vw,380px)]">
+        <Image
+          src="/stack/swoosh.png"
+          alt=""
+          width={344}
+          height={270}
+          className="w-full select-none"
+          style={{ mixBlendMode: "multiply", WebkitMaskImage: SWOOSH_MASK, maskImage: SWOOSH_MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
+        <div className="mb-9 sm:mb-12">
+          <SectionHeading
+            variant="sans"
+            eyebrow="Tools & Platforms"
+            segments={[
+              { text: "Behind the", style: "fill" },
+              { text: "Programs", style: "lime" },
+            ]}
+            ink={INK}
+            accent={BLUE}
+            fontSize="clamp(2.2rem, 9.5vw, 3.7rem)"
           />
-        </motion.div>
-
-        <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
-          <motion.div
-            className="mb-9 sm:mb-12"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
-          >
-            <motion.p variants={rise} className="flex items-center gap-4 font-sans text-[12px] font-semibold uppercase tracking-[0.24em] sm:text-[13px]" style={{ color: "#6b7083" }}>
-              <motion.span variants={lineV} aria-hidden className="h-[2px] w-9 origin-left" style={{ background: BLUE }} />
-              Tools &amp; Platforms
-            </motion.p>
-            <h2 className="mt-4 font-sans font-extrabold leading-[1.04] tracking-[-0.035em]" style={{ fontSize: "clamp(2.2rem, 9.5vw, 3.7rem)", color: INK }}>
-              {WORDS.map((w, i) => (
-                <span key={w} className="mr-[0.25em] inline-block overflow-hidden pb-[0.12em] align-bottom">
-                  <motion.span
-                    className="inline-block"
-                    variants={{
-                      hidden: { y: "110%" },
-                      show: { y: 0, transition: { duration: 0.8, ease: EASE, delay: 0.08 * i } },
-                    }}
-                  >
-                    {i === 2 ? (
-                      <motion.span
-                        style={{
-                          backgroundImage: `linear-gradient(100deg, ${BLUE} 40%, #9a95ff 50%, ${BLUE} 60%)`,
-                          backgroundSize: "250% 100%",
-                          WebkitBackgroundClip: "text",
-                          backgroundClip: "text",
-                          color: "transparent",
-                        }}
-                        variants={{
-                          hidden: { backgroundPositionX: "100%" },
-                          show: { backgroundPositionX: "0%", transition: { duration: 1.6, ease: "easeInOut", delay: 0.9 } },
-                        }}
-                      >
-                        {w}
-                      </motion.span>
-                    ) : (
-                      w
-                    )}
-                  </motion.span>
-                </span>
-              ))}
-            </h2>
-            <motion.span
-              aria-hidden
-              variants={{ hidden: { scaleY: 0, opacity: 0 }, show: { scaleY: 1, opacity: 1, transition: { duration: 0.5, delay: 0.7, ease: EASE } } }}
-              className="absolute right-[12%] top-[4.2rem] hidden h-9 w-[2px] origin-top -rotate-45 sm:block"
-              style={{ background: BLUE }}
-            />
-            <motion.p variants={rise} className="mt-4 max-w-2xl font-sans text-[15px] leading-relaxed sm:text-[17px]" style={{ color: MUTED }}>
-              The platforms my programs have run on. I don&apos;t engineer on them, but I know them well enough to scope the
-              work and keep up in technical discussions. The last group is different: those are the tools I build with.
-            </motion.p>
-          </motion.div>
-
-          <ol className="grid gap-4 sm:gap-5">
-            {cards.map((card, i) => (
-              <StackCard key={card.n} card={card} index={i} />
-            ))}
-          </ol>
+          <p data-flow="ink" className="mt-4 max-w-2xl font-sans text-[15px] leading-relaxed sm:text-[17px]" style={{ color: MUTED }}>
+            The platforms my programs have run on. I don&apos;t engineer on them, but I know them well enough to scope the
+            work and keep up in technical discussions. The last group is different: those are the tools I build with.
+          </p>
         </div>
-      </section>
-    </MotionConfig>
+
+        <ol className="grid gap-4 sm:gap-5">
+          {cards.map((card, i) => (
+            <StackCard key={card.n} card={card} index={i} />
+          ))}
+        </ol>
+      </div>
+    </section>
   );
 }

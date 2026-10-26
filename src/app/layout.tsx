@@ -7,6 +7,8 @@ import ScrollProgress from "@/components/ScrollProgress";
 import GrainOverlay from "@/components/effects/GrainOverlay";
 import MagneticCursor from "@/components/cursor/MagneticCursor";
 import SmoothScrollProvider from "@/components/scroll/SmoothScrollProvider";
+import ScrollFlow from "@/components/scroll/ScrollFlow";
+import ChapterSpine from "@/components/scroll/ChapterSpine";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -81,6 +83,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${anton.variable} ${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col antialiased">
         {/* Anti-FOUC: applies a stored manual theme choice (from the
@@ -88,15 +91,19 @@ export default function RootLayout({
             site's fixed default — the no-stored-choice case needs no JS
             at all, since the bare `:root` values in globals.css already
             render light — so this only ever needs to act when localStorage
-            holds an explicit "dark" override. */}
+            holds an explicit "dark" override. It also switches the motion
+            system on before first paint (unless reduced motion is asked
+            for), so the hero's intro starts from its first frame. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();",
+              "(function(){var d=document.documentElement;try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('flow-on');}}catch(e){}})();",
           }}
         />
         <SmoothScrollProvider>
           <ScrollProgress />
+          <ScrollFlow />
+          <ChapterSpine />
           <Navbar />
           <main className="flex-1 relative z-[2]">{children}</main>
           <ScrollToTop />

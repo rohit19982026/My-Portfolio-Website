@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
 import SectionHeading from "./ui/SectionHeading";
 import JourneyTimeline from "./JourneyTimeline";
-import { useId, useRef, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
+import { useId, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
 import { SiClaude } from "react-icons/si";
 import {
   ChevronDown,
@@ -131,12 +130,9 @@ function MoreCourses() {
 }
 
 export default function Credentials() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section id="credentials" className="py-14 sm:py-24" style={{ background: NAVY }}>
-      <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="credentials" data-flow="sheet" className="py-14 sm:py-24" style={{ background: NAVY }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="03 / MY JOURNEY"
           segments={[
@@ -145,17 +141,15 @@ export default function Credentials() {
           ]}
           className="mb-5"
         />
-        <p className="mb-8 max-w-xl text-[16px] leading-relaxed text-fg/70 sm:mb-12">
+        <p data-flow="ink" className="mb-8 max-w-xl text-[16px] leading-relaxed text-fg/70 sm:mb-12">
           Education and career, from 2014 to today.
         </p>
 
         <JourneyTimeline />
 
-        <motion.section
+        <section
           aria-labelledby="recognition-title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          data-flow="dev"
           className="mx-auto mt-6 max-w-[34rem] overflow-hidden rounded-3xl lg:mt-8 lg:max-w-none"
           style={{
             background:
@@ -176,7 +170,7 @@ export default function Credentials() {
             </div>
           </div>
           <MoreCourses />
-        </motion.section>
+        </section>
       </div>
     </section>
   );

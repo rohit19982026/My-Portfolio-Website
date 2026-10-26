@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { ArrowUpRight, Clock, Sparkle, Target, Users, Zap } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
 import CardDeck, { DeckFrontContext } from "./ui/CardDeck";
@@ -64,18 +64,13 @@ function FlowDots({ steps, accent, front }: { steps: number; accent: string; fro
 
 // Card: the full story (problem, what I solved, the flow) lives on
 // /tools/<slug>, so the home page only has to say what each tool is.
-function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; index: number; inView: boolean; className?: string }) {
+function AgentCard({ agent, index, flow = false, className = "" }: { agent: Agent; index: number; flow?: boolean; className?: string }) {
   const Icon = agent.icon;
   const front = useContext(DeckFrontContext);
   const state = front === null ? undefined : front ? "front" : "rest";
   const text = `color-mix(in srgb, ${agent.accent} var(--accent-text-mix), var(--color-fg))`;
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.45, delay: 0.05 + index * 0.05 }}
-      className={`h-full ${className}`}
-    >
+    <div data-flow={flow ? "dev" : undefined} className={`h-full ${className}`}>
       <Link
         href={`/tools/${agent.slug}`}
         className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl p-5 transition-all duration-300 motion-safe:hover:-translate-y-0.5 hover:border-[var(--tool)] hover:shadow-[0_22px_44px_-24px_var(--tool)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--tool)] sm:p-6"
@@ -183,7 +178,7 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
           </span>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 }
 
@@ -196,28 +191,24 @@ const impactStats = [
   { Icon: Users, value: "7", label: "Agents Built", color: "#2DD4BF" },
 ] as const;
 
-function ImpactStatIcon({ stat, active, delay }: { stat: (typeof impactStats)[number]; active: boolean; delay: number }) {
+function ImpactStatIcon({ stat }: { stat: (typeof impactStats)[number] }) {
   const { Icon, value, label, color } = stat;
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={active ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay }}
+    <div
+      data-flow="ink"
       className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left px-2"
     >
       <Icon size={28} strokeWidth={1.6} style={{ color, filter: `drop-shadow(0 0 6px color-mix(in srgb, ${color} 65%, transparent))` }} />
       <p className="font-heading text-[24px] sm:text-[26px] font-bold text-fg leading-none mt-1">{value}</p>
       <p className="text-[12px] text-fg/55 leading-snug">{label}</p>
-    </motion.div>
+    </div>
   );
 }
 
-function BusinessImpactPanel({ inView }: { inView: boolean }) {
+function BusinessImpactPanel() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.1 }}
+    <div
+      data-flow="dev"
       className="relative mt-6 rounded-2xl p-6 sm:p-8 overflow-hidden"
       style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
@@ -241,22 +232,19 @@ function BusinessImpactPanel({ inView }: { inView: boolean }) {
               i === 0 ? "lg:border-l-0" : "lg:border-l lg:border-fg/10",
             ].join(" ")}
           >
-            <ImpactStatIcon stat={stat} active={inView} delay={0.15 + i * 0.1} />
+            <ImpactStatIcon stat={stat} />
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function ToolsBuilt() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section id="tools" className="py-24" style={{ background: NAVY }}>
+    <section id="tools" data-flow="sheet" data-sheet="corners" className="py-24" style={{ background: NAVY }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div ref={ref} className="mb-12">
+        <div className="mb-12">
           <SectionHeading
             eyebrow="04 / TOOLS BUILT"
             segments={[
@@ -265,7 +253,7 @@ export default function ToolsBuilt() {
             ]}
             className="mb-5"
           />
-          <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed">
+          <p data-flow="ink" className="text-[16px] text-fg/70 max-w-xl leading-relaxed">
             Running four or five programs means the same reports, checks, and setup every week. I automated the
             parts that didn&apos;t need me. Together they save{" "}
             <strong className="text-accent font-semibold">4–8 hours</strong> a week.
@@ -278,7 +266,7 @@ export default function ToolsBuilt() {
               key={agent.slug}
               agent={agent}
               index={i}
-              inView={inView}
+              flow
               // seven cards: centre the last one instead of leaving it orphaned
               className={i === agents.length - 1 ? "sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.625rem)] lg:col-span-1 lg:col-start-2 lg:w-full" : ""}
             />
@@ -286,16 +274,14 @@ export default function ToolsBuilt() {
         </div>
         <CardDeck ariaLabel="Tool case studies" className="sm:hidden" accents={agents.map((a) => a.accent)}>
           {agents.map((agent, i) => (
-            <AgentCard key={agent.slug} agent={agent} index={i} inView={inView} />
+            <AgentCard key={agent.slug} agent={agent} index={i} />
           ))}
         </CardDeck>
 
-        <BusinessImpactPanel inView={inView} />
+        <BusinessImpactPanel />
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        <div
+          data-flow="dev"
           className="mt-6 rounded-2xl p-6 sm:p-8"
           style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
         >
@@ -304,7 +290,7 @@ export default function ToolsBuilt() {
             Every one of these started because I got tired of doing the same thing by hand.
           </p>
           <p className="text-right font-signature text-[28px] text-accent">Rohit Singh</p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

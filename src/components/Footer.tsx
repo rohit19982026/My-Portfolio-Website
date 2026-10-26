@@ -1,5 +1,7 @@
 "use client";
 
+import SectionHeading from "./ui/SectionHeading";
+import { scrollToTop } from "@/lib/scrollTo";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUp, Mail, MapPin, Phone } from "lucide-react";
@@ -24,7 +26,7 @@ const maskOf = (m: string) => ({ WebkitMaskImage: m, maskImage: m, WebkitMaskCom
 // (public/footer/); text, lines and small glyphs are real elements.
 export default function Footer() {
   return (
-    <footer id="contact" className="relative overflow-hidden border-t-2 border-fg/10" style={{ background: "#fefdfb", color: INK }}>
+    <footer id="contact" data-flow="sheet" className="relative overflow-hidden border-t-2 border-fg/10" style={{ background: "#fefdfb", color: INK }}>
       <Image
         src="/footer/blob-top-right.png"
         alt=""
@@ -57,19 +59,25 @@ export default function Footer() {
               <Image src="/footer/logo-star.png" alt="" width={96} height={100} className="h-6 w-auto select-none" />
               <span className="font-sans text-[15px] font-semibold uppercase tracking-[0.2em]">Rohit.Singh</span>
             </Link>
-            <h2
-              className="mt-5 font-sans font-extrabold leading-[1.05] tracking-[-0.035em]"
-              style={{ fontSize: "clamp(2.4rem, 7.5vw, 4.4rem)" }}
-            >
-              Let&rsquo;s <span style={{ color: "#1a1aff" }}>connect</span>
-              <span style={{ color: "#a8ff1a" }}>.</span>
-            </h2>
-            <p className="mt-4 max-w-md font-sans leading-relaxed" style={{ color: MUTED, fontSize: "clamp(1rem, 3.4vw, 1.3rem)" }}>
+            <SectionHeading
+              variant="sans"
+              className="mt-5"
+              segments={[
+                { text: "Let\u2019s", style: "fill" },
+                { text: "connect", style: "lime" },
+              ]}
+              ink={INK}
+              accent="#1a1aff"
+              tail={{ text: ".", color: "#a8ff1a" }}
+              fontSize="clamp(2.4rem, 7.5vw, 4.4rem)"
+            />
+            <p data-flow="ink" className="mt-4 max-w-md font-sans leading-relaxed" style={{ color: MUTED, fontSize: "clamp(1rem, 3.4vw, 1.3rem)" }}>
               Always open to interesting conversations and opportunities around data, AI and program delivery.
             </p>
             <a
               href={EMAIL}
-              className="group mt-8 inline-flex h-16 w-full max-w-[28rem] items-center gap-5 rounded-full border bg-white/60 pl-7 pr-2.5 font-sans text-[18px] font-medium transition-shadow hover:shadow-[0_14px_30px_-18px_rgba(60,50,160,.45)] sm:h-[68px]"
+              data-flow="dev"
+              className="group mt-8 flex h-16 w-full max-w-[28rem] items-center gap-5 rounded-full border bg-white/60 pl-7 pr-2.5 font-sans text-[18px] font-medium transition-shadow hover:shadow-[0_14px_30px_-18px_rgba(60,50,160,.45)] sm:h-[68px]"
               style={{ borderColor: LINE }}
             >
               <Mail size={24} strokeWidth={1.8} />
@@ -83,7 +91,8 @@ export default function Footer() {
             </a>
             <a
               href={PHONE}
-              className="group mt-4 inline-flex h-16 w-full max-w-[28rem] items-center gap-5 rounded-full border bg-white/60 pl-7 pr-2.5 font-sans text-[18px] font-medium transition-shadow hover:shadow-[0_14px_30px_-18px_rgba(60,50,160,.45)] sm:h-[68px]"
+              data-flow="dev"
+              className="group mt-4 flex h-16 w-full max-w-[28rem] items-center gap-5 rounded-full border bg-white/60 pl-7 pr-2.5 font-sans text-[18px] font-medium transition-shadow hover:shadow-[0_14px_30px_-18px_rgba(60,50,160,.45)] sm:h-[68px]"
               style={{ borderColor: LINE }}
             >
               <Phone size={24} strokeWidth={1.8} />
@@ -103,7 +112,7 @@ export default function Footer() {
           <span aria-hidden className="hidden lg:block" style={{ background: LINE }} />
 
           {/* right */}
-          <div className="lg:pt-6">
+          <div data-flow="ink" className="lg:pt-6">
             <p className="font-sans text-[13px] font-semibold uppercase tracking-[0.22em]" style={{ color: "#4a4766" }}>
               Find me on
             </p>
@@ -143,7 +152,7 @@ export default function Footer() {
           <p className="font-sans text-[15px]">&copy; 2026 Rohit Kumar Singh</p>
           <button
             type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={scrollToTop}
             className="group inline-flex min-h-11 items-center gap-3.5 font-sans text-[15px]"
             style={{ color: MUTED }}
           >

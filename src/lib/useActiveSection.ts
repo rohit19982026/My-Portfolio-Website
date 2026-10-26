@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { subscribeScroll } from "./scrollBus";
 
 /** Tracks which of the given section ids is currently the one a reader
  *  would call "the current section" — the top of the viewport (just
@@ -33,7 +34,26 @@ export function useActiveSection(ids: string[]): string | null {
     );
 
     elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    // The observer only reports changes, so nothing tells it the reader has
+    // scrolled back up above the first section (the hero). Clear the highlight
+    // there instead of leaving the first link lit on the hero.
+    // (The first section's position is cached, not re-read every frame.)
+    let firstTop = Infinity;
+    const measure = () => {
+      firstTop = elements[0].getBoundingClientRect().top + window.scrollY;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    const unsub = subscribeScroll(({ y }) => {
+      if (y < firstTop - 160) setActiveId(null);
+    });
+    return () => {
+      observer.disconnect();
+      ro.disconnect();
+      unsub();
+    };
   }, [ids]);
 
   return activeId;

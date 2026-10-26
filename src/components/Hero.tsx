@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import Script from "next/script";
 import {
   Briefcase,
@@ -23,22 +25,8 @@ import {
 import ToolsPanel from "./ToolsPanel";
 import HeroPortrait from "./HeroPortrait";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-} as const;
-
-const fadeBlurUp = {
-  hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.65, ease: EASE },
-  },
-} as const;
+/** Intro stagger slot (see `data-intro` in globals.css). */
+const D = (n: number) => ({ "--d": n }) as React.CSSProperties;
 
 const NAVY = "var(--color-surface-alt)";
 const CARD_BG = "var(--color-card)";
@@ -154,14 +142,26 @@ function CredlyBadge({ badgeId }: { badgeId: string }) {
 }
 
 export default function Hero() {
+  // Desktop depth: as the hero scrolls away its planes separate. The dot
+  // texture and portrait (far/mid) trail the page, the headline (near) leads
+  // it slightly. Mapped over the hero's own exit so it resolves cleanly, and
+  // flat for reduced motion. The phone hero below has no scroll parallax.
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const dotsY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 140]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 110]);
+  const headlineY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -36]);
+
   return (
-    <section className="relative overflow-hidden pt-[64px]" style={{ background: NAVY }}>
+    <section ref={sectionRef} className="relative overflow-hidden pt-[64px]" style={{ background: NAVY }}>
       {/* Faint site-wide dot texture */}
-      <div
+      <motion.div
         className="absolute inset-0 pointer-events-none opacity-40"
         style={{
           backgroundImage: "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)",
           backgroundSize: "26px 26px",
+          y: dotsY,
         }}
         aria-hidden="true"
       />
@@ -172,51 +172,49 @@ export default function Hero() {
           capability strip, cards, pipeline and tools. The block pulls back
           the section's pt-[64px] with -mt-16 because the navbar is sticky,
           not fixed, and already takes its own space. */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={container}
+      <div
         className="hidden lg:block max-w-6xl mx-auto px-6 -mt-16 pt-10 pb-20 relative z-10"
       >
         <div className="grid grid-cols-[1.15fr_1fr] items-start gap-x-12 xl:gap-x-20">
           {/* Same hero as the phone and tablet layout: tight Inter headline
               with the lime full stop, the quieter two-tone line under it,
               and the arch portrait. Only the scale changes here. */}
-          <div>
-            <motion.h1 variants={fadeBlurUp} className="font-sans">
+          <motion.div style={{ y: headlineY }}>
+            <h1 className="font-sans">
               <span
                 className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
                 style={{ fontSize: "clamp(3.4rem, 5.8vw, 5.6rem)" }}
               >
-                Technical
-                <br />
-                Project
-                <br />
-                Manager<span className="text-lime">.</span>
+                <span className="intro-line"><span data-intro="rise" style={D(0)}>Technical</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(1)}>Project</span></span>
+                <span className="intro-line">
+                  <span data-intro="rise" style={D(2)}>
+                    Manager<span data-intro="stamp" style={D(5)} className="text-lime">.</span>
+                  </span>
+                </span>
               </span>
               <span
                 className="mt-[1.1em] block font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
                 style={{ fontSize: "clamp(1.4rem, 2.3vw, 2.1rem)" }}
               >
-                Data, analytics, and
-                <br />
-                <span className="font-semibold text-accent">AI programs</span> for
-                <br />
-                enterprise clients.
+                <span className="intro-line"><span data-intro="rise" style={D(3)}>Data, analytics, and</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(4)}><span className="font-semibold text-accent">AI programs</span> for</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(5)}>enterprise clients.</span></span>
               </span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              variants={fadeBlurUp}
+            <p
+              data-intro="wipe"
+              style={D(7)}
               className="mt-8 mb-7 max-w-[540px] text-[17px] leading-[1.6] text-fg/65"
             >
               I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
               clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
               Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
               take the repetitive reporting off my plate.
-            </motion.p>
+            </p>
 
-            <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3">
+            <div data-intro="wipe" style={D(8)} className="flex flex-row flex-wrap items-start gap-3">
               <a
                 href="#experience"
                 className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
@@ -234,18 +232,20 @@ export default function Hero() {
               </p>
               <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
               <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
 
-          <motion.div variants={fadeBlurUp} className="relative aspect-[5/7] w-full max-w-[460px] justify-self-end">
-            <HeroPortrait variant="mobile" />
+          <motion.div style={{ y: portraitY }} className="w-full max-w-[460px] justify-self-end">
+            <div data-intro="arch" className="relative aspect-[5/7] w-full">
+              <HeroPortrait />
+            </div>
           </motion.div>
         </div>
 
         {/* 4-tile capability strip — icon + title + description, standing
             in for another paragraph of "what I do." */}
-        <motion.div
-          variants={fadeBlurUp}
+        <div
+          data-flow="dev"
           className="mt-12 lg:mt-14 rounded-2xl overflow-hidden"
           style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
         >
@@ -270,13 +270,13 @@ export default function Hero() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Two capability cards (left) + a combined automation-pipeline
             and impact-stats panel (right), matching the reference's
             near-even split between the checklist pair and the panel. */}
-        <motion.div variants={fadeBlurUp} className="grid lg:grid-cols-2 gap-5 mt-6">
-          <div className="relative grid grid-cols-2 gap-5">
+        <div className="grid lg:grid-cols-2 gap-5 mt-6">
+          <div data-flow="dev" className="relative grid grid-cols-2 gap-5">
             {capabilityCards.map((card) => (
               <div
                 key={card.title}
@@ -309,7 +309,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="rounded-2xl p-6" style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}>
+          <div data-flow="dev" className="rounded-2xl p-6" style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}>
             <p className="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-accent mb-6">
               Automation Pipeline
             </p>
@@ -348,13 +348,13 @@ export default function Hero() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
 
 
-        <div className="mt-12 lg:mt-16">
+        <div data-flow="dev" className="mt-12 lg:mt-16">
           <ToolsPanel />
         </div>
-      </motion.div>
+      </div>
 
       {/* Mobile-only hero — leaner, icon/pointer-driven reference design:
           badge, punchy 2-line headline, ring-glow photo with 4 floating
@@ -363,10 +363,7 @@ export default function Hero() {
           strip, and the tools row. Genuinely different content from
           desktop above, not a restyle of it. */}
       <div className="lg:hidden">
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={container}
+        <div
           // The section itself carries pt-[64px] (originally sized to clear
           // a fixed navbar) but the navbar is `sticky`, not `fixed` — it
           // already occupies its own space in normal flow, so that padding
@@ -381,46 +378,46 @@ export default function Hero() {
           className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-9 pb-14 sm:pb-16 relative z-10"
         >
           <div className="grid grid-cols-[1fr_1.1fr] items-center gap-x-[clamp(0.75rem,3vw,2rem)]">
-            <motion.h1 variants={fadeBlurUp} className="font-sans">
+            <h1 className="font-sans">
               <span
                 className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
                 style={{ fontSize: "clamp(1.75rem, 8vw, 3.4rem)" }}
               >
-                Technical
-                <br />
-                Project
-                <br />
-                Manager<span className="text-lime">.</span>
+                <span className="intro-line"><span data-intro="rise" style={D(0)}>Technical</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(1)}>Project</span></span>
+                <span className="intro-line">
+                  <span data-intro="rise" style={D(2)}>
+                    Manager<span data-intro="stamp" style={D(5)} className="text-lime">.</span>
+                  </span>
+                </span>
               </span>
               <span
                 className="mt-[1.1em] block whitespace-nowrap font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
                 style={{ fontSize: "clamp(0.8rem, 4vw, 1.9rem)" }}
               >
-                Data, analytics, and
-                <br />
-                <span className="font-semibold text-accent">AI programs</span> for
-                <br />
-                enterprise clients.
+                <span className="intro-line"><span data-intro="rise" style={D(3)}>Data, analytics, and</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(4)}><span className="font-semibold text-accent">AI programs</span> for</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(5)}>enterprise clients.</span></span>
               </span>
-            </motion.h1>
+            </h1>
 
-            <motion.div variants={fadeBlurUp} className="relative aspect-[5/7] w-full">
-              <HeroPortrait variant="mobile" />
-            </motion.div>
+            <div data-intro="arch" className="relative aspect-[5/7] w-full">
+              <HeroPortrait />
+            </div>
           </div>
 
-          <motion.p
-            variants={fadeBlurUp}
+          <p
+            data-intro="wipe"
+            style={{ ...D(7), fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
             className="leading-[1.6] text-fg/65 mt-5 mb-6"
-            style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
           >
             I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
             clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
             Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
             take the repetitive reporting off my plate.
-          </motion.p>
+          </p>
 
-          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-8">
+          <div data-intro="wipe" style={D(8)} className="flex flex-row flex-wrap items-start gap-3 mb-8">
             <a
               href="#experience"
               className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
@@ -438,11 +435,11 @@ export default function Hero() {
             </p>
             <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
             <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
-          </motion.div>
+          </div>
 
           {/* 4-tile capability strip — a leaner icon+label restatement of
               "what I do," standing in for another paragraph. */}
-          <motion.div variants={fadeBlurUp} className="grid grid-cols-4 gap-2 mb-6">
+          <div data-flow="dev" className="grid grid-cols-4 gap-2 mb-6">
             {capabilityTiles.map((tile) => (
               <div key={tile.label} className="flex flex-col items-center gap-2 text-center">
                 <div
@@ -457,11 +454,11 @@ export default function Hero() {
                 <p className="text-[10px] leading-tight text-fg/70 font-medium">{tile.label}</p>
               </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Two capability cards with checklists, replacing what used to
               be a second paragraph of description. */}
-          <motion.div variants={fadeBlurUp} className="relative grid grid-cols-2 gap-3 mb-6">
+          <div data-flow="dev" className="relative grid grid-cols-2 gap-3 mb-6">
             {capabilityCards.map((card) => (
               <div
                 key={card.title}
@@ -492,7 +489,7 @@ export default function Hero() {
             >
               <Plus size={13} className="text-fg/50" />
             </div>
-          </motion.div>
+          </div>
 
           {/* "What I automate" mini pipeline — a condensed teaser; the full
               6 agent architectures live in the Tools section below. The
@@ -500,8 +497,8 @@ export default function Hero() {
               CARD_BG) so they fully occlude the dashed connector line
               behind them at each step, the standard "line behind, nodes
               on top" stepper trick. */}
-          <motion.div
-            variants={fadeBlurUp}
+          <div
+            data-flow="dev"
             className="rounded-2xl p-5 mb-6"
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
@@ -533,10 +530,10 @@ export default function Hero() {
                 </p>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={fadeBlurUp}
+          <div
+            data-flow="dev"
             className="rounded-2xl p-5 mb-8"
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
@@ -547,12 +544,12 @@ export default function Hero() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={fadeBlurUp} className="mt-2">
+          <div data-flow="dev" className="mt-2">
             <ToolsPanel />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="lazyOnload" />

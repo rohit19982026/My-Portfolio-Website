@@ -111,18 +111,196 @@ body {
 }
 
 html { -webkit-text-size-adjust: 100%; }
+
+/* In-page jumps (and no-JS / reduced-motion hash jumps) stop below the sticky
+   header instead of under it. */
+section[id], footer[id] { scroll-margin-top: 4rem; }
+
+/* Lenis housekeeping: it sets these classes on <html>. */
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 a, button, [role="button"] { touch-action: manipulation; }
 
 /* Scroll progress bar */
 .scroll-progress {
   position: fixed; top: 0; left: 0;
-  height: 2px; width: 0%;
+  height: 2px; width: 100%;
+  transform: scaleX(0); transform-origin: left center;
+  will-change: transform;
   background: var(--color-accent);
   box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 60%, transparent);
   z-index: 200;
-  transition: width 0.1s linear;
   pointer-events: none;
 }
+
+
+/* ==========================================================================
+   Motion system. One vocabulary for the whole page (see lib/flow.ts):
+   everything moves backlog -> in progress -> done as it crosses a reading
+   line, scrubbed by scroll position. Each rule only applies once the engine
+   has switched on (.flow-on), and every variable defaults to "complete", so
+   with no JS or with reduced motion the page is simply its finished self.
+   ========================================================================== */
+
+/* ink: text that darkens as it is read */
+.flow-on [data-flow="ink"] {
+  opacity: calc(0.14 + 0.86 * var(--p, 1));
+}
+
+/* dev: blocks and cards develop from grey to colour, settling into place */
+.flow-on [data-flow="dev"] {
+  opacity: calc(0.22 + 0.78 * var(--p, 1));
+  scale: calc(0.955 + 0.045 * var(--p, 1));
+  filter: grayscale(calc(1 - var(--p, 1)));
+  transform-origin: 50% 85%;
+}
+.flow-on [data-flow="dev"][data-flow-done] {
+  opacity: 1; scale: none; filter: none;
+}
+/* Phones: no filter work while scrolling, just a quick opacity + scale settle. */
+@media (max-width: 767px), (pointer: coarse) {
+  .flow-on [data-flow="dev"] { filter: none; }
+}
+
+/* head: words rise out of a mask in sequence, and the accent word, drawn
+   hollow, fills with colour left to right a little later and higher up */
+.hw {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.05em 0.16em;
+  margin: 0 -0.05em -0.16em;
+}
+.hw-in { display: inline-block; }
+.flow-on [data-flow="head"] .hw-in {
+  translate: 0 calc((1 - clamp(0, (var(--p, 1) * (var(--n, 4) + 2.4) - var(--i, 0)) / 2.4, 1)) * 112%);
+}
+.flow-on [data-flow="head"][data-flow-done] .hw { overflow: visible; }
+.flow-on [data-flow="head"][data-flow-done] .hw-in { translate: none; }
+
+.fw { position: relative; display: inline-block; color: var(--ac); }
+.fw-fill {
+  display: none;
+  position: absolute; left: 0; top: 0; white-space: nowrap;
+  clip-path: inset(-10% calc((1 - var(--f, 1)) * 100%) -10% 0);
+}
+.flow-on [data-flow="head"] .fw-fill { display: block; }
+.flow-on [data-flow="head"] .fw-base {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ac);
+}
+.flow-on [data-flow="head"][data-flow-done] .fw-base {
+  color: var(--ac);
+  -webkit-text-stroke: 0;
+}
+.flow-on [data-flow="head"][data-flow-done] .fw-fill { display: none; }
+/* eyebrow rule draws with the heading */
+.fe-line { transform-origin: left center; }
+.flow-on [data-flow="head"] .fe-line { scale: var(--p, 1) 1; }
+
+/* sheet: a section arrives like a page being laid down. Its top corners start
+   rounded and relax square, and the whole sheet widens a hair as it lands.
+   The corners are two small caps painted over the section's top edge, and the
+   widening is a transform, so the cost is a few pixels of paint plus one
+   composited layer. (Clipping the section itself repainted every pixel of
+   these very tall sections on each frame.) */
+.flow-on [data-flow="sheet"] {
+  --_o: calc(1 - var(--s, 1));
+  --_r: calc(var(--_o) * 44px);
+  position: relative;
+  transform-origin: 50% 0;
+  scale: calc(0.982 + 0.018 * var(--s, 1));
+}
+.flow-on [data-flow="sheet"]:not([data-flow-done]) { will-change: transform; }
+.flow-on [data-flow="sheet"][data-flow-done] { scale: none; }
+/* very tall sections only round their corners: promoting a multi-screen layer
+   to widen it costs more than the effect is worth */
+.flow-on [data-flow="sheet"][data-sheet="corners"] { scale: none; will-change: auto; }
+.flow-on [data-flow="sheet"]::before,
+.flow-on [data-flow="sheet"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  width: var(--_r);
+  height: var(--_r);
+  pointer-events: none;
+}
+.flow-on [data-flow="sheet"]::before {
+  left: 0;
+  background: radial-gradient(circle at 100% 100%, transparent calc(var(--_r) - 0.5px), var(--color-surface) var(--_r));
+}
+.flow-on [data-flow="sheet"]::after {
+  right: 0;
+  background: radial-gradient(circle at 0% 100%, transparent calc(var(--_r) - 0.5px), var(--color-surface) var(--_r));
+}
+.flow-on [data-flow="sheet"][data-flow-done]::before,
+.flow-on [data-flow="sheet"][data-flow-done]::after { display: none; }
+
+/* chapter spine (components/scroll/ChapterSpine.tsx) */
+.spine-fill { transform-origin: top; scale: 1 var(--prog, 0); }
+.spine-head { translate: -50% calc(var(--prog, 0) * 56vh - 50%); }
+
+/* drift: depth. Illustrations travel a little against their card as it crosses
+   the screen, so a card reads as a window with something behind the glass. */
+.flow-on .art-drift {
+  translate: 0 calc(var(--y, 0) * 18px);
+  rotate: calc(var(--y, 0) * var(--tilt, 1) * 2.5deg);
+}
+.flow-on .swoosh-drift {
+  translate: calc(var(--y, 0) * -26px) calc(var(--y, 0) * 70px);
+}
+
+/* intro: one-time hero choreography, plain CSS so it needs no JS to start.
+   Lines rise out of a mask, secondary content is printed on with a wipe,
+   the portrait opens upward like an arch. */
+@keyframes intro-rise {
+  from { translate: 0 112%; }
+  to   { translate: 0 0; }
+}
+@keyframes intro-wipe {
+  from { clip-path: inset(-4% 100% -4% -2%); translate: -0.4rem 0; }
+  to   { clip-path: inset(-4% -2% -4% -2%); translate: 0 0; }
+}
+@keyframes intro-arch {
+  from { clip-path: inset(100% -25% -25% -25% round 999px 999px 0 0); }
+  to   { clip-path: inset(-25% -25% -25% -25% round 999px 999px 0 0); }
+}
+@keyframes intro-stamp {
+  0%   { scale: 0; }
+  70%  { scale: 1.35; }
+  100% { scale: 1; }
+}
+.intro-line { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.intro-line > span { display: block; }
+.flow-on [data-intro="rise"] { animation: intro-rise 1.05s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); }
+.flow-on [data-intro="wipe"] { animation: intro-wipe 0.9s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); }
+.flow-on [data-intro="arch"] { animation: intro-arch 1.35s cubic-bezier(0.65, 0, 0.15, 1) backwards; animation-delay: 0.25s; }
+@keyframes intro-grow {
+  from { scale: 1 0; }
+  to   { scale: 1 1; }
+}
+.flow-on [data-intro="grow"] { transform-origin: top; animation: intro-grow 0.9s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); }
+/* slots for markup that can't take an inline style */
+[data-d="0"] { --d: 0; }
+[data-d="1"] { --d: 1; }
+[data-d="2"] { --d: 2; }
+[data-d="3"] { --d: 3; }
+[data-d="4"] { --d: 4; }
+[data-d="5"] { --d: 5; }
+[data-d="6"] { --d: 6; }
+[data-d="7"] { --d: 7; }
+[data-d="8"] { --d: 8; }
+[data-d="9"] { --d: 9; }
+[data-d="10"] { --d: 10; }
+[data-d="11"] { --d: 11; }
+[data-d="12"] { --d: 12; }
+[data-d="13"] { --d: 13; }
+[data-d="14"] { --d: 14; }
+[data-d="15"] { --d: 15; }
+[data-d="16"] { --d: 16; }
+.flow-on [data-intro="stamp"] { display: inline-block; animation: intro-stamp 0.55s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); transform-origin: 50% 85%; }
 
 /* Balanced line breaks for every heading, so no heading ends on a lone word. */
 h1, h2, h3, h4 { text-wrap: balance; }

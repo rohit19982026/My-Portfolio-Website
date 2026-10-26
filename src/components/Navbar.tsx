@@ -1,19 +1,72 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import Star from "./ui/Star";
 import Button from "./ui/Button";
 import ThemeToggle from "./ui/ThemeToggle";
 import GithubMark from "./icons/GithubMark";
 import { navLinks } from "@/lib/content";
 import { useActiveSection } from "@/lib/useActiveSection";
+import { subscribeScroll } from "@/lib/scrollBus";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const sectionIds = useMemo(() => navLinks.map((link) => link.href.slice(1)), []);
   const activeId = useActiveSection(sectionIds);
+  const activeLabel = navLinks.find((l) => l.href.slice(1) === activeId)?.label ?? null;
+  const reduce = useReducedMotion();
+  const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+  const menuOpenRef = useRef(false);
+  const lockUntil = useRef(0);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+  }, [menuOpen]);
+
+  // Header responds to scroll: it gains a frosted background once the page
+  // has moved, and on phones on the home page it slides away while reading
+  // down and returns the moment the reader scrolls up, giving the content the
+  // full screen. Desktop keeps it pinned. One shared scroll subscription.
+  useEffect(() => {
+    const phone = window.matchMedia("(max-width: 1023px)");
+    let lastY = window.scrollY;
+    let travelled = 0;
+    // After a nav-link jump the header stays visible while the page settles.
+    const onJump = () => {
+      lockUntil.current = performance.now() + 1800;
+      setHidden(false);
+    };
+    window.addEventListener("scrolljump", onJump);
+    const unsub = subscribeScroll(({ y }) => {
+      setScrolled(y > 8);
+      const dy = y - lastY;
+      lastY = y;
+      if (!phone.matches || pathname !== "/") {
+        setHidden(false);
+        return;
+      }
+      if (y < 120 || menuOpenRef.current || performance.now() < lockUntil.current || headerRef.current?.contains(document.activeElement)) {
+        travelled = 0;
+        setHidden(false);
+        return;
+      }
+      // Accumulate travel in one direction so a small wobble never flips it.
+      travelled = Math.sign(dy) === Math.sign(travelled) ? travelled + dy : dy;
+      if (travelled > 14) setHidden(true);
+      else if (travelled < -10) setHidden(false);
+    });
+    return () => {
+      window.removeEventListener("scrolljump", onJump);
+      unsub();
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -23,7 +76,22 @@ export default function Navbar() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-surface border-b-2 border-fg/10 pt-[env(safe-area-inset-top)]">
+    <header
+      ref={headerRef}
+      className={`sticky top-0 z-50 pt-[env(safe-area-inset-top)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        hidden && !menuOpen ? "max-lg:-translate-y-full" : ""
+      }`}
+    >
+      {/* Background lives on its own layer: a backdrop-filter or transform on
+          <header> itself would trap the fixed full-screen mobile menu inside it. */}
+      <span
+        aria-hidden="true"
+        className={`absolute inset-0 -z-10 border-b-2 transition-[background-color,border-color,box-shadow] duration-300 ${
+          scrolled
+            ? "border-fg/[0.07] bg-surface/80 backdrop-blur-md shadow-[0_8px_24px_-16px_rgba(13,13,15,0.35)]"
+            : "border-fg/10 bg-surface"
+        }`}
+      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className="flex min-h-11 items-center gap-2.5 group">
@@ -32,6 +100,24 @@ export default function Navbar() {
             Rohit.Singh
           </span>
         </Link>
+
+        {/* Phone: which chapter you are in, since the link row is collapsed. */}
+        <div className="lg:hidden ml-auto mr-3 min-w-0 flex-1 text-right" aria-hidden="true">
+          <AnimatePresence mode="wait" initial={false}>
+            {activeLabel && (
+              <motion.span
+                key={activeLabel}
+                initial={reduce ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="inline-block max-w-full truncate font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-accent"
+              >
+                {activeLabel}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">

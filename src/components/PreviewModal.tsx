@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useDragControls, useReducedMotion, type PanInfo } from "framer-motion";
+import { motion, useDragControls, type PanInfo } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { X } from "lucide-react";
 import { useCallback, useEffect, useRef, useSyncExternalStore, type KeyboardEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { ArrowUpRight, ExternalLink, MapPin, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import PreviewModal, { EASE, INK, MUTED } from "./PreviewModal";

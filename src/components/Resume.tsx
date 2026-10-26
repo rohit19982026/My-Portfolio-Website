@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { ArrowRight, Download, ExternalLink, Eye, FileText } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
 import GithubMark from "./icons/GithubMark";
@@ -25,8 +25,6 @@ const FEATHER =
 const MUTED = "#6b6880";
 
 function Card({
-  delay,
-  inView,
   icon,
   title,
   subtitle,
@@ -44,8 +42,6 @@ function Card({
   onPreview,
   previewLabel,
 }: {
-  delay: number;
-  inView: boolean;
   icon: ReactNode;
   title: string;
   subtitle: string;
@@ -64,10 +60,8 @@ function Card({
   previewLabel?: string;
 }) {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay }}
+    <article
+      data-flow="dev"
       className="relative flex flex-col overflow-hidden rounded-[1.5rem] p-3.5 sm:rounded-[2rem] sm:p-7"
       style={{
         background: CARD_BG,
@@ -163,19 +157,17 @@ function Card({
         </span>
         <ArrowRight className="h-3.5 w-3.5 shrink-0 transition-transform motion-safe:group-hover:translate-x-1 sm:h-5 sm:w-5" />
       </a>
-    </motion.article>
+    </article>
   );
 }
 
 export default function Resume() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const [previewOpen, setPreviewOpen] = useState(false);
   const [githubOpen, setGithubOpen] = useState(false);
 
   return (
-    <section id="resume" className="relative overflow-hidden py-14 bg-surface border-t-2 border-fg/10 sm:py-24">
-      <div ref={ref} className="relative max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="resume" data-flow="sheet" className="relative overflow-hidden py-14 bg-surface border-t-2 border-fg/10 sm:py-24">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="01 / RESUME & GITHUB"
           segments={[
@@ -184,14 +176,12 @@ export default function Resume() {
           ]}
           className="mb-5"
         />
-        <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-8 sm:mb-12">
+        <p data-flow="ink" className="text-[16px] text-fg/70 max-w-xl leading-relaxed mb-8 sm:mb-12">
           Download my resume, or look through my code on GitHub.
         </p>
 
         <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:gap-6">
           <Card
-            delay={0}
-            inView={inView}
             icon={<FileText strokeWidth={2} className="h-5 w-5 sm:h-7 sm:w-7" style={{ color: "#2a1f8f" }} />}
             title="Resume"
             subtitle="Download my resume"
@@ -209,8 +199,6 @@ export default function Resume() {
             previewLabel="Preview my resume"
           />
           <Card
-            delay={0.12}
-            inView={inView}
             icon={<GithubMark className="h-6 w-6 sm:h-8 sm:w-8" style={{ color: INK }} />}
             title="GitHub"
             subtitle="Explore my work"
