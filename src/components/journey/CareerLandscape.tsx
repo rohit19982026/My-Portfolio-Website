@@ -45,7 +45,7 @@ function Letters({ text }: { text: string }) {
 
 // Constellation positions: desktop (x, y in %) and phone (a column that
 // zigzags down). Order follows `certs`.
-const STARS_WIDE: [number, number][] = [[6, 14], [21, 34], [36, 16], [51, 40], [53, 78], [77, 84], [81, 44]];
+const STARS_WIDE: [number, number][] = [[5, 14], [20, 36], [35, 16], [48, 40], [50, 72], [72, 80], [76, 44]];
 const STARS_TALL: [number, number][] = [[10, 4], [34, 18], [12, 32], [36, 46], [10, 60], [32, 74], [14, 88]];
 const LINES = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 3]];
 
@@ -150,7 +150,7 @@ export default function CareerLandscape() {
       const sunT = clamp(s / 3.7);
       put("--sunx", 0.1 + 0.8 * sunT);
       put("--suny", Math.sin(Math.PI * sunT));
-      const moonT = clamp((s - 2.7) / 2.1);
+      const moonT = clamp((s - 3.2) / 1.9);
       put("--moonx", 0.08 + 0.84 * moonT);
       put("--moony", Math.sin(Math.PI * moonT));
       put("--night", clamp(s - 3));

@@ -112,3 +112,10 @@ stacked bands in each act's own colour.
 Kolkata (2020), British Telecom (2020), phData (Dec 2022), the phData Innovation
 Award and all seven certifications and courses. Added from the Experience
 section on this same site: the BT role and dates, and the current phData role.
+
+**Light mode (revision):** the site is light, so every sky is light too (pale
+paper, lime dawn, soft blue day, golden hour, lavender evening) and all type is
+ink with blue and lime accents. Hills are blue-tinted, the near ridge is brand
+blue with a lime rim, the "moon" is a white disc with a blue ring, stars are
+blue pinpoints, and the lit wordmark is ink letters with lime windows. Small
+type was enlarged (ledes, captions, certification names).

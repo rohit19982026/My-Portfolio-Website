@@ -10,6 +10,7 @@
   --paper: #efeee8;
   --lime: #d7ff3f;
   --amber: #f59e0b;
+  --blue: #0d22ee;
   --cs: 0;
   --w0: 1; --w1: 0; --w2: 0; --w3: 0; --w4: 0; --night: 0;
   --c1: 0; --c2: 0; --c3: 0; --c4: 0;
@@ -41,11 +42,11 @@
 
 /* skies: each one fades in over the one before it, so a cross-fade is exact */
 .cl-sky { position: absolute; inset: 0; }
-.cl-sky-0 { background: linear-gradient(180deg, #fefdfd 0%, #f4f2e8 52%, #e8f4a8 100%); }
-.cl-sky-1 { background: linear-gradient(180deg, #cdd3ff 0%, #e8f5a2 56%, #d7ff3f 100%); opacity: var(--c1); }
-.cl-sky-2 { background: linear-gradient(180deg, #0d22ee 0%, #4f63ff 52%, #bcc6ff 100%); opacity: var(--c2); }
-.cl-sky-3 { background: linear-gradient(180deg, #0b1160 0%, #3a3f9e 42%, #f59e0b 100%); opacity: var(--c3); }
-.cl-sky-4 { background: linear-gradient(180deg, #05071a 0%, #0d0d0f 62%, #101a6b 100%); opacity: var(--c4); }
+.cl-sky-0 { background: linear-gradient(180deg, #fefdfd 0%, #f4f2e8 52%, #eaf6b0 100%); }
+.cl-sky-1 { background: linear-gradient(180deg, #e4e9ff 0%, #f0f8c2 56%, #e0ff6a 100%); opacity: var(--c1); }
+.cl-sky-2 { background: linear-gradient(180deg, #b9ceff 0%, #d9e5ff 55%, #f3f8e4 100%); opacity: var(--c2); }
+.cl-sky-3 { background: linear-gradient(180deg, #e3e6ff 0%, #fde8c6 52%, #ffcf78 100%); opacity: var(--c3); }
+.cl-sky-4 { background: linear-gradient(180deg, #dde2ff 0%, #eef1ff 58%, #fbf3dc 100%); opacity: var(--c4); }
 
 /* sun and moon arc across; the ridges are drawn after them, so they rise and
    set behind the land */
@@ -66,18 +67,18 @@
   opacity: calc(clamp(0, calc(3.9 - var(--cs)), 1) * clamp(0, calc(var(--suny) * 6), 1));
 }
 .cl-moon {
-  background: var(--paper);
-  box-shadow: inset -1.1vmin 0.3vmin 0 rgba(13, 13, 15, 0.22), 0 0 0 clamp(6px, 1.1vmin, 12px) rgba(239, 238, 232, 0.14);
+  background: #fffefb;
+  box-shadow: 0 0 0 clamp(6px, 1.1vmin, 12px) rgba(13, 34, 238, 0.1), 0 0 0 2px var(--blue);
   translate: calc(var(--moonx) * 100vw - 50%) calc(var(--moony) * -60vh);
   translate: calc(var(--moonx) * 100vw - 50%) calc(var(--moony) * -60svh);
-  opacity: calc(clamp(0, calc(var(--cs) - 2.5), 1) * clamp(0, calc(var(--moony) * 6), 1));
+  opacity: calc(clamp(0, calc(var(--cs) - 3.2), 1) * clamp(0, calc(var(--moony) * 6), 1));
 }
 
 .cl-scene { position: absolute; inset: 0; }
 .cl-tall { display: none; }
 .cl-layer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
 
-.cl-stars { opacity: var(--night); }
+.cl-stars { opacity: calc(var(--night) * 0.5); }
 
 /* ridges grow and flatten with the story: tall mountains for graduation,
    flat for the cities. The seam at the bottom stays put (scale from the foot). */
@@ -98,7 +99,7 @@
 .cl-handoff { translate: calc(var(--cs) * -1.15vw) calc((1 - var(--end)) * 100%); }
 
 /* rim lights on the ridge crests: amber at dusk, lime at night */
-.cl-rim-night { opacity: var(--night); }
+.cl-rim-night { opacity: calc(var(--night) * 0.55); }
 .cl-rim-dusk { opacity: var(--w3); }
 
 /* each landmark rises out of the ground for its act and sinks away after */
@@ -168,7 +169,7 @@
 .cl-lede {
   margin: 1.6rem 0 0;
   max-width: 28ch;
-  font-size: clamp(1.05rem, 1.7vw, 1.55rem);
+  font-size: clamp(1.25rem, 2vw, 1.9rem);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -176,7 +177,7 @@
 /* 1 · school: a digit reel rolls 2014 to 2016 as you pass */
 .cl-school {
   --h: 118svh;
-  --bg: linear-gradient(180deg, #e8f4a8, #d7ff3f);
+  --bg: linear-gradient(180deg, #eaf6b0, #e0ff6a);
 }
 .cl-school-in { display: grid; gap: clamp(1.2rem, 3vw, 2.6rem); justify-items: start; }
 .cl-reel {
@@ -192,13 +193,13 @@
 .cl-reel-col { display: block; translate: 0 calc(var(--r) * -66.6667%); }
 .cl-reel-col span { display: block; height: 1em; }
 .cl-school-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 1.2rem; }
-.cl-school-list li { display: grid; grid-template-columns: 4.2rem 1fr; align-items: baseline; column-gap: 1.2rem; }
-.cl-school-list .cl-yr { grid-row: span 2; font-size: 1.5rem; color: #3a4a00; }
-.cl-school-t { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.8rem, 3.4vw, 3.2rem); line-height: 1; }
-.cl-school-n { font-size: clamp(0.95rem, 1.3vw, 1.2rem); font-weight: 600; }
+.cl-school-list li { display: grid; grid-template-columns: 5rem 1fr; align-items: baseline; column-gap: 1.2rem; }
+.cl-school-list .cl-yr { grid-row: span 2; font-size: 1.8rem; color: var(--blue); }
+.cl-school-t { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.2rem, 4.2vw, 4rem); line-height: 1; }
+.cl-school-n { font-size: clamp(1.1rem, 1.6vw, 1.5rem); font-weight: 600; }
 
 /* 2 · graduation: you travel into a hollow 2020 */
-.cl-degree { --h: 108svh; --bg: #0d22ee; --c: #fff; }
+.cl-degree { --h: 108svh; --bg: linear-gradient(180deg, #b9ceff, #e4ecff); }
 .cl-degree-in { position: relative; justify-self: end; text-align: right; width: min(100%, 64rem); }
 .cl-zoom {
   position: absolute;
@@ -210,7 +211,7 @@
   font-size: clamp(8rem, 28vw, 26rem);
   line-height: 0.8;
   color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.78);
+  -webkit-text-stroke: 2px rgba(13, 34, 238, 0.32);
   transform-origin: 100% 50%;
 }
 .cl[data-live] .cl-zoom { scale: calc(0.72 + 0.9 * (1 - var(--y, 0)) / 2); }
@@ -223,11 +224,13 @@
   font-size: clamp(2.7rem, 7.6vw, 8.4rem);
   line-height: 0.94;
 }
-.cl-degree-p { position: relative; margin: 1.3rem 0 0; font-size: clamp(1.05rem, 1.9vw, 1.7rem); font-weight: 700; }
+.cl-degree-p { position: relative; margin: 1.3rem 0 0; font-size: clamp(1.2rem, 2.2vw, 2rem); font-weight: 700; }
+.cl-degree-t { color: var(--ink); }
+.cl-degree-t .cl-block:last-child { color: var(--blue); }
 
 /* 3 · first job: the lines start stretched and compress into place */
-.cl-bt { --h: 108svh; --bg: linear-gradient(180deg, #0b1160, #8a5a2c); --c: #fff; }
-.cl-yr-bt { margin: 0 0 1.2rem; font-size: clamp(1.6rem, 3vw, 2.8rem); color: var(--lime); }
+.cl-bt { --h: 108svh; --bg: linear-gradient(180deg, #e3e6ff, #ffd88a); }
+.cl-yr-bt { margin: 0 0 1.2rem; font-size: clamp(1.8rem, 3.4vw, 3.2rem); color: var(--blue); }
 .cl-bt-t {
   --stretch: 0.3;
   margin: 0;
@@ -242,13 +245,13 @@
   --q: clamp(0, calc((var(--y, 0) - 0.15) / 0.85), 1);
   scale: calc(1 + var(--stretch) * var(--q)) 1;
 }
-.cl-bt-p { margin: 1.6rem 0 0; display: grid; gap: 0.25rem; font-size: clamp(1rem, 1.7vw, 1.45rem); }
-.cl-bt-p span { opacity: 0.78; font-weight: 500; }
+.cl-bt-p { margin: 1.6rem 0 0; display: grid; gap: 0.3rem; font-size: clamp(1.15rem, 2vw, 1.8rem); }
+.cl-bt-p span { opacity: 0.72; font-weight: 500; }
 
 /* 4 · phData: the wordmark is lit like a building at night */
-.cl-city { --h: 118svh; --bg: #0d0d0f; --c: var(--paper); }
+.cl-city { --h: 118svh; --bg: linear-gradient(180deg, #dde2ff, #eef1ff); }
 .cl-city-in { justify-self: end; text-align: right; }
-.cl-yr-city { margin: 0 0 1rem; font-size: clamp(2rem, 5vw, 4.4rem); color: var(--lime); }
+.cl-yr-city { margin: 0 0 1rem; font-size: clamp(2.2rem, 5.2vw, 4.6rem); color: var(--blue); }
 .cl-lit { margin: 0; }
 .cl-lit-small {
   display: block;
@@ -263,23 +266,24 @@
   font-size: min(18vw, 30svh);
   line-height: 0.92;
   color: transparent;
-  background: radial-gradient(circle, var(--ink) 0 2.3px, transparent 2.8px) 0 0 / 15px 19px, var(--paper);
+  background: radial-gradient(circle, var(--lime) 0 2.4px, transparent 2.9px) 0 0 / 15px 19px, var(--ink);
   -webkit-background-clip: text;
   background-clip: text;
 }
 @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .cl-lit-word { color: var(--paper); background: none; }
+  .cl-lit-word { color: var(--ink); background: none; }
 }
-.cl-city-p { margin: 1.4rem 0 0; display: grid; gap: 0.3rem; justify-items: end; font-size: clamp(1rem, 1.7vw, 1.45rem); }
-.cl-city-p strong { color: var(--lime); font-weight: 700; }
+.cl-city-p { margin: 1.4rem 0 0; display: grid; gap: 0.3rem; justify-items: end; font-size: clamp(1.15rem, 2vw, 1.8rem); }
+.cl-city-p strong { color: var(--blue); font-weight: 700; }
 
 /* 5 · recognition: a star turns over a clear night sky */
-.cl-award-act { --h: 118svh; --bg: #05071a; --c: var(--paper); }
+.cl-award-act { --h: 118svh; --bg: #eef1ff; }
 .cl-award { display: grid; justify-items: center; text-align: center; gap: 1.2rem; }
 .cl-award-star-wrap { width: min(17vw, 26svh); aspect-ratio: 1; color: var(--lime); }
+.cl-award-star { stroke: var(--ink); stroke-width: 0.7; stroke-linejoin: round; paint-order: stroke; }
 .cl[data-live] .cl-award-star-wrap { rotate: calc(var(--y, 0) * 110deg); }
 .cl-award-star { width: 100%; height: 100%; display: block; }
-.cl-award-k { margin: 0.4rem 0 0.2rem; font-family: var(--font-heading); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lime); }
+.cl-award-k { margin: 0.4rem 0 0.2rem; font-family: var(--font-heading); font-size: 1rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); }
 .cl-award-t {
   margin: 0.4rem 0 0;
   font-family: var(--font-display);
@@ -288,10 +292,10 @@
   font-size: min(8vw, 17svh);
   line-height: 0.95;
 }
-.cl-award-d { margin: 1rem auto 0; max-width: 46ch; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.5; opacity: 0.85; }
+.cl-award-d { margin: 1rem auto 0; max-width: 46ch; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.5; opacity: 0.85; }
 
 /* 6 · the certifications are a constellation */
-.cl-certs { --h: 132svh; --bg: #05071a; --c: var(--paper); padding-bottom: 30svh; }
+.cl-certs { --h: 132svh; --bg: linear-gradient(180deg, #eef1ff, #fbf3dc); padding-bottom: 30svh; }
 .cl-certs-in { display: grid; justify-items: center; gap: clamp(1.2rem, 3vw, 2.4rem); }
 .cl-certs-t {
   margin: 0;
@@ -305,7 +309,7 @@
 
 .cl-const { position: relative; width: min(100%, 1180px); aspect-ratio: 16 / 8; text-align: left; }
 .cl-const-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.cl-const-lines polyline { fill: none; stroke: rgba(215, 255, 63, 0.42); stroke-width: 1.2; }
+.cl-const-lines polyline { fill: none; stroke: rgba(13, 34, 238, 0.4); stroke-width: 1.4; }
 .cl-const-tall { display: none; }
 .cl-const-list { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
 .cl-const-list li {
@@ -315,13 +319,13 @@
   display: flex;
   gap: 0.8rem;
   align-items: flex-start;
-  max-width: 17vw;
-  translate: -0.95rem -0.95rem;
+  max-width: 18vw;
+  translate: -1.1rem -1.1rem;
 }
-.cl-const-star { flex: none; width: 1.9rem; height: 1.9rem; color: var(--lime); }
+.cl-const-star { flex: none; width: 2.2rem; height: 2.2rem; color: var(--lime); stroke: var(--ink); stroke-width: 0.9; stroke-linejoin: round; paint-order: stroke; }
 .cl-const-text { display: grid; gap: 0.2rem; padding-top: 0.15rem; }
-.cl-const-text strong { font-family: var(--font-heading); font-size: clamp(0.78rem, 1.15vw, 1.02rem); line-height: 1.25; font-weight: 700; }
-.cl-const-text span { font-size: clamp(0.7rem, 0.95vw, 0.85rem); opacity: 0.7; }
+.cl-const-text strong { font-family: var(--font-heading); font-size: clamp(0.95rem, 1.45vw, 1.3rem); line-height: 1.25; font-weight: 700; }
+.cl-const-text span { font-size: clamp(0.82rem, 1.1vw, 1rem); opacity: 0.7; }
 
 /* ---------- phones: the same story, recomposed ----------
    Copy sits in the top of the screen, the landmarks in the lower half. */
@@ -333,7 +337,7 @@
   .cl-sun { translate: calc(var(--sunx) * 100vw - 50%) calc(var(--suny) * -34svh); }
   .cl-moon { translate: calc(var(--moonx) * 100vw - 50%) calc(var(--moony) * -32svh); }
   .cl-body { width: 9vmin; }
-  .cl-lede { margin-top: 1.1rem; }
+  .cl-lede { margin-top: 1.1rem; font-size: 1.2rem; }
   .cl-school { --h: 112svh; }
   .cl-reel { font-size: min(34vw, 20svh); }
   .cl-school-list { gap: 0.9rem; }
@@ -355,8 +359,8 @@
   .cl-const-wide { display: none; }
   .cl-const-tall { display: block; }
   .cl-const-list li { left: var(--mx); top: var(--my); max-width: calc(100% - var(--mx) - 2.4rem); }
-  .cl-const-text strong { font-size: 0.92rem; }
-  .cl-const-text span { font-size: 0.78rem; }
+  .cl-const-text strong { font-size: 1.02rem; }
+  .cl-const-text span { font-size: 0.86rem; }
 }
 
 /* a little more room between the copy and the near ridge on short screens */

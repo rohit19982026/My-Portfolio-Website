@@ -14,8 +14,9 @@ import type { CSSProperties } from "react";
 
 const INK = "#0d0d0f";
 const LIME = "#d7ff3f";
-const PAPER = "#efeee8";
+const PAPER = "#fffefb";
 const AMBER = "#f59e0b";
+const BLUE = "#0d22ee";
 
 const f = (n: number) => n.toFixed(1);
 
@@ -203,15 +204,15 @@ function DataCity({ id }: { id: string }) {
       </defs>
       {TOWERS_CITY.map((t) => (
         <g key={t.x}>
-          <rect x={t.x} y={-t.h} width={t.w} height={t.h} fill="#07091c" stroke={LIME} strokeOpacity={0.5} strokeWidth={2} />
+          <rect x={t.x} y={-t.h} width={t.w} height={t.h} fill={INK} />
           <rect x={t.x + 5} y={-t.h + 12} width={t.w - 10} height={t.h - 16} fill={`url(#${id})`} opacity={0.75} />
         </g>
       ))}
       {arcs.map((d, i) => (
-        <path key={i} className="cl-arc" d={d} pathLength={1} fill="none" stroke={LIME} strokeWidth={3} strokeLinecap="round" />
+        <path key={i} className="cl-arc" d={d} pathLength={1} fill="none" stroke={BLUE} strokeWidth={3.5} strokeLinecap="round" />
       ))}
       {roofs.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={7} fill={LIME} />
+        <circle key={i} cx={x} cy={y} r={8} fill={LIME} stroke={INK} strokeWidth={2.5} />
       ))}
     </g>
   );
@@ -244,13 +245,13 @@ export function BackScene({ v }: { v: Variant }) {
     <div className={`cl-scene cl-${v}`}>
       <Svg v={v} className="cl-layer cl-stars">
         {stars(v).map((s, i) => (
-          <circle key={i} cx={s.x} cy={s.y} r={s.r} fill={PAPER} />
+          <circle key={i} cx={s.x} cy={s.y} r={s.r} fill={BLUE} />
         ))}
       </Svg>
       <Svg v={v} className="cl-layer cl-far">
         <g transform={`translate(${-w * 0.1},0)`}>
-          <path d={far.fill} fill={INK} fillOpacity={0.2} />
-          <path className="cl-rim cl-rim-night" d={far.crest} fill="none" stroke={LIME} strokeWidth={2.5} />
+          <path d={far.fill} fill={BLUE} fillOpacity={0.15} />
+          <path className="cl-rim cl-rim-night" d={far.crest} fill="none" stroke={BLUE} strokeWidth={2.5} />
           <path className="cl-rim cl-rim-dusk" d={far.crest} fill="none" stroke={AMBER} strokeWidth={2.5} />
         </g>
       </Svg>
@@ -276,8 +277,8 @@ export function BackScene({ v }: { v: Variant }) {
       </Svg>
       <Svg v={v} className="cl-layer cl-mid">
         <g transform={`translate(${-w * 0.1},0)`}>
-          <path d={mid.fill} fill={INK} fillOpacity={0.62} />
-          <path className="cl-rim cl-rim-night" d={mid.crest} fill="none" stroke={LIME} strokeWidth={2.5} />
+          <path d={mid.fill} fill={BLUE} fillOpacity={0.3} />
+          <path className="cl-rim cl-rim-night" d={mid.crest} fill="none" stroke={BLUE} strokeWidth={2.5} />
           <path className="cl-rim cl-rim-dusk" d={mid.crest} fill="none" stroke={AMBER} strokeWidth={2.5} />
         </g>
       </Svg>
@@ -297,8 +298,8 @@ export function FrontScene({ v }: { v: Variant }) {
     <div className={`cl-scene cl-${v}`}>
       <Svg v={v} className="cl-layer cl-near">
         <g transform={`translate(${-w * 0.1},0)`}>
-          <path d={near.fill} fill={INK} />
-          <path className="cl-rim cl-rim-night" d={near.crest} fill="none" stroke={LIME} strokeWidth={3} />
+          <path d={near.fill} fill={BLUE} />
+          <path d={near.crest} fill="none" stroke={LIME} strokeWidth={4} />
         </g>
       </Svg>
       <Svg v={v} className="cl-layer cl-handoff">
