@@ -2,12 +2,17 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-ink">
-      <div className="mb-6 font-display text-8xl text-outline-lime">404</div>
-      <h1 className="font-heading text-2xl font-bold text-white mb-3">
+    <div className="min-h-dvh flex flex-col items-center justify-center text-center px-6 bg-surface">
+      <div
+        className="mb-6 font-display text-8xl tracking-[0.02em]"
+        style={{ color: "transparent", WebkitTextStroke: "2px var(--color-accent)" }}
+      >
+        404
+      </div>
+      <h1 className="heading-display text-[clamp(1.6rem,5vw,2.25rem)] text-fg mb-3">
         This page doesn&apos;t exist
       </h1>
-      <p className="text-white/65 mb-8 max-w-sm leading-relaxed">
+      <p className="text-fg/65 mb-8 max-w-sm leading-relaxed">
         The link may be out of date, or the page has been removed.
       </p>
       <Link

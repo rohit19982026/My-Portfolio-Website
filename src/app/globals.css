@@ -11,6 +11,22 @@
      achievement/warning hue exists, so this stays isolated on purpose. */
   --color-award: #f59e0b;
 
+  /* Semantic role tokens — layered on top of the 6 literal brand colors
+     above, which never change with theme (they back self-contained chips
+     like lime-fill buttons, where contrast is internal to the chip, not
+     page-dependent). These are what responds to the light/dark toggle;
+     default values here are LIGHT mode, the site's default look. Dark
+     overrides live in the `:root[data-theme="dark"]` block below. */
+  --color-surface:       #efeee8;                 /* = paper */
+  --color-surface-alt:   #ffffff;                 /* = white */
+  --color-card:          rgba(13, 13, 15, .035);
+  --color-card-border:   rgba(13, 13, 15, .12);
+  --color-card-subtle:   rgba(13, 13, 15, .02);
+  --color-divider:       rgba(13, 13, 15, .14);
+  --color-fg:            #0d0d0f;                 /* = ink */
+  --color-accent:        #0d22ee;                 /* = blue */
+  --color-diagram-card:  #e4e2da;
+
   --radius-card: 4px;
   --radius-pill: 999px;
 
@@ -25,31 +41,285 @@
   --font-signature: var(--font-caveat);
 }
 
+/* Mix ratios for blending a fixed per-agent/per-category brand accent
+   (lime/purple/blue/teal/amber/pink — chosen to pop on dark navy cards)
+   toward the theme's own foreground color when that accent is used as
+   small flat text rather than a self-contained chip or an icon. Light
+   mode's values (the default below) darken each bright accent just
+   enough to stay legible as text on a light card; the dark-mode
+   override reproduces the original, unmixed flat-accent look exactly
+   (100%/80%), so switching to dark via the toggle is unchanged from
+   before light became the default.
+   --accent-text-mix:    flat "accent as text" spots (tags, badges, the
+                          per-agent cadence/built-with text).
+   --accent-eyebrow-mix: the diagram SKILL/OUTPUT eyebrow labels. */
+:root {
+  --accent-text-mix: 40%;
+  --accent-eyebrow-mix: 35%;
+}
+:root[data-theme="dark"] {
+  --accent-text-mix: 100%;
+  --accent-eyebrow-mix: 80%;
+}
+:root[data-theme="light"] {
+  --accent-text-mix: 40%;
+  --accent-eyebrow-mix: 35%;
+}
+
+/* Theme: light is the unconditional default (the bare `:root` values
+   above and below) — every visitor sees it until they toggle. The
+   `data-theme` attribute, set by the toggle in ui/ThemeToggle.tsx and
+   persisted to localStorage, is the only thing that switches it; there
+   is no OS/browser `prefers-color-scheme` detection, by design, so the
+   default is the same for everyone. `:root[data-theme="light"]` just
+   restates the bare defaults, for a visitor switching back from dark. */
+:root[data-theme="dark"] {
+  --color-surface:      #0d0d0f;
+  --color-surface-alt:  #070b18;
+  --color-card:         rgba(255, 255, 255, .035);
+  --color-card-border:  rgba(255, 255, 255, .1);
+  --color-card-subtle:  rgba(255, 255, 255, .02);
+  --color-divider:      rgba(255, 255, 255, .14);
+  --color-fg:           #ffffff;
+  --color-accent:       #d7ff3f;
+  --color-diagram-card: #10152b;
+}
+
+:root[data-theme="light"] {
+  --color-surface:      #efeee8;
+  --color-surface-alt:  #ffffff;
+  --color-card:         rgba(13, 13, 15, .035);
+  --color-card-border:  rgba(13, 13, 15, .12);
+  --color-card-subtle:  rgba(13, 13, 15, .02);
+  --color-divider:      rgba(13, 13, 15, .14);
+  --color-fg:           #0d0d0f;
+  --color-accent:       #0d22ee;
+  --color-diagram-card: #e4e2da;
+}
+
 * { box-sizing: border-box; }
 
 body {
-  background-color: var(--color-ink);
-  color: var(--color-white);
+  background-color: var(--color-surface);
+  color: var(--color-fg);
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
+  /* notch / rounded-corner insets (viewport-fit=cover), mainly landscape */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* In-page jumps (and no-JS / reduced-motion hash jumps) stop below the sticky
+   header instead of under it. */
+section[id], footer[id] { scroll-margin-top: 4rem; }
+
+/* Lenis housekeeping: it sets these classes on <html>. */
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+a, button, [role="button"] { touch-action: manipulation; }
 
 /* Scroll progress bar */
 .scroll-progress {
   position: fixed; top: 0; left: 0;
-  height: 2px; width: 0%;
-  background: var(--color-lime);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--color-lime) 60%, transparent);
+  height: 2px; width: 100%;
+  transform: scaleX(0); transform-origin: left center;
+  will-change: transform;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 60%, transparent);
   z-index: 200;
-  transition: width 0.1s linear;
   pointer-events: none;
+}
+
+
+/* ==========================================================================
+   Motion system. One vocabulary for the whole page (see lib/flow.ts):
+   everything moves backlog -> in progress -> done as it crosses a reading
+   line, scrubbed by scroll position. Each rule only applies once the engine
+   has switched on (.flow-on), and every variable defaults to "complete", so
+   with no JS or with reduced motion the page is simply its finished self.
+   ========================================================================== */
+
+/* ink: text that darkens as it is read */
+.flow-on [data-flow="ink"] {
+  opacity: calc(0.14 + 0.86 * var(--p, 1));
+}
+
+/* dev: blocks and cards develop from grey to colour, settling into place */
+.flow-on [data-flow="dev"] {
+  opacity: calc(0.22 + 0.78 * var(--p, 1));
+  scale: calc(0.955 + 0.045 * var(--p, 1));
+  filter: grayscale(calc(1 - var(--p, 1)));
+  transform-origin: 50% 85%;
+}
+.flow-on [data-flow="dev"][data-flow-done] {
+  opacity: 1; scale: none; filter: none;
+}
+/* Phones: no filter work while scrolling, just a quick opacity + scale settle. */
+@media (max-width: 767px), (pointer: coarse) {
+  .flow-on [data-flow="dev"] { filter: none; }
+}
+
+/* head: words rise out of a mask in sequence, and the accent word, drawn
+   hollow, fills with colour left to right a little later and higher up */
+.hw {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.05em 0.16em;
+  margin: 0 -0.05em -0.16em;
+}
+.hw-in { display: inline-block; }
+.flow-on [data-flow="head"] .hw-in {
+  translate: 0 calc((1 - clamp(0, (var(--p, 1) * (var(--n, 4) + 2.4) - var(--i, 0)) / 2.4, 1)) * 112%);
+}
+.flow-on [data-flow="head"][data-flow-done] .hw { overflow: visible; }
+.flow-on [data-flow="head"][data-flow-done] .hw-in { translate: none; }
+
+.fw { position: relative; display: inline-block; color: var(--ac); }
+.fw-fill {
+  display: none;
+  position: absolute; left: 0; top: 0; white-space: nowrap;
+  clip-path: inset(-10% calc((1 - var(--f, 1)) * 100%) -10% 0);
+}
+.flow-on [data-flow="head"] .fw-fill { display: block; }
+.flow-on [data-flow="head"] .fw-base {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ac);
+}
+.flow-on [data-flow="head"][data-flow-done] .fw-base {
+  color: var(--ac);
+  -webkit-text-stroke: 0;
+}
+.flow-on [data-flow="head"][data-flow-done] .fw-fill { display: none; }
+/* eyebrow rule draws with the heading */
+.fe-line { transform-origin: left center; }
+.flow-on [data-flow="head"] .fe-line { scale: var(--p, 1) 1; }
+
+/* sheet: a section arrives like a page being laid down. Its top corners start
+   rounded and relax square, and the whole sheet widens a hair as it lands.
+   The corners are two small caps painted over the section's top edge, and the
+   widening is a transform, so the cost is a few pixels of paint plus one
+   composited layer. (Clipping the section itself repainted every pixel of
+   these very tall sections on each frame.) */
+.flow-on [data-flow="sheet"] {
+  --_o: calc(1 - var(--s, 1));
+  --_r: calc(var(--_o) * 44px);
+  position: relative;
+  transform-origin: 50% 0;
+  scale: calc(0.982 + 0.018 * var(--s, 1));
+}
+.flow-on [data-flow="sheet"]:not([data-flow-done]) { will-change: transform; }
+.flow-on [data-flow="sheet"][data-flow-done] { scale: none; }
+/* very tall sections only round their corners: promoting a multi-screen layer
+   to widen it costs more than the effect is worth */
+.flow-on [data-flow="sheet"][data-sheet="corners"] { scale: none; will-change: auto; }
+.flow-on [data-flow="sheet"]::before,
+.flow-on [data-flow="sheet"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  width: var(--_r);
+  height: var(--_r);
+  pointer-events: none;
+}
+.flow-on [data-flow="sheet"]::before {
+  left: 0;
+  background: radial-gradient(circle at 100% 100%, transparent calc(var(--_r) - 0.5px), var(--color-surface) var(--_r));
+}
+.flow-on [data-flow="sheet"]::after {
+  right: 0;
+  background: radial-gradient(circle at 0% 100%, transparent calc(var(--_r) - 0.5px), var(--color-surface) var(--_r));
+}
+.flow-on [data-flow="sheet"][data-flow-done]::before,
+.flow-on [data-flow="sheet"][data-flow-done]::after { display: none; }
+
+/* chapter spine (components/scroll/ChapterSpine.tsx) */
+.spine-fill { transform-origin: top; scale: 1 var(--prog, 0); }
+.spine-head { translate: -50% calc(var(--prog, 0) * 56vh - 50%); }
+
+/* drift: depth. Illustrations travel a little against their card as it crosses
+   the screen, so a card reads as a window with something behind the glass. */
+.flow-on .art-drift {
+  translate: 0 calc(var(--y, 0) * 18px);
+  rotate: calc(var(--y, 0) * var(--tilt, 1) * 2.5deg);
+}
+.flow-on .swoosh-drift {
+  translate: calc(var(--y, 0) * -26px) calc(var(--y, 0) * 70px);
+}
+
+/* intro: one-time hero choreography, plain CSS so it needs no JS to start.
+   Lines rise out of a mask, secondary content is printed on with a wipe,
+   the portrait opens upward like an arch. */
+@keyframes intro-rise {
+  from { translate: 0 112%; }
+  to   { translate: 0 0; }
+}
+@keyframes intro-wipe {
+  from { clip-path: inset(-4% 100% -4% -2%); translate: -0.4rem 0; }
+  to   { clip-path: inset(-4% -2% -4% -2%); translate: 0 0; }
+}
+@keyframes intro-arch {
+  from { clip-path: inset(100% -25% -25% -25% round 999px 999px 0 0); }
+  to   { clip-path: inset(-25% -25% -25% -25% round 999px 999px 0 0); }
+}
+@keyframes intro-stamp {
+  0%   { scale: 0; }
+  70%  { scale: 1.35; }
+  100% { scale: 1; }
+}
+.intro-line { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.intro-line > span { display: block; }
+.flow-on [data-intro="rise"] { animation: intro-rise 1.05s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); }
+.flow-on [data-intro="wipe"] { animation: intro-wipe 0.9s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); }
+.flow-on [data-intro="arch"] { animation: intro-arch 1.35s cubic-bezier(0.65, 0, 0.15, 1) backwards; animation-delay: 0.25s; }
+@keyframes intro-grow {
+  from { scale: 1 0; }
+  to   { scale: 1 1; }
+}
+.flow-on [data-intro="grow"] { transform-origin: top; animation: intro-grow 0.9s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); }
+/* slots for markup that can't take an inline style */
+[data-d="0"] { --d: 0; }
+[data-d="1"] { --d: 1; }
+[data-d="2"] { --d: 2; }
+[data-d="3"] { --d: 3; }
+[data-d="4"] { --d: 4; }
+[data-d="5"] { --d: 5; }
+[data-d="6"] { --d: 6; }
+[data-d="7"] { --d: 7; }
+[data-d="8"] { --d: 8; }
+[data-d="9"] { --d: 9; }
+[data-d="10"] { --d: 10; }
+[data-d="11"] { --d: 11; }
+[data-d="12"] { --d: 12; }
+[data-d="13"] { --d: 13; }
+[data-d="14"] { --d: 14; }
+[data-d="15"] { --d: 15; }
+[data-d="16"] { --d: 16; }
+.flow-on [data-intro="stamp"] { display: inline-block; animation: intro-stamp 0.55s var(--ease-signature) backwards; animation-delay: calc(var(--d, 0) * 85ms + 150ms); transform-origin: 50% 85%; }
+
+/* Balanced line breaks for every heading, so no heading ends on a lone word. */
+h1, h2, h3, h4 { text-wrap: balance; }
+
+/* Shared section/page headline spacing (Anton, uppercase): open the letters up
+   a touch, widen word gaps and give lines room so heavy glyphs never touch. */
+.heading-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.014em;
+  word-spacing: 0.04em;
+  line-height: 1.08;
 }
 
 /* Hollow, stroke-only display letterforms — the signature headline treatment */
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 2px var(--color-white);
+  -webkit-text-stroke: 2px var(--color-fg);
 }
 .text-outline-ink {
   color: transparent;
@@ -104,8 +374,8 @@ body {
 }
 
 @keyframes pulse-dot {
-  0%,100% { opacity:1; box-shadow:0 0 0 0 color-mix(in srgb, var(--color-lime) 40%, transparent); }
-  50%     { opacity:.7; box-shadow:0 0 0 6px color-mix(in srgb, var(--color-lime) 0%, transparent); }
+  0%,100% { opacity:1; box-shadow:0 0 0 0 color-mix(in srgb, var(--color-accent) 40%, transparent); }
+  50%     { opacity:.7; box-shadow:0 0 0 6px color-mix(in srgb, var(--color-accent) 0%, transparent); }
 }
 
 /* Same ring-pulse as pulse-dot but keyed off currentColor, so a single
@@ -117,16 +387,48 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-ink); }
-::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-lime) 35%, transparent); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-lime) 55%, transparent); }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-accent) 35%, transparent); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-accent) 55%, transparent); }
 
-::selection { background: color-mix(in srgb, var(--color-lime) 35%, transparent); color: var(--color-ink); }
-:focus-visible { outline: 2px solid var(--color-lime); outline-offset: 2px; }
+/* Blue-on-selection (light mode's default accent) needs white text —
+   blue is dark/saturated enough that ink text on it reads poorly. Dark
+   mode's lime selection needs the opposite, so it gets its own
+   ink-text override below. */
+::selection { background: color-mix(in srgb, var(--color-accent) 35%, transparent); color: var(--color-white); }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+:root[data-theme="dark"] ::selection { color: var(--color-ink); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Auto carousel: progress fill for the active pill and the counter digit roll */
+@keyframes carouselFill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+@keyframes carouselDigit {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes carouselFill { from { width: 100%; } to { width: 100%; } }
+}
+
+/* foil seal on the case studies */
+@keyframes foilSheen {
+  0% { transform: translateX(-130%); }
+  55%, 100% { transform: translateX(260%); }
+}
+@keyframes foilHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[foilSheen_7s_ease-in-out_infinite\] { animation: none; }
 }

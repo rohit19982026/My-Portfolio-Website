@@ -1,9 +1,11 @@
 export const navLinks = [
+  { label: "Resume", href: "#resume" },
   { label: "Experience", href: "#experience" },
-  // "Work" (case studies) nav link removed while that section is unmounted
-  // — see the comment in src/app/page.tsx.
+  { label: "Cases", href: "#case-studies" },
+  { label: "Credentials", href: "#credentials" },
   { label: "Tools", href: "#tools" },
   { label: "Stack", href: "#stack" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const skillMarqueeItems = [
@@ -15,8 +17,9 @@ export const skillMarqueeItems = [
   "KANTATA",
   "CLAUDE",
   "N8N",
-  "PSM1 CERTIFIED",
+  "CLAUDE CERTIFIED ARCHITECT",
+  "PSM I CERTIFIED",
   "ITIL FOUNDATION",
-  "$3.5M+ DELIVERED",
-  "6 PROGRAMS RUN",
+  "$250K–$1M PROGRAM BUDGETS",
+  "4–5 CONCURRENT PROGRAMS",
 ];

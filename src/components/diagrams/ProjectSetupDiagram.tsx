@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertTriangle, Bot, Calendar, CheckCircle2, FileText, Users, Zap } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import FlowDiagram, { type Step } from "./FlowDiagram";
@@ -28,7 +30,7 @@ const steps: Step[] = [
       ],
     ],
   },
-  { kind: "step", id: "ready", label: "Program Ready", sub: "15 minutes, day one", tone: "card", icon: CheckCircle2 },
+  { kind: "step", id: "ready", label: "Program Ready", sub: "Signed SOW to live program", tone: "card", icon: CheckCircle2 },
   { kind: "step", id: "end", marker: "end", label: "", sub: "" },
 ];
 

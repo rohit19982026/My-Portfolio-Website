@@ -1,140 +1,365 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import {
+  AnimatePresence,
+  motion,
+  MotionConfig,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
+import Image from "next/image";
 import SectionHeading from "./ui/SectionHeading";
+import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
-const alpha = (token: string, pct: number) =>
-  `color-mix(in srgb, var(--color-${token}) ${pct}%, transparent)`;
+// Each icon image has its own colour; the card's wash and icon tile take that colour, so they match.
+const ICON_HUE: Record<number, string> = { 1: "#6d3fe0", 2: "#d98a00", 3: "#1f9d4a", 4: "#e0334f", 5: "#2563eb", 6: "#6d3fe0", 7: "#1f9d4a" };
 
-const roles = [
+type Point = { title: string; text: string; icon: number };
+
+const roles: {
+  period: string;
+  current: boolean;
+  titleMain: string;
+  titleSub?: string;
+  org: string;
+  points: Point[];
+  tags: string[];
+}[] = [
   {
-    period: "DEC 2022 — PRESENT",
-    title: "Technical Project Manager — Data & AI",
-    org: "phData · Snowflake Elite Partner · Bengaluru",
+    period: "DEC 2022 TO PRESENT",
     current: true,
-    color: "white",
-    bullets: [
-      "Run PMO governance across 4–6 concurrent Data Platform and AI programs — fixed-price migrations, T&M, managed retainers, $3.5M+ combined contract value. RACI, WBS, decision logs, and budget variance stay current from kickoff to close; risk gets flagged two sprints before it becomes a real problem.",
-      "17 external approvals had stalled for weeks with no owner watching them. I put a name and a day-count on each, visible to the people who could actually clear them — the wait stopped being invisible, and so did the delay.",
-      "A managed retainer's UAT was running 11 days. I traced exactly where the pipeline stalled and put the specific items, owners, and wait times in front of the people who could act. The cycle dropped to 4 days.",
-      "I'm the bridge between the engineering team and the client's business leadership — weekly status, quarterly business reviews, and scoping new programs with Principal Architects during presales, then carrying them through delivery myself. Those relationships have grown single-program work into multi-year platform engagements more than once.",
-      "Built AI agents (Glean + Claude + n8n) for monthly financial reviews, weekly status briefs, and new program setup. Saves 5+ hours a week. Won phData's Innovation Award.",
-      "Scoped 10+ programs end to end. One client pushed 14 scope additions beyond the agreed contract. Every one formally logged and resolved — none became free work.",
+    titleMain: "Technical Project Manager",
+    titleSub: "Data & AI",
+    org: "phData · Bengaluru",
+    points: [
+      { title: "Program Delivery", icon: 1, text: "Manage four to five data and AI programs at once for US Fortune 500 clients, each with its own engineering team." },
+      { title: "Requirements and Planning", icon: 2, text: "Review client requirements and effort estimates with the Principal Architects before the SOW is signed. Then break the agreed scope into a WBS, RACI and Jira backlog for the engineering team." },
+      { title: "Sprint and Risk Management", icon: 3, text: "Run sprint planning, stand-ups and retrospectives for each program. Keep the risk register and decision log current, and track progress and blockers in Jira dashboards." },
+      { title: "Dependency Management", icon: 2, text: "Chase client-side dependencies such as system access, data and approvals from kickoff onward." },
+      { title: "Client and Stakeholder Management", icon: 4, text: "Main contact for client VPs, directors and C-level sponsors, with weekly status updates across a 10–12 hour India–US time gap. Keep sales, engineering, architects and leadership aligned on goals, status and open risks." },
+      { title: "Scope and Expectations", icon: 5, text: "Set expectations on scope, timelines and trade-offs, and work out a middle ground with engineering when a request isn't feasible as asked. Assess mid-project changes against the SOW and raise change orders for out-of-scope work." },
+      { title: "Commercial and Reporting", icon: 6, text: "Run monthly invoicing, forecast vs actuals and burn-down for each program, and flag budget variance early. Use QBRs to review challenges with sponsors and look for follow-on work." },
+      { title: "Process Automation", icon: 7, text: "Built a Jira dependency tracker with Google Apps Script and the Jira REST API. It pulls active stories on a schedule, maps which tickets block each other and counts days blocked. Its reports took the place of one team's weekly status meeting." },
+      { title: "AI Agents", icon: 1, text: "Built three PMO agents with Glean and Claude. One sets up new projects from signed SOWs in Salesforce and sends client status updates by email and Slack, one posts a weekly program-health summary to Slack, and one checks billing data at month-end and lists each inconsistency with an action item. They save an estimated 4–8 hours of PMO work a week, and the work earned phData's Innovation Award." },
     ],
-    tags: ["PMO Governance", "RACI · WBS · Risk Register", "Financial Management", "C-Level Stakeholder Mgmt", "Presales-to-Delivery", "Account Expansion", "Scrum Master (PSM1)", "AI Agent Builder"],
+    tags: ["Program Delivery", "Budget Tracking", "Stakeholder Management", "Change Orders", "Scrum (PSM I)", "AI Agents"],
   },
   {
-    period: "AUG 2020 — NOV 2022",
-    title: "Change Manager — IT Infrastructure",
-    org: "British Telecom (BT) · Kolkata",
+    period: "AUG 2020 TO NOV 2022",
     current: false,
-    color: "lime",
-    bullets: [
-      "Change governance for critical UK telecom infrastructure — formal review, rollback planning, approval gating for 50+ changes a year. 99.9% uptime.",
-      "Owned all stakeholder communication around change events: brief before, live status during, report after.",
+    titleMain: "Change Manager",
+    titleSub: "IT Infrastructure",
+    org: "British Telecom (BT) · Kolkata",
+    points: [
+      { title: "Change Delivery", icon: 3, text: "Managed infrastructure changes across network, systems and application teams under ITIL." },
+      { title: "Risk and Rollback", icon: 2, text: "Took each change from intake through risk assessment, rollback planning and post-implementation review." },
+      { title: "CAB and Communication", icon: 5, text: "Presented changes at Change Advisory Board sessions to senior IT leadership, and ran stakeholder communication for each change window." },
     ],
-    tags: ["ITIL Foundation", "CAB Governance", "99.9% Uptime", "Change Risk Assessment", "Cross-functional Communication"],
+    tags: ["ITIL Foundation", "CAB Governance", "Change Risk Assessment", "Stakeholder Communication"],
   },
 ];
 
-export default function Trajectory() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+// How long each role lasted, in the same words as the intro line below.
+const TENURE = ["Almost four years", "About two years"];
 
+const INK = "#0d0d1f";
+const MUTED = "#5f6477";
+const BLUE = "#3d36f5";
+const ACCENT = "#6d3fe0";
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+/** A number on the rail. Its fill comes from the same progress value as the line, at the node's own position. */
+function Node({ n, t, fill }: { n: number; t: number; fill: MotionValue<number> }) {
+  // opacity only, so the fill never repaints
+  const on = useTransform(fill, (v) => clamp((v - t) / 0.02 + 0.5, 0, 1));
+  const off = useTransform(on, (v) => 1 - v);
+  const label = String(n).padStart(2, "0");
   return (
-    <section id="experience" className="py-24 bg-ink">
-      <div className="max-w-6xl mx-auto px-6">
-        <SectionHeading
-          eyebrow="01 / EXPERIENCE"
-          segments={[
-            { text: "Where I've worked.", style: "fill" },
-            { text: "What I delivered.", style: "lime" },
-          ]}
-          className="mb-5"
+    <span
+      aria-hidden
+      className="absolute left-0 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white font-sans text-[12.5px] font-bold tabular-nums sm:top-5 sm:h-11 sm:w-11"
+      style={{ border: "1.5px solid #d9d2ee" }}
+    >
+      <motion.span className="absolute -inset-[1.5px] rounded-full" style={{ background: ACCENT, opacity: on }} />
+      <motion.span className="relative" style={{ color: "#8f8aa8", opacity: off }}>
+        {label}
+      </motion.span>
+      <motion.span className="absolute inset-0 flex items-center justify-center text-white" style={{ opacity: on }}>
+        {label}
+      </motion.span>
+    </span>
+  );
+}
+
+function Card({
+  point,
+  i,
+  hue,
+  t,
+  fill,
+  liRef,
+}: {
+  point: Point;
+  i: number;
+  hue: string;
+  t: number;
+  fill: MotionValue<number>;
+  liRef: (el: HTMLLIElement | null) => void;
+}) {
+  const onMove = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--sx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--sy", `${e.clientY - r.top}px`);
+  };
+  return (
+    <li ref={liRef} data-flow="dev" className="relative pl-[3.4rem] sm:pl-[4.2rem]">
+      <Node n={i + 1} t={t} fill={fill} />
+      <div
+        onPointerMove={onMove}
+        className="group relative overflow-hidden rounded-[1.25rem] border bg-white p-4 transition-[transform,box-shadow,border-color] duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--hue)_38%,#e6e2f2)] hover:shadow-[0_1px_2px_rgba(13,13,31,.05),0_18px_34px_-18px_rgba(13,13,31,.2)] active:scale-[0.995] sm:rounded-[1.4rem] sm:p-6"
+        style={
+          {
+            "--hue": hue,
+            "--sx": "50%",
+            "--sy": "0%",
+            borderColor: "rgba(13,13,31,.08)",
+            boxShadow: "0 1px 2px rgba(13,13,31,.04), 0 12px 28px -20px rgba(13,13,31,.16)",
+            color: INK,
+          } as CSSProperties
+        }
+      >
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{ background: `radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, ${hue} 7%, #ffffff), transparent 55%)` }}
         />
-        <p ref={ref} className="text-[16px] text-white/70 max-w-xl leading-relaxed mb-14">
-          Six years in delivery. Three and a half at phData running data and AI programs,
-          two and a half before that at British Telecom running change for UK network
-          infrastructure.
-        </p>
-
-        <div className="relative">
-          <div
-            className="absolute left-0 top-2 bottom-2 w-px"
-            style={{ background: `linear-gradient(180deg, var(--color-lime), ${alpha("lime", 10)})` }}
-          />
-
-          <div className="space-y-12">
-            {roles.map((role, i) => (
-              <motion.div
-                key={role.title}
-                initial={{ opacity: 0, x: -24 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.1 + i * 0.2 }}
-                className="pl-8 relative"
-              >
-                <div
-                  className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-ink -translate-x-1/2"
-                  style={{ backgroundColor: `var(--color-${role.color})` }}
-                />
-
-                <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                  <p className="font-heading text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">
-                    {role.period}
-                  </p>
-                  {role.current && (
-                    <span
-                      className="px-2 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wide"
-                      style={{ background: alpha("lime", 12), color: "var(--color-lime)", border: `1px solid ${alpha("lime", 30)}` }}
-                    >
-                      CURRENT
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="font-heading text-[19px] font-bold leading-snug text-white mb-1">
-                  {role.title}
-                </h3>
-                <p
-                  className="font-heading text-[11px] font-bold uppercase tracking-wider mb-5"
-                  style={{ color: `var(--color-${role.color})` }}
-                >
-                  {role.org}
-                </p>
-
-                <ul className="space-y-3 mb-5">
-                  {role.bullets.map((b, bi) => (
-                    <li key={bi} className="flex gap-3 text-[13.5px] text-white/70 leading-relaxed">
-                      <span
-                        className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full"
-                        style={{ backgroundColor: `var(--color-${role.color})` }}
-                      />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-2">
-                  {role.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-heading text-[10px] px-2.5 py-1 rounded-full font-semibold"
-                      style={{
-                        border: `1px solid ${alpha(role.color, 25)}`,
-                        backgroundColor: alpha(role.color, 8),
-                        color: `var(--color-${role.color})`,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ background: `radial-gradient(260px circle at var(--sx) var(--sy), color-mix(in srgb, ${hue} 8%, transparent), transparent 65%)` }}
+        />
+        <div className="relative grid grid-cols-[1fr_auto] items-start gap-x-4 sm:gap-x-6">
+          <div className="min-w-0">
+            <h4 className="font-sans text-[16.5px] font-bold leading-snug tracking-[-0.02em] sm:text-[19px]">
+              {point.title}
+            </h4>
+            <p className="mt-1.5 font-sans text-[14px] leading-relaxed sm:text-[15px]" style={{ color: MUTED }}>
+              {point.text}
+            </p>
           </div>
+          <span
+            className="block h-10 w-10 shrink-0 overflow-hidden rounded-xl transition-transform duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] sm:h-16 sm:w-16 sm:rounded-2xl"
+            style={{ border: `1px solid color-mix(in srgb, ${hue} 16%, #ffffff)` }}
+          >
+            <Image
+              src={`/experience/icon-${point.icon}.png`}
+              alt=""
+              width={106}
+              height={106}
+              className="h-full w-full select-none object-cover"
+            />
+          </span>
         </div>
       </div>
-    </section>
+    </li>
+  );
+}
+
+function Role({ role, index }: { role: (typeof roles)[number]; index: number }) {
+  const reduce = useReducedMotion();
+  const listRef = useRef<HTMLOListElement>(null);
+  const liRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [ts, setTs] = useState<number[]>(() => role.points.map(() => 2));
+  const [active, setActive] = useState(0);
+
+  // the line's tip sits on one fixed line of the screen, 60% down; each node is lit
+  // by the same value, so a node fills exactly as the line reaches its centre
+  const { scrollYProgress: fill } = useScroll({ target: listRef, offset: ["start 60%", "end 60%"] });
+
+  const measure = useCallback(() => {
+    const ol = listRef.current;
+    if (!ol || !ol.offsetHeight) return;
+    const next = liRefs.current.map((li) => (li ? (li.offsetTop + (li.offsetWidth > 700 ? 40 : 36)) / ol.offsetHeight : 2));
+    setTs((prev) => (prev.length === next.length && prev.every((v, k) => Math.abs(v - next[k]) < 0.001) ? prev : next));
+  }, []);
+
+  useLayoutEffect(() => {
+    measure();
+    const ol = listRef.current;
+    if (!ol) return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(ol);
+    return () => ro.disconnect();
+  }, [measure]);
+
+  useMotionValueEvent(fill, "change", (v) => {
+    const n = ts.filter((t) => v >= t).length;
+    setActive((prev) => (prev === n ? prev : n));
+  });
+
+  const shown = Math.max(1, active);
+
+  return (
+    <article className="grid gap-9 lg:grid-cols-[minmax(0,330px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
+      <header data-flow="ink" className="lg:sticky lg:top-28 lg:self-start">
+        <div className="flex flex-wrap items-center gap-3">
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: "#5b5878" }}>
+            {role.period}
+          </p>
+          {role.current && (
+            <span
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.14em]"
+              style={{ background: "#f1ecff", color: ACCENT }}
+            >
+              <span className="relative flex h-1.5 w-1.5">
+                {!reduce && (
+                  <motion.span
+                    className="absolute inset-0 rounded-full"
+                    style={{ background: ACCENT }}
+                    animate={{ scale: [1, 3], opacity: [0.35, 0] }}
+                    transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut" }}
+                  />
+                )}
+                <span className="relative h-1.5 w-1.5 rounded-full" style={{ background: ACCENT }} />
+              </span>
+              Current
+            </span>
+          )}
+        </div>
+        <p className="mt-1.5 font-sans text-[13px]" style={{ color: MUTED }}>
+          {TENURE[index]}
+        </p>
+        <h3
+          className="mt-4 font-sans font-extrabold leading-[1.1] tracking-[-0.03em]"
+          style={{ fontSize: "clamp(1.6rem, 5vw, 2.1rem)", color: INK }}
+        >
+          {role.titleMain}
+          {role.titleSub && (
+            <>
+              <br />
+              <span style={{ color: ACCENT }}>{role.titleSub}</span>
+            </>
+          )}
+        </h3>
+        <p className="mt-3 font-sans text-[11.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: "#6b6880" }}>
+          {role.org}
+        </p>
+
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {role.tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full px-3 py-1.5 font-sans text-[11.5px] font-semibold"
+              style={{ background: "#f7f5fd", border: "1px solid #e9e4f7", color: "#5a3bc0" }}
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+
+        {/* where you are in the list, following the scroll */}
+        <div className="mt-7 hidden items-baseline gap-2 lg:flex" aria-hidden>
+          <span className="relative inline-block h-[1.4em] w-[1.6em] overflow-hidden font-sans text-[20px] font-bold tabular-nums" style={{ color: INK }}>
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.span
+                key={shown}
+                className="absolute inset-0 block"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: EASE }}
+              >
+                {String(shown).padStart(2, "0")}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+          <span className="font-sans text-[13px] font-medium tabular-nums" style={{ color: "#9a96b3" }}>
+            / {String(role.points.length).padStart(2, "0")}
+          </span>
+        </div>
+      </header>
+
+      <ol ref={listRef} className="relative grid gap-4 sm:gap-5">
+        {/* the rail: a hairline, and a line in the brand colour that follows the scroll exactly */}
+        <span aria-hidden className="absolute bottom-0 left-[19px] top-0 w-px sm:left-[21.5px]" style={{ background: "#e6e1f4" }} />
+        <motion.span
+          aria-hidden
+          className="absolute bottom-0 left-[18.5px] top-0 w-[2px] origin-top sm:left-[21px]"
+          style={{ scaleY: fill, background: `linear-gradient(180deg, ${ACCENT}, ${BLUE})` }}
+        />
+        {role.points.map((p, i) => (
+          <Card
+            key={p.title}
+            point={p}
+            i={i}
+            hue={ICON_HUE[p.icon] ?? ACCENT}
+            t={ts[i] ?? 2}
+            fill={fill}
+            liRef={(el) => {
+              liRefs.current[i] = el;
+            }}
+          />
+        ))}
+      </ol>
+    </article>
+  );
+}
+
+
+export default function Trajectory() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <section
+        id="experience"
+        data-flow="sheet" data-sheet="corners"
+        className="relative overflow-x-clip py-20 sm:py-24"
+        style={{
+          background: "radial-gradient(60% 38% at 92% 0%, rgba(109,63,224,.055), transparent 70%), #fefdfd",
+          color: INK,
+          borderTop: "2px solid rgba(13,13,31,0.06)",
+        }}
+      >
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-12 sm:mb-16">
+            <SectionHeading
+              variant="sans"
+              eyebrow="02 / Experience"
+              segments={[
+                { text: "Role history.", style: "fill" },
+                { text: "What shipped.", style: "lime" },
+              ]}
+              ink={INK}
+              accent={BLUE}
+              fontSize="clamp(2.1rem, 8.5vw, 3.5rem)"
+            />
+            <p data-flow="ink" className="mt-4 max-w-xl font-sans text-[16px] leading-relaxed" style={{ color: MUTED }}>
+              Six years in IT delivery: almost four at phData running data and AI programs, and two
+              before that managing infrastructure changes at British Telecom.
+            </p>
+          </div>
+
+          {roles.map((role, i) => (
+            <div key={role.titleMain}>
+              {i > 0 && (
+                <div className="my-14 flex items-center gap-4 sm:my-20" aria-hidden>
+                  <span className="h-px flex-1" style={{ background: "linear-gradient(90deg, transparent, #d9d3ee)" }} />
+                  <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em]" style={{ color: "#6b6880" }}>
+                    Before phData
+                  </span>
+                  <span className="h-px flex-1" style={{ background: "linear-gradient(270deg, transparent, #d9d3ee)" }} />
+                </div>
+              )}
+              <Role role={role} index={i} />
+            </div>
+          ))}
+        </div>
+      </section>
+    </MotionConfig>
   );
 }

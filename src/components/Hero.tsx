@@ -1,155 +1,106 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { SiJira, SiClaude, SiCursor } from "react-icons/si";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
+import Script from "next/script";
 import {
-  Terminal,
   Briefcase,
-  Layers,
-  Gauge,
-  Cpu,
   Plus,
-  Mail,
-  BrainCircuit,
-  TrendingUp,
-  Sparkle,
-  ArrowUpRight,
-  ChevronRight,
-  CalendarDays,
+  MessageCircle,
+  Cpu,
   Users,
-  Brain,
   BarChart3,
   Network,
+  Zap,
+  Clock,
+  Target,
+  Bot,
+  CheckCircle2,
+  FileText,
+  DollarSign,
+  Bell,
+  ArrowRight,
 } from "lucide-react";
+import ToolsPanel from "./ToolsPanel";
 import HeroPortrait from "./HeroPortrait";
-import GithubMark from "./icons/GithubMark";
-import SalesforceMark from "./icons/SalesforceMark";
-import SlackMark from "./icons/SlackMark";
-import GleanMark from "./icons/GleanMark";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+/** Intro stagger slot (see `data-intro` in globals.css). */
+const D = (n: number) => ({ "--d": n }) as React.CSSProperties;
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-} as const;
+const NAVY = "var(--color-surface-alt)";
+const CARD_BG = "var(--color-card)";
+const CARD_BORDER = "var(--color-card-border)";
 
-const fadeBlurUp = {
-  hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.65, ease: EASE },
-  },
-} as const;
-
-const pop = {
-  hidden: { opacity: 0, y: 10, scale: 0.94 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: "spring", stiffness: 260, damping: 22 },
-  },
-} as const;
-
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
-
-const tools = [
-  { name: "Jira", Icon: SiJira, color: "#2684FF" },
-  { name: "GitHub", Icon: GithubMark, color: "#ffffff" },
-  { name: "Salesforce", Icon: SalesforceMark, color: "#00A1E0" },
-  { name: "Claude", Icon: SiClaude, color: "#D97757" },
-  { name: "Claude Code", Icon: Terminal, color: "#D97757", accentBorder: true },
-  { name: "Cursor", Icon: SiCursor, color: "#e5e7eb" },
-  { name: "Glean", Icon: GleanMark, color: "#8B7FF0" },
-  { name: "Slack", Icon: SlackMark, color: null },
-] as const;
-
-const stats = [
-  { Icon: Briefcase, value: "4.5+", label: "Years of Experience", color: "#8B7FF0" },
-  { Icon: Layers, value: "15+", label: "Enterprise Projects", color: "#5B9BF0" },
-  { Icon: Gauge, value: "100%", label: "On-time Delivery", color: "#e5e7eb" },
-  { Icon: Cpu, value: "AI", label: "Automation First Mindset", color: "var(--color-lime)" },
-] as const;
-
-// Mobile-only stats per the new reference design — deliberately its own
-// array, not a mobile-styling variant of `stats` above: two of the four
-// values genuinely differ ("$3.5M+ Impact Delivered" and "100% Client
-// Focused" replace "On-time Delivery" and "Automation First Mindset").
-// "$3.5M+" already appears verified elsewhere on the site (skillMarqueeItems
-// in src/lib/content.ts), so it isn't a new/fabricated figure.
+// Impact stats — shared by both breakpoints. Every value is a figure
+// stated on the resume (years in delivery, program count, team size,
+// PMO hours saved), not an estimated or rounded-up one.
 const mobileStats = [
-  { Icon: CalendarDays, value: "4.5+", label: "Years Experience" },
-  { Icon: Layers, value: "15+", label: "Enterprise Projects" },
-  { Icon: TrendingUp, value: "$3.5M+", label: "Impact Delivered" },
-  { Icon: Users, value: "100%", label: "Client Focused" },
+  { Icon: Clock, value: "6 Yrs", label: "IT Delivery" },
+  { Icon: Target, value: "4–5", label: "Concurrent Programs" },
+  { Icon: CheckCircle2, value: "12–15", label: "Engineers / Program" },
+  { Icon: Zap, value: "4–8 Hrs", label: "Hours Saved / Week" },
 ] as const;
 
-// Floating icon badges over the mobile photo — new to this design, no
-// existing precedent to extend (desktop's floating cards are rectangular
-// info cards, not small icon badges).
-const photoBadges = [
-  { Icon: Brain, position: "-left-3 -top-3" },
-  { Icon: BarChart3, position: "-right-3 -top-3" },
-  { Icon: Network, position: "-right-3 bottom-8" },
+// 4-tile capability strip — a leaner icon+label restatement of the bio,
+// per feedback that paragraph-heavy sections read as too bulky. Mobile
+// renders label only; desktop has room for the description too. Each
+// description is a condensed version of an actual resume bullet, not a
+// generic restatement.
+const capabilityTiles = [
+  {
+    label: "Own Program Delivery",
+    description: "From signed SOW to final handover, across four or five programs at a time.",
+    Icon: Users,
+    color: "var(--color-accent)",
+  },
+  {
+    label: "Run Financial Governance",
+    description: "Monthly invoicing and burn tracking, so budget problems show up early.",
+    Icon: Target,
+    color: "#8B7FF0",
+  },
+  {
+    label: "Build PMO Agents",
+    description: "Glean and Claude agents that write the reports and run the checks.",
+    Icon: Bot,
+    color: "#8B7FF0",
+  },
+  {
+    label: "Bridge Client & Engineering",
+    description: "Client VPs in the US, engineers in India, and me keeping them in sync.",
+    Icon: Cpu,
+    color: "var(--color-accent)",
+  },
 ] as const;
 
-function ToolIcon({ tool }: { tool: (typeof tools)[number] }) {
-  const { Icon, color, name } = tool;
-  const accentBorder = "accentBorder" in tool && tool.accentBorder;
-  return (
-    <div
-      className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 text-center"
-      style={{
-        background: CARD_BG,
-        border: `1px solid ${accentBorder ? "color-mix(in srgb, #D97757 45%, transparent)" : CARD_BORDER}`,
-      }}
-    >
-      <Icon size={26} color={color ?? undefined} style={{ color: color ?? undefined }} />
-      <span className="font-heading text-[11px] sm:text-[12px] text-white/70">{name}</span>
-    </div>
-  );
-}
+// Two capability cards — condensed checklists standing in for a
+// paragraph description. Items are the resume's own Skills lines
+// (Core Skills / AI & Automation), not a restatement.
+const capabilityCards = [
+  {
+    title: "Core Skills",
+    Icon: Briefcase,
+    color: "var(--color-accent)",
+    items: ["Stakeholder Management", "Cross-Team Coordination", "Executive Communication", "Risk & Budget Control"],
+  },
+  {
+    title: "AI & Automation",
+    Icon: Bot,
+    color: "#8B7FF0",
+    items: ["Claude & Claude Code", "Glean Agents", "n8n", "MCP · Jira REST API"],
+  },
+] as const;
 
-function StatIcon({ stat, active, delay }: { stat: (typeof stats)[number]; active: boolean; delay: number }) {
-  const { Icon, value, label, color } = stat;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={active ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay }}
-      className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left px-2"
-    >
-      <Icon
-        size={30}
-        strokeWidth={1.6}
-        style={{ color, filter: `drop-shadow(0 0 6px color-mix(in srgb, ${color} 65%, transparent))` }}
-      />
-      <p className="font-heading text-[26px] sm:text-[28px] font-bold text-white leading-none mt-1">{value}</p>
-      <p className="text-[12.5px] text-white/55 leading-snug">{label}</p>
-    </motion.div>
-  );
-}
-
-function AIEnthusiastCard({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`flex items-center gap-3.5 rounded-2xl px-4 py-3.5 ${className}`}
-      style={{ background: "rgba(8,12,26,0.75)", border: `1px solid ${CARD_BORDER}`, backdropFilter: "blur(6px)" }}
-    >
-      <BrainCircuit size={30} strokeWidth={1.5} style={{ color: "var(--color-lime)", filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-lime) 60%, transparent))" }} />
-      <div>
-        <p className="font-heading text-[13.5px] font-bold text-white leading-snug">AI Enthusiast</p>
-        <p className="text-[11.5px] text-white/55 leading-snug">Builder of AI Agents &amp; Automations</p>
-      </div>
-    </div>
-  );
-}
+// Automation pipeline mini-teaser; the full 6 agent architectures live
+// in the Tools section further down the page.
+const automateSteps = [
+  { label: "Project Initiation", Icon: FileText },
+  { label: "Delivery Workflows", Icon: Network },
+  { label: "Financial Reviews", Icon: DollarSign },
+  { label: "Reporting & Updates", Icon: BarChart3 },
+  { label: "Notifications & Briefs", Icon: Bell },
+] as const;
 
 function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
   const { Icon, value, label } = stat;
@@ -158,300 +109,261 @@ function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
       <Icon
         size={22}
         strokeWidth={1.6}
-        style={{ color: "var(--color-lime)", filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-lime) 55%, transparent))" }}
+        style={{ color: "var(--color-accent)", filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 55%, transparent))" }}
       />
-      <p className="font-heading text-[17px] font-bold text-white leading-none mt-0.5">{value}</p>
-      <p className="text-[10px] text-white/55 leading-tight">{label}</p>
+      <p className="font-heading text-[17px] font-bold text-fg leading-none mt-0.5">{value}</p>
+      <p className="text-[10px] text-fg/55 leading-tight">{label}</p>
     </div>
   );
 }
 
-function PhotoBadge({ Icon, position }: { Icon: (typeof photoBadges)[number]["Icon"]; position: string }) {
+// Credly's public badge-sharing embed — a fixed-size (150x270) iframe
+// that embed.js swaps the div for once it loads. The script only needs
+// to be included once per page; it scans the whole DOM for matching
+// data-share-badge-id divs, so this single component instance covers
+// both the desktop and mobile badge placements below.
+function CredlyBadge({ badgeId }: { badgeId: string }) {
   return (
     <div
-      className={`absolute ${position} z-10 flex items-center justify-center w-11 h-11 rounded-xl`}
-      style={{ background: "rgba(8,12,26,0.85)", border: `1px solid ${CARD_BORDER}`, backdropFilter: "blur(6px)" }}
+      className="inline-flex flex-col items-center gap-2 rounded-2xl p-3 shrink-0"
+      style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
     >
-      <Icon size={18} strokeWidth={1.75} className="text-white/80" />
-    </div>
-  );
-}
-
-// The new mobile design's larger "AI Enthusiast" card wants a photorealistic
-// glowing-brain image (per the reference mockup) — no such asset exists in
-// this repo and this sandboxed environment blocks outbound fetches to
-// external image hosts (confirmed: even a plain curl to example.com is
-// rejected at the proxy), so sourcing one wasn't possible here. This is a
-// stylized stand-in using the same dot/glow language already established
-// site-wide (DOT_PATTERN, FlowDiagram's port-dots) instead of a real photo —
-// swap in a sourced image later by replacing this function's contents with
-// a positioned <Image>.
-function BrainGraphic() {
-  const dots = [
-    { top: "22%", left: "30%", size: 5, delay: 0 },
-    { top: "62%", left: "22%", size: 4, delay: 0.4 },
-    { top: "38%", left: "68%", size: 4, delay: 0.8 },
-    { top: "72%", left: "60%", size: 5, delay: 1.2 },
-  ];
-  return (
-    <div
-      className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden flex items-center justify-center"
-      style={{
-        background: "radial-gradient(60% 60% at 50% 50%, rgba(215,255,63,0.16) 0%, transparent 75%)",
-        border: `1px solid ${CARD_BORDER}`,
-      }}
-    >
-      <Brain
-        size={40}
-        strokeWidth={1.3}
-        style={{ color: "var(--color-lime)", filter: "drop-shadow(0 0 8px color-mix(in srgb, var(--color-lime) 60%, transparent))" }}
+      <p className="font-heading text-[9px] font-bold uppercase tracking-[0.14em] text-accent whitespace-nowrap">
+        Verified Credential
+      </p>
+      <div
+        data-iframe-width="150"
+        data-iframe-height="270"
+        data-share-badge-id={badgeId}
+        data-share-badge-host="https://www.credly.com"
       />
-      {dots.map((d, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            top: d.top,
-            left: d.left,
-            width: d.size,
-            height: d.size,
-            background: "var(--color-lime)",
-            boxShadow: "0 0 6px var(--color-lime)",
-            animation: `pulse-dot 2.2s ease-in-out ${d.delay}s infinite`,
-          }}
-        />
-      ))}
     </div>
   );
 }
 
 export default function Hero() {
-  const panelRef = useRef(null);
-  const panelInView = useInView(panelRef, { once: true, margin: "-80px" });
+  // Desktop depth: as the hero scrolls away its planes separate. The dot
+  // texture and portrait (far/mid) trail the page, the headline (near) leads
+  // it slightly. Mapped over the hero's own exit so it resolves cleanly, and
+  // flat for reduced motion. The phone hero below has no scroll parallax.
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const dotsY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 140]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 110]);
+  const headlineY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -36]);
 
   return (
-    <section className="relative overflow-hidden pt-[64px]" style={{ background: NAVY }}>
+    <section ref={sectionRef} className="relative overflow-hidden pt-[64px]" style={{ background: NAVY }}>
       {/* Faint site-wide dot texture */}
-      <div
+      <motion.div
         className="absolute inset-0 pointer-events-none opacity-40"
         style={{
           backgroundImage: "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)",
           backgroundSize: "26px 26px",
+          y: dotsY,
         }}
         aria-hidden="true"
       />
 
-      {/* Desktop/tablet hero. The new mobile-only hero below has genuinely
-          different content (headline, bio, stats, AI card), not just
-          different styling, so it's a full sibling block rather than
-          threaded through this one via props.
-
-          Like the mobile block, this pulls back the section's own
-          pt-[64px] — sized long ago to clear a fixed navbar, but Navbar is
-          `sticky`, not `fixed`, so it already occupies its own space in
-          normal flow and that padding was pure dead space stacked on top
-          of it. -mt-16 cancels it back out, pt-10 restores real breathing
-          room (this block only ever renders at lg:+, since it's
-          `hidden lg:block`, so the old py-14/sm:py-16 steps below that
-          were dead weight — lg:py-20 was the only value that ever actually
-          applied). */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={container}
+      {/* Desktop hero (lg and up). Its top part is the same design as the
+          phone and tablet hero below (headline, subtitle, arch portrait),
+          just scaled up; underneath it keeps a roomier layout for the
+          capability strip, cards, pipeline and tools. The block pulls back
+          the section's pt-[64px] with -mt-16 because the navbar is sticky,
+          not fixed, and already takes its own space. */}
+      <div
         className="hidden lg:block max-w-6xl mx-auto px-6 -mt-16 pt-10 pb-20 relative z-10"
       >
-        <div className="grid grid-cols-[1.3fr_1fr] lg:grid-cols-[1.15fr_420px] gap-x-6 sm:gap-x-10 gap-y-8 items-start lg:items-stretch">
-          {/* Text column */}
-          <div>
-            <motion.div
-              variants={pop}
-              className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 rounded-pill mb-6 whitespace-nowrap"
-              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-            >
+        <div className="grid grid-cols-[1.15fr_1fr] items-start gap-x-12 xl:gap-x-20">
+          {/* Same hero as the phone and tablet layout: tight Inter headline
+              with the lime full stop, the quieter two-tone line under it,
+              and the arch portrait. Only the scale changes here. */}
+          <motion.div style={{ y: headlineY }}>
+            <h1 className="font-sans">
               <span
-                className="w-2 h-2 rounded-full bg-lime shrink-0"
-                style={{ boxShadow: "0 0 8px var(--color-lime)", animation: "pulse-dot 2s ease-in-out infinite" }}
-              />
-              <span className="font-heading text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.16em] text-white/75">
-                Technical Project Manager
+                className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
+                style={{ fontSize: "clamp(3.4rem, 5.8vw, 5.6rem)" }}
+              >
+                <span className="intro-line"><span data-intro="rise" style={D(0)}>Technical</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(1)}>Project</span></span>
+                <span className="intro-line">
+                  <span data-intro="rise" style={D(2)}>
+                    Manager<span data-intro="stamp" style={D(5)} className="text-lime">.</span>
+                  </span>
+                </span>
               </span>
-            </motion.div>
+              <span
+                className="mt-[1.1em] block font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
+                style={{ fontSize: "clamp(1.4rem, 2.3vw, 2.1rem)" }}
+              >
+                <span className="intro-line"><span data-intro="rise" style={D(3)}>Data, analytics, and</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(4)}><span className="font-semibold text-accent">AI programs</span> for</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(5)}>enterprise clients.</span></span>
+              </span>
+            </h1>
 
-            <motion.p variants={fadeBlurUp} className="font-heading text-[16px] sm:text-[19px] text-white/70 mb-1">
-              Hi, I&apos;m
-            </motion.p>
-
-            <motion.h1
-              variants={fadeBlurUp}
-              className="font-heading font-bold leading-[1.1] mb-4"
-              style={{ fontSize: "clamp(1.75rem, 5.2vw, 3.25rem)" }}
+            <p
+              data-intro="wipe"
+              style={D(7)}
+              className="mt-8 mb-7 max-w-[540px] text-[17px] leading-[1.6] text-fg/65"
             >
-              <span className="block text-white">Rohit</span>
-              <span className="block text-lime">Kumar Singh</span>
-            </motion.h1>
+              I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
+              clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
+              Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
+              take the repetitive reporting off my plate.
+            </p>
 
-            <motion.p
-              variants={fadeBlurUp}
-              className="pl-3 mb-5 font-heading font-medium text-lime leading-snug"
-              style={{ borderLeft: "3px solid var(--color-lime)", fontSize: "clamp(13px, 1.6vw, 16px)" }}
-            >
-              Driving Data. Building AI. Automating Tomorrow.
-            </motion.p>
-
-            <motion.p
-              variants={fadeBlurUp}
-              className="leading-[1.6] text-white/65 max-w-[520px] mb-6"
-              style={{ fontSize: "clamp(13.5px, 1.6vw, 16px)" }}
-            >
-              I lead enterprise data &amp; AI programs at phData —{" "}
-              <span className="text-lime font-semibold">platform migrations</span>, data warehouses,{" "}
-              <span className="text-lime font-semibold">AI deployments</span> — and build{" "}
-              <span className="text-lime font-semibold">AI agents</span> that automate my own repetitive work.
-            </motion.p>
-
-          </div>
-
-          {/* Photo column — comes right after the text column in DOM order
-              so grid auto-placement lands it in row 1's second column; the
-              CTA row below (col-span-2) then correctly starts a fresh row
-              instead of grid auto-placement pushing the photo down. At lg:
-              the CTA row collapses back to column 1 only, so the photo
-              needs row-span-2 there to keep covering column 2 alongside
-              it — otherwise that column-2 cell next to the CTA row would
-              sit empty, the exact bug being fixed, just moved to desktop. */}
-          <div className="relative h-[300px] sm:h-[360px] lg:h-auto lg:row-span-2">
-            <HeroPortrait variant="desktop" />
-
-            {/* Floating cards — desktop only */}
-            <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="hidden lg:block absolute -right-6 top-10 w-[230px]"
-            >
-              <AIEnthusiastCard />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.05 }}
-              className="hidden lg:block absolute -right-2 bottom-6 w-[190px] rounded-2xl px-4 py-3.5"
-              style={{ background: "rgba(8,12,26,0.75)", border: `1px solid ${CARD_BORDER}`, backdropFilter: "blur(6px)" }}
-            >
-              <div className="flex items-center gap-1.5 mb-2">
-                <TrendingUp size={15} style={{ color: "var(--color-lime)" }} />
-                <p className="font-heading text-[12.5px] font-bold text-white leading-snug">
-                  Turning Ideas<br />Into Impact
-                </p>
-              </div>
-              <div className="flex items-end gap-1 h-6">
-                {[3, 6, 10, 14, 20].map((h, i) => (
-                  <span key={i} className="w-1.5 rounded-sm bg-lime" style={{ height: `${h}px` }} />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* AI card + CTAs — a separate grid row spanning BOTH columns below
-              lg:, so it gets the section's full width to lay out in rather
-              than being trapped in the text column's ~55% while the photo
-              column (fixed height, often shorter than the text column on
-              tablet-ish widths) leaves dead space beside it. At lg: it
-              collapses back to the text column's width, matching the
-              reference where CTAs sit under the paragraph, not full width. */}
-          <div className="col-span-2 lg:col-span-1">
-            <motion.div variants={fadeBlurUp} className="lg:hidden mb-6 max-w-[420px]">
-              <AIEnthusiastCard />
-            </motion.div>
-
-            <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 max-w-[420px] lg:max-w-none">
+            <div data-intro="wipe" style={D(8)} className="flex flex-row flex-wrap items-start gap-3">
               <a
                 href="#experience"
                 className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
               >
-                See My Work <span aria-hidden="true">→</span>
+                <Briefcase size={15} /> View My Work
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
+                className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-fg/25 text-fg font-heading font-bold text-[13px] px-6 py-3.5 hover:border-accent hover:text-accent transition"
               >
-                <Mail size={15} /> Let&apos;s Talk
+                <MessageCircle size={15} /> Let&apos;s Talk
               </a>
-            </motion.div>
-          </div>
+              <p className="basis-full pt-2 font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/55">
+                My certification credentials via Credly
+              </p>
+              <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
+              <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
+            </div>
+          </motion.div>
+
+          <motion.div style={{ y: portraitY }} className="w-full max-w-[460px] justify-self-end">
+            <div data-intro="arch" className="relative aspect-[5/7] w-full">
+              <HeroPortrait />
+            </div>
+          </motion.div>
         </div>
 
-        {/* Tools & platforms — full width */}
-        <div className="mt-12 lg:mt-16">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="h-px flex-1" style={{ background: "rgba(255,255,255,0.14)" }} />
-            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-white/45 shrink-0">
-              Trusted Tools &amp; Platforms
-            </p>
-            <span className="h-px flex-1" style={{ background: "rgba(255,255,255,0.14)" }} />
-          </div>
-
-          <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-9 gap-3">
-            {tools.map((tool) => (
-              <ToolIcon key={tool.name} tool={tool} />
-            ))}
-            <button
-              type="button"
-              aria-label="More tools"
-              className="flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4 sm:py-5 col-span-2 sm:col-span-1 mx-auto w-full"
-              style={{ border: "1px dashed rgba(255,255,255,0.25)", background: "transparent" }}
-            >
-              <Plus size={22} className="text-white/50" />
-              <span className="font-heading text-[11px] sm:text-[12px] text-white/50">+ More</span>
-            </button>
-          </div>
-        </div>
-
-        {/* The numbers */}
-        <motion.div
-          ref={panelRef}
-          initial={{ opacity: 0, y: 24 }}
-          animate={panelInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-10 lg:mt-14 rounded-2xl p-6 sm:p-8"
+        {/* 4-tile capability strip — icon + title + description, standing
+            in for another paragraph of "what I do." */}
+        <div
+          data-flow="dev"
+          className="mt-12 lg:mt-14 rounded-2xl overflow-hidden"
           style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
         >
-          <p className="flex items-center gap-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-lime mb-7">
-            The Numbers <Sparkle size={13} />
-          </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8">
-            {stats.map((stat, i) => (
+          <div className="grid grid-cols-4">
+            {capabilityTiles.map((tile, i) => (
               <div
-                key={stat.label}
-                className={[
-                  "relative pl-5 -ml-5 lg:pl-6 lg:-ml-0",
-                  i % 2 === 1 ? "border-l border-white/10" : "border-l border-transparent",
-                  i >= 2 ? "border-t border-white/10 pt-6 -mt-px" : "",
-                  "lg:border-t-0 lg:pt-0 lg:mt-0",
-                  i === 0 ? "lg:border-l-0" : "lg:border-l lg:border-white/10",
-                ].join(" ")}
+                key={tile.label}
+                className="p-6"
+                style={i > 0 ? { borderLeft: `1px solid ${CARD_BORDER}` } : undefined}
               >
-                <StatIcon stat={stat} active={panelInView} delay={0.15 + i * 0.1} />
+                <div
+                  className="w-11 h-11 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    background: `color-mix(in srgb, ${tile.color} 16%, transparent)`,
+                    border: `1px solid color-mix(in srgb, ${tile.color} 32%, transparent)`,
+                  }}
+                >
+                  <tile.Icon size={20} strokeWidth={1.75} style={{ color: tile.color }} />
+                </div>
+                <p className="font-heading text-[15px] font-bold text-fg mb-1.5 leading-snug">{tile.label}</p>
+                <p className="text-[12.5px] text-fg/55 leading-snug">{tile.description}</p>
               </div>
             ))}
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
 
-      {/* Mobile-only hero — new reference design (role-first headline, a
-          different bio, a lime ring-glow photo with floating badges, an
-          all-lime single-row stats strip, a larger AI Enthusiast card, and
-          a horizontal-scroll tools row). Genuinely different content from
-          desktop above, not a restyle of it — see Hero.tsx's own git
-          history/plan notes for why that's an intentional, stated tradeoff
-          of a mobile-only redesign rather than an oversight. */}
+        {/* Two capability cards (left) + a combined automation-pipeline
+            and impact-stats panel (right), matching the reference's
+            near-even split between the checklist pair and the panel. */}
+        <div className="grid lg:grid-cols-2 gap-5 mt-6">
+          <div data-flow="dev" className="relative grid grid-cols-2 gap-5">
+            {capabilityCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-2xl p-6"
+                style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+              >
+                <div className="flex items-center gap-2.5 mb-2">
+                  <card.Icon size={18} style={{ color: card.color }} />
+                  <p className="font-heading text-[13px] font-bold uppercase tracking-wide text-fg leading-tight">
+                    {card.title}
+                  </p>
+                </div>
+                <span className="block w-8 h-0.5 rounded-full mb-4" style={{ background: card.color }} />
+                <ul className="space-y-2.5">
+                  {card.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-[13px] text-fg/65 leading-snug">
+                      <CheckCircle2 size={15} className="shrink-0 mt-[1px]" style={{ color: card.color }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center"
+              style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
+              aria-hidden="true"
+            >
+              <Plus size={16} className="text-fg/50" />
+            </div>
+          </div>
+
+          <div data-flow="dev" className="rounded-2xl p-6" style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}>
+            <p className="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-accent mb-6">
+              Automation Pipeline
+            </p>
+            <div className="flex items-start justify-between mb-7">
+              {automateSteps.map((step, i) => (
+                <div key={step.label} className="flex items-center flex-1 last:flex-none">
+                  <div className="flex flex-col items-center gap-2 text-center w-[74px] shrink-0">
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
+                    >
+                      <step.Icon size={18} strokeWidth={1.75} className="text-fg/80" />
+                    </div>
+                    <p className="text-[10.5px] leading-tight text-fg/55">{step.label}</p>
+                  </div>
+                  {i < automateSteps.length - 1 && (
+                    <ArrowRight size={14} className="text-fg/25 shrink-0 mx-0.5 mt-5" />
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-4 gap-3 pt-6" style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
+              {mobileStats.map((stat) => (
+                <div key={stat.label} className="flex flex-col items-center text-center gap-1.5">
+                  <stat.Icon
+                    size={22}
+                    strokeWidth={1.6}
+                    style={{
+                      color: "var(--color-accent)",
+                      filter: "drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 55%, transparent))",
+                    }}
+                  />
+                  <p className="font-heading text-[20px] font-bold text-fg leading-none whitespace-nowrap">{stat.value}</p>
+                  <p className="text-[10.5px] text-fg/55 leading-tight">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+
+        <div data-flow="dev" className="mt-12 lg:mt-16">
+          <ToolsPanel />
+        </div>
+      </div>
+
+      {/* Mobile-only hero — leaner, icon/pointer-driven reference design:
+          badge, punchy 2-line headline, ring-glow photo with 4 floating
+          badges, a capability tile strip, two checklist cards, a
+          condensed automation pipeline, impact stats, a trusted-by logo
+          strip, and the tools row. Genuinely different content from
+          desktop above, not a restyle of it. */}
       <div className="lg:hidden">
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={container}
+        <div
           // The section itself carries pt-[64px] (originally sized to clear
           // a fixed navbar) but the navbar is `sticky`, not `fixed` — it
           // already occupies its own space in normal flow, so that padding
@@ -460,135 +372,187 @@ export default function Hero() {
           // mobile pulls it back out with a negative margin so the headline
           // sits right under the header instead of ~90px below it.
           //
-          // No badge pill here (unlike desktop) — the headline itself opens
-          // with "I am a Technical Project Manager," so a "TECHNICAL
-          // PROJECT MANAGER" tag directly above it just restated the same
-          // words twice in a row. Desktop's badge stays: its headline is
-          // name-first ("Hi, I'm Rohit Kumar Singh"), so the badge is the
-          // only place that states the role there — no repetition.
-          className="max-w-6xl mx-auto px-6 -mt-16 pt-3 pb-14 sm:pb-16 relative z-10"
+          // Badge pill carries location + availability, not a restatement
+          // of the role title the headline already leads with directly
+          // below it.
+          className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pt-9 pb-14 sm:pb-16 relative z-10"
         >
-          <div className="grid grid-cols-[1.2fr_1fr] gap-x-4 sm:gap-x-6 items-start">
-            <motion.h1 variants={fadeBlurUp} className="font-heading leading-[1.15]">
-              <span className="block font-medium text-white/70" style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}>
-                I am a
-              </span>
-              <span className="block font-bold text-white" style={{ fontSize: "clamp(1.7rem, 8.5vw, 2.4rem)" }}>
-                Technical
-              </span>
-              <span className="block font-bold text-white" style={{ fontSize: "clamp(1.7rem, 8.5vw, 2.4rem)" }}>
-                Project Manager
+          <div className="grid grid-cols-[1fr_1.1fr] items-center gap-x-[clamp(0.75rem,3vw,2rem)]">
+            <h1 className="font-sans">
+              <span
+                className="block font-extrabold tracking-[-0.035em] leading-[1.02] text-fg"
+                style={{ fontSize: "clamp(1.75rem, 8vw, 3.4rem)" }}
+              >
+                <span className="intro-line"><span data-intro="rise" style={D(0)}>Technical</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(1)}>Project</span></span>
+                <span className="intro-line">
+                  <span data-intro="rise" style={D(2)}>
+                    Manager<span data-intro="stamp" style={D(5)} className="text-lime">.</span>
+                  </span>
+                </span>
               </span>
               <span
-                className="block font-medium text-white mt-2"
-                style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}
+                className="mt-[1.1em] block whitespace-nowrap font-medium leading-[1.25] tracking-[-0.01em] text-fg/60"
+                style={{ fontSize: "clamp(0.8rem, 4vw, 1.9rem)" }}
               >
-                and good at building
+                <span className="intro-line"><span data-intro="rise" style={D(3)}>Data, analytics, and</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(4)}><span className="font-semibold text-accent">AI programs</span> for</span></span>
+                <span className="intro-line"><span data-intro="rise" style={D(5)}>enterprise clients.</span></span>
               </span>
-              <span
-                className="block font-bold text-lime whitespace-nowrap"
-                style={{ fontSize: "clamp(0.9rem, 3.7vw, 1.15rem)" }}
-              >
-                AI agents &amp; systems
-              </span>
-              <span className="block font-medium text-white" style={{ fontSize: "clamp(0.95rem, 4vw, 1.1rem)" }}>
-                that drive impact.
-              </span>
-            </motion.h1>
+            </h1>
 
-            <motion.div variants={fadeBlurUp} className="relative h-[240px] sm:h-[320px]">
-              <HeroPortrait variant="mobile" />
-              {photoBadges.map((b, i) => (
-                <PhotoBadge key={i} Icon={b.Icon} position={b.position} />
-              ))}
-            </motion.div>
+            <div data-intro="arch" className="relative aspect-[5/7] w-full">
+              <HeroPortrait />
+            </div>
           </div>
 
-          <motion.p
-            variants={fadeBlurUp}
-            className="leading-[1.6] text-white/65 mt-5 mb-6"
-            style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
+          <p
+            data-intro="wipe"
+            style={{ ...D(7), fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
+            className="leading-[1.6] text-fg/65 mt-5 mb-6"
           >
-            I lead enterprise data &amp; AI programs at <span className="text-white font-semibold">phData</span> —
-            from <span className="text-lime font-semibold">platform migrations</span> and data warehouses to{" "}
-            <span className="text-lime font-semibold">AI deployments</span> — and build AI agents and systems that
-            automate my own repetitive work and save time for teams.
-          </motion.p>
+            I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
+            clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
+            Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
+            take the repetitive reporting off my plate.
+          </p>
 
-          <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap gap-3 mb-10">
+          <div data-intro="wipe" style={D(8)} className="flex flex-row flex-wrap items-start gap-3 mb-8">
             <a
               href="#experience"
               className="inline-flex items-center justify-center gap-2 rounded-pill bg-lime text-ink font-heading font-bold text-[13px] px-6 py-3.5 hover:brightness-95 transition"
             >
-              See My Work <ArrowUpRight size={15} />
+              <Briefcase size={15} /> View My Work
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-white/25 text-white font-heading font-bold text-[13px] px-6 py-3.5 hover:border-lime hover:text-lime transition"
+              className="inline-flex items-center justify-center gap-2 rounded-pill border-2 border-fg/25 text-fg font-heading font-bold text-[13px] px-6 py-3.5 hover:border-accent hover:text-accent transition"
             >
-              <Mail size={15} /> Let&apos;s Talk
+              <MessageCircle size={15} /> Let&apos;s Talk
             </a>
-          </motion.div>
+            <p className="basis-full pt-2 font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-fg/55">
+              My certification credentials via Credly
+            </p>
+            <CredlyBadge badgeId="a388e87c-806c-4686-ad52-6b0703386abe" />
+            <CredlyBadge badgeId="dbedad99-3dcb-4d10-b727-53574049235d" />
+          </div>
 
-          <motion.div
-            variants={fadeBlurUp}
+          {/* 4-tile capability strip — a leaner icon+label restatement of
+              "what I do," standing in for another paragraph. */}
+          <div data-flow="dev" className="grid grid-cols-4 gap-2 mb-6">
+            {capabilityTiles.map((tile) => (
+              <div key={tile.label} className="flex flex-col items-center gap-2 text-center">
+                <div
+                  className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
+                  style={{
+                    background: `color-mix(in srgb, ${tile.color} 16%, transparent)`,
+                    border: `1px solid color-mix(in srgb, ${tile.color} 32%, transparent)`,
+                  }}
+                >
+                  <tile.Icon size={19} strokeWidth={1.75} style={{ color: tile.color }} />
+                </div>
+                <p className="text-[10px] leading-tight text-fg/70 font-medium">{tile.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Two capability cards with checklists, replacing what used to
+              be a second paragraph of description. */}
+          <div data-flow="dev" className="relative grid grid-cols-2 gap-3 mb-6">
+            {capabilityCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-2xl p-4"
+                style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <card.Icon size={15} style={{ color: card.color }} />
+                  <p className="font-heading text-[10px] font-bold uppercase tracking-wide text-fg leading-tight">
+                    {card.title}
+                  </p>
+                </div>
+                <span className="block w-6 h-0.5 rounded-full mb-2.5" style={{ background: card.color }} />
+                <ul className="space-y-1.5">
+                  {card.items.map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-[10.5px] text-fg/65 leading-snug">
+                      <CheckCircle2 size={12} className="shrink-0 mt-[1.5px]" style={{ color: card.color }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full flex items-center justify-center"
+              style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
+              aria-hidden="true"
+            >
+              <Plus size={13} className="text-fg/50" />
+            </div>
+          </div>
+
+          {/* "What I automate" mini pipeline — a condensed teaser; the full
+              6 agent architectures live in the Tools section below. The
+              circle backgrounds are solid NAVY (not the translucent
+              CARD_BG) so they fully occlude the dashed connector line
+              behind them at each step, the standard "line behind, nodes
+              on top" stepper trick. */}
+          <div
+            data-flow="dev"
             className="rounded-2xl p-5 mb-6"
+            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
+          >
+            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-accent mb-4">
+              Automation Pipeline
+            </p>
+            <div className="relative mb-2">
+              <div
+                className="absolute left-5 right-5 top-5 h-px"
+                style={{ borderTop: "1.5px dashed var(--color-divider)" }}
+                aria-hidden="true"
+              />
+              <div className="relative flex items-center justify-between">
+                {automateSteps.map((step) => (
+                  <div
+                    key={step.label}
+                    className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: NAVY, border: `1px solid ${CARD_BORDER}` }}
+                  >
+                    <step.Icon size={15} strokeWidth={1.75} className="text-fg/80" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-5 gap-1">
+              {automateSteps.map((step) => (
+                <p key={step.label} className="text-[8.5px] leading-tight text-fg/55 text-center">
+                  {step.label}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div
+            data-flow="dev"
+            className="rounded-2xl p-5 mb-8"
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
             <div className="grid grid-cols-4 gap-2">
               {mobileStats.map((stat, i) => (
-                <div key={stat.label} className={i > 0 ? "border-l border-white/10 pl-2" : ""}>
+                <div key={stat.label} className={i > 0 ? "border-l border-fg/10 pl-2" : ""}>
                   <MobileStatIcon stat={stat} />
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={fadeBlurUp}
-            className="flex items-center gap-4 rounded-2xl p-5 mb-10"
-            style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-          >
-            <BrainGraphic />
-            <div className="flex-1 min-w-0">
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.1em] text-lime mb-1.5">
-                AI Enthusiast &bull; Builder &bull; Automator
-              </p>
-              <p className="text-[13px] text-white leading-snug">
-                I design AI agents and systems that turn manual work into intelligent automation.
-              </p>
-            </div>
-            <ChevronRight size={18} className="text-white/40 shrink-0" />
-          </motion.div>
-
-          <motion.div variants={fadeBlurUp}>
-            <div className="flex items-center justify-between gap-3 mb-4">
-              <p className="font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/60 whitespace-nowrap">
-                Tools &amp; Platforms I Work With
-              </p>
-              <p className="flex items-center gap-1.5 font-heading text-[10px] text-white/45 whitespace-nowrap">
-                and many more <span className="w-1.5 h-1.5 rounded-full bg-lime shrink-0" />
-              </p>
-            </div>
-            <div className="flex gap-3 overflow-x-auto -mx-6 px-6 no-scrollbar">
-              {tools.map((tool) => (
-                <div key={tool.name} className="shrink-0 w-[86px]">
-                  <ToolIcon tool={tool} />
-                </div>
-              ))}
-              <button
-                type="button"
-                aria-label="More tools"
-                className="shrink-0 w-[86px] flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-4"
-                style={{ border: "1px dashed rgba(255,255,255,0.25)", background: "transparent" }}
-              >
-                <Plus size={22} className="text-white/50" />
-                <span className="font-heading text-[11px] text-white/50">+ More</span>
-              </button>
-            </div>
-          </motion.div>
-        </motion.div>
+          <div data-flow="dev" className="mt-2">
+            <ToolsPanel />
+          </div>
+        </div>
       </div>
+
+      <Script src="https://cdn.credly.com/assets/utilities/embed.js" strategy="lazyOnload" />
     </section>
   );
 }

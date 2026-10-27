@@ -1,18 +1,13 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, type ComponentType, type CSSProperties, type ReactNode } from "react";
+import SectionHeading from "./ui/SectionHeading";
+import JourneyTimeline from "./JourneyTimeline";
+import { useId, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
+import { SiClaude } from "react-icons/si";
 import {
-  BarChart3,
-  Bell,
-  BookOpen,
-  Calendar,
-  CheckCircle2,
-  ChevronRight,
+  ChevronDown,
   ClipboardList,
   Database,
-  GraduationCap,
-  Package,
   RefreshCcw,
   ScanEye,
   Trophy,
@@ -22,9 +17,9 @@ import {
 // established this session — kept as local literals here too, matching
 // how each of those files defines its own copy rather than sharing a
 // module (a separate cleanup, not blocking here).
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
+const NAVY = "var(--color-surface-alt)";
+const CARD_BG = "var(--color-card)";
+const CARD_BORDER = "var(--color-card-border)";
 
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; style?: CSSProperties; className?: string }>;
 
@@ -56,327 +51,126 @@ function ItilBadge({ size = 15, style }: { size?: number; style?: CSSProperties 
   );
 }
 
-const education = {
-  degree: "Bachelor of Computer Application",
-  institution: "Brainware University, Kolkata",
-  year: "Jun 2020",
-  grade: "CGPA: 7.5 / 10",
-  quote: "Strong academic foundation in computer applications and problem solving.",
-};
-
 type CertItem = { name: string; issuer: string; icon: IconType; color: string };
 
 const certifications: CertItem[] = [
+  { name: "Claude Certified Architect – Foundations", issuer: "Anthropic", icon: SiClaude, color: "#D97757" },
   { name: "PSM I — Professional Scrum Master", issuer: "Scrum.org", icon: RefreshCcw, color: "#00ADEF" },
   { name: "ITIL Foundation", issuer: "Axelos", icon: ItilBadge, color: "#E6007E" },
   { name: "LandingLens Computer Vision Fundamentals", issuer: "LandingAI", icon: ScanEye, color: "#5B9BF0" },
   { name: "LandingLens on Snowflake", issuer: "LandingAI", icon: ScanEye, color: "#5B9BF0" },
-  { name: "Deeply Practical Project Management", issuer: "PMP-track", icon: ClipboardList, color: "#8B7FF0" },
+  { name: "Deeply Practical Project Management", issuer: "Course", icon: ClipboardList, color: "#8B7FF0" },
   { name: "Data Warehouse Fundamentals", issuer: "Course", icon: Database, color: "#5B9BF0" },
 ];
 
 const award = {
   title: "phData Innovation Award",
-  desc: "Recognised for building production AI agents (Glean + Claude + n8n) that automated project provisioning from signed SOWs, generated weekly program status reports, and sent automated client notifications to email and Slack.",
-  stats: [
-    { label: "Automated Provisioning", icon: Package },
-    { label: "Weekly Program Reports", icon: BarChart3 },
-    { label: "Client Notifications to Email & Slack", icon: Bell },
-  ],
+  desc: "Given for the agents that set up new projects from signed SOWs and sent weekly status reports to clients by email and Slack.",
 };
 
-function CardNumberHeader({ number, label, headerIcon }: { number: string; label: string; headerIcon?: ReactNode }) {
-  return (
-    <div className="mb-5">
-      <div className="flex items-center justify-between gap-3 mb-2.5">
-        <div className="flex items-baseline gap-2">
-          <span className="font-heading text-[18px] font-bold text-lime leading-none">{number}</span>
-          <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">{label}</span>
-        </div>
-        {headerIcon && <div className="lg:hidden">{headerIcon}</div>}
-      </div>
-      <div className="w-10 h-[3px] bg-lime rounded-full" />
-    </div>
-  );
-}
+// Claude and PSM I are already shown as verified Credly badges in the hero, so
+// only the rest (ITIL and the courses) live behind the toggle here.
+const moreCourses = certifications.slice(2);
 
-function CornerIconBadge({ Icon, accentColor = "var(--color-lime)" }: { Icon: IconType; accentColor?: string }) {
+const BOX = { background: CARD_BG, border: `1px solid ${CARD_BORDER}` } as const;
+
+function IconDisc({ color, children }: { color: string; children: ReactNode }) {
   return (
     <span
-      className="flex items-center justify-center w-9 h-9 rounded-full shrink-0"
-      style={{
-        background: `color-mix(in srgb, ${accentColor} 16%, transparent)`,
-        border: `1px solid color-mix(in srgb, ${accentColor} 35%, transparent)`,
-      }}
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+      style={{ background: `color-mix(in srgb, ${color} 16%, transparent)` }}
     >
-      <Icon size={16} style={{ color: accentColor }} />
+      {children}
     </span>
   );
 }
 
-// Directly ports HeroPortrait.tsx's mobile ring-glow backdrop recipe (two
-// concentric ring outlines, a soft centered radial glow, one small
-// dark-fill/accent-stroke "port dot" marker on the outer ring — the same
-// marker already used for edge endpoints in FlowDiagram.tsx) — generalized
-// from a hardcoded lime tint into a parameterized accentColor so Recognition
-// can reuse the exact same treatment in amber instead of inventing a
-// second visual language.
-function RingIconBadge({ Icon, accentColor = "var(--color-lime)", sparkle = false }: { Icon: IconType; accentColor?: string; sparkle?: boolean }) {
+function MoreCourses() {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
   return (
-    <div className="relative w-28 h-28 mx-auto mb-5 flex items-center justify-center" aria-hidden="true">
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          backgroundImage: `radial-gradient(circle, color-mix(in srgb, ${accentColor} 35%, transparent) 1px, transparent 1.6px)`,
-          backgroundSize: "10px 10px",
-        }}
-      />
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{ background: `radial-gradient(60% 60% at 50% 45%, color-mix(in srgb, ${accentColor} 30%, transparent) 0%, transparent 75%)` }}
-      />
-      <div className="absolute rounded-full" style={{ inset: "10%", border: `1px solid color-mix(in srgb, ${accentColor} 30%, transparent)` }} />
-      <div className="absolute rounded-full" style={{ inset: "22%", border: `1px solid color-mix(in srgb, ${accentColor} 20%, transparent)` }} />
-      <div
-        className="absolute rounded-full"
-        style={{ top: "14%", right: "18%", width: 6, height: 6, background: "#0d0d0f", border: `1.5px solid ${accentColor}` }}
-      />
-      {sparkle && (
-        <>
-          <span
-            className="absolute rounded-full"
-            style={{ top: "20%", left: "18%", width: 3, height: 3, background: accentColor, boxShadow: `0 0 6px ${accentColor}` }}
-          />
-          <span
-            className="absolute rounded-full"
-            style={{ bottom: "20%", right: "24%", width: 2.5, height: 2.5, background: accentColor, boxShadow: `0 0 5px ${accentColor}` }}
-          />
-        </>
-      )}
-      <Icon size={34} style={{ color: accentColor, filter: `drop-shadow(0 0 8px color-mix(in srgb, ${accentColor} 60%, transparent))` }} />
-    </div>
-  );
-}
-
-function CertItemRow({ item, variant }: { item: CertItem; variant: "grid" | "list" }) {
-  const { icon: Icon, color, name, issuer } = item;
-  return (
-    <div
-      className={
-        variant === "grid"
-          ? "flex items-start gap-2.5 rounded-card p-3"
-          : "flex items-center gap-3 rounded-card px-3.5 py-3"
-      }
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.02)" }}
-    >
-      <span
-        className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
-        style={{ background: `color-mix(in srgb, ${color} 18%, transparent)` }}
+    <div style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((o) => !o)}
+        className="flex min-h-14 w-full items-center justify-between gap-3 px-5 text-left transition-colors hover:bg-fg/[0.03] sm:px-6"
       >
-        <Icon size={15} style={{ color }} />
-      </span>
-      <div className="flex-1 min-w-0">
-        <p className="font-heading text-[12.5px] font-bold text-white leading-snug">{name}</p>
-        <p className="text-[10.5px] text-white/50 mt-0.5">{issuer}</p>
-      </div>
-      <CheckCircle2 size={14} className="text-lime shrink-0" />
-    </div>
-  );
-}
-
-function EducationCard({ inView }: { inView: boolean }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.08 }}
-      className="rounded-2xl p-6 sm:p-7"
-      style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-    >
-      <CardNumberHeader number="01" label="EDUCATION" headerIcon={<CornerIconBadge Icon={GraduationCap} />} />
-      <div className="hidden lg:block">
-        <RingIconBadge Icon={GraduationCap} />
-      </div>
-      <p className="font-heading text-white text-[17px] font-bold leading-snug mb-1">{education.degree}</p>
-      <p className="text-lime text-[13px] font-semibold mb-3">{education.institution}</p>
-      <div className="flex items-center gap-1.5 text-white/55 text-[12px] mb-6">
-        <Calendar size={13} />
-        <span>
-          {education.year} · {education.grade}
+        <span className="font-heading text-[12px] font-bold text-fg/75">
+          Other certifications and courses
+          <span className="ml-2 rounded-full bg-fg/10 px-2 py-0.5 text-[10.5px] font-bold text-fg/65">{moreCourses.length}</span>
         </span>
-      </div>
-      <div className="pt-5" style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
-        <p className="font-display text-[24px] leading-none text-lime mb-2">&ldquo;</p>
-        <p className="italic text-white/70 text-[13px] leading-relaxed">{education.quote}</p>
-      </div>
-    </motion.div>
-  );
-}
-
-function CertificationsCard({ inView }: { inView: boolean }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.16 }}
-      className="rounded-2xl p-6 sm:p-7"
-      style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-    >
-      <CardNumberHeader number="02" label="CERTIFICATIONS & COURSES" />
-      <div className="hidden lg:grid lg:grid-cols-2 gap-3 mb-6">
-        {certifications.map((c) => (
-          <CertItemRow key={c.name} item={c} variant="grid" />
-        ))}
-      </div>
-      <div className="lg:hidden flex flex-col gap-2.5 mb-6">
-        {certifications.map((c) => (
-          <CertItemRow key={c.name} item={c} variant="list" />
-        ))}
-      </div>
-      <div className="hidden lg:flex items-center gap-2 text-white/60 text-[12.5px]">
-        <BookOpen size={15} className="text-lime shrink-0" />
-        <span>
-          Continuously learning. <span className="text-lime font-semibold">Always building.</span>
-        </span>
-      </div>
+        <ChevronDown
+          size={17}
+          className={`shrink-0 text-fg/55 transition-transform duration-300 motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+        />
+      </button>
       <div
-        className="lg:hidden flex items-center justify-between rounded-card px-3.5 py-2.5"
-        style={{ border: `1px solid ${CARD_BORDER}` }}
+        id={panelId}
+        inert={!open}
+        className={`grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       >
-        <div className="flex items-center gap-2 text-white/70 text-[12.5px]">
-          <BookOpen size={15} className="text-lime shrink-0" />
-          <span>
-            Continuously learning. <span className="text-lime font-semibold">Always building.</span>
-          </span>
+        <div className="overflow-hidden">
+          <ul className="grid gap-2 px-5 pb-5 sm:grid-cols-2 sm:px-6">
+            {moreCourses.map((c) => (
+              <li key={c.name} className="flex items-center gap-3 rounded-xl px-3.5 py-2.5" style={BOX}>
+                <c.icon size={15} style={{ color: c.color }} />
+                <span className="min-w-0 flex-1">
+                  <span className="block font-heading text-[12.5px] font-bold leading-snug text-fg">{c.name}</span>
+                  <span className="block text-[10.5px] text-fg/50">{c.issuer}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ChevronRight size={14} className="text-white/40 shrink-0" />
-      </div>
-    </motion.div>
-  );
-}
-
-function RecognitionCard({ inView }: { inView: boolean }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.24 }}
-      className="rounded-2xl p-6 sm:p-7"
-      style={{ background: CARD_BG, border: "1px solid color-mix(in srgb, var(--color-award) 30%, transparent)" }}
-    >
-      <CardNumberHeader
-        number="03"
-        label="RECOGNITION"
-        headerIcon={<CornerIconBadge Icon={Trophy} accentColor="var(--color-award)" />}
-      />
-      <div className="hidden lg:block">
-        <RingIconBadge Icon={Trophy} accentColor="var(--color-award)" sparkle />
-      </div>
-      <p className="font-heading text-white text-[16px] font-bold mb-2">{award.title}</p>
-      <p className="text-[13px] text-white/70 leading-relaxed mb-6">{award.desc}</p>
-      <div className="grid grid-cols-3 gap-2">
-        {award.stats.map((s) => (
-          <div
-            key={s.label}
-            className="flex flex-col items-center gap-1.5 text-center rounded-card p-2.5"
-            style={{ border: `1px solid ${CARD_BORDER}` }}
-          >
-            <s.icon size={16} style={{ color: "var(--color-award)" }} />
-            <span className="text-[9.5px] text-white/60 leading-tight">{s.label}</span>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-function CredentialsHeader() {
-  return (
-    <div className="relative mb-14">
-      <svg className="hidden lg:block absolute top-0 right-0 w-40 h-16 opacity-[0.15]" aria-hidden="true" viewBox="0 0 160 64">
-        <path d="M0,30 Q40,0 80,30 T160,30" stroke="var(--color-lime)" strokeWidth="1.5" fill="none" strokeDasharray="1 6" />
-      </svg>
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5 }}
-        className="font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-lime mb-5"
-      >
-        02 / CREDENTIALS &amp; RECOGNITION
-      </motion.p>
-      <div className="lg:flex lg:items-end lg:justify-between lg:gap-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-          className="font-heading normal-case font-bold text-[28px] sm:text-[34px] lg:text-[40px] leading-tight text-white mb-5 lg:mb-0"
-        >
-          Built on learning. <span className="text-lime">Proven by impact.</span>
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-[14px] sm:text-[15px] text-white/70 leading-relaxed lg:max-w-sm lg:text-right"
-        >
-          A strong academic foundation, continuous learning and real-world impact that creates value for teams and
-          businesses.
-        </motion.p>
       </div>
     </div>
-  );
-}
-
-function PullQuote({ inView }: { inView: boolean }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.4 }}
-      className="mt-6 rounded-2xl p-6 sm:p-8 lg:flex lg:items-center lg:gap-10"
-      style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-    >
-      <div className="lg:flex-1">
-        <p className="font-display text-[36px] leading-none text-lime mb-2">&ldquo;</p>
-        <p className="text-[15px] sm:text-[16px] text-white/75 italic leading-relaxed max-w-2xl">
-          I believe in lifelong learning and applying it to solve real business problems through technology and
-          automation.
-        </p>
-      </div>
-      <div className="h-px w-full my-6 lg:hidden" style={{ background: "rgba(255,255,255,0.14)" }} />
-      <div className="hidden lg:block w-px self-stretch mx-2" style={{ background: "rgba(255,255,255,0.14)" }} />
-      <div className="lg:shrink-0 lg:w-56 text-right">
-        <p className="font-signature text-[28px] text-lime">Rohit Singh</p>
-        <p className="text-[12px] text-white/50 mt-1">Always shipping, always learning.</p>
-      </div>
-    </motion.div>
   );
 }
 
 export default function Credentials() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section id="credentials" className="py-24" style={{ background: NAVY }}>
-      <div ref={ref} className="max-w-6xl mx-auto px-6">
-        <CredentialsHeader />
+    <section id="credentials" data-flow="sheet" className="py-14 sm:py-24" style={{ background: NAVY }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="03 / MY JOURNEY"
+          segments={[
+            { text: "My", style: "fill" },
+            { text: "journey.", style: "lime" },
+          ]}
+          className="mb-5"
+        />
+        <p data-flow="ink" className="mb-8 max-w-xl text-[16px] leading-relaxed text-fg/70 sm:mb-12">
+          Education and career, from 2014 to today.
+        </p>
 
-        <div className="hidden lg:grid lg:grid-cols-[1fr_1.5fr_1.15fr] gap-6">
-          <EducationCard inView={inView} />
-          <CertificationsCard inView={inView} />
-          <RecognitionCard inView={inView} />
-        </div>
-        <div className="lg:hidden flex flex-col gap-6">
-          <EducationCard inView={inView} />
-          <CertificationsCard inView={inView} />
-          <RecognitionCard inView={inView} />
-        </div>
+        <JourneyTimeline />
 
-        <PullQuote inView={inView} />
+        <section
+          aria-labelledby="recognition-title"
+          data-flow="dev"
+          className="mx-auto mt-6 max-w-[34rem] overflow-hidden rounded-3xl lg:mt-8 lg:max-w-none"
+          style={{
+            background:
+              "radial-gradient(90% 120% at 0% 0%, color-mix(in srgb, var(--color-award) 12%, transparent), transparent 60%), var(--color-card)",
+            border: "1px solid color-mix(in srgb, var(--color-award) 32%, transparent)",
+          }}
+        >
+          <div className="flex items-start gap-4 p-5 sm:p-6">
+            <IconDisc color="var(--color-award)">
+              <Trophy size={19} style={{ color: "var(--color-award)" }} />
+            </IconDisc>
+            <div className="min-w-0">
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.18em] text-fg/50">Recognition</p>
+              <h3 id="recognition-title" className="mt-1 font-heading text-[18px] font-bold leading-snug text-fg">
+                {award.title}
+              </h3>
+              <p className="mt-1.5 max-w-2xl text-[13.5px] leading-relaxed text-fg/65">{award.desc}</p>
+            </div>
+          </div>
+          <MoreCourses />
+        </section>
       </div>
     </section>
   );

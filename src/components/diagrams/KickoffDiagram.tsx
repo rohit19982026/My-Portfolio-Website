@@ -1,11 +1,13 @@
+"use client";
+
 import { Bot, CheckCircle2, ClipboardList, Compass, FileText, Map } from "lucide-react";
 import FlowDiagram, { type Step } from "./FlowDiagram";
 
 const ACCENT = "#F0618B";
 
 // Fan-out/fan-in like Billing, but shallower — no separate tool-call step
-// first, since this agent works directly off the kickoff brief per its own
-// copy ("I give this agent the kickoff brief and it outputs...").
+// first, since this agent works directly off the kickoff brief, turning it
+// straight into a stakeholder map, interview guide, and discovery plan.
 const steps: Step[] = [
   { kind: "step", id: "start", marker: "start", label: "", sub: "" },
   { kind: "step", id: "trigger", label: "Kickoff Brief", sub: "New program intake", tone: "card", icon: FileText },

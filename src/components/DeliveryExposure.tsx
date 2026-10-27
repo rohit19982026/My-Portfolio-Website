@@ -1,256 +1,204 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, type ComponentType, type CSSProperties } from "react";
-import {
-  Database,
-  Cog,
-  Laptop,
-  Zap,
-  Server,
-  Sigma,
-  Cloud,
-  Infinity as InfinityIcon,
-  GanttChart,
-  Workflow,
-  ScanEye,
-  Braces,
-} from "lucide-react";
-import {
-  SiSnowflake,
-  SiDatabricks,
-  SiApachehadoop,
-  SiApacheairflow,
-  SiQlik,
-  SiApachespark,
-  SiJira,
-  SiConfluence,
-  SiAsana,
-  SiClaude,
-  SiN8N,
-  SiGoogleappsscript,
-  SiGoogledrive,
-} from "react-icons/si";
+import Image from "next/image";
 import SectionHeading from "./ui/SectionHeading";
-import SalesforceMark from "./icons/SalesforceMark";
-import SlackMark from "./icons/SlackMark";
-import GleanMark from "./icons/GleanMark";
-import SwipeCarousel from "./ui/SwipeCarousel";
 
-/**
- * Dark-navy treatment matching Hero.tsx's reference-driven redesign this
- * session — same NAVY/CARD_BG/CARD_BORDER literals and the same #8B7FF0/
- * #5B9BF0 accent pair Hero's stat icons use, so the two dark sections share
- * one visual system instead of introducing a second one. (This does mean
- * the page has no light-background section left between Hero and Footer
- * while Work.tsx stays unmounted — a real, visible consequence of this
- * change, not a silent side effect.)
+/*
+ * Section 05 follows the supplied design: three tinted cards (number, 3D
+ * illustration, kicker, title, one plain sentence, tool pills). The
+ * illustrations, the corner swoosh and every tool icon are crops of that
+ * design (public/stack/); the text, lines and pills are real elements.
+ * A fixed light section in both themes so the design stays exact.
  */
-const NAVY = "#070b18";
-const CARD_BG = "rgba(255,255,255,0.035)";
-const CARD_BORDER = "rgba(255,255,255,0.1)";
-const CATEGORY_ACCENT = "#8B7FF0";
-const DOT_PATTERN = "radial-gradient(circle, rgba(140,160,255,0.16) 1px, transparent 1.6px)";
 
-type IconComponent = ComponentType<{
-  size?: number;
-  color?: string;
-  className?: string;
-  style?: CSSProperties;
-}>;
+const INK = "#031536";
+const MUTED = "#5f6477";
+const BLUE = "#3d36f5";
+const MASK =
+  "linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%)";
+const SWOOSH_MASK =
+  "linear-gradient(to right, transparent 0, #000 40%), linear-gradient(to bottom, #000 55%, transparent 100%)";
 
-// `wordmark: true` items ARE their own label (e.g. the styled "aws" text
-// below already reads as the name) — ItemChip skips the separate label in
-// that case instead of showing the name twice.
-type StackItem = { name: string; Icon: IconComponent; color: string | null; wordmark?: boolean };
-type StackCategory = { label: [string, string]; HeaderIcon: IconComponent; items: StackItem[] };
+type Chip = { name: string; icon: string };
+type Card = {
+  n: string;
+  kicker: string;
+  title: string;
+  accent: string;
+  numColor: string;
+  tint: string;
+  art: { src: string; w: number; h: number };
+  blurb: string;
+  chips: Chip[];
+};
 
-// AWS's real mark is essentially a wordmark, not a glyph — styled text
-// reads truer to the actual logo than an invented icon shape. Marked
-// wordmark: true below so ItemChip doesn't also render a separate "AWS"
-// label next to it.
-function AwsText({ size = 16, style }: { size?: number; style?: CSSProperties }) {
-  return (
-    <span style={{ fontSize: size, fontWeight: 800, color: "#FF9900", lineHeight: 1, ...style }}>
-      aws
-    </span>
-  );
-}
-// No public brand mark for this one — a clean initial badge instead of
-// guessing at an unofficial logo.
-function KantataBadge({ size = 16, style }: { size?: number; style?: CSSProperties }) {
-  return (
-    <span
-      style={{
-        width: size,
-        height: size,
-        fontSize: size * 0.62,
-        fontWeight: 800,
-        color: "#8B7FF0",
-        border: "1.5px solid currentColor",
-        borderRadius: 4,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        lineHeight: 1,
-        ...style,
-      }}
-    >
-      K
-    </span>
-  );
-}
-
-const stacks: StackCategory[] = [
+// Only things the rest of the site already says: which platforms and tools
+// were involved and what my part in them was. No program types, outcomes
+// or numbers.
+const cards: Card[] = [
   {
-    label: ["DATA PLATFORMS", "I'VE DELIVERED ON"],
-    HeaderIcon: Database,
-    items: [
-      { name: "Snowflake", Icon: SiSnowflake, color: "#29B5E8" },
-      { name: "Databricks", Icon: SiDatabricks, color: "#FF3621" },
-      { name: "Amazon Redshift", Icon: Server, color: "#8C4FFF" },
-      { name: "SQL Server", Icon: Database, color: "#CC2927" },
-      { name: "Hadoop / HDFS", Icon: SiApachehadoop, color: "#66CCFF" },
-      { name: "Sigma", Icon: Sigma, color: "#e5e7eb" },
+    n: "01",
+    kicker: "Used daily",
+    title: "PMO & Delivery Tools",
+    accent: "#7956fb",
+    numColor: "#bcaef7",
+    tint: "#f4f2ff",
+    art: { src: "/stack/art-laptop.png", w: 225, h: 215 },
+    blurb:
+      "My everyday delivery stack: Jira and Confluence for backlog and documentation, Kantata as our PSA tool, and Salesforce for client and SOW records. MS Project, Azure DevOps or Asana when a client works in them, and Slack or Teams to stay in touch.",
+    chips: [
+      { name: "Jira", icon: "jira" },
+      { name: "Confluence", icon: "confluence" },
+      { name: "Kantata", icon: "kantata" },
+      { name: "Salesforce", icon: "salesforce" },
+      { name: "MS Project", icon: "msproject" },
+      { name: "Asana", icon: "asana" },
+      { name: "Slack", icon: "slack" },
+      { name: "Teams", icon: "teams" },
     ],
   },
   {
-    label: ["ENGINEERING TOOLING", "ON THOSE PROGRAMS"],
-    HeaderIcon: Cog,
-    items: [
-      { name: "dbt", Icon: Braces, color: "#FF694A" },
-      { name: "Airflow / MWAA", Icon: SiApacheairflow, color: "#017CEE" },
-      { name: "ETL / ELT Pipelines", Icon: Workflow, color: "#5B9BF0" },
-      { name: "Qlik Replicate", Icon: SiQlik, color: "#009845" },
-      { name: "Spark SQL", Icon: SiApachespark, color: "#E25A1C" },
-      { name: "LandingAI / Computer Vision", Icon: ScanEye, color: "#5B9BF0" },
-      { name: "AWS", Icon: AwsText, color: "#FF9900", wordmark: true },
-      { name: "Azure", Icon: Cloud, color: "#0078D4" },
+    n: "02",
+    kicker: "Built & run",
+    title: "AI & Automation",
+    accent: "#f0a200",
+    numColor: "#f7c566",
+    tint: "#fff7e8",
+    art: { src: "/stack/art-bolt.png", w: 210, h: 190 },
+    blurb:
+      "What I build with: Glean Agent Builder and Claude for the PMO agents, Google Apps Script and the Jira REST API for the dependency tracker, and n8n for workflow automation. MCP connections link them to Salesforce, Slack and Google Drive.",
+    chips: [
+      { name: "Glean", icon: "glean" },
+      { name: "Claude", icon: "claude" },
+      { name: "Google Apps Script", icon: "gas" },
+      { name: "Jira REST API", icon: "jira" },
+      { name: "n8n", icon: "n8n" },
+      { name: "Salesforce", icon: "salesforce" },
+      { name: "Slack", icon: "slack" },
+      { name: "Google Drive", icon: "drive" },
     ],
   },
   {
-    label: ["PMO & DELIVERY", "TOOLS I USE DAILY"],
-    HeaderIcon: Laptop,
-    items: [
-      { name: "Jira", Icon: SiJira, color: "#2684FF" },
-      { name: "Confluence", Icon: SiConfluence, color: "#2684FF" },
-      { name: "Kantata (PSA)", Icon: KantataBadge, color: "#8B7FF0" },
-      { name: "MS Project", Icon: GanttChart, color: "#31752F" },
-      { name: "Azure DevOps", Icon: InfinityIcon, color: "#0078D4" },
-      { name: "Asana", Icon: SiAsana, color: "#F06A6A" },
-      { name: "Salesforce", Icon: SalesforceMark, color: "#00A1E0" },
-      { name: "Slack / Teams", Icon: SlackMark, color: null },
-    ],
-  },
-  {
-    label: ["AI & AUTOMATION", "I'VE BUILT"],
-    HeaderIcon: Zap,
-    items: [
-      { name: "Glean Agent Builder", Icon: GleanMark, color: "#8B7FF0" },
-      { name: "Claude (Anthropic)", Icon: SiClaude, color: "#D97757" },
-      { name: "n8n (workflow automation)", Icon: SiN8N, color: "#EA4B71" },
-      { name: "Google Apps Script", Icon: SiGoogleappsscript, color: "#4285F4" },
-      { name: "Salesforce MCP", Icon: SalesforceMark, color: "#00A1E0" },
-      { name: "Slack MCP", Icon: SlackMark, color: null },
-      { name: "Google Drive MCP", Icon: SiGoogledrive, color: "#4285F4" },
+    n: "03",
+    kicker: "Delivered on",
+    title: "Data Platforms",
+    accent: "#2a8ef0",
+    numColor: "#7db6f5",
+    tint: "#eef6ff",
+    art: { src: "/stack/art-db.png", w: 225, h: 195 },
+    blurb:
+      "The data programs I've managed ran on Snowflake and Databricks, along with Redshift, SQL Server, Hadoop and Sigma. I scope the work and follow the technical discussion; the engineers build it.",
+    chips: [
+      { name: "Snowflake", icon: "snowflake" },
+      { name: "Databricks", icon: "databricks" },
+      { name: "Redshift", icon: "redshift" },
+      { name: "SQL Server", icon: "sqlserver" },
+      { name: "Hadoop", icon: "hadoop" },
+      { name: "Sigma", icon: "sigma" },
     ],
   },
 ];
 
-function ItemChip({ item }: { item: StackItem }) {
-  const { Icon, color, name, wordmark } = item;
+function StackCard({ card, index }: { card: Card; index: number }) {
   return (
-    <div
-      className="inline-flex items-center gap-2 px-3 py-2 rounded-card"
-      style={{ border: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.02)" }}
+    <li
+      data-flow="dev"
+      className="grid grid-cols-[clamp(78px,22%,200px)_1fr] gap-x-4 rounded-[1.7rem] p-4 transition-shadow duration-500 hover:shadow-[0_30px_60px_-34px_var(--glow)] sm:gap-x-7 sm:p-7"
+      style={
+        {
+          "--glow": card.accent,
+          background: `linear-gradient(135deg, ${card.tint}, #ffffff 92%)`,
+          border: `1px solid color-mix(in srgb, ${card.accent} 14%, #ffffff)`,
+          boxShadow: `0 22px 44px -34px color-mix(in srgb, ${card.accent} 55%, transparent)`,
+        } as React.CSSProperties
+      }
     >
-      <Icon size={16} color={color ?? undefined} style={{ color: color ?? undefined }} />
-      {!wordmark && (
-        <span className="font-heading text-[12.5px] text-white/80 whitespace-nowrap">{name}</span>
-      )}
-    </div>
-  );
-}
-
-function CategoryCard({ category, index, inView }: { category: StackCategory; index: number; inView: boolean }) {
-  const { label, HeaderIcon, items } = category;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.08 + index * 0.1 }}
-      className="relative p-6 rounded-2xl"
-      style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
-    >
-      {/* Decorative dot-grid corner ornament */}
-      <div
-        className="absolute top-4 right-4 w-7 h-7 pointer-events-none"
-        style={{ backgroundImage: DOT_PATTERN, backgroundSize: "8px 8px", opacity: 0.6 }}
-        aria-hidden="true"
-      />
-
-      <div className="flex items-center gap-3 mb-3">
-        <HeaderIcon
-          size={28}
-          style={{
-            color: CATEGORY_ACCENT,
-            filter: `drop-shadow(0 0 6px color-mix(in srgb, ${CATEGORY_ACCENT} 65%, transparent))`,
-          }}
-        />
-        <p className="font-heading text-[13px] font-bold uppercase tracking-[0.1em] leading-snug">
-          <span className="text-white">{label[0]} </span>
-          <span
-            className="bg-gradient-to-r from-[#8B7FF0] to-[#5B9BF0] bg-clip-text text-transparent"
-          >
-            {label[1]}
-          </span>
+      <div className="flex flex-col border-r pr-3 sm:pr-6" style={{ borderColor: `color-mix(in srgb, ${card.accent} 16%, #ffffff)` }}>
+        <p className="flex items-center gap-2.5 font-sans text-[22px] font-extrabold leading-none sm:text-[32px]" style={{ color: card.numColor }}>
+          {card.n}
+          <span aria-hidden className="h-px w-7 origin-left sm:w-11" style={{ background: card.numColor }} />
         </p>
+        <div className="flex flex-1 items-center justify-center pt-2 sm:pt-3">
+          {/* the illustration sits on its own plane: it travels a little
+              against the card as the card crosses the screen (see .art-drift) */}
+          <div data-flow="drift" className="art-drift w-full" style={{ "--tilt": index % 2 ? -1 : 1 } as React.CSSProperties}>
+            <Image
+              src={card.art.src}
+              alt=""
+              width={card.art.w}
+              height={card.art.h}
+              className="pointer-events-none -mr-2 h-auto w-[150%] max-w-none select-none sm:mr-0 sm:w-full sm:max-w-[190px]"
+              style={{ mixBlendMode: "multiply", WebkitMaskImage: MASK, maskImage: MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="w-10 h-[3px] bg-lime rounded-full mb-4" />
-      <div className="h-px w-full mb-5" style={{ background: "rgba(255,255,255,0.14)" }} />
-
-      <div className="flex flex-wrap gap-2">
-        {items.map((item) => (
-          <ItemChip key={item.name} item={item} />
-        ))}
+      <div className="min-w-0">
+        <p className="font-sans text-[11px] font-bold uppercase tracking-[0.2em] sm:text-[13px]" style={{ color: card.accent }}>
+          {card.kicker}
+        </p>
+        <h3 className="mt-1.5 font-sans font-bold leading-tight tracking-[-0.02em]" style={{ fontSize: "clamp(1.2rem, 5.2vw, 1.75rem)", color: INK }}>
+          {card.title}
+        </h3>
+        <p className="mt-2 font-sans text-[13.5px] leading-relaxed sm:text-[15.5px]" style={{ color: MUTED }}>
+          {card.blurb}
+        </p>
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {card.chips.map((c) => (
+            <li
+              key={c.name}
+              className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 transition-transform duration-200 motion-safe:hover:-translate-y-[3px]  font-sans text-[12.5px] font-medium sm:px-3.5 sm:py-2 sm:text-[14px]"
+              style={{ color: INK, border: "1px solid rgba(110,100,180,.13)", boxShadow: "0 6px 14px -9px rgba(80,70,160,.35)" }}
+            >
+              <Image src={`/stack/i-${c.icon}.png`} alt="" width={20} height={20} className="h-[18px] w-[18px] select-none sm:h-5 sm:w-5" />
+              {c.name}
+            </li>
+          ))}
+        </ul>
       </div>
-    </motion.div>
+    </li>
   );
 }
 
 export default function DeliveryExposure() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section id="stack" className="py-24" style={{ background: NAVY }}>
-      <div className="max-w-6xl mx-auto px-6">
-        <div ref={ref} className="mb-14">
+    <section id="stack" data-flow="sheet" className="relative overflow-hidden py-20 sm:py-24" style={{ background: "#fefdfd", color: INK }}>
+      <div aria-hidden data-flow="drift" className="swoosh-drift pointer-events-none absolute right-0 top-0 w-[clamp(200px,38vw,380px)]">
+        <Image
+          src="/stack/swoosh.png"
+          alt=""
+          width={344}
+          height={270}
+          className="w-full select-none"
+          style={{ mixBlendMode: "multiply", WebkitMaskImage: SWOOSH_MASK, maskImage: SWOOSH_MASK, WebkitMaskComposite: "source-in", maskComposite: "intersect" }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
+        <div className="mb-9 sm:mb-12">
           <SectionHeading
-            eyebrow="04 / STACK"
+            variant="sans"
+            eyebrow="Tools & Platforms"
             segments={[
-              { text: "The tools and platforms I've", style: "fill" },
-              { text: "delivered on.", style: "lime" },
+              { text: "Behind the", style: "fill" },
+              { text: "Programs", style: "lime" },
             ]}
+            ink={INK}
+            accent={BLUE}
+            fontSize="clamp(2.2rem, 9.5vw, 3.7rem)"
           />
-          <p className="text-[15px] text-white/65 max-w-2xl leading-relaxed mt-5">
-            I&apos;m a project manager, not an engineer. This is what I&apos;ve run programs on,
-            not a list of things I can build with — enough to scope the work, sequence it, and
-            follow the technical conversation without needing everything translated.
+          <p data-flow="ink" className="mt-4 max-w-2xl font-sans text-[15px] leading-relaxed sm:text-[17px]" style={{ color: MUTED }}>
+            The platforms my programs have run on. I don&apos;t engineer on them, but I know them well enough to scope the
+            work and keep up in technical discussions. The last group is different: those are the tools I build with.
           </p>
         </div>
 
-        <div className="hidden sm:grid sm:grid-cols-2 gap-5">
-          {stacks.map((category, i) => (
-            <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
+        <ol className="grid gap-4 sm:gap-5">
+          {cards.map((card, i) => (
+            <StackCard key={card.n} card={card} index={i} />
           ))}
-        </div>
-        <SwipeCarousel ariaLabel="Tools and platforms I've delivered on, swipeable carousel" className="sm:hidden">
-          {stacks.map((category, i) => (
-            <CategoryCard key={category.label.join(" ")} category={category} index={i} inView={inView} />
-          ))}
-        </SwipeCarousel>
+        </ol>
       </div>
     </section>
   );
