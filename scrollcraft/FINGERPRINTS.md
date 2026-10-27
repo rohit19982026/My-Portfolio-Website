@@ -67,3 +67,4 @@ constrain yours.
 | Build | Grammar | Nav | Hero device | Act sequence | Close | Signature move |
 |---|---|---|---|---|---|---|
 | portfolio (existing site, rebuilt motion) | editorial scroll with one shared state machine (backlog, in progress, done) | desktop chapter spine plus frosted header; phone header names chapter and auto-hides | mask-rise lines, arch opens upward, depth by scroll and pointer | 8 sections, 3 densities, peak is the 2700px Experience rail | contact heading fills in and the page stops | ticker as scroll-velocity speedometer |
+| portfolio, My journey section | sticky-stage landscape with copy in natural flow | none (section hand-off by rising ground) | mask-rise giant type behind a near ridge | 7 acts, peak at day to dusk | next section's ground rises | sun and moon arcing across, landmarks rising from the ground |

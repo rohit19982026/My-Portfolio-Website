@@ -67,3 +67,48 @@ reduced-motion visitors hit on the original site.)
 ## Authored silence
 Section bodies after they are done. The system only moves things that are
 crossing the line.
+
+---
+
+# "My journey": cinematic career landscape
+
+Self-authored under delegation. The old timeline of cards and illustrations was
+removed entirely (component, images and animation code).
+
+**Grammar:** one landscape you travel through. Two sticky stages (one behind
+the copy, one in front) hold a drawn scene; the copy scrolls between them in
+natural flow, so wheel and touch scrolling are never taken over. The near ridge
+in front means type rises from behind the hills.
+
+**World:** drawn in code in the site's own palette (ink, lime, blue, paper,
+one amber). No generated imagery: no image key was available, and flat
+graphic shapes suit the brand better than a stock photograph.
+
+**One number drives it:** the fractional act index. Skies cross-fade, a sun and
+a moon arc across and set behind the land, ridges grow and flatten (mountains
+for graduation, flat for the cities) and each landmark rises out of the ground
+for its act: school, university, a city, a data city. Only transforms and
+opacity move.
+
+| Act | Feeling | Type mechanic |
+|---|---|---|
+| Arrival | Anticipation | Giant MY JOURNEY. rises from behind the near ridge |
+| 2014 and 2016 | Beginning | A digit reel rolls 2014 to 2016 |
+| 2020, degree | Ambition | You travel into a hollow 2020 that grows past you |
+| 2020, British Telecom | Pressure, then footing | Lines start stretched and compress into place |
+| Dec 2022, phData | Scale | The wordmark is lit like a building at night |
+| Recognition | Pride | A lime star turns over a clear night sky |
+| Certifications | Wonder | Seven certifications as a constellation |
+
+**Peak:** the move from the university day into the dusk city (act 2 to 3).
+**Handoff:** the next section's own ground rises from below as this one ends.
+
+**Phones:** a separate composition, not a shrunk desktop: copy in the top of the
+screen, landmarks in the lower half, smaller sun and moon, gentler stretch.
+**Reduced motion or no JS:** the stages never show; the same words become plain
+stacked bands in each act's own colour.
+
+**Facts kept:** Class 10 (2014), Class 12 (2016), BCA at Brainware University,
+Kolkata (2020), British Telecom (2020), phData (Dec 2022), the phData Innovation
+Award and all seven certifications and courses. Added from the Experience
+section on this same site: the BT role and dates, and the current phData role.
