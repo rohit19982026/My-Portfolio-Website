@@ -3,8 +3,9 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import Star from "../ui/Star";
 import { subscribeScroll } from "@/lib/scrollBus";
-import { award, bt, certs, degree, intro, phdata, school } from "@/lib/career";
+import { award, bt, degree, intro, phdata, school } from "@/lib/career";
 import { BackScene, FrontScene } from "./scenes";
+import Medals from "./Medals";
 import "./career.css";
 
 /*
@@ -40,51 +41,6 @@ function Letters({ text }: { text: string }) {
         </span>
       ))}
     </>
-  );
-}
-
-// Constellation positions: desktop (x, y in %) and phone (a column that
-// zigzags down). Order follows `certs`.
-const STARS_WIDE: [number, number][] = [[5, 14], [20, 36], [35, 16], [48, 40], [50, 72], [72, 80], [76, 44]];
-const STARS_TALL: [number, number][] = [[10, 4], [34, 18], [12, 32], [36, 46], [10, 60], [32, 74], [14, 88]];
-const LINES = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 3]];
-
-function Constellation() {
-  const pts = (set: [number, number][]) => LINES.map(([a, b]) => `${set[a][0]},${set[a][1]} ${set[b][0]},${set[b][1]}`);
-  return (
-    <div className="cl-const" data-flow="dev">
-      <svg className="cl-const-lines cl-const-wide" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        {pts(STARS_WIDE).map((p, i) => (
-          <polyline key={i} points={p} vectorEffect="non-scaling-stroke" />
-        ))}
-      </svg>
-      <svg className="cl-const-lines cl-const-tall" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        {pts(STARS_TALL).map((p, i) => (
-          <polyline key={i} points={p} vectorEffect="non-scaling-stroke" />
-        ))}
-      </svg>
-      <ol className="cl-const-list">
-        {certs.map((c, i) => (
-          <li
-            key={c.name}
-            style={
-              {
-                "--x": `${STARS_WIDE[i][0]}%`,
-                "--y": `${STARS_WIDE[i][1]}%`,
-                "--mx": `${STARS_TALL[i][0]}%`,
-                "--my": `${STARS_TALL[i][1]}%`,
-              } as CSSProperties
-            }
-          >
-            <Star className="cl-const-star" />
-            <span className="cl-const-text">
-              <strong>{c.name}</strong>
-              <span>{c.issuer}</span>
-            </span>
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }
 
@@ -154,6 +110,8 @@ export default function CareerLandscape() {
       put("--moonx", 0.08 + 0.84 * moonT);
       put("--moony", Math.sin(Math.PI * moonT));
       put("--night", clamp(s - 3));
+      // for the certifications the land sinks, leaving the sky to the medals
+      put("--lower", clamp(s - 5));
       // hand over to the next section as this one's bottom edge arrives
       put("--end", clamp((y + vh - (bottom - vh * 0.55)) / (vh * 0.55)));
     };
@@ -307,11 +265,11 @@ export default function CareerLandscape() {
           </div>
         </article>
 
-        {/* 6 · certifications and courses, as a constellation */}
+        {/* 6 · certifications and courses, as enamel medals on lanyards */}
         <article className="cl-act cl-certs" data-act>
           <div className="cl-certs-in">
             <h3 className="cl-certs-t">Certifications and courses</h3>
-            <Constellation />
+            <Medals />
           </div>
         </article>
       </div>

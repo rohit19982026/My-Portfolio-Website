@@ -13,7 +13,7 @@
   --blue: #0d22ee;
   --cs: 0;
   --w0: 1; --w1: 0; --w2: 0; --w3: 0; --w4: 0; --night: 0;
-  --c1: 0; --c2: 0; --c3: 0; --c4: 0;
+  --c1: 0; --c2: 0; --c3: 0; --c4: 0; --lower: 0;
   --sunx: 0.1; --suny: 0; --moonx: 0.1; --moony: 0; --end: 0;
   position: relative;
   isolation: isolate;
@@ -87,14 +87,14 @@
 .cl-far {
   transform-origin: 50% 100%;
   scale: 1 calc(0.62 + 0.2 * var(--w1) + 0.5 * var(--w2) + 0.12 * var(--w3));
-  translate: calc(var(--cs) * -0.5vw) 0;
+  translate: calc(var(--cs) * -0.5vw) calc(var(--lower) * 16%);
 }
 .cl-mid {
   transform-origin: 50% 100%;
   scale: 1 calc(1 + 0.32 * var(--w2) - 0.1 * var(--w4));
-  translate: calc(var(--cs) * -1vw) 0;
+  translate: calc(var(--cs) * -1vw) calc(var(--lower) * 20%);
 }
-.cl-near { translate: calc(var(--cs) * -1.15vw) 0; }
+.cl-near { translate: calc(var(--cs) * -1.15vw) calc(var(--lower) * 13%); }
 /* the next section's own ground rises from below as this one ends */
 .cl-handoff { translate: calc(var(--cs) * -1.15vw) calc((1 - var(--end)) * 100%); }
 
@@ -307,25 +307,78 @@
   text-align: center;
 }
 
-.cl-const { position: relative; width: min(100%, 1180px); aspect-ratio: 16 / 8; text-align: left; }
-.cl-const-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.cl-const-lines polyline { fill: none; stroke: rgba(13, 34, 238, 0.4); stroke-width: 1.4; }
-.cl-const-tall { display: none; }
-.cl-const-list { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
-.cl-const-list li {
+/* medals on lanyard ribbons (Medals.tsx) */
+.cl-rails { width: 100vw; margin-inline: calc(50% - 50vw); display: grid; gap: clamp(0.5rem, 2vw, 1.6rem); }
+.cl-rails-tall { display: none; }
+.cl-rail { position: relative; height: calc(var(--h) + 230px); }
+.cl-ribbon { position: absolute; left: 0; top: 0; width: 100%; display: block; overflow: visible; }
+.cl-badges { margin: 0; padding: 0; list-style: none; }
+.cl-badge {
+  --k: 1;
   position: absolute;
-  left: var(--x);
-  top: var(--y);
-  display: flex;
-  gap: 0.8rem;
-  align-items: flex-start;
-  max-width: 18vw;
-  translate: -1.1rem -1.1rem;
+  left: calc(var(--gx) + (100% - 2 * var(--gx)) * var(--t));
+  top: calc(var(--ry) - 6px);
+  width: clamp(150px, 15vw, 210px);
+  translate: -50% 0;
+  transform-origin: 50% 0;
+  text-align: center;
 }
-.cl-const-star { flex: none; width: 2.2rem; height: 2.2rem; color: var(--lime); stroke: var(--ink); stroke-width: 0.9; stroke-linejoin: round; paint-order: stroke; }
-.cl-const-text { display: grid; gap: 0.2rem; padding-top: 0.15rem; }
-.cl-const-text strong { font-family: var(--font-heading); font-size: clamp(0.95rem, 1.45vw, 1.3rem); line-height: 1.25; font-weight: 700; }
-.cl-const-text span { font-size: clamp(0.82rem, 1.1vw, 1rem); opacity: 0.7; }
+.cl-pin-wrap { position: relative; width: clamp(108px, 10.5vw, 148px); margin-inline: auto; }
+.cl-pin { display: block; width: 100%; height: auto; overflow: visible; }
+.cl-pin-icon {
+  position: absolute;
+  left: 50%;
+  top: 60.5%;
+  width: 36%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+}
+.cl-pin-icon svg { width: 100%; height: 100%; }
+.cl-itil {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 0.16em solid currentColor;
+  border-radius: 50%;
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.3vw, 2rem);
+  line-height: 1;
+}
+.cl-pin-txt { margin: 0.7rem 0 0; display: grid; gap: 0.35rem; justify-items: center; }
+.cl-pin-txt strong { font-family: var(--font-heading); font-size: clamp(1rem, 1.3vw, 1.22rem); line-height: 1.25; font-weight: 700; text-wrap: balance; }
+.cl-pin-txt span {
+  font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(13, 34, 238, 0.09);
+  color: var(--blue);
+}
+.cl-badge:hover .cl-pin-wrap { rotate: 5deg; transition: rotate 0.35s var(--ease-signature); }
+.cl-pin-wrap { transform-origin: 50% 0; transition: rotate 0.35s var(--ease-signature); }
+
+/* scrubbed arrival: the ribbon draws across, then each medal drops from its
+   strap and swings to rest (a damped pendulum, so it reverses on scroll up) */
+.flow-on .cl-rail[data-flow] {
+  --q: clamp(0, calc((var(--p, 1) - 0.18) / 0.82), 1);
+}
+.flow-on .cl-rail[data-flow] .cl-ribbon {
+  clip-path: inset(-40% calc((1 - clamp(0, calc(var(--p, 1) * 1.5), 1)) * 100%) -40% 0);
+}
+.flow-on .cl-rail[data-flow] .cl-badge {
+  --k: clamp(0, calc((var(--q) * (var(--n) + 1.3) - var(--i)) / 1.3), 1);
+  translate: -50% calc((1 - var(--k)) * -110px);
+  rotate: calc(var(--dir) * (1 - var(--k)) * 26deg * cos(calc(var(--k) * 720deg)));
+  opacity: clamp(0, calc(var(--k) * 5), 1);
+}
+.flow-on .cl-rail[data-flow-done] .cl-ribbon { clip-path: none; }
 
 /* ---------- phones: the same story, recomposed ----------
    Copy sits in the top of the screen, the landmarks in the lower half. */
@@ -355,12 +408,13 @@
   .cl-award-t { font-size: clamp(2.4rem, 13vw, 5rem); }
   .cl-award-star-wrap { width: min(40vw, 22svh); }
   .cl-certs { --h: 150svh; padding-top: 12svh; }
-  .cl-const { aspect-ratio: auto; height: clamp(30rem, 150vw, 40rem); }
-  .cl-const-wide { display: none; }
-  .cl-const-tall { display: block; }
-  .cl-const-list li { left: var(--mx); top: var(--my); max-width: calc(100% - var(--mx) - 2.4rem); }
-  .cl-const-text strong { font-size: 1.02rem; }
-  .cl-const-text span { font-size: 0.86rem; }
+  .cl-rails-wide { display: none; }
+  .cl-rails-tall { display: grid; }
+  .cl-rail { height: calc(var(--h) + 214px); }
+  .cl-badge { width: 44vw; }
+  .cl-pin-wrap { width: min(30vw, 120px); }
+  .cl-pin-txt strong { font-size: 1.02rem; }
+  .cl-pin-txt span { font-size: 0.8rem; }
 }
 
 /* a little more room between the copy and the near ridge on short screens */

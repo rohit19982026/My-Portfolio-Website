@@ -98,7 +98,7 @@ opacity move.
 | 2020, British Telecom | Pressure, then footing | Lines start stretched and compress into place |
 | Dec 2022, phData | Scale | The wordmark is lit like a building at night |
 | Recognition | Pride | A lime star turns over a clear night sky |
-| Certifications | Wonder | Seven certifications as a constellation |
+| Certifications | Earned, tangible | Seven enamel medals on lanyard ribbons |
 
 **Peak:** the move from the university day into the dusk city (act 2 to 3).
 **Handoff:** the next section's own ground rises from below as this one ends.
@@ -119,3 +119,13 @@ ink with blue and lime accents. Hills are blue-tinted, the near ridge is brand
 blue with a lime rim, the "moon" is a white disc with a blue ring, stars are
 blue pinpoints, and the lit wordmark is ink letters with lime windows. Small
 type was enlarged (ledes, captions, certification names).
+
+**Certifications revision:** the constellation read as dots and lines, so it
+was replaced with enamel medals hanging from two sagging lanyard ribbons (four,
+then three; two per ribbon on phones). Each medal is one drawn object: offset
+shadow, rim, enamel in a rotating site colour, stitched edge, issuer set round
+the top edge, an icon (Claude, Scrum cycle, ITIL, LandingLens scan, Snowflake,
+clipboard, database), a metal ring and a strap. As a ribbon arrives it draws
+across and its medals drop and swing to rest, a damped pendulum scrubbed by
+scroll (so it reverses). The land sinks during this act so the medals have the
+sky. Names and issuers are real text below each medal.
