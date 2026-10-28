@@ -98,7 +98,7 @@ opacity move.
 | 2020, British Telecom | Pressure, then footing | Lines start stretched and compress into place |
 | Dec 2022, phData | Scale | The wordmark is lit like a building at night |
 | Recognition | Pride | A lime star turns over a clear night sky |
-| Certifications | Earned, tangible | Seven enamel medals on lanyard ribbons |
+| Certifications | Curiosity, then clarity | A pinned lens opens onto one drawing per credential |
 
 **Peak:** the move from the university day into the dusk city (act 2 to 3).
 **Handoff:** the next section's own ground rises from below as this one ends.
@@ -129,3 +129,22 @@ clipboard, database), a metal ring and a strap. As a ribbon arrives it draws
 across and its medals drop and swing to rest, a damped pendulum scrubbed by
 scroll (so it reverses). The land sinks during this act so the medals have the
 sky. Names and issuers are real text below each medal.
+
+**Certifications, second revision (the medals were decoration):** credentials are
+information, so the act is short (about three screens) and built to be
+explored, not watched. A pinned stage holds an index on one side and a lens on
+the other. As you scroll, the lens iris opens from its centre onto the next
+credential's drawing, which draws on as it opens and then plays while it is in
+focus: an agent architecture (Claude Architect), a sprint ring with its
+burndown (Scrum Master), a service loop (ITIL), detection boxes snapping onto
+objects (Computer Vision), a snowflake over rising data bars (LandingLens on
+Snowflake), a Gantt that builds itself (Project Management) and a star schema
+with a query sweeping the fact rows (Data Warehouse). The index lights the
+matching line; the full name and issuer print on beneath the lens.
+
+**Interaction:** every index line is a real link that travels to its chapter
+(mouse, touch or keyboard, with `aria-current` on the active one). On a fine
+pointer the lens leans toward the cursor and the drawing inside shifts a little
+more than the frame. Phones: the index becomes seven tappable markers and the
+active one stretches. Without the scroll loop (reduced motion, no JS) the lens
+is hidden and the same names are a plain list.

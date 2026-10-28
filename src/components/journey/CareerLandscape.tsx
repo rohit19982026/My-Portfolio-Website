@@ -5,7 +5,7 @@ import Star from "../ui/Star";
 import { subscribeScroll } from "@/lib/scrollBus";
 import { award, bt, degree, intro, phdata, school } from "@/lib/career";
 import { BackScene, FrontScene } from "./scenes";
-import Medals from "./Medals";
+import CertStage from "./CertStage";
 import "./career.css";
 
 /*
@@ -53,6 +53,12 @@ export default function CareerLandscape() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const acts = Array.from(root.querySelectorAll<HTMLElement>("[data-act]"));
+    const stage = root.querySelector<HTMLElement>(".cl-certs-stage");
+    const chaps = Array.from(root.querySelectorAll<HTMLElement>("[data-chap]"));
+    const idx = Array.from(root.querySelectorAll<HTMLElement>(".cl-idx a"));
+    let chapCenters: number[] = [];
+    let activeChap = -1;
+    let lastCa = "";
     let centers: number[] = [];
     let top = 0;
     let bottom = 0;
@@ -78,11 +84,47 @@ export default function CareerLandscape() {
         const b = a.getBoundingClientRect();
         return b.top + y + b.height / 2;
       });
+      chapCenters = chaps.map((c) => {
+        const b = c.getBoundingClientRect();
+        return b.top + y + b.height / 2;
+      });
+    };
+
+    // which credential is in focus, as a fractional chapter index; only the
+    // pinned stage carries the variable, so only it is restyled
+    const updateChapters = (y: number) => {
+      if (!stage || chapCenters.length === 0) return;
+      const first = chapCenters[0];
+      const last = chapCenters[chapCenters.length - 1];
+      if (y + vh < first - vh * 1.2 || y > last + vh * 1.2) return;
+      const vc = y + vh * 0.5;
+      let ca = 0;
+      if (vc <= first) ca = 0;
+      else if (vc >= last) ca = chapCenters.length - 1;
+      else {
+        for (let i = 0; i < chapCenters.length - 1; i++) {
+          if (vc < chapCenters[i + 1]) {
+            ca = i + (vc - chapCenters[i]) / (chapCenters[i + 1] - chapCenters[i]);
+            break;
+          }
+        }
+      }
+      const v = ca.toFixed(3);
+      if (v !== lastCa) {
+        lastCa = v;
+        stage.style.setProperty("--ca", v);
+      }
+      const a = Math.round(ca);
+      if (a !== activeChap) {
+        activeChap = a;
+        idx.forEach((el, i) => (i === a ? el.setAttribute("aria-current", "step") : el.removeAttribute("aria-current")));
+      }
     };
 
     // which act are we in, as a fractional index: interpolate between the
     // screen-centre positions of neighbouring acts
     const update = (y: number) => {
+      updateChapters(y);
       const near = y + vh > top - vh && y < bottom + vh;
       if (!near && inRange === false) return;
       inRange = near;
@@ -111,7 +153,7 @@ export default function CareerLandscape() {
       put("--moony", Math.sin(Math.PI * moonT));
       put("--night", clamp(s - 3));
       // for the certifications the land sinks, leaving the sky to the medals
-      put("--lower", clamp(s - 5));
+      put("--lower", clamp((s - 5) * 2.2));
       // hand over to the next section as this one's bottom edge arrives
       put("--end", clamp((y + vh - (bottom - vh * 0.55)) / (vh * 0.55)));
     };
@@ -265,12 +307,9 @@ export default function CareerLandscape() {
           </div>
         </article>
 
-        {/* 6 · certifications and courses, as enamel medals on lanyards */}
+        {/* 6 · certifications and courses: a lens you look through */}
         <article className="cl-act cl-certs" data-act>
-          <div className="cl-certs-in">
-            <h3 className="cl-certs-t">Certifications and courses</h3>
-            <Medals />
-          </div>
+          <CertStage />
         </article>
       </div>
     </section>

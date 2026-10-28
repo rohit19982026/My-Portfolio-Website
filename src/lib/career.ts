@@ -33,12 +33,13 @@ export const award = {
   desc: "Given for the agents that set up new projects from signed SOWs and sent weekly status reports to clients by email and Slack.",
 };
 
+/** `name` is the credential's full name; `short` is the label used in the index. */
 export const certs = [
-  { name: "Claude Certified Architect (Foundations)", issuer: "Anthropic" },
-  { name: "PSM I, Professional Scrum Master", issuer: "Scrum.org" },
-  { name: "ITIL Foundation", issuer: "Axelos" },
-  { name: "LandingLens Computer Vision Fundamentals", issuer: "LandingAI" },
-  { name: "LandingLens on Snowflake", issuer: "LandingAI" },
-  { name: "Deeply Practical Project Management", issuer: "Course" },
-  { name: "Data Warehouse Fundamentals", issuer: "Course" },
+  { short: "Claude Architect", name: "Claude Certified Architect (Foundations)", issuer: "Anthropic" },
+  { short: "Scrum Master", name: "PSM I, Professional Scrum Master", issuer: "Scrum.org" },
+  { short: "ITIL", name: "ITIL Foundation", issuer: "Axelos" },
+  { short: "Computer Vision", name: "LandingLens Computer Vision Fundamentals", issuer: "LandingAI" },
+  { short: "LandingLens on Snowflake", name: "LandingLens on Snowflake", issuer: "LandingAI" },
+  { short: "Project Management", name: "Deeply Practical Project Management", issuer: "Course" },
+  { short: "Data Warehouse", name: "Data Warehouse Fundamentals", issuer: "Course" },
 ];

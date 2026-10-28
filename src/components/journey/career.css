@@ -294,91 +294,157 @@
 }
 .cl-award-d { margin: 1rem auto 0; max-width: 46ch; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.5; opacity: 0.85; }
 
-/* 6 · the certifications are a constellation */
-.cl-certs { --h: 132svh; --bg: linear-gradient(180deg, #eef1ff, #fbf3dc); padding-bottom: 30svh; }
-.cl-certs-in { display: grid; justify-items: center; gap: clamp(1.2rem, 3vw, 2.4rem); }
+/* 6 · certifications and courses: a lens you look through (CertStage.tsx).
+   --ca is the fractional chapter in focus; --open and --dwell are derived per
+   drawing: --open as the iris reaches it, --dwell while it is the one shown. */
+.cl-certs { display: block; min-height: 0; padding: 0; --bg: linear-gradient(180deg, #eef1ff, #fbf3dc); }
+.cl-certs-wrap { position: relative; }
+.cl-certs-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 5rem);
+  padding: 9svh var(--gx) 16svh;
+  align-items: center;
+}
+.cl-certs-left { display: grid; gap: clamp(1.2rem, 3.4svh, 2.4rem); align-content: center; min-width: 0; }
 .cl-certs-t {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(2rem, 4.6vw, 4.2rem);
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
   letter-spacing: 0.02em;
-  text-align: center;
-}
-
-/* medals on lanyard ribbons (Medals.tsx) */
-.cl-rails { width: 100vw; margin-inline: calc(50% - 50vw); display: grid; gap: clamp(0.5rem, 2vw, 1.6rem); }
-.cl-rails-tall { display: none; }
-.cl-rail { position: relative; height: calc(var(--h) + 230px); }
-.cl-ribbon { position: absolute; left: 0; top: 0; width: 100%; display: block; overflow: visible; }
-.cl-badges { margin: 0; padding: 0; list-style: none; }
-.cl-badge {
-  --k: 1;
-  position: absolute;
-  left: calc(var(--gx) + (100% - 2 * var(--gx)) * var(--t));
-  top: calc(var(--ry) - 6px);
-  width: clamp(150px, 15vw, 210px);
-  translate: -50% 0;
-  transform-origin: 50% 0;
-  text-align: center;
-}
-.cl-pin-wrap { position: relative; width: clamp(108px, 10.5vw, 148px); margin-inline: auto; }
-.cl-pin { display: block; width: 100%; height: auto; overflow: visible; }
-.cl-pin-icon {
-  position: absolute;
-  left: 50%;
-  top: 60.5%;
-  width: 36%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  display: grid;
-  place-items: center;
-}
-.cl-pin-icon svg { width: 100%; height: 100%; }
-.cl-itil {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-  border: 0.16em solid currentColor;
-  border-radius: 50%;
-  font-family: var(--font-sans);
-  font-style: italic;
-  font-weight: 800;
-  font-size: clamp(1.2rem, 2.3vw, 2rem);
   line-height: 1;
 }
-.cl-pin-txt { margin: 0.7rem 0 0; display: grid; gap: 0.35rem; justify-items: center; }
-.cl-pin-txt strong { font-family: var(--font-heading); font-size: clamp(1rem, 1.3vw, 1.22rem); line-height: 1.25; font-weight: 700; text-wrap: balance; }
-.cl-pin-txt span {
-  font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+
+/* the index: the line in focus is full size and ink, the rest recede */
+.cl-idx { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(0.15rem, 1svh, 0.6rem); align-self: center; }
+.cl-idx li {
+  --d: max(calc(var(--ca, 0) - var(--i)), calc(var(--i) - var(--ca, 0)));
+  --w: clamp(0, calc(1 - var(--d)), 1);
+}
+.cl-idx a {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  padding: 0.1rem 0 0.1rem 1.6rem;
+  color: var(--ink);
+  text-decoration: none;
+  transform-origin: 0 50%;
+  scale: calc(0.7 + 0.3 * var(--w));
+  opacity: calc(0.24 + 0.76 * var(--w));
+  transition: opacity 0.25s var(--ease-signature);
+}
+.cl-idx a:hover, .cl-idx a:focus-visible { opacity: 1; }
+.cl-idx a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.1rem;
+  height: 0.72rem;
+  border-radius: 4px;
+  background: var(--lime);
+  border: 2.5px solid var(--ink);
+  transform-origin: 0 50%;
+  scale: var(--w) 1;
+  translate: 0 -50%;
+}
+.cl-idx-n { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.7rem, 3.5vw, 3.5rem); line-height: 1; }
+.cl-idx-s { font-size: 0.92rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+
+/* the lens */
+.cl-lens-col { display: grid; justify-items: center; align-self: center; min-width: 0; }
+.cl-lens {
+  --px: 0; --py: 0;
+  position: relative;
+  width: min(100%, 56svh);
+  aspect-ratio: 1;
+  border: 3px solid var(--ink);
+  border-radius: 30px;
+  background: #fffefb;
+  box-shadow: 10px 12px 0 var(--ink);
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(calc(var(--py) * -5deg)) rotateY(calc(var(--px) * 6deg));
+}
+.cl-lens-in { position: absolute; inset: 0; }
+.cl-art {
+  --open: clamp(0, calc(var(--ca, 0) - var(--i) + 1), 1);
+  --dwell: clamp(0, calc(var(--ca, 0) - var(--i) + 0.6), 1);
+  position: absolute;
+  inset: 0;
+  z-index: var(--i);
+  background: #fffefb radial-gradient(circle, rgba(13, 34, 238, 0.13) 1.2px, transparent 1.6px) 0 0 / 22px 22px;
+  clip-path: circle(calc(var(--open) * 74%) at 50% 50%);
+}
+.cl-art svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.cl-art[style*="--i: 0"], .cl-art[style*="--i:0"] { clip-path: none; }
+
+/* drawing helpers */
+.cl-dr {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, calc(var(--open) * 1.5 - var(--st, 0) * 0.1), 1));
+}
+.cl-dw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, calc(var(--dwell) * 1.8 - var(--dd, 0) * 0.16), 1));
+}
+.cl-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  scale: clamp(0, calc(var(--open) * 1.5 - var(--st, 0) * 0.1), 1);
+}
+.cl-spin { transform-box: fill-box; transform-origin: center; rotate: calc(var(--dwell) * 140deg); }
+/* the lens leans toward a pointer, and the drawing shifts a little more than
+   the frame, so it has depth */
+.cl-px1 { translate: calc(var(--px, 0) * 9px) calc(var(--py, 0) * 9px); }
+
+/* captions: the full name of the credential in focus is printed on, line by line */
+.cl-caps { list-style: none; margin: clamp(1.4rem, 3.4svh, 2.2rem) 0 0; padding: 0; position: relative; width: min(100%, 56svh); height: 6.6rem; }
+.cl-cap {
+  --d: max(calc(var(--ca, 0) - var(--i)), calc(var(--i) - var(--ca, 0)));
+  --w: clamp(0, calc((0.5 - var(--d)) * 4), 1);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.7rem;
+  clip-path: inset(0 0 calc((1 - var(--w)) * 100%) 0);
+}
+.cl-cap strong { font-family: var(--font-heading); font-size: clamp(1.3rem, 2vw, 1.8rem); line-height: 1.2; font-weight: 800; text-wrap: balance; }
+.cl-cap span {
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.2rem 0.65rem;
+  padding: 0.25rem 0.8rem;
   border-radius: 999px;
-  background: rgba(13, 34, 238, 0.09);
+  background: rgba(13, 34, 238, 0.1);
   color: var(--blue);
 }
-.cl-badge:hover .cl-pin-wrap { rotate: 5deg; transition: rotate 0.35s var(--ease-signature); }
-.cl-pin-wrap { transform-origin: 50% 0; transition: rotate 0.35s var(--ease-signature); }
 
-/* scrubbed arrival: the ribbon draws across, then each medal drops from its
-   strap and swings to rest (a damped pendulum, so it reverses on scroll up) */
-.flow-on .cl-rail[data-flow] {
-  --q: clamp(0, calc((var(--p, 1) - 0.18) / 0.82), 1);
-}
-.flow-on .cl-rail[data-flow] .cl-ribbon {
-  clip-path: inset(-40% calc((1 - clamp(0, calc(var(--p, 1) * 1.5), 1)) * 100%) -40% 0);
-}
-.flow-on .cl-rail[data-flow] .cl-badge {
-  --k: clamp(0, calc((var(--q) * (var(--n) + 1.3) - var(--i)) / 1.3), 1);
-  translate: -50% calc((1 - var(--k)) * -110px);
-  rotate: calc(var(--dir) * (1 - var(--k)) * 26deg * cos(calc(var(--k) * 720deg)));
-  opacity: clamp(0, calc(var(--k) * 5), 1);
-}
-.flow-on .cl-rail[data-flow-done] .cl-ribbon { clip-path: none; }
+/* scroll distance: one short chapter per credential, with run-in and run-out */
+.cl-chap { height: 30svh; }
+.cl-chap-lead { height: 40svh; }
+.cl-chap-tail { height: 46svh; }
+
+/* without the scroll loop (reduced motion, no JS) there is no lens: the same
+   names are simply a list */
+.cl:not([data-live]) .cl-certs-stage { position: static; height: auto; margin: 0; display: block; padding: 12svh var(--gx) 14svh; }
+.cl:not([data-live]) .cl-certs-t { margin-bottom: 1.6rem; }
+.cl:not([data-live]) .cl-idx, .cl:not([data-live]) .cl-lens, .cl:not([data-live]) .cl-chaps { display: none; }
+.cl:not([data-live]) .cl-lens-col { display: block; }
+.cl:not([data-live]) .cl-caps { height: auto; width: auto; display: grid; gap: 1.6rem; margin: 0; }
+.cl:not([data-live]) .cl-cap { position: static; clip-path: none; }
 
 /* ---------- phones: the same story, recomposed ----------
    Copy sits in the top of the screen, the landmarks in the lower half. */
@@ -407,14 +473,37 @@
   .cl-award-act { --h: 112svh; }
   .cl-award-t { font-size: clamp(2.4rem, 13vw, 5rem); }
   .cl-award-star-wrap { width: min(40vw, 22svh); }
-  .cl-certs { --h: 150svh; padding-top: 12svh; }
-  .cl-rails-wide { display: none; }
-  .cl-rails-tall { display: grid; }
-  .cl-rail { height: calc(var(--h) + 214px); }
-  .cl-badge { width: 44vw; }
-  .cl-pin-wrap { width: min(30vw, 120px); }
-  .cl-pin-txt strong { font-size: 1.02rem; }
-  .cl-pin-txt span { font-size: 0.8rem; }
+  .cl-certs { padding: 0; }
+  .cl-certs-stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    align-content: start;
+    row-gap: 0.9rem;
+    padding: 11svh var(--gx) 6svh;
+  }
+  .cl-certs-left { display: contents; }
+  .cl-certs-t { order: 1; font-size: clamp(1.7rem, 8vw, 2.4rem); }
+  .cl-lens-col { order: 2; }
+  .cl-lens { width: min(100%, 42svh); border-radius: 24px; box-shadow: 7px 9px 0 var(--ink); }
+  .cl-caps { width: 100%; height: 6.2rem; margin-top: 1.1rem; }
+  .cl-cap strong { font-size: 1.2rem; }
+  /* the index becomes a row of seven tappable markers; the active one stretches */
+  .cl-idx { order: 3; display: flex; justify-content: center; gap: 0; margin-top: 0.4rem; }
+  .cl-idx a { padding: 0; width: 2.7rem; height: 2.7rem; justify-content: center; align-items: center; scale: 1; opacity: 1; }
+  .cl-idx a::before { display: none; }
+  .cl-idx a::after {
+    content: "";
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 999px;
+    background: var(--ink);
+    opacity: calc(0.28 + 0.72 * var(--w));
+    scale: calc(1 + 1.4 * var(--w)) 1;
+  }
+  .cl-idx-n, .cl-idx-s { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .cl-chap { height: 24svh; }
+  .cl-chap-lead { height: 34svh; }
+  .cl-chap-tail { height: 40svh; }
 }
 
 /* a little more room between the copy and the near ridge on short screens */
