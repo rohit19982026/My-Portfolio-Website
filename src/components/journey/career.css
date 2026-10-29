@@ -1,0 +1,512 @@
+/* "My journey": one landscape you travel through. See CareerLandscape.tsx.
+   --cs is the fractional act index (0..6), --wN the weight of act N (1 when you
+   are in it, fading to 0 a full act away), --cK how far sky K has taken over,
+   --night how far into the night we are. (Not --s: lib/flow.ts owns that one
+   for the section's own sheet effect.) */
+
+.cl {
+  --gx: clamp(20px, 5vw, 84px);
+  --ink: #0d0d0f;
+  --paper: #efeee8;
+  --lime: #d7ff3f;
+  --amber: #f59e0b;
+  --blue: #0d22ee;
+  --cs: 0;
+  --w0: 1; --w1: 0; --w2: 0; --w3: 0; --w4: 0; --night: 0;
+  --c1: 0; --c2: 0; --c3: 0; --c4: 0; --lower: 0;
+  --sunx: 0.1; --suny: 0; --moonx: 0.1; --moony: 0; --end: 0;
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background: #fefdfd;
+  color: var(--ink);
+}
+
+/* ---------- the two stages (only when the scroll loop is running) ---------- */
+
+.cl-stage {
+  display: none;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  overflow: hidden;
+  pointer-events: none;
+}
+.cl[data-live] .cl-stage { display: block; }
+.cl-back { z-index: 0; }
+.cl-front { z-index: 2; }
+.cl-content { position: relative; z-index: 1; }
+
+/* skies: each one fades in over the one before it, so a cross-fade is exact */
+.cl-sky { position: absolute; inset: 0; }
+.cl-sky-0 { background: linear-gradient(180deg, #fefdfd 0%, #f4f2e8 52%, #eaf6b0 100%); }
+.cl-sky-1 { background: linear-gradient(180deg, #e4e9ff 0%, #f0f8c2 56%, #e0ff6a 100%); opacity: var(--c1); }
+.cl-sky-2 { background: linear-gradient(180deg, #b9ceff 0%, #d9e5ff 55%, #f3f8e4 100%); opacity: var(--c2); }
+.cl-sky-3 { background: linear-gradient(180deg, #e3e6ff 0%, #fde8c6 52%, #ffcf78 100%); opacity: var(--c3); }
+.cl-sky-4 { background: linear-gradient(180deg, #dde2ff 0%, #eef1ff 58%, #fbf3dc 100%); opacity: var(--c4); }
+
+/* sun and moon arc across; the ridges are drawn after them, so they rise and
+   set behind the land */
+.cl-body {
+  position: absolute;
+  left: 0;
+  top: 78%;
+  width: clamp(76px, 13vmin, 168px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.cl-sun {
+  background: var(--lime);
+  box-shadow: 0 0 0 clamp(8px, 1.4vmin, 16px) rgba(215, 255, 63, 0.3), 0 0 0 2px var(--ink);
+  translate: calc(var(--sunx) * 100vw - 50%) calc(var(--suny) * -62vh);
+  translate: calc(var(--sunx) * 100vw - 50%) calc(var(--suny) * -62svh);
+  /* gone before it dips behind the translucent hills */
+  opacity: calc(clamp(0, calc(3.9 - var(--cs)), 1) * clamp(0, calc(var(--suny) * 6), 1));
+}
+.cl-moon {
+  background: #fffefb;
+  box-shadow: 0 0 0 clamp(6px, 1.1vmin, 12px) rgba(13, 34, 238, 0.1), 0 0 0 2px var(--blue);
+  translate: calc(var(--moonx) * 100vw - 50%) calc(var(--moony) * -60vh);
+  translate: calc(var(--moonx) * 100vw - 50%) calc(var(--moony) * -60svh);
+  opacity: calc(clamp(0, calc(var(--cs) - 3.2), 1) * clamp(0, calc(var(--moony) * 6), 1));
+}
+
+.cl-scene { position: absolute; inset: 0; }
+.cl-tall { display: none; }
+.cl-layer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+.cl-stars { opacity: calc(var(--night) * 0.5); }
+
+/* ridges grow and flatten with the story: tall mountains for graduation,
+   flat for the cities. The seam at the bottom stays put (scale from the foot). */
+/* the ridge layers are wider than the stage so panning never shows an edge */
+.cl-far, .cl-mid, .cl-near, .cl-handoff { width: 116%; left: -8%; }
+.cl-far {
+  transform-origin: 50% 100%;
+  scale: 1 calc(0.62 + 0.2 * var(--w1) + 0.5 * var(--w2) + 0.12 * var(--w3));
+  translate: calc(var(--cs) * -0.5vw) calc(var(--lower) * 16%);
+}
+.cl-mid {
+  transform-origin: 50% 100%;
+  scale: 1 calc(1 + 0.32 * var(--w2) - 0.1 * var(--w4));
+  translate: calc(var(--cs) * -1vw) calc(var(--lower) * 20%);
+}
+.cl-near { translate: calc(var(--cs) * -1.15vw) calc(var(--lower) * 13%); }
+/* the next section's own ground rises from below as this one ends */
+.cl-handoff { translate: calc(var(--cs) * -1.15vw) calc((1 - var(--end)) * 100%); }
+
+/* rim lights on the ridge crests: amber at dusk, lime at night */
+.cl-rim-night { opacity: calc(var(--night) * 0.55); }
+.cl-rim-dusk { opacity: var(--w3); }
+
+/* each landmark rises out of the ground for its act and sinks away after */
+/* sharpened so two landmarks are never both half-visible: one is mostly gone
+   before the next is mostly there */
+.cl-lm-school { --o: clamp(0, calc((var(--w1) - 0.3) * 1.5), 1); opacity: var(--o); translate: 0 calc((1 - var(--o)) * 16%); }
+.cl-lm-uni { --o: clamp(0, calc((var(--w2) - 0.3) * 1.5), 1); opacity: var(--o); translate: 0 calc((1 - var(--o)) * 16%); }
+.cl-lm-bt { --o: clamp(0, calc((var(--w3) - 0.3) * 1.5), 1); opacity: var(--o); translate: 0 calc((1 - var(--o)) * 16%); }
+.cl-lm-city { --o: clamp(0, calc((var(--w4) - 0.3) * 1.5), 1); opacity: var(--o); translate: 0 calc((1 - var(--o)) * 16%); }
+/* data arcs between the rooftops draw on as the last act arrives */
+.cl-arc {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, calc(var(--w4) * 1.5 - 0.25), 1));
+}
+
+@media (max-width: 767px) {
+  .cl-wide { display: none; }
+  .cl-tall { display: block; }
+}
+
+/* ---------- the acts ---------- */
+
+.cl-act {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-height: var(--h, 100svh);
+  padding: 12svh var(--gx) 24svh;
+  color: var(--c, var(--ink));
+  background: var(--bg, transparent);
+}
+/* without the landscape each act is a plain band with its own ground */
+.cl[data-live] .cl-act { background: transparent; }
+.cl:not([data-live]) .cl-act { min-height: 0; padding-block: 14svh; }
+
+.cl-block { display: block; }
+.cl-yr {
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* 0 · arrival */
+.cl-intro {
+  --h: 100svh;
+  --bg: linear-gradient(180deg, #fefdfd, #e8f4a8);
+  padding-bottom: 18svh;
+}
+.cl-giant {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: min(25vw, 32svh);
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+}
+.cl-line { display: block; overflow: hidden; white-space: nowrap; padding: 0 0.02em 0.06em; }
+.cl-ch { display: inline-block; }
+.flow-on [data-flow="head"] .cl-ch {
+  translate: 0 calc((1 - clamp(0, (var(--p, 1) * (var(--n, 8) + 3) - var(--i, 0)) / 3, 1)) * 110%);
+}
+.cl-lede {
+  margin: 1.6rem 0 0;
+  max-width: 28ch;
+  font-size: clamp(1.25rem, 2vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* 1 · school: a digit reel rolls 2014 to 2016 as you pass */
+.cl-school {
+  --h: 118svh;
+  --bg: linear-gradient(180deg, #eaf6b0, #e0ff6a);
+}
+.cl-school-in { display: grid; gap: clamp(1.2rem, 3vw, 2.6rem); justify-items: start; }
+.cl-reel {
+  --r: clamp(0, calc((0.8 - var(--y, -1)) / 0.6), 1);
+  display: flex;
+  height: 1em;
+  font-family: var(--font-display);
+  font-size: min(21vw, 27svh);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.cl-reel-win { display: block; height: 1em; overflow: hidden; }
+.cl-reel-col { display: block; translate: 0 calc(var(--r) * -66.6667%); }
+.cl-reel-col span { display: block; height: 1em; }
+.cl-school-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 1.2rem; }
+.cl-school-list li { display: grid; grid-template-columns: 5rem 1fr; align-items: baseline; column-gap: 1.2rem; }
+.cl-school-list .cl-yr { grid-row: span 2; font-size: 1.8rem; color: var(--blue); }
+.cl-school-t { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.2rem, 4.2vw, 4rem); line-height: 1; }
+.cl-school-n { font-size: clamp(1.1rem, 1.6vw, 1.5rem); font-weight: 600; }
+
+/* 2 · graduation: you travel into a hollow 2020 */
+.cl-degree { --h: 108svh; --bg: linear-gradient(180deg, #b9ceff, #e4ecff); }
+.cl-degree-in { position: relative; justify-self: end; text-align: right; width: min(100%, 64rem); }
+.cl-zoom {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 28vw, 26rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(13, 34, 238, 0.32);
+  transform-origin: 100% 50%;
+}
+.cl[data-live] .cl-zoom { scale: calc(0.72 + 0.9 * (1 - var(--y, 0)) / 2); }
+.cl-degree-t {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(2.7rem, 7.6vw, 8.4rem);
+  line-height: 0.94;
+}
+.cl-degree-p { position: relative; margin: 1.3rem 0 0; font-size: clamp(1.2rem, 2.2vw, 2rem); font-weight: 700; }
+.cl-degree-t { color: var(--ink); }
+.cl-degree-t .cl-block:last-child { color: var(--blue); }
+
+/* 3 · first job: the lines start stretched and compress into place */
+.cl-bt { --h: 108svh; --bg: linear-gradient(180deg, #e3e6ff, #ffd88a); }
+.cl-yr-bt { margin: 0 0 1.2rem; font-size: clamp(1.8rem, 3.4vw, 3.2rem); color: var(--blue); }
+.cl-bt-t {
+  --stretch: 0.3;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(2.8rem, 8vw, 9rem);
+  line-height: 0.94;
+  transform-origin: 0 50%;
+}
+.cl[data-live] .cl-bt-t {
+  --q: clamp(0, calc((var(--y, 0) - 0.15) / 0.85), 1);
+  scale: calc(1 + var(--stretch) * var(--q)) 1;
+}
+.cl-bt-p { margin: 1.6rem 0 0; display: grid; gap: 0.3rem; font-size: clamp(1.15rem, 2vw, 1.8rem); }
+.cl-bt-p span { opacity: 0.72; font-weight: 500; }
+
+/* 4 · phData: the wordmark is lit like a building at night */
+.cl-city { --h: 118svh; --bg: linear-gradient(180deg, #dde2ff, #eef1ff); }
+.cl-city-in { justify-self: end; text-align: right; }
+.cl-yr-city { margin: 0 0 1rem; font-size: clamp(2.2rem, 5.2vw, 4.6rem); color: var(--blue); }
+.cl-lit { margin: 0; }
+.cl-lit-small {
+  display: block;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(2rem, 6vw, 6.4rem);
+  line-height: 0.9;
+}
+.cl-lit-word {
+  display: block;
+  font-family: var(--font-display);
+  font-size: min(18vw, 30svh);
+  line-height: 0.92;
+  color: transparent;
+  background: radial-gradient(circle, var(--lime) 0 2.4px, transparent 2.9px) 0 0 / 15px 19px, var(--ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .cl-lit-word { color: var(--ink); background: none; }
+}
+.cl-city-p { margin: 1.4rem 0 0; display: grid; gap: 0.3rem; justify-items: end; font-size: clamp(1.15rem, 2vw, 1.8rem); }
+.cl-city-p strong { color: var(--blue); font-weight: 700; }
+
+/* 5 · recognition: a star turns over a clear night sky */
+.cl-award-act { --h: 118svh; --bg: #eef1ff; }
+.cl-award { display: grid; justify-items: center; text-align: center; gap: 1.2rem; }
+.cl-award-star-wrap { width: min(17vw, 26svh); aspect-ratio: 1; color: var(--lime); }
+.cl-award-star { stroke: var(--ink); stroke-width: 0.7; stroke-linejoin: round; paint-order: stroke; }
+.cl[data-live] .cl-award-star-wrap { rotate: calc(var(--y, 0) * 110deg); }
+.cl-award-star { width: 100%; height: 100%; display: block; }
+.cl-award-k { margin: 0.4rem 0 0.2rem; font-family: var(--font-heading); font-size: 1rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); }
+.cl-award-t {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: min(8vw, 17svh);
+  line-height: 0.95;
+}
+.cl-award-d { margin: 1rem auto 0; max-width: 46ch; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.5; opacity: 0.85; }
+
+/* 6 · certifications and courses: a lens you look through (CertStage.tsx).
+   --ca is the fractional chapter in focus; --open and --dwell are derived per
+   drawing: --open as the iris reaches it, --dwell while it is the one shown. */
+.cl-certs { display: block; min-height: 0; padding: 0; --bg: linear-gradient(180deg, #eef1ff, #fbf3dc); }
+.cl-certs-wrap { position: relative; }
+.cl-certs-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 5rem);
+  padding: 9svh var(--gx) 16svh;
+  align-items: center;
+}
+.cl-certs-left { display: grid; gap: clamp(1.2rem, 3.4svh, 2.4rem); align-content: center; min-width: 0; }
+.cl-certs-t {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* the index: the line in focus is full size and ink, the rest recede */
+.cl-idx { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(0.15rem, 1svh, 0.6rem); align-self: center; }
+.cl-idx li {
+  --d: max(calc(var(--ca, 0) - var(--i)), calc(var(--i) - var(--ca, 0)));
+  --w: clamp(0, calc(1 - var(--d)), 1);
+}
+.cl-idx a {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  padding: 0.1rem 0 0.1rem 1.6rem;
+  color: var(--ink);
+  text-decoration: none;
+  transform-origin: 0 50%;
+  scale: calc(0.7 + 0.3 * var(--w));
+  opacity: calc(0.24 + 0.76 * var(--w));
+  transition: opacity 0.25s var(--ease-signature);
+}
+.cl-idx a:hover, .cl-idx a:focus-visible { opacity: 1; }
+.cl-idx a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.1rem;
+  height: 0.72rem;
+  border-radius: 4px;
+  background: var(--lime);
+  border: 2.5px solid var(--ink);
+  transform-origin: 0 50%;
+  scale: var(--w) 1;
+  translate: 0 -50%;
+}
+.cl-idx-n { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.7rem, 3.5vw, 3.5rem); line-height: 1; }
+.cl-idx-s { font-size: 0.92rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+
+/* the lens */
+.cl-lens-col { display: grid; justify-items: center; align-self: center; min-width: 0; }
+.cl-lens {
+  --px: 0; --py: 0;
+  position: relative;
+  width: min(100%, 56svh);
+  aspect-ratio: 1;
+  border: 3px solid var(--ink);
+  border-radius: 30px;
+  background: #fffefb;
+  box-shadow: 10px 12px 0 var(--ink);
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(calc(var(--py) * -5deg)) rotateY(calc(var(--px) * 6deg));
+}
+.cl-lens-in { position: absolute; inset: 0; }
+.cl-art {
+  --open: clamp(0, calc(var(--ca, 0) - var(--i) + 1), 1);
+  --dwell: clamp(0, calc(var(--ca, 0) - var(--i) + 0.6), 1);
+  position: absolute;
+  inset: 0;
+  z-index: var(--i);
+  background: #fffefb radial-gradient(circle, rgba(13, 34, 238, 0.13) 1.2px, transparent 1.6px) 0 0 / 22px 22px;
+  clip-path: circle(calc(var(--open) * 74%) at 50% 50%);
+}
+.cl-art svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.cl-art[style*="--i: 0"], .cl-art[style*="--i:0"] { clip-path: none; }
+
+/* drawing helpers */
+.cl-dr {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, calc(var(--open) * 1.5 - var(--st, 0) * 0.1), 1));
+}
+.cl-dw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, calc(var(--dwell) * 1.8 - var(--dd, 0) * 0.16), 1));
+}
+.cl-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  scale: clamp(0, calc(var(--open) * 1.5 - var(--st, 0) * 0.1), 1);
+}
+.cl-spin { transform-box: fill-box; transform-origin: center; rotate: calc(var(--dwell) * 140deg); }
+/* the lens leans toward a pointer, and the drawing shifts a little more than
+   the frame, so it has depth */
+.cl-px1 { translate: calc(var(--px, 0) * 9px) calc(var(--py, 0) * 9px); }
+
+/* captions: the full name of the credential in focus is printed on, line by line */
+.cl-caps { list-style: none; margin: clamp(1.4rem, 3.4svh, 2.2rem) 0 0; padding: 0; position: relative; width: min(100%, 56svh); height: 6.6rem; }
+.cl-cap {
+  --d: max(calc(var(--ca, 0) - var(--i)), calc(var(--i) - var(--ca, 0)));
+  --w: clamp(0, calc((0.5 - var(--d)) * 4), 1);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.7rem;
+  clip-path: inset(0 0 calc((1 - var(--w)) * 100%) 0);
+}
+.cl-cap strong { font-family: var(--font-heading); font-size: clamp(1.3rem, 2vw, 1.8rem); line-height: 1.2; font-weight: 800; text-wrap: balance; }
+.cl-cap span {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(13, 34, 238, 0.1);
+  color: var(--blue);
+}
+
+/* scroll distance: one short chapter per credential, with run-in and run-out */
+.cl-chap { height: 30svh; }
+.cl-chap-lead { height: 40svh; }
+.cl-chap-tail { height: 46svh; }
+
+/* without the scroll loop (reduced motion, no JS) there is no lens: the same
+   names are simply a list */
+.cl:not([data-live]) .cl-certs-stage { position: static; height: auto; margin: 0; display: block; padding: 12svh var(--gx) 14svh; }
+.cl:not([data-live]) .cl-certs-t { margin-bottom: 1.6rem; }
+.cl:not([data-live]) .cl-idx, .cl:not([data-live]) .cl-lens, .cl:not([data-live]) .cl-chaps { display: none; }
+.cl:not([data-live]) .cl-lens-col { display: block; }
+.cl:not([data-live]) .cl-caps { height: auto; width: auto; display: grid; gap: 1.6rem; margin: 0; }
+.cl:not([data-live]) .cl-cap { position: static; clip-path: none; }
+
+/* ---------- phones: the same story, recomposed ----------
+   Copy sits in the top of the screen, the landmarks in the lower half. */
+@media (max-width: 767px) {
+  .cl-act { align-content: start; padding-top: 14svh; padding-bottom: 32svh; }
+  .cl-intro { padding-top: 13svh; }
+  .cl-giant { font-size: min(24vw, 19svh); }
+  .cl-bt-t { --stretch: 0.1; }
+  .cl-sun { translate: calc(var(--sunx) * 100vw - 50%) calc(var(--suny) * -34svh); }
+  .cl-moon { translate: calc(var(--moonx) * 100vw - 50%) calc(var(--moony) * -32svh); }
+  .cl-body { width: 9vmin; }
+  .cl-lede { margin-top: 1.1rem; font-size: 1.2rem; }
+  .cl-school { --h: 112svh; }
+  .cl-reel { font-size: min(34vw, 20svh); }
+  .cl-school-list { gap: 0.9rem; }
+  .cl-school-list li { grid-template-columns: 3.2rem 1fr; column-gap: 0.9rem; }
+  .cl-degree { --h: 104svh; }
+  .cl-degree-in { justify-self: stretch; }
+  .cl-zoom { font-size: clamp(7rem, 40vw, 14rem); }
+  .cl-degree-t { font-size: clamp(2.4rem, 12.4vw, 5rem); }
+  .cl-bt { --h: 104svh; }
+  .cl-bt-t { font-size: clamp(2.5rem, 12vw, 5rem); }
+  .cl-city { --h: 112svh; }
+  .cl-city-in { justify-self: stretch; }
+  .cl-lit-word { font-size: min(30vw, 17svh); }
+  .cl-award-act { --h: 112svh; }
+  .cl-award-t { font-size: clamp(2.4rem, 13vw, 5rem); }
+  .cl-award-star-wrap { width: min(40vw, 22svh); }
+  .cl-certs { padding: 0; }
+  .cl-certs-stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    align-content: start;
+    row-gap: 0.9rem;
+    padding: 11svh var(--gx) 6svh;
+  }
+  .cl-certs-left { display: contents; }
+  .cl-certs-t { order: 1; font-size: clamp(1.7rem, 8vw, 2.4rem); }
+  .cl-lens-col { order: 2; }
+  .cl-lens { width: min(100%, 42svh); border-radius: 24px; box-shadow: 7px 9px 0 var(--ink); }
+  .cl-caps { width: 100%; height: 6.2rem; margin-top: 1.1rem; }
+  .cl-cap strong { font-size: 1.2rem; }
+  /* the index becomes a row of seven tappable markers; the active one stretches */
+  .cl-idx { order: 3; display: flex; justify-content: center; gap: 0; margin-top: 0.4rem; }
+  .cl-idx a { padding: 0; width: 2.7rem; height: 2.7rem; justify-content: center; align-items: center; scale: 1; opacity: 1; }
+  .cl-idx a::before { display: none; }
+  .cl-idx a::after {
+    content: "";
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 999px;
+    background: var(--ink);
+    opacity: calc(0.28 + 0.72 * var(--w));
+    scale: calc(1 + 1.4 * var(--w)) 1;
+  }
+  .cl-idx-n, .cl-idx-s { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .cl-chap { height: 24svh; }
+  .cl-chap-lead { height: 34svh; }
+  .cl-chap-tail { height: 40svh; }
+}
+
+/* a little more room between the copy and the near ridge on short screens */
+@media (max-height: 560px) {
+  .cl-act { padding-block: 10svh; }
+}

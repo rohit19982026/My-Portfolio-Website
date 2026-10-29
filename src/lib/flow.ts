@@ -19,7 +19,7 @@ import { subscribeScroll } from "./scrollBus";
  *    data-flow="dev"   blocks and cards: --p
  *    data-flow="head"  section headings: --p (words rise), --f (outline fills)
  *    data-flow="sheet" a section's top edge opening up: --s
- *    data-flow="drift" depth: --y, -1 to 1 as the element crosses the screen
+ *    data-flow="drift" depth: --y, +1 entering at the bottom to -1 leaving at the top
  *
  *  Without this running (no JS, reduced motion, failed bundle) every variable
  *  falls back to "complete" in CSS, so nothing is ever left hidden. */
@@ -81,7 +81,7 @@ export function startFlow(): () => void {
     if (!range) return null;
     const top = rect.top;
     if (kind === "drift") {
-      // -1 as it enters at the bottom, 0 mid-screen, 1 as it leaves at the top.
+      // +1 as it enters at the bottom, 0 mid-screen, -1 as it leaves at the top.
       return { kind, y: Math.max(-1, Math.min(1, (top + rect.height / 2 - vh / 2) / ((vh + rect.height) / 2))) };
     }
     // An element near the end of the page can never scroll up to the line, so
