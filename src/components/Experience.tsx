@@ -35,15 +35,15 @@ const roles: {
     titleSub: "Data & AI",
     org: "phData · Bengaluru",
     points: [
-      { title: "Program Delivery", icon: 1, text: "Manage four to five data and AI programs at once for US Fortune 500 clients, each with its own engineering team." },
+      { title: "Program Delivery", icon: 1, text: "Manage four to five data and AI programs at once for US Fortune 500 clients. Each is worth $500K to $2M and has its own team of 12 to 15 engineers. Most move a client's older systems onto Snowflake or AWS and their reporting to Tableau or Sigma." },
       { title: "Requirements and Planning", icon: 2, text: "Review client requirements and effort estimates with the Principal Architects before the SOW is signed. Then break the agreed scope into a WBS, RACI and Jira backlog for the engineering team." },
       { title: "Sprint and Risk Management", icon: 3, text: "Run sprint planning, stand-ups and retrospectives for each program. Keep the risk register and decision log current, and track progress and blockers in Jira dashboards." },
       { title: "Dependency Management", icon: 2, text: "Chase client-side dependencies such as system access, data and approvals from kickoff onward." },
       { title: "Client and Stakeholder Management", icon: 4, text: "Main contact for client VPs, directors and C-level sponsors, with weekly status updates across a 10–12 hour India–US time gap. Keep sales, engineering, architects and leadership aligned on goals, status and open risks." },
       { title: "Scope and Expectations", icon: 5, text: "Set expectations on scope, timelines and trade-offs, and work out a middle ground with engineering when a request isn't feasible as asked. Assess mid-project changes against the SOW and raise change orders for out-of-scope work." },
-      { title: "Commercial and Reporting", icon: 6, text: "Run monthly invoicing, forecast vs actuals and burn-down for each program, and flag budget variance early. Use QBRs to review challenges with sponsors and look for follow-on work." },
+      { title: "Commercial and Reporting", icon: 6, text: "Run monthly invoicing, forecast vs actuals and burn-down for each program, and flag budget variance early. Use quarterly reviews to go through problems openly with sponsors. Three clients have extended into analytics or AI/ML work after their migration." },
       { title: "Process Automation", icon: 7, text: "Built a Jira dependency tracker with Google Apps Script and the Jira REST API. It pulls active stories on a schedule, maps which tickets block each other and counts days blocked. Its reports took the place of one team's weekly status meeting." },
-      { title: "AI Agents", icon: 1, text: "Built three PMO agents with Glean and Claude. One sets up new projects from signed SOWs in Salesforce and sends client status updates by email and Slack, one posts a weekly program-health summary to Slack, and one checks billing data at month-end and lists each inconsistency with an action item. They save an estimated 4–8 hours of PMO work a week, and the work earned phData's Innovation Award." },
+      { title: "AI Agents", icon: 1, text: "Built three PMO agents with Glean and Claude. One sets up a new project from a signed SOW in Salesforce and sends client status updates by email and Slack. One posts a weekly program-health summary to Slack. One runs 17 checks on month-end billing data and lists each issue with a fix, which cut a 10-hour manual review to under 30 minutes. I also built a few smaller Claude helpers, listed under Tools below. I estimate the tools save 4–8 hours of PMO work a week, and the work earned phData's Innovation Award." },
     ],
     tags: ["Program Delivery", "Budget Tracking", "Stakeholder Management", "Change Orders", "Scrum (PSM I)", "AI Agents"],
   },
@@ -54,9 +54,9 @@ const roles: {
     titleSub: "IT Infrastructure",
     org: "British Telecom (BT) · Kolkata",
     points: [
-      { title: "Change Delivery", icon: 3, text: "Managed infrastructure changes across network, systems and application teams under ITIL." },
-      { title: "Risk and Rollback", icon: 2, text: "Took each change from intake through risk assessment, rollback planning and post-implementation review." },
-      { title: "CAB and Communication", icon: 5, text: "Presented changes at Change Advisory Board sessions to senior IT leadership, and ran stakeholder communication for each change window." },
+      { title: "Change Delivery", icon: 3, text: "Managed 50+ changes a year to live IT systems, such as network, server and application updates, working with the network, systems and application teams under ITIL." },
+      { title: "Risk and Rollback", icon: 2, text: "For each change I checked the risk, set the date, prepared a rollback plan and confirmed it worked after release, so systems kept running without disruption." },
+      { title: "Approvals and Communication", icon: 5, text: "Presented each change to the Change Advisory Board, a panel of senior IT leaders who approve or reject changes. Told the affected teams what was changing and when, before and during the change." },
     ],
     tags: ["ITIL Foundation", "CAB Governance", "Change Risk Assessment", "Stakeholder Communication"],
   },
@@ -341,8 +341,8 @@ function Role({ role, index }: { role: (typeof roles)[number]; index: number }) 
 
 const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.07 } } };
 
-const WORDS_A = ["Role", "history."];
-const WORDS_B = ["What", "shipped."];
+const WORDS_A = ["Where", "I've"];
+const WORDS_B = ["worked."];
 
 export default function Trajectory() {
   return (

@@ -46,7 +46,7 @@ const cards: Card[] = [
     tint: "#f4f2ff",
     art: { src: "/stack/art-laptop.png", w: 225, h: 215 },
     blurb:
-      "My everyday delivery stack: Jira and Confluence for backlog and documentation, Kantata as our PSA tool, and Salesforce for client and SOW records. MS Project, Azure DevOps or Asana when a client works in them, and Slack or Teams to stay in touch.",
+      "My everyday delivery stack: Jira and Confluence for the backlog and documentation, Kantata for time and budgets, and Salesforce for client and SOW records. MS Project, Azure DevOps or Asana when a client works in them, and Slack or Teams to stay in touch.",
     chips: [
       { name: "Jira", icon: "jira" },
       { name: "Confluence", icon: "confluence" },
@@ -67,7 +67,7 @@ const cards: Card[] = [
     tint: "#fff7e8",
     art: { src: "/stack/art-bolt.png", w: 210, h: 190 },
     blurb:
-      "What I build with: Glean Agent Builder and Claude for the PMO agents, Google Apps Script and the Jira REST API for the dependency tracker, and n8n for workflow automation. MCP connections link them to Salesforce, Slack and Google Drive.",
+      "What I build with: Glean Agent Builder and Claude for the PMO agents, Google Apps Script and the Jira REST API for the dependency tracker, and n8n for workflow automation. MCP, a way of connecting Claude to other apps, links them to Salesforce, Slack and Google Drive.",
     chips: [
       { name: "Glean", icon: "glean" },
       { name: "Claude", icon: "claude" },
@@ -273,8 +273,9 @@ export default function DeliveryExposure() {
               style={{ background: BLUE }}
             />
             <motion.p variants={rise} className="mt-4 max-w-2xl font-sans text-[15px] leading-relaxed sm:text-[17px]" style={{ color: MUTED }}>
-              The platforms my programs have run on. I don&apos;t engineer on them, but I know them well enough to scope the
-              work and keep up in technical discussions. The last group is different: those are the tools I build with.
+              The tools and platforms behind my programs. I don&apos;t engineer on the data platforms, but I know them well
+              enough to scope the work and follow the technical discussion. The AI and automation group is different:
+              those are the tools I build with.
             </motion.p>
           </motion.div>
 

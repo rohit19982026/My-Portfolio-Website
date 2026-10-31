@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useContext, useRef } from "react";
-import { ArrowUpRight, Clock, Sparkle, Target, Users, Zap } from "lucide-react";
+import { ArrowUpRight, Clock, Target, Wrench, Zap } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
 import CardDeck, { DeckFrontContext } from "./ui/CardDeck";
 import { agents, type Agent } from "@/lib/agents";
@@ -187,13 +187,14 @@ function AgentCard({ agent, index, inView, className = "" }: { agent: Agent; ind
   );
 }
 
-// Every figure here is stated on the resume — no rounded-up or
-// estimated numbers standing in for metrics that were never measured.
+// Every figure here is stated on the resume. The weekly hours are an
+// estimate, so the label says so. The 10-hour review is the month-end
+// billing audit, before and after the agent.
 const impactStats = [
-  { Icon: Clock, value: "4–8 Hrs", label: "Saved / Week", color: "#5B9BF0" },
-  { Icon: Target, value: "17", label: "Billing Checks", color: "var(--color-accent)" },
-  { Icon: Zap, value: "4–5", label: "Programs at Once", color: "var(--color-accent)" },
-  { Icon: Users, value: "7", label: "Agents Built", color: "#2DD4BF" },
+  { Icon: Clock, value: "4–8 Hrs", label: "Est. saved a week", color: "#5B9BF0" },
+  { Icon: Zap, value: "10h → <30m", label: "Month-end billing review", color: "var(--color-accent)" },
+  { Icon: Target, value: "17", label: "Checks in that review", color: "var(--color-accent)" },
+  { Icon: Wrench, value: "7", label: "Tools built", color: "#2DD4BF" },
 ] as const;
 
 function ImpactStatIcon({ stat, active, delay }: { stat: (typeof impactStats)[number]; active: boolean; delay: number }) {
@@ -206,7 +207,7 @@ function ImpactStatIcon({ stat, active, delay }: { stat: (typeof impactStats)[nu
       className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left px-2"
     >
       <Icon size={28} strokeWidth={1.6} style={{ color, filter: `drop-shadow(0 0 6px color-mix(in srgb, ${color} 65%, transparent))` }} />
-      <p className="font-heading text-[24px] sm:text-[26px] font-bold text-fg leading-none mt-1">{value}</p>
+      <p className="font-heading text-[18px] min-[420px]:text-[24px] sm:text-[26px] font-bold text-fg leading-none mt-1 whitespace-nowrap">{value}</p>
       <p className="text-[12px] text-fg/55 leading-snug">{label}</p>
     </motion.div>
   );
@@ -227,7 +228,7 @@ function BusinessImpactPanel({ inView }: { inView: boolean }) {
         aria-hidden="true"
       />
       <p className="flex items-center gap-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-7">
-        Business Impact <Sparkle size={13} />
+        By the numbers
       </p>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8">
         {impactStats.map((stat, i) => (
@@ -260,15 +261,16 @@ export default function ToolsBuilt() {
           <SectionHeading
             eyebrow="04 / TOOLS BUILT"
             segments={[
-              { text: "Small agents", style: "fill" },
+              { text: "Small tools", style: "fill" },
               { text: "for the work that repeats.", style: "lime" },
             ]}
             className="mb-5"
           />
           <p className="text-[16px] text-fg/70 max-w-xl leading-relaxed">
-            Running four or five programs means the same reports, checks, and setup every week. I automated the
-            parts that didn&apos;t need me. Together they save{" "}
-            <strong className="text-accent font-semibold">4–8 hours</strong> a week.
+            Running four or five programs means the same reports, checks and setup every week. I automated the
+            parts that didn&apos;t need me, and I still review what they produce. Most use Claude or Glean; the Jira
+            tracker is plain code. My estimate is{" "}
+            <strong className="text-accent font-semibold">4–8 hours</strong> saved a week.
           </p>
         </div>
 

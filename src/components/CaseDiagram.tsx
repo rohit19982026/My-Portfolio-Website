@@ -78,7 +78,7 @@ function Trade({ accent }: { accent: string }) {
       </motion.g>
       <motion.g {...pop(0.2)} style={{ transformOrigin: "250px 36px" }}>
         <rect x={188} y={18} width={124} height={36} rx={18} fill="#fff" stroke={LINE} />
-        <text x={250} y={40} textAnchor="middle" style={{ ...label, fill: INK, fontWeight: 600 }}>No status meetings</text>
+        <text x={250} y={40} textAnchor="middle" style={{ ...label, fill: INK, fontWeight: 600 }}>No status meeting</text>
       </motion.g>
       <motion.path d="M140 30 H180" stroke={accent} strokeWidth={2} strokeLinecap="round" fill="none" {...draw(0.35)} />
       <motion.path d="M174 25 L180 30 L174 35" stroke={accent} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" fill="none" {...draw(0.55)} />

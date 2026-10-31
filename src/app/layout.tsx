@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "I run data and AI programs for US Fortune 500 clients at phData, usually four or five at once. Along the way I've built the agents that take the repetitive reporting off my plate.",
+      "I run data and AI programs for US Fortune 500 clients at phData, usually four or five at once. Alongside that, I build small tools and AI agents that take the repetitive reporting off my plate.",
     type: "website",
     locale: "en_US",
   },
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Rohit Kumar Singh — Technical Project Manager, Data & AI",
     description:
-      "I run data and AI programs for US Fortune 500 clients at phData, usually four or five at once, and build the agents that take the repetitive reporting off my plate.",
+      "I run data and AI programs for US Fortune 500 clients at phData, usually four or five at once, and build small tools and AI agents that take the repetitive reporting off my plate.",
   },
 };
 

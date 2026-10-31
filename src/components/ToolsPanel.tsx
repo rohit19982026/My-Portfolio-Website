@@ -33,7 +33,7 @@ export default function ToolsPanel() {
       <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
         <div className="min-w-0 flex-1 basis-[22rem]">
           <p className="flex items-center gap-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em]" style={{ color: "#4a4766" }}>
-            Tools I use daily
+            My toolkit
             <span aria-hidden className="h-[3px] w-12 rounded-full" style={{ background: BLUE }} />
           </p>
           <h3
@@ -45,7 +45,7 @@ export default function ToolsPanel() {
             <span style={{ color: "#d7ff3f" }}>.</span>
           </h3>
           <p className="mt-3 max-w-3xl font-sans leading-relaxed" style={{ color: "#6b6880", fontSize: "clamp(0.88rem, 2.6vw, 1.15rem)" }}>
-            These are the platforms I use regularly to plan, collaborate, build and deliver projects.
+            Jira, Salesforce and Azure DevOps for delivery. Claude, Glean and Cursor for building tools. GitHub for the code.
           </p>
         </div>
         <a

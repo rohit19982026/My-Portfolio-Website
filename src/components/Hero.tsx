@@ -44,14 +44,14 @@ const NAVY = "var(--color-surface-alt)";
 const CARD_BG = "var(--color-card)";
 const CARD_BORDER = "var(--color-card-border)";
 
-// Impact stats — shared by both breakpoints. Every value is a figure
-// stated on the resume (years in delivery, program count, team size,
-// PMO hours saved), not an estimated or rounded-up one.
+// Stats — shared by both breakpoints. Every value is a figure stated on
+// the resume (years in IT, program count, team size, PMO hours saved).
+// The hours-saved figure is an estimate, so its label says so.
 const mobileStats = [
-  { Icon: Clock, value: "6 Yrs", label: "IT Delivery" },
-  { Icon: Target, value: "4–5", label: "Concurrent Programs" },
-  { Icon: CheckCircle2, value: "12–15", label: "Engineers / Program" },
-  { Icon: Zap, value: "4–8 Hrs", label: "Hours Saved / Week" },
+  { Icon: Clock, value: "6 Yrs", label: "In IT delivery" },
+  { Icon: Target, value: "4–5", label: "Programs at once" },
+  { Icon: CheckCircle2, value: "12–15", label: "Engineers per program" },
+  { Icon: Zap, value: "4–8 Hrs", label: "Est. saved a week" },
 ] as const;
 
 // 4-tile capability strip — a leaner icon+label restatement of the bio,
@@ -61,57 +61,57 @@ const mobileStats = [
 // generic restatement.
 const capabilityTiles = [
   {
-    label: "Own Program Delivery",
-    description: "From signed SOW to final handover, across four or five programs at a time.",
+    label: "Delivery",
+    description: "From signed SOW to go-live, across four or five programs at a time.",
     Icon: Users,
     color: "var(--color-accent)",
   },
   {
-    label: "Run Financial Governance",
+    label: "Budgets and billing",
     description: "Monthly invoicing and burn tracking, so budget problems show up early.",
     Icon: Target,
     color: "#8B7FF0",
   },
   {
-    label: "Build PMO Agents",
-    description: "Glean and Claude agents that write the reports and run the checks.",
+    label: "Tools and automation",
+    description: "Scripts and AI agents that write the reports and run the checks.",
     Icon: Bot,
     color: "#8B7FF0",
   },
   {
-    label: "Bridge Client & Engineering",
+    label: "Clients and engineers",
     description: "Client VPs in the US, engineers in India, and me keeping them in sync.",
     Icon: Cpu,
     color: "var(--color-accent)",
   },
 ] as const;
 
-// Two capability cards — condensed checklists standing in for a
-// paragraph description. Items are the resume's own Skills lines
-// (Core Skills / AI & Automation), not a restatement.
+// Two capability cards — short checklists of what the job actually involves
+// and what I build with. Items are drawn from the resume's bullets and
+// skills lines, in plain words.
 const capabilityCards = [
   {
-    title: "Core Skills",
+    title: "Day to day",
     Icon: Briefcase,
     color: "var(--color-accent)",
-    items: ["Stakeholder Management", "Cross-Team Coordination", "Executive Communication", "Risk & Budget Control"],
+    items: ["Weekly client updates", "Budget and invoicing", "Scope changes", "Risks and dependencies"],
   },
   {
-    title: "AI & Automation",
+    title: "What I build with",
     Icon: Bot,
     color: "#8B7FF0",
-    items: ["Claude & Claude Code", "Glean Agents", "n8n", "MCP · Jira REST API"],
+    items: ["Claude and Claude Code", "Glean agents", "Apps Script + Jira API", "n8n"],
   },
 ] as const;
 
-// Automation pipeline mini-teaser; the full 6 agent architectures live
-// in the Tools section further down the page.
+// "What I automate" mini-teaser; the full set of seven tools lives in the
+// Tools section further down the page.
 const automateSteps = [
-  { label: "Project Initiation", Icon: FileText },
-  { label: "Delivery Workflows", Icon: Network },
-  { label: "Financial Reviews", Icon: DollarSign },
-  { label: "Reporting & Updates", Icon: BarChart3 },
-  { label: "Notifications & Briefs", Icon: Bell },
+  { label: "Project setup", Icon: FileText },
+  { label: "Status reports", Icon: BarChart3 },
+  { label: "Billing checks", Icon: DollarSign },
+  { label: "Jira tracking", Icon: Network },
+  { label: "Daily briefs", Icon: Bell },
 ] as const;
 
 function MobileStatIcon({ stat }: { stat: (typeof mobileStats)[number] }) {
@@ -211,9 +211,11 @@ export default function Hero() {
               className="mt-8 mb-7 max-w-[540px] text-[17px] leading-[1.6] text-fg/65"
             >
               I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
-              clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
-              Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
-              take the repetitive reporting off my plate.
+              clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once. That
+              means planning the work, tracking budgets, keeping clients informed and unblocking the engineers. Most
+              programs move a client&apos;s older systems onto Snowflake or AWS. Alongside that, I build small{" "}
+              <span className="text-accent font-semibold">tools and AI agents</span> that take the repetitive
+              reporting off my plate.
             </motion.p>
 
             <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3">
@@ -311,7 +313,7 @@ export default function Hero() {
 
           <div className="rounded-2xl p-6" style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}>
             <p className="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-accent mb-6">
-              Automation Pipeline
+              What I automate
             </p>
             <div className="flex items-start justify-between mb-7">
               {automateSteps.map((step, i) => (
@@ -415,9 +417,11 @@ export default function Hero() {
             style={{ fontSize: "clamp(13.5px, 3.6vw, 15px)" }}
           >
             I run <span className="text-accent font-semibold">data and AI programs</span> for US Fortune 500
-            clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once.
-            Along the way I&apos;ve built the <span className="text-accent font-semibold">agents</span> that
-            take the repetitive reporting off my plate.
+            clients at <span className="text-fg font-semibold">phData</span>, usually four or five at once. That
+            means planning the work, tracking budgets, keeping clients informed and unblocking the engineers. Most
+            programs move a client&apos;s older systems onto Snowflake or AWS. Alongside that, I build small{" "}
+            <span className="text-accent font-semibold">tools and AI agents</span> that take the repetitive
+            reporting off my plate.
           </motion.p>
 
           <motion.div variants={fadeBlurUp} className="flex flex-row flex-wrap items-start gap-3 mb-8">
@@ -506,7 +510,7 @@ export default function Hero() {
             style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}` }}
           >
             <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-accent mb-4">
-              Automation Pipeline
+              What I automate
             </p>
             <div className="relative mb-2">
               <div

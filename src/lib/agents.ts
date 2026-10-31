@@ -29,9 +29,10 @@ export type Agent = {
   result?: string;
 };
 
-// Facts here are the ones the site already states. No invented numbers:
-// only the billing agent's 17 checks and the tracker's dropped status
-// meeting are outcomes; the other tools describe what they do.
+// Facts here are the ones the resume or the site already states. No invented
+// numbers: only the billing agent (17 checks, a 10-hour review cut to under 30
+// minutes) and the tracker's dropped status meeting are outcomes; the other
+// tools describe what they do. The tracker uses no AI, so it isn't called an agent.
 export const agents: Agent[] = [
   {
     slug: "billing",
@@ -52,7 +53,7 @@ export const agents: Agent[] = [
       "The findings come together in one report.",
       "I review it with the team.",
     ],
-    result: "17 checks run for me every month.",
+    result: "A month-end review that took about 10 hours by hand now takes under 30 minutes, and the 17 checks run every month.",
   },
   {
     slug: "standup",
