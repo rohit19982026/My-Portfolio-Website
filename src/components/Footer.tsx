@@ -65,7 +65,8 @@ export default function Footer() {
               <span style={{ color: "#a8ff1a" }}>.</span>
             </h2>
             <p className="mt-4 max-w-md font-sans leading-relaxed" style={{ color: MUTED, fontSize: "clamp(1rem, 3.4vw, 1.3rem)" }}>
-              Always open to interesting conversations and opportunities around data, AI and program delivery.
+              Working on a data or AI program and want to talk delivery? Or hiring for a role like mine? Send me a note
+              or give me a call.
             </p>
             <a
               href={EMAIL}

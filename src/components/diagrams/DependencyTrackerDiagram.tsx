@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, Clock, FileCheck, Network, Zap } from "lucide-react";
+import { Clock, Code, FileCheck, Network, Zap } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import FlowDiagram, { type Step } from "./FlowDiagram";
 
@@ -13,7 +13,7 @@ const steps: Step[] = [
   { kind: "step", id: "start", marker: "start", label: "", sub: "" },
   { kind: "step", id: "trigger", label: "Scheduled Trigger", sub: "Runs on a schedule", tone: "card", icon: Zap },
   { kind: "step", id: "pull", label: "Tool Call: Jira REST API", sub: "Active stories", tone: "card", icon: SiJira, iconColor: "#2684FF" },
-  { kind: "step", id: "agent", label: "Dependency Tracker", sub: "Google Apps Script", tone: "hero", icon: Bot },
+  { kind: "step", id: "agent", label: "Dependency Tracker", sub: "Google Apps Script", tone: "hero", icon: Code },
   {
     kind: "branch",
     id: "outputs",

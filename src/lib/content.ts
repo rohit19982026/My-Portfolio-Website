@@ -2,24 +2,25 @@ export const navLinks = [
   { label: "Resume", href: "#resume" },
   { label: "Experience", href: "#experience" },
   { label: "Cases", href: "#case-studies" },
-  { label: "Credentials", href: "#credentials" },
+  { label: "Journey", href: "#credentials" },
   { label: "Tools", href: "#tools" },
   { label: "Stack", href: "#stack" },
   { label: "Contact", href: "#contact" },
 ];
 
+// Only things the resume or the sections below already state. Program size
+// matches the resume ($500K-$2M each, four or five at a time).
 export const skillMarqueeItems = [
   "SNOWFLAKE",
   "DATABRICKS",
-  "DBT",
-  "AIRFLOW",
+  "AWS",
   "JIRA",
   "KANTATA",
   "CLAUDE",
-  "N8N",
+  "GLEAN",
   "CLAUDE CERTIFIED ARCHITECT",
   "PSM I CERTIFIED",
   "ITIL FOUNDATION",
-  "$250K–$1M PROGRAM BUDGETS",
-  "4–5 CONCURRENT PROGRAMS",
+  "4–5 PROGRAMS AT A TIME",
+  "$500K–$2M PER PROGRAM",
 ];

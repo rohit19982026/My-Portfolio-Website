@@ -52,6 +52,7 @@ export const caseStudies: CaseStudy[] = [
       "Some steps only the client could do in their own systems, like running the script that creates user accounts and setting up a system login for our tools. I tracked those with a name and a date, the same as our own tasks.",
       "When one of our engineers moved on mid-project, his replacement was already being onboarded and his work was handed over before he left. I told the client in the same update, along with what it meant for the timeline.",
     ],
+    keep: "Raise it early, and let the client decide.",
     diagram: "lanes",
   },
   {
@@ -77,7 +78,7 @@ export const caseStudies: CaseStudy[] = [
       "I built the tool myself with Google Apps Script and the Jira API. On a schedule, it pulls the open tickets, shows which ones are blocking others and counts how many days each one has been stuck.",
     ],
     ending:
-      "Its reports replaced the weekly status meetings, and the engineers got that time back. Later, once they could see how long their work sat waiting on others, they asked me to track more.",
+      "Its reports replaced the weekly status meeting, and the engineers got that time back. Later, once they could see how long their work sat waiting on others, they asked me to track more.",
     keep: "Give before you ask.",
     diagram: "trade",
   },
@@ -106,8 +107,9 @@ export const caseStudies: CaseStudy[] = [
       "When the gap comes from the original estimate, I take it to our engineering directors early, with the numbers, so we agree how to cover it before it turns into a problem.",
     ],
     ending:
-      "Going through these problems openly with client sponsors in our quarterly reviews has led to follow-on work and larger accounts.",
+      "Three clients have extended into analytics or AI/ML work after their migration. I put that down to delivering reliably and being open about problems, including in our quarterly reviews.",
     endingLabel: "What it's led to",
+    keep: "Put the numbers in front of people.",
     diagram: "fork",
   },
   {
@@ -134,6 +136,7 @@ export const caseStudies: CaseStudy[] = [
       "If we can't agree on a way forward, I bring in our engineering directors and leadership for a second view.",
       "A weekly health check I built scores every program and posts the summary to Slack, so I can see early if one of the quieter programs starts to slip.",
     ],
+    keep: "Tell people where your time is going.",
     diagram: "board",
   },
 ];

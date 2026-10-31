@@ -376,10 +376,11 @@ export default function CaseStudies() {
               className="mt-4 font-sans font-extrabold leading-[1.05] tracking-[-0.035em]"
               style={{ fontSize: "clamp(2.1rem, 8.5vw, 3.5rem)" }}
             >
-              A few <span style={{ color: BLUE }}>programs</span>{" "}I&apos;ve run
+              Problems I&apos;ve <span style={{ color: BLUE }}>worked through</span>
             </motion.h2>
             <motion.p variants={rise} className="mt-3 font-sans text-[15px] sm:text-[17px]" style={{ color: MUTED }}>
-              From my work at phData, a data and AI consulting firm, where I run client programs. Client names are left out.
+              Four situations from my work at phData, a data and AI consulting firm. The first two are specific projects.
+              The last two are how I usually handle things that come up on every program. Client names are left out.
             </motion.p>
           </motion.div>
 
